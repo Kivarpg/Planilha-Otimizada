@@ -1300,11 +1300,13 @@ fun NpcEncontroCard(
     BoxWithConstraints(
         modifier = Modifier
             .align(Alignment.TopEnd)
-            .then(if (compactActions) Modifier.fillMaxWidth() else Modifier)
+            .fillMaxWidth()
     ) {
-        // Os três botões devem caber no espaço real do cartão, inclusive em telas estreitas.
-        val actionButtonWidth = if (compactActions) ((maxWidth - 8.dp) / 3).coerceAtLeast(48.dp) else 0.dp
-        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+        // Em qualquer largura, respeitar o espaço real do cartão.
+        // Abaixo de 152 dp, manter o toque mínimo de 48 dp e permitir rolagem.
+        val actionButtonWidth = ((maxWidth - 8.dp) / 3).coerceAtLeast(48.dp)
+        val actionRowModifier = if (maxWidth < 152.dp) Modifier.horizontalScroll(rememberScrollState()) else Modifier
+        Row(modifier = actionRowModifier, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
         InkButton(
                     visualTemplate = visualTemplate,
             label = "Exportar",
@@ -1322,7 +1324,7 @@ fun NpcEncontroCard(
             variant = InkButtonVariant.Secondary,
             // Largura ampliada para caber "Exportar" numa linha só (o texto
             // quebrava em duas por falta de espaço dentro do botão).
-            brushIndex = 0, customWidth = if (compactActions) actionButtonWidth else 136.dp, customHeight = 44.dp
+            brushIndex = 0, customWidth = actionButtonWidth.coerceAtMost(136.dp), customHeight = 44.dp
         )
         InkButton(
                     visualTemplate = visualTemplate,
@@ -1344,7 +1346,7 @@ fun NpcEncontroCard(
             },
             size = InkButtonSize.Small,
             variant = InkButtonVariant.Secondary,
-            brushIndex = 1, customWidth = if (compactActions) actionButtonWidth else 116.dp, customHeight = 44.dp
+            brushIndex = 1, customWidth = actionButtonWidth.coerceAtMost(116.dp), customHeight = 44.dp
         )
         InkButton(
                     visualTemplate = visualTemplate,
@@ -1352,7 +1354,7 @@ fun NpcEncontroCard(
             onClick = { mostrarCarregar = true },
             size = InkButtonSize.Small,
             variant = InkButtonVariant.Secondary,
-            brushIndex = 2, customWidth = if (compactActions) actionButtonWidth else 134.dp, customHeight = 44.dp
+            brushIndex = 2, customWidth = actionButtonWidth.coerceAtMost(134.dp), customHeight = 44.dp
         )
         } // Exportar / Salvar / Carregar: sempre na mesma linha
     } // BoxWithConstraints
