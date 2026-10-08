@@ -86,9 +86,9 @@ class EncounterRecentUiRegressionContractTest {
         assertTrue(actions.contains("BoxWithConstraints("))
         assertTrue(actions.contains("Row("))
         assertTrue(!actions.contains("FlowRow("))
-        assertTrue(actions.contains("val actionButtonWidth = if (compactActions)"))
-        assertTrue(actions.contains("((maxWidth - 8.dp) / 3)"))
-        assertTrue(Regex("customWidth = if \\(compactActions\\) actionButtonWidth").findAll(actions).count() == 3)
+        assertTrue(actions.contains("((maxWidth - 8.dp) / 3).coerceAtLeast(48.dp)"))
+        assertTrue(actions.contains("if (maxWidth < 152.dp) Modifier.horizontalScroll(rememberScrollState())"))
+        assertTrue(Regex("customWidth = actionButtonWidth.coerceAtMost\\\\(").findAll(actions).count() == 3)
 
         val archetypeStart = generator.indexOf("AppText(\"3. Arquétipo\"")
         val archetypeEnd = generator.indexOf("if (tipoSangueDeDragao)", archetypeStart)
