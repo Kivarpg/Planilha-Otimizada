@@ -987,7 +987,10 @@ fun NpcEncontroCard(
                     // em uma única linha. A quantidade representa quantas vezes
                     // o NPC adquiriu o mesmo Encanto nesta gaveta. Encantos que
                     // não são repetíveis continuam em linhas independentes.
-                    groupAccumulatedEncounterCharms(encantosDaGaveta).forEachIndexed { indice, grupo ->
+                    val gruposDeEncantos = remember(encantosDaGaveta) {
+                        groupAccumulatedEncounterCharms(encantosDaGaveta)
+                    }
+                    gruposDeEncantos.forEachIndexed { indice, grupo ->
                         val c = grupo.charm
                         var mostrarDetalhes by androidx.compose.runtime.remember(npc.id, c.nome) { androidx.compose.runtime.mutableStateOf(false) }
                         val nomeExibicao = "${indice + 1}. ${formatGroupedEncounterCharmName(grupo)}"
