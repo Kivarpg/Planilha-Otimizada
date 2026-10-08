@@ -326,7 +326,11 @@ fun NpcEncontroCard(
     // npc.iniciativaAtual (o próprio rastreador da Aba 11) quando o NPC
     // não está em nenhum combate ativo.
     val estadoIniciativas by viewModel.iniciativasController.state.collectAsState()
-    val participanteEmCombate = estadoIniciativas.participantes.firstOrNull { it.origemNpcId == npc.id }
+    // A ficha pode recompor por alterações de XP, gavetas ou texto.
+    // Só procurar o participante novamente se a lista de combate ou o NPC mudar.
+    val participanteEmCombate = remember(estadoIniciativas.participantes, npc.id) {
+        estadoIniciativas.participantes.firstOrNull { it.origemNpcId == npc.id }
+    }
     val iniciativaSincronizada = participanteEmCombate?.iniciativa ?: npc.iniciativaAtual
     val ajustarIniciativaSincronizada: (Int) -> Unit = { delta ->
         if (participanteEmCombate != null) {
