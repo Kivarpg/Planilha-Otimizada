@@ -541,7 +541,9 @@ fun NpcEncontroCard(
             // comentário em LinhaInfo/corZebrada (EncounterNpcCardComponents.kt)
             // para a explicação completa.
             var zebra = 0
-            val totaisMotes = EncounterMoteService.totais(npc.tipoExaltado, npc.essencia, npc.arma, npc.armadura)
+            val totaisMotes = remember(npc.tipoExaltado, npc.essencia, npc.arma, npc.armadura) {
+                EncounterMoteService.totais(npc.tipoExaltado, npc.essencia, npc.arma, npc.armadura)
+            }
             val motesComitadosEquipamento = totaisMotes.comitados
             val tipoArmaTooltip = when {
                 npc.arma == null -> "Desarmado"
