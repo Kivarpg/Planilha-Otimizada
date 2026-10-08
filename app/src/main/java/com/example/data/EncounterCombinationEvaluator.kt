@@ -257,7 +257,7 @@ internal object EncounterCombinationEvaluator {
             if(EncounterParticipantBindings.check(map,constraint)
                 != EncounterParticipantBindings.Check.SATISFIED) return null
         }
-        return if (assignments.isEmpty()) base else base.copy(bindings=map)
+        return if (map == base.bindings) base else base.copy(bindings=map)
     }
 
     private fun applyChoices(
@@ -271,7 +271,7 @@ internal object EncounterCombinationEvaluator {
             if (existing != null && existing != choice.option) return null
             updated[choice.group]=choice.option
         }
-        return base.copy(choices=updated)
+        return if (updated == base.choices) base else base.copy(choices=updated)
     }
 }
 
