@@ -43,6 +43,20 @@ class EncounterRecentUiRegressionContractTest {
         assertTrue(bindings >= calls)
     }
 
+    @Test fun `social and mental actions do not display unavailable combat results`() {
+        val socialStart = card.indexOf("ArquetipoEncontro.SOCIAL -> {")
+        val mentalStart = card.indexOf("ArquetipoEncontro.MENTAL -> {", socialStart)
+        val afterMental = card.indexOf("\n            LinhaInfo(\n                \"Absorção\"", mentalStart)
+        assertTrue(socialStart >= 0 && mentalStart > socialStart && afterMental > mentalStart)
+        val social = card.substring(socialStart, mentalStart)
+        val mental = card.substring(mentalStart, afterMental)
+        for (section in listOf(social, mental)) {
+            assertTrue(!section.contains("\"Ataque Decisivo\""))
+            assertTrue(!section.contains("\"Dano\""))
+            assertTrue(section.contains("\"Ataque Fulminante\""))
+        }
+    }
+
     @Test fun `compact encounter choices preserve two column policy`() {
         val archetypeStart = generator.indexOf("AppText(\"3. Arquétipo\"")
         val archetypeEnd = generator.indexOf("if (tipoSangueDeDragao)", archetypeStart)
