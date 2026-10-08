@@ -760,7 +760,11 @@ fun NpcEncontroCard(
                 calculo = "$formulaPerifericos = ${totaisMotes.perifericosMax}; Comitado = $motesComitadosEquipamento; Disponível = ${totaisMotes.perifericosDisponiveis}",
                 visualTemplate = visualTemplate
             )
-            val equipamentoDetalhes = buildEquipamentoDetalhesAba7(npc)
+            // O texto consulta catálogos de armas e armaduras; recalcular
+            // apenas quando o equipamento ou a habilidade usada mudar.
+            val equipamentoDetalhes = remember(npc.arma, npc.armadura, npc.habilidadePrincipal) {
+                buildEquipamentoDetalhesAba7(npc)
+            }
             LinhaInfo(
                 "Equipamento",
                 "",
