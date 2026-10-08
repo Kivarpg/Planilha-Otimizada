@@ -868,8 +868,8 @@ fun NpcEncontroCard(
             }
             val ordemPenalidadesNpc = NPC_HEALTH_PENALTY_ORDER
             Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                ordemPenalidadesNpc.forEach { penalidadeRotulo ->
-                    val caixasDoGrupo = gruposPorPenalidadeNpc[ordemPenalidadesNpc.indexOf(penalidadeRotulo)]
+                ordemPenalidadesNpc.forEachIndexed { indicePenalidade, penalidadeRotulo ->
+                    val caixasDoGrupo = gruposPorPenalidadeNpc[indicePenalidade]
                     if (caixasDoGrupo.isNotEmpty()) {
                         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
                             androidx.compose.foundation.layout.BoxWithConstraints(modifier = Modifier.weight(1f)) {
