@@ -362,9 +362,13 @@ fun EncounterGeneratorTab(
     }
 
     if (mostrarCatalogoArmaduras) {
-        val armadurasCatalogo = ENCOUNTER_ARMOR_WEIGHT_CATEGORIES
-            .filter { it != "Sem Armadura" }
-            .flatMap { com.example.data.ArmorCatalog.candidatas(it) }
+        // O catálogo só precisa ser montado uma vez enquanto este diálogo
+        // permanece na composição; mudanças de seleção não alteram as opções.
+        val armadurasCatalogo = remember {
+            ENCOUNTER_ARMOR_WEIGHT_CATEGORIES
+                .filter { it != "Sem Armadura" }
+                .flatMap { com.example.data.ArmorCatalog.candidatas(it) }
+        }
         AlertDialog(
             onDismissRequest = { mostrarCatalogoArmaduras = false },
             title = { AppText(modifier = Modifier.fillMaxWidth(), text = "Equipamento — Armadura", textAlign = TextAlign.Center) },
