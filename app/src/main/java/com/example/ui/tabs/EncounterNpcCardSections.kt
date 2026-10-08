@@ -443,12 +443,12 @@ internal fun NpcCardSkills(
 EncounterCardTitle("Habilidades", color = visualTemplate.accentBright)
 Spacer(modifier = Modifier.height(28.dp))
 run {
-    val habilidadesOrdenadas = remember(npc.abilities, npc.tipoExaltado, npc.casta, npc.habilidadesFavorecidas) {
-        val habilidadesEspeciais = if (npc.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR) {
-            emptySet()
-        } else {
-            habilidadesDeCastaOuAspecto(npc) + npc.habilidadesFavorecidas.toSet()
-        }
+    val habilidadesEspeciaisMarcadas = remember(npc.tipoExaltado, npc.casta, npc.habilidadesFavorecidas) {
+        if (npc.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR) emptySet()
+        else habilidadesDeCastaOuAspecto(npc) + npc.habilidadesFavorecidas.toSet()
+    }
+    val habilidadesOrdenadas = remember(npc.abilities, habilidadesEspeciaisMarcadas) {
+        val habilidadesEspeciais = habilidadesEspeciaisMarcadas
         npc.abilities.asSequence()
             .filter { it.value > 0 || it.key in habilidadesEspeciais }
             .map { it.key to it.value }
@@ -469,10 +469,6 @@ run {
     val colunas = remember(habilidadesOrdenadas, numeroColunas) {
         val tamanhoColuna = kotlin.math.ceil(habilidadesOrdenadas.size / numeroColunas.toDouble()).toInt().coerceAtLeast(1)
         habilidadesOrdenadas.chunked(tamanhoColuna)
-    }
-    val habilidadesEspeciaisMarcadas = remember(npc.tipoExaltado, npc.casta, npc.habilidadesFavorecidas) {
-        if (npc.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR) emptySet()
-        else habilidadesDeCastaOuAspecto(npc) + npc.habilidadesFavorecidas.toSet()
     }
     Row(
         modifier = Modifier.fillMaxWidth(),
