@@ -52,7 +52,7 @@ jobs:
           project_name="$(sed -n 's/^rootProject\.name = "\(Exalted\.[0-9][0-9]*\)"$/\1/p' settings.gradle.kts)"
           test -n "$project_name"
           if [ "${{ github.event_name }}" = "push" ]; then
-            requested_name="$(tr -d '\r\n' < .github/build-authorization.txt)"
+            requested_name="$(head -n 1 .github/build-authorization.txt | tr -d '\r')"
             test "${{ github.event.head_commit.message }}" = "$requested_name" || { echo "::error::Commit de autorização não corresponde ao nome da versão"; exit 1; }
           else
             requested_name="Exalted.${{ inputs.version }}"
