@@ -42,7 +42,6 @@ import com.example.model.WeaponStatsTable
 import com.example.ui.theme.ExaltVisualTemplate
 import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.visualTemplateParaExaltado
 
 // Extraído de EncounterNpcCard.kt (refatoração de organização — pedido
 // explícito do usuário, sem mudança de comportamento). Diálogo de
