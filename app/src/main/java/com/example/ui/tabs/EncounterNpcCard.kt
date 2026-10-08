@@ -796,7 +796,7 @@ fun NpcEncontroCard(
             val melhorias = xpDisplay.melhorias
             val especializacoes = xpDisplay.especializacoes
             val fvComprada = xpDisplay.fvComprada
-            val detalhamentoXp = buildString {
+            val detalhamentoXp = remember(xpDisplay) { buildString {
                 if (todosEncantos.isNotEmpty()) {
                     appendLine("Encantos adquiridos:")
                     todosEncantos.forEach { appendLine("• $it") }
@@ -815,7 +815,7 @@ fun NpcEncontroCard(
                     if (isNotEmpty()) appendLine()
                     appendLine("Força de Vontade: +$fvComprada ponto(s)")
                 }
-            }.ifBlank { "Esta planilha ainda não utilizou nenhum ponto de experiência." }
+            }.ifBlank { "Esta planilha ainda não utilizou nenhum ponto de experiência." } }
 
             Spacer(modifier = Modifier.height(18.dp))
             EncounterCardTitle("Força de Vontade", color = visualTemplate.accentBright)
