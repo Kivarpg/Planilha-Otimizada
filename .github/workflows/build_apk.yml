@@ -1,13 +1,11 @@
-# Build de CI — testes unitários + APK debug
-# Dispara em push/PR para qualquer branch e também manualmente (workflow_dispatch).
+# Build manual — testes unitários + APK release
+# Nunca compilar em push ou pull request. Somente execução manual autorizada.
 name: Build APK
 # O título de cada execução acompanha exatamente a mensagem do commit de
 # versão (ex.: Exalted.766), sem o antigo "Build APK" no nome visível.
 run-name: ${{ github.event.head_commit.message || github.ref_name }}
 
 on:
-  push:
-  pull_request:
   workflow_dispatch:
 
 concurrency:
