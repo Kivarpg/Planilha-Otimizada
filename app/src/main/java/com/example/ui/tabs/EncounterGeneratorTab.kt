@@ -184,14 +184,17 @@ fun EncounterGeneratorTab(
     // a arma e a armadura são escolhidas manualmente no catálogo após a geração.
     val equipamentoAutomatico = true
 
-    val opcoesFocoBase: List<String> = if (tipoLunar) {
-        ExaltedConstants.ALL_ATTRIBUTES.toList()
-    } else {
-        ExaltedConstants.ALL_25_ABILITIES.toList()
+    // As opções só mudam quando o tipo Lunar é selecionado; não reconstruir
+    // listas a cada recomposição da Aba 11.
+    val opcoesFocoBase: List<String> = remember(tipoLunar) {
+        if (tipoLunar) ExaltedConstants.ALL_ATTRIBUTES.toList()
+        else ExaltedConstants.ALL_25_ABILITIES.toList()
     }
     // Feitiçaria é uma diretiva estrutural do Foco; não entra nas listas canônicas
     // de Habilidades/Atributos usadas pelos cálculos mecânicos.
-    val opcoesFoco: List<String> = opcoesFocoBase + listOf(com.example.data.ENCOUNTER_FOCUS_SORCERY)
+    val opcoesFoco: List<String> = remember(opcoesFocoBase) {
+        opcoesFocoBase + com.example.data.ENCOUNTER_FOCUS_SORCERY
+    }
 
 
     val dialogListHeight = if (LocalConfiguration.current.screenHeightDp < 700) 300.dp else 420.dp
