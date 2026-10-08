@@ -634,19 +634,6 @@ fun NpcEncontroCard(
                         calculo = "Destreza ($destrezaNpc) + ${npc.habilidadePrincipal} ($habValor) + Especialização (1) = ${npc.acaoPrincipal}",
                             visualTemplate = visualTemplate
                         )
-                    LinhaInfo(
-                        "Dano", danoDisplay.numeric, zebra++,
-                        calculo = "Dano calculado para a arma equipada = ${npc.dano}",
-                        prefixo = if (npc.dano.startsWith("+")) "+" else null,
-                        sufixo = danoDisplay.suffix,
-                        visualTemplate = visualTemplate
-                    )
-                    // Ação já calculada pelo gerador: exibir também para arquétipos não físicos.
-                    LinhaInfo(
-                        "Ataque Decisivo", npc.acaoDecisiva.toString(), zebra++,
-                        calculo = "Destreza ($destrezaNpc) + ${npc.habilidadePrincipal} ($habValor) + Especialização (1) = ${npc.acaoDecisiva}",
-                        visualTemplate = visualTemplate
-                    )
                     val brigaHab = npc.abilities["Briga"] ?: 0
                     val defesaArma = npc.arma?.defesa ?: 0
                     LinhaInfo(
@@ -673,19 +660,6 @@ fun NpcEncontroCard(
                         calculo = "Destreza ($destrezaNpc) + ${npc.habilidadePrincipal} ($habValor) + Especialização (1) = ${npc.acaoPrincipal}",
                             visualTemplate = visualTemplate
                         )
-                    LinhaInfo(
-                        "Dano", danoDisplay.numeric, zebra++,
-                        calculo = "Dano calculado para a arma equipada = ${npc.dano}",
-                        prefixo = if (npc.dano.startsWith("+")) "+" else null,
-                        sufixo = danoDisplay.suffix,
-                        visualTemplate = visualTemplate
-                    )
-                    // Ação já calculada pelo gerador: exibir também para arquétipos não físicos.
-                    LinhaInfo(
-                        "Ataque Decisivo", npc.acaoDecisiva.toString(), zebra++,
-                        calculo = "Destreza ($destrezaNpc) + ${npc.habilidadePrincipal} ($habValor) + Especialização (1) = ${npc.acaoDecisiva}",
-                        visualTemplate = visualTemplate
-                    )
                     val brigaHab = npc.abilities["Briga"] ?: 0
                     val defesaArma = npc.arma?.defesa ?: 0
                     LinhaInfo(
