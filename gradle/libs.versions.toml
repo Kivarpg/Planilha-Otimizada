@@ -1,0 +1,51 @@
+[versions]
+# CORRIGIDO — causa raiz confirmada da crash "ClassNotFoundException:
+# MainActivity": eu tinha usado AGP 8.7.3 (chute meu, sem acesso de
+# rede pra confirmar), mas o AGP só passou a suportar compileSdk 36 (e
+# só passou a ter suporte NATIVO a Kotlin, sem precisar do plugin
+# separado org.jetbrains.kotlin.android) a partir da versão 9.0. Isso
+# bate exatamente com o build.gradle.kts do módulo NUNCA ter tido esse
+# plugin — o projeto original já presumia AGP 9+. Com AGP 8.7.3, o
+# Kotlin compilava (via dependência transitiva do plugin do Compose),
+# mas as classes nunca eram corretamente conectadas ao empacotamento
+# final do Android, resultando num .apk sem a MainActivity dentro.
+agp = "9.3.3"
+kotlin = "2.2.10"
+coreKtx = "1.15.0"
+coreSplashscreen = "1.0.1"
+androidxTestCore = "1.6.1"
+androidxJunit = "1.2.1"
+junit = "4.13.2"
+lifecycleViewmodelKtx = "2.8.7"
+activityCompose = "1.9.3"
+composeBom = "2024.12.01"
+kotlinxCoroutinesAndroid = "1.9.0"
+kotlinxCoroutinesTest = "1.9.0"
+robolectric = "4.14.1"
+zxingCore = "3.5.3"
+ktlintGradle = "14.2.0"
+
+[libraries]
+androidx-core = { group = "androidx.test", name = "core", version.ref = "androidxTestCore" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
+kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
+androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
+zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingCore" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradle" }

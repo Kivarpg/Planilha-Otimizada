@@ -1,0 +1,42 @@
+EXALTED.779 — CHECKPOINT CONSOLIDADO (SEM COMPILACAO)
+Data: 2026-10-07
+Base compilada confirmada pelo usuario: Exalted.778 (141ebd91f190bef984ee9599f3bdbd3a293d836e)
+
+ESCOPO EFETIVAMENTE IMPLEMENTADO
+- Cancelamento cooperativo do prefetch de roadmap antes e depois das expansoes de XP.
+- Verificacao de cancelamento antes da preparacao dos expansores e antes de retornar o roadmap.
+- Impedir publicacao de prefetch que perdeu a titularidade do job ou mudou de epoch.
+- Testes de regressao cobrindo cancelamento inicial, intermediario e entre expansoes.
+
+ARQUIVOS ALTERADOS DESDE A BASE 778
+- app/src/main/java/com/example/data/EncounterProgressionRoadmap.kt
+- app/src/main/java/com/example/viewmodel/EncounterNpcActions.kt
+- app/src/test/java/com/example/data/EncounterProgressionRoadmapTest.kt
+
+COMMITS DO LOTE
+- d6330a0dc4a5 Test early roadmap prefetch cancellation
+- b9ac5c529ad5 Skip obsolete roadmap setup before XP planning
+- ea38271abf3b Reject superseded roadmap prefetch publications
+- 14a78f645975 Cover cancellation after roadmap catalog preparation
+- 7a02ebb5840a Cover cancellation immediately after roadmap XP expansion
+- 448655057aaf Reject cancelled roadmap before final result
+- 2af045a43a3e Avoid preparing superseded NPC roadmap prefetch
+
+ESTADO E RESTRICOES
+- Todos os commits deste lote usam [skip ci]. Nenhuma compilacao foi solicitada.
+- Nenhuma mudanca de regras de compra de Encantos ou de geracao de NPC foi pretendida.
+- Testes adicionados, mas NAO executados: compilacao e regressao ainda precisam de validacao.
+- Otimizacoes amplas de geracao Solar, Sangue de Dragao e Lunar NAO foram implementadas neste lote.
+- settings.gradle.kts permanece Exalted.778 ate autorizacao para compilar.
+- Nao criar Exalted.779 version commit nem disparar GitHub Actions antes de ordem explicita do usuario.
+
+PROXIMOS PASSOS
+1. Continuar revisao de gargalos de geracao por tipo, com testes de equivalencia e mudancas isoladas.
+2. Inspecionar o conjunto consolidado para possiveis corridas de cancelamento/cache.
+3. Ao concluir o lote combinado, atualizar versao para Exalted.779 e solicitar autorizacao de compilacao.
+
+ADENDO — 2026-10-07 / SEGUNDA ETAPA DO LOTE
+- 1848e19d6b9e: reutiliza o conjunto de Atributos de Casta/Favorecidos durante um lote de XP Lunar, evitando recria-lo em cada rota avaliada.
+- a6ac92109fd3: calcula o custo minimo de Encanto Solar/Sangue de Dragao na criacao do indice de XP, reutilizando-o durante as expansoes.
+- Ambas as alteracoes pretendem preservar o resultado mecanico; equivalencia e compilacao NAO verificadas.
+- Codigo preparado para checkpoint de compilacao Exalted.779 mediante autorizacao expressa; nao houve disparo de CI.

@@ -1,0 +1,48 @@
+EXALTED.783 — CONSOLIDACAO PRE-COMPILACAO
+Base confirmada pelo usuario: Exalted.782 (compilacao bem-sucedida).
+Politica: nenhum build ate ordem expressa; commits intermediarios com [skip ci].
+
+ABA 14 MAPAS
+- 9d8a3b6f: distancia da rota deixa de materializar routePoints.toList() a cada recomposicao. Usa remember(routePoints) com derivedStateOf e extrai mapRouteDistanceKm para calculo puro.
+- 7b35116e: testes para 0/1 pontos e distancia acumulada de dois segmentos de referencia.
+- Calibracao preservada: MAP_REFERENCE_PX=170 e MAP_REFERENCE_KM=500, independentemente do zoom visual.
+- Risco a validar: leitura observavel da SnapshotStateList pelo derivedStateOf e equivalencia numerica em CI.
+
+ABA 11
+- Exalted.782 confirmou a compilacao apos corrigir teste de reproducibilidade do feitico inicial (comparar campos relevantes, nao UUIDs).
+
+PENDENCIAS
+- Executar testes no proximo build autorizado.
+- Revisar desempenho e UX das abas 5, 8, 9, 11 e demais.
+- Testes de dispositivo nao substituidos pela compilacao GitHub.
+- Manter Solar, Sangue de Dragao e Lunar com mesma prioridade.
+- Nao alterar versao ou iniciar workflow ate solicitacao de compilacao.
+
+ABA 8 ENCANTOS — RODADA 02
+- 75320db3: cache das arvores preparadas reinicializado tambem quando charmsParaArvore muda, evitando arvore antiga para catalogo novo dentro do mesmo Tipo de Exaltado.
+- 87d13abd: teste de contrato da chave de invalidacao do cache em CharmsTab.kt.
+- Pendencia: executar testes no proximo build autorizado; verificar performance em dispositivo real.
+
+RODADA 03 — REVISAO DE REGRESSAO
+- 88d573b3: contrato de teste garante derivedStateOf sobre routePoints e ausencia de remember(routePoints.toList()).
+- Aba 11: inspecao de EncounterNpcSpellManagement.kt confirma verificacoes para vaga inicial terrestre, sorteio e bloqueio apos primeiro XP; sem mudanca mecanica nesta rodada.
+- Nao foram executados testes ou compilacao. Nao afirmar estabilidade de dispositivo.
+
+RODADA 04 — ABA 11 FEITICO INICIAL
+- 86fabb66: filtragem dos candidatos a feitico inicial usa EncantosSolaresCatalog.sameName, igual a deduplicacao da lista final; elimina candidaturas duplicadas por caixa/acentuacao.
+- 4dd4a4c8: regressao de NPC com feitico existente em caixa diferente; novo inicial deve escolher outro feitico e preservar o existente.
+- A regra sameName foi inspecionada: Normalizer NFD, remocao de diacriticos, lowercase e trim.
+- Revisao de XP Solar/DB/Lunar em andamento; indices preparados e invalidacao Quimera inspecionados, sem alterar mecanicas.
+- Testes ainda nao executados: validar no proximo build explicitamente autorizado.
+
+RODADA 05 — CIRCULOS DE FEITICARIA POR TIPO
+- 037073fe: circulosDesbloqueados agora normaliza os nomes de Encantos uma vez para lookup por Set, mantendo filtros de Tipo de Exaltado.
+- c5c1e600: teste de reconhecimento de tres circulos Solares com caixa, acento e espacos variantes.
+- 5fee0cc2: teste para confirmar limite Lunar (Terrestre/Celestial) e Sangue de Dragao (Terrestre) mesmo com nomes normalizados.
+- Testes ainda pendentes de execucao, sem CI ou compilacao autorizada.
+
+RODADA 06 — CONTRATOS DE INTERFACE DE FEITICOS
+- dc08728a: novo EncounterInitialSpellUiContractTest cobre visibilidade do gerenciador antes de XP e disponibilidade de detalhes apos XP.
+- Revisao de EncounterNpcCard.kt confirmou guarda tanto no botao quanto no AlertDialog, evitando popup persistente depois do bloqueio.
+- Os testes sao de contrato estatico; nao substituem testes de interface Compose/dispositivo.
+- Nenhuma compilacao iniciada; continuar auditoria e validacao integrada antes da proxima versao.

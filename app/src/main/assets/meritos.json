@@ -1,0 +1,742 @@
+{
+  "meritos": [
+    {
+      "id": "aliados",
+      "nome": "Aliados",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        1,
+        3,
+        5
+      ],
+      "descricao": "Este benefício pode ser adquirido novamente quantas vezes desejar.\n\nCada compra concede ao personagem um único aliado notável controlado pelo Narrador — um amigo próximo ou companheiro de confiança com algumas habilidades úteis. A natureza desse aliado deve ser definida no momento da compra do Mérito. Um ponto concede um aliado mortal ou sobrenatural muito menor, que pode possuir contatos úteis, influência política, conhecimento especializado ou outros recursos que ele esteja disposto a colocar à disposição do personagem, dentro do razoável. Três pontos concedem um aliado sobrenatural pelo menos tão poderoso quanto um jovem Exaltado Terrestrial. Cinco pontos concedem um aliado sobrenatural tão poderoso quanto um Exaltado Celestial. O Narrador tem a palavra final sobre o que constitui um aliado válido.\n\nDesvantagem: Aliados não são autômatos ou lacaios. Eles têm suas próprias vidas e preocupações, e esperam que o personagem lhes ofereça a mesma ajuda que eles oferecem a ele. Um aliado maltratado provavelmente abandonará o personagem ou até mesmo se tornará seu inimigo.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "ambidestro",
+      "nome": "Ambidestro",
+      "categoria": "normal",
+      "tipo": "inato",
+      "custosPermitidos": [
+        1,
+        2
+      ],
+      "descricao": "O personagem não sofre penalidade de -1 em ações que utilizam a mão não dominante. A versão de dois pontos deste Mérito concede pés totalmente preênseis, além das mãos. Este Mérito é comum aos Haltans nativos, bem como aos homens-macaco que habitam as ruínas da Primeira Era, tomadas pela selva, agora conhecidas como Mahalanka — Covil de Raksi, Rainha das Presas.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "artefato",
+      "nome": "Artefato",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "descricao": "Este benefício pode ser adquirido novamente quantas vezes desejar.\n\nO personagem possui um item mágico — veja o Capítulo Nove para mais detalhes.\n\nUm Artefato de dois pontos é uma maravilha menor com utilidade limitada, mas ainda sobrenatural, como um cálice que anula qualquer veneno em seu interior, ou um torque cravejado de joias que mantém o usuário fresco e limpo em quaisquer circunstâncias. Muitos desses itens foram criados na Primeira Era e se tornaram mercadorias raras e altamente valiosas na Era das Mágoas, cobiçadas pelos ricos e poderosos quando aparecem.\n\nOs artefatos de três pontos são o que a maioria das pessoas imagina quando ouve a palavra \"artefato\" — são maravilhas de grande poder, como a maioria dos daiklaves, armaduras mágicas, capas hipnóticas e similares.\n\nArtefatos de quatro pontos são lendas por si só, com poderes de complexidade ou profundidade significativas. Os artefatos mais famosos dessa classificação são os \"daiklaves de cem anos\": armas fabricadas ao longo de um século de paixão e trabalho árduo, e que possuem Evocações verdadeiramente formidáveis. Outros artefatos desse tipo podem incluir capas que permitem ao seu usuário cavalgar o vento, ou véus que dispersam a luz e desviam o olhar.\n\nArtefatos de cinco pontos são tesouros lendários na Era das Mágoas — recipientes mágicos, armas de cerco menores da Primeira Era e os lendários \"daiklaves milenares\". Qualquer personagem que entre em posse de um item desse tipo será definido tanto pela sua posse quanto por qualquer outro elemento de sua personalidade ou lenda e, como tal, artefatos de cinco pontos só podem ser adquiridos com a aprovação explícita do Narrador.\n\nArtefatos de poder ainda maior podem ser encontrados em Criação em raras ocasiões: poderosos remanescentes da Primeira Era, como guerreiros invencíveis, \"daiklaves de dez mil anos\" ou navios de guerra mágicos. Esses itens são considerados Artefatos N/A e não podem ser adquiridos durante a criação de personagens gastando pontos — como possuem um poder que define a crônica, eles só podem chegar às mãos de um jogador se o jogador e o Narrador desejarem desenvolver uma campanha em torno dessa história, ou se um jogador, de alguma forma, forjar ou desenterrar um milagre capaz de abalar o mundo durante o jogo.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "apoio",
+      "nome": "Apoio",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        2,
+        3,
+        4
+      ],
+      "descricao": "Este benefício pode ser adquirido novamente quantas vezes desejar.\n\nO personagem goza de posição oficial em uma organização, definida quando este Mérito é obtido. Por exemplo, ele pode ser uma ministra do governo, uma oficial militar, uma comerciante da Guilda ou membro de uma rede de espionagem. Apoio representa o suporte que o personagem pode obter da organização.\n\nO apoio de dois pontos representa uma posição de baixo nível dentro de uma organização de poder significativo (como um membro da guilda que paga suas mensalidades, mas não possui um status especial), ou um cargo sólido em uma organização menos poderosa, com a maioria das tarefas desagradáveis repassadas a subordinados (um oficial na guarda do mercado de Gem).\n\nO apoio com três pontos representa uma posição intermediária em uma organização poderosa (um príncipe mercante da Guilda), ou o status de membro da elite em uma organização menor (um capitão da guarda do mercado).\n\nO apoio de quatro pontos representa um nível de elite em uma organização poderosa (um fator da Guilda) com apoio significativo.\n\nDesvantagem: O apoio representa filiação, e não liderança. Os personagens terão que prestar contas a seus superiores e cumprir os deveres inerentes ao seu cargo para mantê-lo.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "resistencia_ilimitada",
+      "nome": "Resistência Ilimitada",
+      "categoria": "normal",
+      "tipo": "adquirivel",
+      "custosPermitidos": [
+        2
+      ],
+      "descricao": "Firme como um touro, o personagem continua firme muito depois de todos os outros terem sucumbido à exaustão. O personagem reduz a dificuldade de todos os testes para resistir à fadiga ou permanecer acordado em 2.",
+      "preRequisitos": [
+        "Vigor ou Resistência •••"
+      ],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "comando",
+      "nome": "Comando",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "descricao": "Este Mérito pode ser recomprado quantas vezes forem desejadas para representar múltiplos destacamentos militares distintos ou forças militares verdadeiramente enormes.\n\nO personagem é o comandante reconhecido de uma força militar organizada de algum tipo — geralmente composta por soldados mortais comuns (as características de um soldado médio podem ser encontradas na pág. 496). A classificação deste Mérito determina o tamanho da força que o personagem comanda. Para mais informações sobre grupos de batalha, consulte as páginas 205-211. Com dois pontos, este Mérito fornece uma força militar de Tamanho 3, Poder 0 e Treinamento Médio.\n\nCom três pontos, este Mérito proporciona um grupo de Tamanho 3, Poder 0 com Treinamento de Elite, ou um grupo de Tamanho 4-5, Poder 0 com Treinamento Médio.\n\nCom quatro pontos, este Mérito fornece um Grupo de Tamanho 4-5, Poder 0 com Treinamento de Elite, ou dois grupos de Tamanho 5, Poder 0 com Treinamento Médio. Alternativamente, pode fornecer um grupo de batalha de Tamanho 3, Poder 0 com Treinamento de Elite e as características de tropas de elite em vez de tropas médias.\n\nCom cinco pontos, este Mérito fornece um grupo de Tamanho 5, Poder 0 com Treinamento de Elite e as características de tropas de elite em vez de tropas comuns, ou cinco grupos de Tamanho 5, Poder 0 com Treinamento Médio, ou dois grupos de Tamanho 5, Poder 0 com Treinamento de Elite.\n\nNota: Adquirir o Mérito de Comando indica que os soldados são pessoalmente leais à Exaltado — que são \"seus\" homens, em vez de forças pertencentes a uma organização; forças militares desse tipo são adquiridas através do Mérito de Apoio.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "contatos",
+      "nome": "Contatos",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        1,
+        3,
+        5
+      ],
+      "descricao": "Este benefício pode ser adquirido novamente quantas vezes desejar.\n\nCada compra concede ao personagem uma rede de contatos dispostos a fornecer informações. O jogador deve especificar que tipo de contatos está comprando no momento em que o Mérito é obtido. Exemplos podem incluir contatos dentro da Ordem Imaculada, os nômades Delzahn, a corte do Tri-Khan de Chiaroscuro, a Guilda, os artesãos de Nexus, a Casa Mnemon, capitães de navios ocidentais, a família Lintha, uma família nobre específica de Port Calin, todas as famílias nobres de Port Calin ou os contrabandistas da Liga Haslanti.\n\nOs contatos de um ponto geralmente se restringem a uma única cidade-estado ou região similar. Os contatos de três pontos podem abranger uma área ampla ou indicar uma organização com alcance e influência vastos, porém específicos, enquanto os contatos de cinco pontos significam que, praticamente em qualquer lugar que o personagem vá dentro de uma Direção , ele poderá encontrar contatos relevantes no campo adquirido.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "culto",
+      "nome": "Culto",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "descricao": "O personagem é objeto de veneração organizada por um grupo de mortais. Sem magia adicional, os humanos (incluindo os Exaltados) não conseguem ouvir as orações dirigidas a eles, embora, em profunda meditação, possam sentir o bater de asas silencioso, como o bater de asas de uma mariposa, de apelos, sacrifícios e palavras de adoração girando ao seu redor.\n\nA classificação deste Mérito determina o tamanho do culto da personagem e o poder que ele pode extrair de suas orações. Um culto de um ponto compreende apenas alguns sacerdotes em tempo integral e um punhado de adoradores devotos. Um culto de dois pontos abrange várias centenas de indivíduos, talvez uma vila inteira. Um culto de três pontos significa que o personagem é venerada em toda uma região significativa, ou talvez governe abertamente uma poderosa cidade-estado como seu deus-rei (embora isso exigisse Méritos adicionais para representar tal influência). Um culto de quatro pontos significa que uma nação inteira honra o personagem ; dezenas de milhares oferecem orações a ele, e a Caçada Selvagem certamente já ouviu seu nome. Um culto de cinco pontos abrange grande parte de uma Direção; poucos Exaltados podem reivindicar uma abundância tão vasta de adoração e, atualmente, nenhum Exaltado Solar o fez na Era das Mágoas.\n\nO personagem pode gastar um ponto de Força de Vontade sem perdê-lo um número de vezes por história igual à sua classificação de Culto. Existem classificações de Culto mais altas, que permitem à personagem gastar um ponto de Força de Vontade gratuitamente por cena, mas tal veneração é reservada aos espíritos mais poderosos — atualmente, nenhum Exaltado na Segunda Era é tão amplamente venerado , e muito poucos, mesmo entre os deuses mais poderosos, podem ostentar tal reverência.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "sentido_de_perigo",
+      "nome": "Sentido de Perigo",
+      "categoria": "normal",
+      "tipo": "inato",
+      "custosPermitidos": [
+        3
+      ],
+      "descricao": "Um indefinível “sexto sentido” alerta o personagem quando ele está em perigo — uma vantagem inegável na Era da Tumulto! Ela recebe um dado bônus em rolagens para detectar perigo.",
+      "preRequisitos": [
+        "Percepção ou Prontidão •••"
+      ],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "dominio",
+      "nome": "Domínio",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        2,
+        4
+      ],
+      "descricao": "Este benefício pode ser adquirido novamente quantas vezes desejar.\n\nO personagem controla um local de poder na Criação. Um domínio é uma fonte de incrível poder geomântico, geralmente um local de esplendor natural extraordinário. Um domínio pode ser o coração de uma floresta primordial, uma caverna de cristal atrás de uma imponente cachoeira, um campo de vidro negro onde o deserto encontra um vulcão ancestral, ou qualquer outro lugar de clara majestade e poder. A maioria dos domínios possui forte influência de um dos cinco elementos, mas certos domínios raros ressoam com a Essência do sol ou da lua, do destino, ou até mesmo da morte.\n\nUm personagem sintonizado com um domínio que permanece dentro de seus limites desfruta de certos benefícios. Fora de combate, ele respira duas partículas adicionais de Essência por hora e pode rolar reflexivamente (Percepção + Ocultismo, dificuldade 3) para sentir qualquer gasto ativo de Essência dentro dos limites do domínio. O domínio também pode ser usado como um Meio para trabalhos de feitiçaria que ressoem com sua natureza (págs. 487-488), concedendo um intervalo extra.\n\nComo um Mérito de quatro pontos, o personagem ganha o controle de um domínio excepcionalmente poderoso. Ela respira quatro motes extras por hora fora de combate, a dificuldade para detectar o uso de Essência torna-se 1, e usar o domínio como um Meio concede dois intervalos extras.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "senso_de_direcao",
+      "nome": "Senso de direção",
+      "categoria": "normal",
+      "tipo": "inato",
+      "custosPermitidos": [
+        1
+      ],
+      "descricao": "O personagem nunca está completamente perdida e é capaz de determinar naturalmente sua orientação em relação aos cinco polos. Além de sempre saber para onde está voltada e agir como uma bússola viva, ele reduz a dificuldade em tentativas de navegar em direção a um local fixo e conhecido ou de refazer seus passos em 2.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "memoria_eidetica",
+      "nome": "Memória Eidética",
+      "categoria": "normal",
+      "tipo": "inato",
+      "custosPermitidos": [
+        2
+      ],
+      "descricao": "O personagem possui uma memória quase perfeita, obtendo sucesso automático em todas as suas tentativas de recordar detalhes de cenas e eventos anteriores.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "familiar",
+      "nome": "Familiar",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        1,
+        2,
+        3
+      ],
+      "descricao": "Este benefício pode ser adquirido novamente quantas vezes desejar.\n\nA Criação está repleta de criaturas, tanto prosaicas quanto exóticas, e o personagem formou um laço profundo e intenso com uma delas. Embora o familiar (provavelmente) não seja mais capaz de falar as línguas dos homens do que qualquer outra criatura, o personagem consegue entender, de forma geral, os chilreios, os passos, os latidos e os gestos de seu companheiro animal, e o familiar, por sua vez, entende os comandos do personagem. Ele pode até mesmo compartilhar os sentidos de seu familiar, concentrando-se e não realizando outras ações, contanto que o familiar esteja a uma distância considerável (ver p. 197).\n\nUm ponto neste Mérito concede um familiar relativamente fraco, como um esquilo, uma coruja, um gato ou um cachorro. Dois pontos concedem uma besta formidável ou útil, como um animal de montaria ou um predador feroz — cavalos, simhata, tigres e cães de presságio são todos familiares apropriados com dois pontos. Três pontos concedem um familiar que é de alguma forma excepcional ou mágico, como um dos macacos falantes de Halta, um boi blindado e cuspindo fogo mutado pelo Wyld, um superpredador como um lagarto tirano ou um leão puro-sangue divino, filho do deus cavalo Hiparkes.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "reflexos_rapidos",
+      "nome": "Reflexos Rápidos",
+      "categoria": "normal",
+      "tipo": "adquirivel",
+      "custosPermitidos": [
+        3
+      ],
+      "descricao": "Temperado pela guerra ou talvez por ter crescido vivendo no limite, o nervos de aço do personagem lhe confere uma vantagem em batalha. Ele adiciona um dado extra às suas rolagens de “Juntar-se à Batalha”.",
+      "preRequisitos": [
+        "Inteligência •••"
+      ],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "pe_veloz",
+      "nome": "Pé Veloz",
+      "categoria": "normal",
+      "tipo": "adquirivel",
+      "custosPermitidos": [
+        4
+      ],
+      "descricao": "O personagem é particularmente ágil e veloz, movendo-se pelo mundo como uma sombra correndo contra a luz. Ela adiciona um dado extra a todas as rolagens dependendo da sua velocidade, principalmente nas ações de investida, desengajamento e retirada (ver p. 197-199).",
+      "preRequisitos": [
+        "Destreza •••"
+      ],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "seguidores",
+      "nome": "Seguidores",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        1,
+        2,
+        3
+      ],
+      "descricao": "Este benefício pode ser adquirido novamente quantas vezes desejar.\n\nCada compra representa um número de seguidores mortais com alguma especialização específica que se uniram ao personagem. A natureza desses seguidores deve ser definida a cada compra deste Mérito. Exemplos incluem burocratas, guarda-costas, assassinos , mercadores, espiões, artistas, ferreiros ou astrólogos. Tais seguidores possuem habilidade média a acima da média em suas profissões (dois ou três pontos em Atributos), mas são leais ao personagem (e não a uma organização da qual o personagem possa ter Apoio ou que possa liderar por Influência) e podem ser treinados para alcançar maior especialização ao longo do tempo.\n\nUm ponto concede até uma dúzia de seguidores, dois concedem até 50, enquanto três concedem um grupo de até cem.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "gigante",
+      "nome": "Gigante",
+      "categoria": "normal",
+      "tipo": "inato",
+      "custosPermitidos": [
+        4
+      ],
+      "descricao": "O personagem é enorme, medindo entre dois metros e trinta centímetros de altura. Seu tamanho avantajado concede um bônus de -0 no nível de saúde. Este Mérito também pode ser obtido como resultado da mutação Wyld.\n\nDesvantagem: O tamanho avantajado da personagem é muito marcante; estou impondo uma penalidade de -3 em todos os testes de disfarce para que ele se passe por alguém de estatura menor, tornando-a memorável onde quer que vá.",
+      "preRequisitos": [
+        "Resistência •••"
+      ],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "pedra_ignea",
+      "nome": "Pedra Ígnea",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        2,
+        4
+      ],
+      "descricao": "Este benefício pode ser adquirido novamente quantas vezes desejar.\n\nEste Mérito concede a posse de uma pedra-lar — uma gema formada de Essência geomântica concentrada, portadora de poderosos poderes mágicos. A maioria das pedras-lar irradia amplos benefícios místicos para a região ao seu redor, mas algumas pedras mais raras possuem poderes mais concentrados ou diretos, ou até mesmo escondem algumas poderosas Evocações em suas profundezas. A maioria das pedras-lar são formadas deliberadamente por meio da concentração de Essência em mansões, mas algumas se formam naturalmente em domínios ou em locais onde a Essência operou prodigiosos milagres sobre a terra. Se uma pedra-lar estiver ligada a uma mansão, e o dono da mansão colocar a pedra-lar em um encaixe especialmente projetado em um artefato sintonizado, então o personagem desfrutará dos benefícios de estar dentro da mansão onde quer que vá (veja o Mérito Mansão, p. 163).\n\nDois pontos neste Mérito representam o poder da maioria das lareiras na Criação, enquanto quatro pontos fornecem uma lareira maior proveniente de uma mansão ou domínio excepcionalmente poderoso.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "horrivel",
+      "nome": "Horrível",
+      "categoria": "normal",
+      "tipo": "inato",
+      "custosPermitidos": [
+        0
+      ],
+      "descricao": "Este Mérito não tem custo e pode ser obtido gratuitamente.\n\nO personagem é memoravelmente feio, possivelmente como resultado de uma deformidade evidente, cicatrizes desfigurantes, mutações desumanas ou simplesmente por ter nascido assim. Sua Aparência não mede o quão atraente ele é; em vez disso, quanto mais pontos de Aparência ele tiver, mais assustadoramente horrível ele parecerá. O personagem adiciona seu bônus de Aparência (p. 218) às tentativas de ameaçar ou intimidar, em vez de instigar e persuadir ações.\n\nDesvantagem: O personagem subtrai sua pontuação de Aparência da maioria das tentativas de sedução.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "influencia",
+      "nome": "Influência",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "descricao": "Este benefício pode ser adquirido novamente quantas vezes desejar.\n\nEste Mérito reflete a posição e a influência de um personagem na sociedade. Pode derivar de um cargo político, notoriedade, liderança de uma organização, conquista militar ou da admiração ou temor pelo poder demonstrado pelo personagem. Seja qual for o motivo, as pessoas levam em consideração os desejos e a vontade do personagem. A maioria dos Exaltados eventualmente adquire algum grau de Influência , caso não a possuam inicialmente.\n\nUm ponto descreve uma figura de destaque local — um chefe de família tribal, um médico respeitado, um feiticeiro conhecido ou o dono de uma casa de chá muito popular.\n\nDois pontos descrevem uma figura influente na cidade-estado ou satrapia onde reside — um magistrado com conexões políticas , um magnata do transporte marítimo, o líder de uma companhia mercenária com um contrato importante.\n\nTrês pontos descrevem um personagem influente, muito importante para a região em que reside: um conselheiro real, um general, um chefe tribal, um príncipe mercante com investimentos por toda a região.\n\nQuatro pontos descrevem uma grande potência regional, cujas palavras têm grande peso e que possivelmente governa uma pequena cidade diretamente. Isso também representa líderes de alianças tribais, os braços direitos de príncipes e Exaltados Lunares que vivem abertamente como deuses.\n\nCinco pontos descrevem um personagem de vasta influência, provavelmente o governante de uma cidade-estado com influência sobre os principados vizinhos . Alternativamente, o personagem pode ser um senhor da guerra temido por muitos, ou o deus-rei lunar de uma horda devastadora.\n\nÉ possível , embora difícil, cultivar influências de diferentes tipos em múltiplas regiões simultaneamente.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "estomago_de_ferro",
+      "nome": "Estômago de Ferro",
+      "categoria": "normal",
+      "tipo": "adquirivel",
+      "custosPermitidos": [
+        1
+      ],
+      "descricao": "O personagem consegue digerir quase tudo que seja comestível, desde insetos vivos e água salobra até carne crua ou rações estragadas. Ela possui uma penalidade de -2 em testes de Sobrevivência para buscar comida por conta própria, bem como em testes de Resistência para se recuperar de intoxicação alimentar.",
+      "preRequisitos": [
+        "Vigor ou Resistência •••"
+      ],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "idioma",
+      "nome": "Idioma",
+      "categoria": "normal",
+      "tipo": "adquirivel",
+      "custosPermitidos": [
+        1
+      ],
+      "descricao": "Este benefício pode ser adquirido novamente quantas vezes desejar.\n\nCada compra concede ao personagem fluência em um idioma além de sua língua nativa. Se o personagem possuir Linguística 1+, ele também será alfabetizado em qualquer forma escrita do idioma.\n\nOs habitantes \"civilizados\" de cada uma das Direções Exteriores falam uma língua diferente (na verdade, vários dialetos regionais intimamente relacionados), enquanto as Terras dos Catadores têm sua própria língua particular e o poderoso Reino tem duas línguas oficiais. Existem também inúmeras línguas locais que são faladas apenas por grupos tribais ou étnicos espalhados pela periferia da Criação.\n\nAs principais linguagens da Criação são:\n\n• Alto Reino: A língua formal dos Dinastas e patrícios da Ilha Abençoada, bem como de seus servos. Todos os assuntos oficiais do Reino são conduzidos em Alto Reino. Sua forma escrita é um alfabeto fonético de caracteres complexos, elaborados com pinceladas.\n\n• Baixo Reino: A língua dos plebeus do Reino, geralmente constituída por versões locais deturpadas do Alto Reino, tornou-se quase incompreensível para forasteiros. Compartilha o estilo de escrita do Alto Reino, mas frequentemente utiliza representações de caracteres simplificadas que podem ser feitas sem pincéis ou caligrafia cuidadosa.\n\n• Antigo Reino: A língua nativa dos espíritos e daqueles que os criaram, bem como do Povo das Fadas. Era amplamente falada na Primeira Era, especialmente por sábios e feiticeiros-engenheiros, e usada em muitos documentos oficiais. Os personagens devem ter Conhecimento 1+ ou Ocultismo 1+ para aprender este idioma. Existem vários estilos para escrever Antigo Reino, sendo o mais extravagante um complexo sistema glífico onde a disposição dos símbolos é tão importante quanto a escolha dos mesmos, e a mesma frase pode ser lida de diversas maneiras, frequentemente como uma escolha deliberada do escritor com o intuito de transmitir um significado sutil e multifacetado.\n\n• Língua dos Dragões: Derivada de elementos recuperados de uma língua sacerdotal perdida durante o xogunato, esta língua foi criada e difundida por luminares da Casa Mnemon ao longo de dois séculos. É uma mistura do Antigo Reino e do Alto Reino, com elementos de uma língua perdida do xogunato, e exclui a mente dos conceitos mais amplos e perigosos inerentes ao Antigo Reino, mantendo a pessoa focada nos Dragões, nos Polos, no mundo natural e na Hierarquia Perfeita. É uma língua bela, mais do que erudita, e mesmo em satrapias que foram completamente suprimidas pelo Reino, há uma corrida de sábios e poetas para aprender esta língua de poetas e príncipes. Sua forma escrita utiliza pinceladas muito desafiadoras, porém belas.\n\n• Dialeto dos Rios: O idioma das Terras dos Catadores. A Guilda promoveu essa língua repleta de empréstimos linguísticos como a “língua comercial” não oficial do Limiar; é provavelmente o idioma mais amplamente compreendido em toda a Criação. Sua forma escrita emprega um alfabeto glífico simples, cujos caracteres podem ser facilmente desenhados com uma pena, um estilete ou até mesmo um pedaço de carvão.\n\n• Língua do Céu: Uma família linguística falada no Norte. Sua forma escrita utiliza um alfabeto rúnico simples.\n\n• Língua de Fogo: Uma família linguística falada no Sul. Sua forma escrita emprega um alfabeto sofisticado de linhas e curvas fluidas; o significado pode ser bastante influenciado pela maneira como os caracteres se conectam uns aos outros.\n\n• Língua da Floresta: Uma família linguística falada no Leste, além dos limites das Terras dos Catadores. Sua forma escrita consiste em uma ampla variedade de ideogramas ramificados, conectados vertical e diagonalmente.\n\n• Língua do Mar: Uma família linguística falada no Ocidente. Sua forma escrita consiste em um alfabeto simples de linhas e pontos cuja conexão entre si pode ser extremamente complexa.\n\n• Dialeto da Guilda: Uma língua secreta falada apenas pelos membros da Guilda. Sua forma escrita é composta por linhas horizontais e verticais simples, projetadas para serem escritas de forma rápida e discreta quando necessário.\n\n• Línguas Locais: A criação contém inúmeras línguas faladas por tribos “bárbaras” específicas, enclaves étnicos insulares, habitantes de ilhas isoladas e vários outros pequenos grupos. Quatro dessas línguas podem ser aprendidas com uma única compra de Mérito.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "mansao",
+      "nome": "Mansão",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        3,
+        5
+      ],
+      "descricao": "Este benefício pode ser adquirido novamente quantas vezes desejar.\n\nO personagem possui uma mansão — uma magnífica torre mágica, fortaleza, palácio ou propriedade erguida sobre um domínio e projetada para capturar e canalizar seu poder. Muitas mansões são projetadas para expressar poderes mágicos menores, a fim de realçar a beleza ou o conforto do edifício, como colunas de água independentes repletas de peixes coloridos ou pisos que permanecem aquecidos com a Essência do Fogo canalizada, mesmo no auge do inverno.\n\nAlém da propriedade da própria mansão, possuir este Mérito com três pontos concede os benefícios tanto do Mérito Domínio (p. 160) quanto do Mérito Pedra Ígnea (p. 161), com dois pontos cada, sem custo adicional. Com cinco pontos, o personagem é o proprietário de uma mansão erguida sobre um domínio excepcionalmente poderoso, com uma pedra da lareira igualmente poderosa (replicando os benefícios dos Méritos Domínio e Pedra Ígnea de quatro pontos).",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "mentor",
+      "nome": "Mentor",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        1,
+        2,
+        3
+      ],
+      "descricao": "Outra pessoa com mais experiência ensina e aconselha o personagem regularmente. Os mentores podem oferecer conselhos, assistência e até mesmo treinamento em áreas mundanas ou mágicas.\n\nUm mentor de um ponto é um especialista em uma área específica de destaque, como idiomas, esgrima, feitiçaria ou artes marciais. Um mentor de dois pontos é um especialista em diversas áreas notáveis e pode ser um indivíduo de considerável poder ou influência. Um mentor de três pontos é um mestre em muitas coisas, além de ser uma figura de poder regional significativo ou uma autoridade universalmente respeitada em suas áreas de especialização.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "artista_marcial",
+      "nome": "Artista Marcial",
+      "categoria": "normal",
+      "tipo": "adquirivel",
+      "custosPermitidos": [
+        4
+      ],
+      "descricao": "O personagem passou por treinamento sistemático em pelo menos uma arte marcial formal. Talvez ele tenha sido criada como uma monja imaculada ou estudado em um dojo durante suas jornadas . Este Mérito permite que o personagem adquira a Habilidade de Artes Marciais.",
+      "preRequisitos": [
+        "Briga •"
+      ],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "musculos_poderosos",
+      "nome": "Músculos Poderosos",
+      "categoria": "normal",
+      "tipo": "adquirivel",
+      "custosPermitidos": [
+        1,
+        2,
+        3
+      ],
+      "descricao": "O personagem consegue levantar e carregar pesos incríveis. Ao tentar uma façanha de força (veja págs. 228-229), o personagem adiciona sua pontuação neste Mérito à reserva de dados da tentativa.",
+      "preRequisitos": [
+        "Força •••"
+      ],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "imunidade_natural",
+      "nome": "Imunidade Natural",
+      "categoria": "normal",
+      "tipo": "inato",
+      "custosPermitidos": [
+        2
+      ],
+      "descricao": "Seja por ser naturalmente resistente ou abençoado por um espírito, o personagem parece nunca contrair doenças menores, como um resfriado comum, e se recupera facilmente de enfermidades mais graves. O personagem reduz a dificuldade de todos os testes para resistir a infecções, doenças e enfermidades em 2.",
+      "preRequisitos": [
+        "Resistência •••"
+      ],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "tolerancia_a_dor",
+      "nome": "Tolerância à dor",
+      "categoria": "normal",
+      "tipo": "adquirivel",
+      "custosPermitidos": [
+        4
+      ],
+      "descricao": "Embora o personagem ainda sinta dor, ele lida com ele melhor do que a maioria. Penalidades de -2 em ferimentos são reduzidas para -1, enquanto penalidades de -4 em ferimentos são reduzidas para -3.",
+      "preRequisitos": [
+        "Resistência ••••"
+      ],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "saque_rapido",
+      "nome": "Saque Rápido",
+      "categoria": "normal",
+      "tipo": "adquirivel",
+      "custosPermitidos": [
+        1,
+        4
+      ],
+      "descricao": "O personagem possui a agilidade de um duelista mortal. Com um ponto, ele não sofre penalidade de Defesa ao realizar uma ação de sacar/preparar arma. Com quatro pontos, se ele realizar uma sequência de ações de sacar/preparar arma e uma ação de ataque, a penalidade da sequência é reduzida para -1 em vez de -3. Este Mérito deve ser adquirido separadamente para cada uma das Habilidades de ataque.",
+      "preRequisitos": [
+        "Armas Brancas, Arqueirismo, Arremesso, Artes Marciais, Briga •••"
+      ],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "retentores",
+      "nome": "Vassalos",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        2,
+        4
+      ],
+      "descricao": "Este benefício pode ser adquirido novamente quantas vezes desejar.\n\nCada compra concede ao personagem um único servo controlado pelo Narrador, um especialista em sua área com habilidades notáveis e úteis. A natureza desse servo deve ser definida no momento da compra do Mérito. Ele pode ser um cortesão, guarda-costas, assassino, conselheiro ou até mesmo o sumo sacerdote do personagem. Os servos são especialistas excepcionais em sua profissão (quatro ou cinco pontos em Atributos, além de pelo menos uma especialidade aplicável) e são pessoalmente leais ao personagem (ou pelo menos fortemente motivados a não traí-lo ou abandoná-lo).\n\nDois pontos concedem um aliado mortal ou sobrenatural menor (como um assassino de sangue divino ou um conselheiro demoníaco do Primeiro Círculo), que pode possuir contatos ou experiência úteis, influência política, proeza marcial ou outros recursos que ele esteja disposto a arriscar a pedido do personagem.\n\nQuatro pontos concedem um aliado sobrenatural pelo menos tão poderoso quanto um jovem Exaltado Terrestre, embora sempre mais fraco que o próprio personagem — pares são melhor representados como Aliados em vez de Retentores.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "recursos",
+      "nome": "Recursos",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "descricao": "Este Mérito descreve as finanças de um personagem. Cada ponto representa uma faixa econômica e concede uma renda padrão. A origem dessa riqueza deve ser detalhada (aluguéis de propriedades, parceria agrícola, estipêndio governamental, banditismo), já que pode variar ao longo do jogo. A maioria dos Exaltados não tem muita dificuldade em acumular alguns Recursos, se desejarem, mas geralmente faz mais sentido escolher este Mérito em conjunto com outro, como Apoio ou Culto.\n\nUm ponto indica menos de 1 shekel por ano em jade, menos de 64 koku por ano em dinheiro ou menos de 60 dinares por ano em prata — até quatro vezes a renda esperada de uma família com dois adultos qualificados trabalhando. É apropriado para proprietários de terras agrícolas, artesãos ou artífices respeitados, artistas renomados , pequenos comerciantes bem-sucedidos, criminosos de nível médio em cartéis urbanos ou funcionários do governo local.\n\nDois pontos indicam aproximadamente uma mina por ano em jade, 128 koku em dinheiro ou 100 dinares em prata — cerca do dobro da renda proporcionada pelo nível anterior. É apropriado para proprietários de imóveis em áreas urbanas degradadas, chefes de gangues, altos funcionários do governo local, artesãos e artistas mortais famosos, investidores comerciais regionais bem-sucedidos ou o estipêndio de um patrício do Reino.\n\nTrês pontos indicam um talento ou menos por ano em jade; 8.000 koku em dinheiro; ou menos de 5 talentes por ano em prata — mais de cinquenta vezes a renda do nível anterior. Este nível de Recursos representa uma participação nos espólios do império. É a renda dos chefes de casas patrícias estabelecidas, grandes cartéis ou príncipes mercantes de guildas, e também é o estipêndio ou renda discricionária usual para Dinastas. Esses personagens geralmente são economias por si só, com comitivas que ajudam a administrar seus ativos e dependem deles para viver. Acima de três pontos, é incomum que uma fortuna seja medida em dinheiro — a maioria dos ricos independentes vincula suas riquezas em prata ou jade real ou de contabilidade.\n\nQuatro pontos indicam uma renda de 4 a 6 talentos por ano em jade; 16.000 a 50.000 koku por ano em dinheiro; ou 20 a 30 talentes por ano em prata. Dinastas bem-sucedidos e patrícios abastados às vezes possuem esse nível de recursos, assim como príncipes mercantes de guildas bem-sucedidos, os senhores catadores mais afortunados, governantes de pequenos estados do Limiar e artesãos mortais com habilidades de valor singular para os Escolhidos — por exemplo, arquitetos de mansões mortais renomados.\n\nCinco pontos indicam uma renda de 12 a 20 tabletes por ano em jade; 96.000 a 160.000 koku por ano em dinheiro; ou 60 a 100 talentes por ano em prata. Os chefes das famílias patrícias mais ricas, dinastas renomados e bem-sucedidos (frequentemente ocupando posições vitais em suas Casas), membros estabelecidos de guildas e os governantes de poderosos reinos do Limiar possuem esse nível de riqueza pessoal.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "concepcao_seletiva",
+      "nome": "Concepção Seletiva",
+      "categoria": "normal",
+      "tipo": "inato",
+      "custosPermitidos": [
+        1
+      ],
+      "descricao": "O personagem desfruta de controle consciente total sobre sua fertilidade, jamais correndo o risco de uma gravidez indesejada . Talvez isso seja resultado de anos de controle corporal e da Essência, uma bênção divina ou simplesmente o benefício de um nascimento afortunado. Ambos os sexos podem suprimir a fertilidade quando desejarem. Personagens femininas podem gastar um ponto de Força de Vontade para garantir a concepção e saberão automaticamente quando estiverem grávidas; personagens masculinos não possuem esse benefício.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "pulmoes_fortes",
+      "nome": "Pulmões Fortes",
+      "categoria": "normal",
+      "tipo": "adquirivel",
+      "custosPermitidos": [
+        1
+      ],
+      "descricao": "O personagem é experiente em prender a respiração por longos períodos, como os famosos mergulhadores de pérolas do Ocidente. Ela pode prender a respiração por (Resistência + Atletismo) minutos antes de começar a sufocar ou se afogar; sob coação, esse tempo aumenta para ([Resistência + Atletismo] x 2) rodadas.",
+      "preRequisitos": [
+        "Atletismo •••"
+      ],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "temperado_pelos_elementos",
+      "nome": "Temperado pelos Elementos",
+      "categoria": "normal",
+      "tipo": "adquirivel",
+      "custosPermitidos": [
+        2
+      ],
+      "descricao": "Devido à sua criação, o personagem sente-se à vontade navegando por um certo ambiente hostil, escolhido ao adquirir este Mérito. O personagem é capaz de atravessar um tipo de terreno difícil (como neve profunda, selva densa ou ruínas destruídas) em velocidade normal. Embora este Mérito possa ser adquirido mais de uma vez, poucos personagens o fazem, pois requer anos de familiaridade íntima para ser cultivado — apenas alguns meses em um pântano ou na tundra são insuficientes para desenvolver tal habilidade.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "resistencia_a_toxinas",
+      "nome": "Resistência a toxinas",
+      "categoria": "normal",
+      "tipo": "adquirivel",
+      "custosPermitidos": [
+        3
+      ],
+      "descricao": "Talvez o personagem seja uma provadora de venenos, ou talvez ele seja simplesmente mais resistente do que a maioria. De qualquer forma, ele adiciona dois dados às rolagens para resistir a venenos.\n\nDesvantagem: O corpo da personagem não consegue distinguir entre toxinas recreativas e intencionais. É muito difícil para ele ficar intoxicada.",
+      "preRequisitos": [
+        "Vigor ou Resistência •••"
+      ],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "camaleao",
+      "nome": "Camaleão",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        3
+      ],
+      "descricao": "O personagem pode mudar a cor e o padrão da sua pele para se camuflar com o ambiente. Ela adiciona um dado aos testes de Furtividade e aos testes de Sobrevivência para caçar. Se ele não estiver vestindo roupas, adicione dois dados.\n\nDesvantagem: Quando o personagem está nervosa ou estressada, ele deve fazer um teste de Força de Vontade (dificuldade 1) para evitar que sua pele mude reflexivamente alguns tons em direção à cor dominante do ambiente, revelando-a como uma provável mutante Wyld.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "garras_presas_cascos_chifres",
+      "nome": "Garras/Presas/Cascos/Chifres",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        1,
+        4
+      ],
+      "descricao": "O personagem adquire alguma forma de armamento natural, geralmente na forma de chifres ou garras e presas curtas, porém afiadas. A versão de um ponto deste Mérito permite que o personagem cause dano letal em vez de dano contundente com golpes decisivos desarmados ou ataques selvagens decisivos durante uma luta agarrada (este último representa as presas). A versão de quatro pontos deste Mérito concede armas naturais maiores e mais perigosas, permitindo que os golpes ou mordidas do personagem causem dano letal ao atacar com força e sejam tratados como uma arma média para ataques fulminantes.\n\nDesvantagem: O armamento natural concedido pela versão de quatro pontos deste Mérito impõe uma penalidade de -1 em disfarce em tentativas.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "sentido_aprimorado",
+      "nome": "Sentido Aprimorado",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        3
+      ],
+      "descricao": "Um dos sentidos do personagem torna-se extraordinariamente aguçado, como o de um animal selvagem. O personagem adiciona dois dados a todos os testes de Percepção relacionados a esse sentido.\n\nDesvantagem: Essa característica é fisicamente evidente em características como cor ou formato incomum dos olhos, orelhas grandes, nariz alongado ou alguma outra mutação semelhante.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "cura_exaltado",
+      "nome": "Cura Exaltado",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        5
+      ],
+      "descricao": "O personagem se cura rápida e perfeitamente, sem risco de complicações persistentes. Apenas os ferimentos mais graves deixam qualquer vestígio de cicatriz, e a cura do personagem é como uma forma lenta de regeneração, reparando impecavelmente músculos e nervos seccionados, ligamentos rompidos e ossos quebrados. A menos que uma parte do corpo seja seccionada ou destruída , ele é restaurada à sua perfeita condição de funcionamento assim que curada. Finalmente, os ferimentos do personagem nunca infeccionam . Para mais detalhes sobre a cura de ferimentos, veja a página 173. Todos os Exaltados possuem este Mérito sem custo. Espíritos também possuem este Mérito universalmente, assim como o Povo das Fadas.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "membros_extras",
+      "nome": "Membros extras",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        3
+      ],
+      "descricao": "O personagem possui mais membros do que o normal — geralmente na forma de braços ou pernas extras, mas manifestações mais estranhas são possíveis, como tentáculos preênseis ou até mesmo uma cabeça extra. Em todos os casos, o resultado é o mesmo: quando o personagem realiza uma sequência de golpes, uma de suas ações (à escolha do jogador) sofre apenas uma penalidade de -1 em vez de -3.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "branquias",
+      "nome": "Brânquias",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        0,
+        3
+      ],
+      "descricao": "O personagem possui brânquias visíveis em alguma parte do corpo e pode respirar confortavelmente debaixo d'água. A versão gratuita deste Mérito faz com que os pulmões do personagem se atrofiem, impedindo-o de respirar ar; fora d'água, ele começa a sufocar após (Vigor x 5) minutos. A versão com três pontos torna o personagem anfíbio, capaz de respirar igualmente bem acima ou abaixo da superfície da água.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "corpo_envenenado",
+      "nome": "Corpo Envenenado",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        1,
+        2,
+        5
+      ],
+      "descricao": "O corpo do personagem é tóxico de alguma forma. Esse veneno é equivalente ao veneno de cobra (p. 234), e o personagem é naturalmente imune à sua própria toxina.\n\nPor um ponto, o sangue do personagem é venenoso e precisa ser ingerido para causar dano.\n\nPara dois pontos, todos os fluidos corporais do personagem são venenosos e podem ser transmitidos por ingestão ou contato íntimo.\n\nPor cinco pontos, o sangue do personagem se torna um veneno de contato. Qualquer um que infligir dois ou mais níveis de dano letal ao personagem com um único ataque, ou que o agarrar quando ele já tiver sofrido dano letal durante a cena, deve fazer um teste de dificuldade 3 (Inteligência + Esquiva) para evitar ser envenenado.\n\nDesvantagem: Essa vantagem tende a ser sua própria desvantagem, já que não pode ser desativada.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "espinhos",
+      "nome": "Espinhos",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        5
+      ],
+      "descricao": "O corpo da personagem é coberto de espinhos afiados, à semelhança de um porco-espinho. Seus ataques decisivos desarmados infligem dano letal; seu golpe fulminante devastador se torna uma arma média e, da mesma forma, inflige dano letal quando usado decisivamente; e qualquer um que tente iniciar um agarrar contra o personagem perde automaticamente um ponto de Iniciativa por rodada de luta agarrada.\n\nDesvantagem: As tentativas de disfarce sofrem uma penalidade de -5, e o contato físico próximo com outras pessoas — de qualquer tipo — torna-se, na melhor das hipóteses, difícil.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "sutileza",
+      "nome": "Sutileza",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        2
+      ],
+      "descricao": "Este benefício pode ser adquirido quantas vezes desejar.\n\nA sutileza deve ser anexada a outro Mérito Sobrenatural já adquirido; ele torna esse Mérito não óbvio para os observadores quando não está em uso. Exemplos podem incluir garras totalmente retráteis, membros extras que se dobram em bolsas ou cavidades facilmente escondidas no corpo do personagem, ou guelras que se fecham a ponto de ficarem invisíveis quando não estão em uso. O Selvagem raramente é benevolente o suficiente para conceder este Mérito àqueles que sentem seu toque; ele é mais comumente concedido como uma bênção do Povo das Fadas aos seus servos humanos, embora alguns feiticeiros também tenham estudado a arte de infundir sutileza nas obras do Selvagem.",
+      "preRequisitos": [
+        "Outro Mérito Sobrenatural fisicamente evidente, como garras, espinhos ou membros extras."
+      ],
+      "podeSerAdquiridoNovamente": true
+    },
+    {
+      "id": "cauda",
+      "nome": "Cauda",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        1,
+        2
+      ],
+      "descricao": "O personagem possui uma cauda, que pode ser escamosa, peluda, com tufos ou carnuda como a de um rato. Por um ponto, a cauda adiciona dois dados às tentativas de manter o equilíbrio. Por dois pontos, a cauda também se torna preênsil e pode funcionar como um membro totalmente funcional, embora sofra uma penalidade de -1 na mão não dominante. A cauda pode ser escondida sob as roupas, embora isso anule seus benefícios.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "taumaturgo",
+      "nome": "Taumaturgo",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        4
+      ],
+      "descricao": "O personagem é capaz de usar uma pequena magia específica, possivelmente como parte de uma tradição antiga, possivelmente como um prodígio único no mundo. Ninguém sabe ao certo por que um indivíduo é dotado de taumaturgia enquanto dezenas de milhares não o são; talvez o personagem seja o sétimo filho de um sétimo filho, tenha sido abençoado no ventre por um deus poderoso ou simplesmente tenha nascido sob uma confluência de signos auspiciosos (ou inauspiciosos...). Para mais informações sobre taumaturgia, veja as páginas 490-491. Personagens exaltados que escolherem o talento Encantar Feitiçaria do Círculo Terrestre (veja as páginas 360-361) recebem este Mérito sem custo.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "couro_incomum",
+      "nome": "Couro Incomum",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "descricao": "Uma das mutações mais comuns concedidas pelo Wyld, este Mérito concede um couro excepcionalmente resistente. O personagem ganha pontos adicionais de absorção natural iguais ao valor do Mérito. Um ou dois pontos geralmente representam pelos, penas, folhas ou escamas leves. Três pontos indicam uma carne muito além do normal para um humano — a pele coriácea de um rinoceronte ou crocodilo, ou a carapaça de um inseto, talvez. Quatro ou cinco pontos concedem um couro blindado que pode ser feita de armadura óssea, uma carapaça de obsidiana ou até mesmo um corpo de pedra viva.\n\nDesvantagem: O personagem obviamente tem a aparência de uma mutante Wyld, com todo o estigma que acompanha tal condição, e sofre uma penalidade igual à sua classificação neste Mérito em todos os testes de disfarce para se passar por normal.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "venenoso",
+      "nome": "Venenoso",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        3,
+        4
+      ],
+      "descricao": "O corpo do personagem possui um reservatório de veneno mortal, que pode ser aplicado através de ataques naturais. A versão padrão deste Mérito exige que o personagem também possua algum outro Mérito ou poder que lhe conceda armamento natural capaz de infligir dano letal, como garras, presas, espinhos, um ferrão na cauda ou similares. Isso permite que o personagem envenene seus inimigos com um ataque decisivo bem-sucedido até (Vigor / 2, arredondado para cima) vezes por dia.\n\nAlternativamente, se o personagem não possuir tal habilidade natural com armas , este Mérito permite que ele cuspa um veneno de contato como uma manobra de dificuldade 3 (veja p. 199), mirando como se fosse uma arma de arremesso. O sucesso envenena o alvo. Este ataque pode ser realizado até (Vigor / 2, arredondando para cima) vezes por dia.\n\nPor quatro pontos, um personagem com armamento letal natural apropriado pode envenenar seus ataques e cuspir veneno. Ambos os ataques utilizam a mesma quantidade limitada de veneno. Independentemente disso, todo o veneno fornecido por este Mérito possui as mesmas características do veneno de cobra.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "caminhar_na_parede",
+      "nome": "Caminhar na parede",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        4
+      ],
+      "descricao": "O personagem adquire a capacidade de se fixar em paredes e até mesmo em tetos, bem como de caminhar ou rastejar sobre eles. Tetos e superfícies inerentemente lisas que oferecem pouca aderência (como o vidro de Chiaroscuro) contam como terreno difícil.\n\nDesvantagem: As mãos e os pés do personagem tornam-se visivelmente não humanos, podendo apresentar ventosas adesivas, pequenas garras para escalada ou esporas semelhantes às de um lagarto.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "asas",
+      "nome": "Asas",
+      "categoria": "sobrenatural",
+      "tipo": "inato",
+      "custosPermitidos": [
+        3,
+        5
+      ],
+      "descricao": "Com três pontos, este Mérito concede ao personagem patágio ou outras asas planadoras fracas. O personagem tem pouca capacidade de manobrar no ar e não consegue ganhar altura de forma eficaz, mas pode cobrir distâncias enormes com um salto, especialmente de grandes altitudes — efetivamente, ele pode percorrer duas faixas de alcance para a frente enquanto plana antes de ter que descer uma faixa de alcance, e, contanto que tenha espaço para planar até o chão, não precisa temer dano por queda.\n\nA versão de cinco pontos deste Mérito concede asas poderosas (ou meios equivalentes de voo, como bolsas cheias de gás) e voo verdadeiro e funcional. Um personagem voador em combate não se move mais rápido que outros personagens; suas vantagens residem na capacidade de transpor a maioria dos terrenos difíceis com facilidade e na grande dificuldade que muitos combatentes de curto alcance enfrentam para alcançá-lo e atacá-lo.\n\nDesvantagem: Além do estigma da mutação, o personagem sofre uma penalidade de -4 em tentativas de se disfarçar como um indivíduo sem asas. Ações realizadas no ar que exigem qualquer grau de sutileza ou precisão (incluindo ataques em combate) sofrem uma penalidade de -3; sacar um arco ou brandir uma lança sem atrapalhar as próprias asas é mais difícil do que parece!",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false
+    },
+    {
+      "id": "bem_nascido",
+      "nome": "Bem-Nascido",
+      "categoria": "normal",
+      "tipo": "inato",
+      "custosPermitidos": [
+        2
+      ],
+      "descricao": "O personagem possui uma linhagem excepcionalmente refinada. O sangue dos Dragões corre com força em suas veias e nas de sua descendência. Seus filhos têm uma probabilidade significativamente maior de se Exaltarem como Sangue de Dragão do que os filhos de personagens que não possuem este Mérito. Essa é uma característica muito valorizada no Reino e em toda a Criação. Sempre que ele realizar uma jogada de negociação na qual sua linhagem seja um fator relevante — como ao negociar um contrato de casamento dinástico ou ao tratar com as famílias nobres de Nechara —, ele adiciona um sucesso automático. Por outro lado, ele ganha +1 em Perseverança contra negociações nesse contexto. Nenhum desses efeitos conta como um bônus proveniente de Encantos.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false,
+      "restritoAoTemplate": "SangueDeDragao"
+    },
+    {
+      "id": "sobrenome_de_renome",
+      "nome": "Sobrenome de Renome",
+      "categoria": "normal",
+      "tipo": "adquirivel",
+      "custosPermitidos": [
+        2
+      ],
+      "descricao": "Muitos Exaltados e outras grandes figuras são conhecidos por toda a Criação por seus títulos e epítetos — tanto ou até mais do que por seus nomes. Tepet Ejava é a Rosa Negra; Yurgen Kaneko é o Touro do Norte; Sha’a Oka é o Leão Negro. Este Mérito representa uma personagem cujo título carrega grande peso em suas interações com os outros. Ao adquirir este Mérito, o jogador deve especificar tanto o sobrenome de renome da personagem quanto a reputação que ele carrega. Uma vez por história, quando ele obtiver um feito de influência social que se beneficie dessa reputação, ele pode aumentar a classificação do feito em um ponto.",
+      "preRequisitos": [
+        "Influência 1+"
+      ],
+      "podeSerAdquiridoNovamente": false,
+      "restritoAoTemplate": "SangueDeDragao"
+    },
+    {
+      "id": "sangue_do_coracao",
+      "nome": "Sangue do Coração",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "descricao": "Este Mérito representa um Lunar que possui várias formas animais no momento da criação do personagem. Um ponto concede as formas de cerca de seis animais relativamente fracos — comparáveis a Familiares de um ponto (Exaltado, p. 161) — e de dois ou três animais mais fortes — comparáveis a Familiares de dois pontos — provenientes de uma única região.\n\nDois pontos concedem as formas de uma a duas dúzias de animais mais fracos, seis animais mais fortes e um ou dois animais extremamente poderosos — comparáveis a Familiares de três pontos — provenientes de uma única região.\n\nTrês pontos oferecem os mesmos benefícios de dois pontos, além das formas de dois a três animais adicionais, sejam eles mais fortes ou extremamente poderosos.\n\nPor um ponto adicional, o Lunar pode selecionar formas animais provenientes de qualquer número de regiões.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false,
+      "restritoAoTemplate": "Lunar"
+    },
+    {
+      "id": "faces_roubadas",
+      "nome": "Faces Roubadas",
+      "categoria": "normal",
+      "tipo": "historia",
+      "custosPermitidos": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "descricao": "Este Mérito representa um Lunar que assumiu formas humanas no momento da criação do personagem. Cada ponto pode fornecer cinco formas humanas sem posição social de destaque — um camponês, um bandido, um estivador, um menino de rua, etc. — ou uma única forma humana cujo status social, econômico ou político constitua um recurso valioso; por exemplo, um Dinasta, um agente da Guilda, um ancião de clã, a filha favorita da rainha, etc.",
+      "preRequisitos": [],
+      "podeSerAdquiridoNovamente": false,
+      "restritoAoTemplate": "Lunar"
+    }
+  ]
+}

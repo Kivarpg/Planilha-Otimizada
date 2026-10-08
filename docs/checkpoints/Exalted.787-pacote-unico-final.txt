@@ -1,0 +1,27 @@
+EXALTED.787 — PACOTE UNICO DE CONCLUSAO
+Base: Exalted.786, compilada com sucesso segundo o usuario.
+Objetivo: agrupar todas as tarefas pendentes em uma unica compilacao de validacao, sem builds intermediarios.
+Politica: commits incrementais com [skip ci]. Nao alterar settings.gradle.kts nem executar GitHub Actions sem comando explicito.
+
+ALTERACOES JA REALIZADAS
+- 1d78b655: EncounterNpcCard.kt — invalida gavetas de Encantos quando ViewModel muda; invalida Feiticos disponiveis quando ViewModel ou Tipo de Exaltado muda.
+- 8b878fc2: EncounterNpcCacheContractTest.kt — contratos de regressao para as chaves de cache.
+
+CRITERIOS DE ACEITE ANTES DE SOLICITAR COMPILACAO
+[ ] Aba 11: revisar e validar criacao, XP, requisitos e cadeias de Encantos para Solar, Sangue de Dragao e Lunar; comparacao entre lote unico e lotes sucessivos.
+[ ] Aba 11: verificar gavetas por Habilidade/Atributo, diferenciacao visual de titulos, Feitico inicial gratis, troca antes do XP, bloqueio depois do XP, nomes sem duplicacao.
+[ ] Aba 8: validar abertura de arvores, pre-requisitos, selecao do menor requisito, cache e long press.
+[ ] Abas 5 e 9: verificar cortes, vitalidade e controles.
+[ ] Todas as abas existentes: auditoria especifica de textos, espacamentos, botoes sobrepostos e pop-ups.
+[ ] Mapas: validar regua/escala em km na tela maximizada e registrar calibragem.
+[ ] Animacao inicial: validar simbolos ocultos ate queda e toque para pular.
+[ ] Validar nomes, versao ZIP/APK e arquivos sem pasta raiz interna.
+[ ] Revisar regressao/consistencia das alteracoes e testes; CI somente na compilacao final autorizada.
+[ ] Testes reais em dispositivo depois da compilacao (nao podem ser declarados concluidos por revisao estatica).
+
+OBSERVACOES
+- Itens de interface e aparelho exigem validacao visual/dispositivo, nao inferir sucesso apenas do codigo.
+- A lista e um criterio de aceite, nao evidencia de que todos os itens foram concluídos.
+- Percentual de completude nao foi recalculado por auditoria; nao usar 80% como medicao verificada.
+
+STATUS: EM EXECUCAO. NAO PRONTO PARA COMPILAR.

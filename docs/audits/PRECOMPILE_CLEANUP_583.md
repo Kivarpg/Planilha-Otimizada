@@ -1,0 +1,1 @@
+Exalted.583: limpeza pré-compilação sobre o artefato real; contrato Android 583 reconciliado; gate smartphone reaplicado; prefetch especulativo residual removido; caches/resíduos e documentos históricos de raiz limpos; regras e qualidade preservadas.

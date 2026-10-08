@@ -1,0 +1,33 @@
+EXALTED.784 — CHECKPOINT PRE-COMPILACAO
+Base: Exalted.783, compilacao informada como bem-sucedida pelo usuario.
+Politica: nenhuma compilacao ou mudanca de versao sem autorizacao explicita.
+
+ABA 8 — ENCANTOS
+- 4a8b054a: chaves de remember para catalogo de arvores, resolvedor de pre-requisitos, cache de arvores e catalogo de busca agora incluem viewModel.
+- 0bcbb61b: atualiza teste de contrato da chave do cache e acrescenta verificacoes de invalidacao de dados em troca de ViewModel.
+- Motivo: evitar reutilizar dados da instancia antiga quando o Tipo de Exaltado permanece o mesmo.
+
+REVISOES PENDENTES
+- Executar testes unitarios no proximo build autorizado; ainda nao foram executados.
+- Revisar desempenho de construcao e XP dos NPCs Solar, Sangue de Dragao e Lunar, com equivalencia de resultados.
+- Revisar UI das abas 5, 9, 11 e demais, incluindo sobreposicoes, textos cortados e pop-ups.
+- Verificar comportamento em dispositivo real apos compilacao; CI nao prova estabilidade no celular.
+- Preservar a correspondencia Exalted.N.zip e Exalted.N.apk.
+
+STATUS: alteracoes versionadas com [skip ci], build nao iniciado.
+
+RODADA 02 — ABA 11 NOMES CHINESES
+- e4b07323: normalizarReduplicacaoChinesa passa a reconhecer duas palavras identicas separadas por espacos, preservando nomes compostos distintos e normalizacao antiga sem espacos.
+- d2e21c48: testes de Ying Ying, Yuan Yuan, Xion Xion, Ming Yuan.
+- Sem alteracoes na mecanica de XP; sem compilacao ou testes executados nesta rodada.
+
+RODADA 03 — EFICIENCIA E VERIFICACAO ESTATICA
+- 3f34f778: sorteio inicial de Feiticos usa Set de nomes normalizados para evitar comparacoes O(candidatos x feiticos), preservando ordem e chamadas Random.
+- 07c55cd6: regressao quando todos os Feiticos terrestres ja existem no NPC, sem duplicacao no fallback.
+- e0f718e0: corrigida assertiva obsoleta do teste de cache da Aba 8 apos a mudanca para chave incluindo viewModel. A assertiva antiga procurava a chave anterior e falharia em CI.
+- Testes nao executados; compilacao nao autorizada.
+
+RODADA 04 — FALLBACK DE FEITICO INICIAL
+- 91d4d8ad: indice de definicoes por nome normalizado para fallback de Feitico inicial; mantem a primeira definicao do catalogo para nomes equivalentes e a ordem dos Feiticos possuidos.
+- be06fa39: teste de regressao para duas definicoes com mesmo nome normalizado, preservando o Feitico existente e a escolha canonica.
+- Analise de codigo realizada; testes ainda nao executados em CI nesta versao.

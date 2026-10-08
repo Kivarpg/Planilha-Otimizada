@@ -1,0 +1,40 @@
+EXALTED.781 — PACOTE UNICO DE CONSOLIDACAO
+Base compilada informada pelo usuario: Exalted.780.
+OBJETIVO: reunir tarefas restantes num unico checkpoint para UMA compilacao planejada. Nao iniciar CI ate autorizacao expressa.
+ESCOPO:
+1. Aba 11 Solar: desempenho da geracao, expansao de XP, validacao de equivalencia e pre-requisitos.
+2. Aba 11 Sangue de Dragao: Aspectos, Assinaturas, caches, filtros, custos XP e testes.
+3. Aba 11 Lunar: Quimera, traits, indices, rotas, XP e testes de regressao.
+4. Aba 11 interface/funcionalidade: gavetas por Habilidade/Atributo e cores dos titulos; feitiço inicial automatico ao gerar NPC com circulo; permitir Gerenciar Feitico inicial antes de XP e ocultar depois de XP; foco e nomes duplicados.
+5. Aba 8: abertura/carregamento de arvores de Encantos, long press e ordem de requisitos.
+6. Aba 5: textos truncados, botoes e controles.
+7. Aba 9: colunas e trilha de vitalidade.
+8. Todas as abas: sobreposicao de botoes, pop-ups, fontes, espacamentos, identidade visual aprovada, mapas, animacao e usabilidade.
+9. Estabilidade: testes de unidade/regressao, revisao de Compose, verificacao em aparelho quando disponivel; nao confundir compilacao com teste em dispositivo.
+10. Limpeza/documentacao: remover codigo morto comprovado, consolidar especificacao e checkpoints, verificar nomes ZIP/APK.
+CRITERIOS DE CONCLUSAO: cada mudanca rastreada por commit [skip ci], testes acrescentados quando aplicavel, revisao final do conjunto; somente depois solicitar autorizacao para compilar Exalted.781.
+RESTRICOES: nao modificar regras de negocio sem autorizacao; manter prioridades equivalentes dos tres tipos; nao compilar pequenas alteracoes; compilacao final pode exigir nova tentativa se falhar.
+STATUS INICIAL: plano registrado; itens ainda nao verificados nem implementados nesta versao. Percentuais anteriores eram estimativas, nao auditoria.
+
+EXECUCAO PARCIAL 01 - FEITICARIA ABA 11
+37ef77c2: nao percorre circulos se NPC nao possui Encantos.
+ebde1203: testes de idempotencia da concessao inicial, ausencia de circulo e bloqueio apos XP.
+a5ce5b05: janela de gerenciamento de Feitico inicial so aparece enquanto elegivel, inclusive se XP mudar durante a janela aberta.
+STATUS: alteracoes registradas sem CI. Testes ainda nao executados. Demais frentes do pacote unico continuam pendentes; NAO compilar ate autorizacao explicita.
+
+EXECUCAO PARCIAL 02
+35f26c8: teste de reproducibilidade do sorteio do feitico inicial com a mesma semente e duas opcoes.
+Revisao visual: EncounterNpcCard.kt ja distingue titulos de gavetas de Encantos (accentBright, titleMedium, bold) dos nomes dos Encantos (onSurface, bodyMedium).
+Uma tentativa de otimizar sorteio foi revertida por alterar consumo do Random; algoritmo final preservado.
+PENDENTE: auditoria abrangente de interface e outras abas, validacao de testes e compilacao; nao anunciar pacote pronto antes dessas verificacoes.
+
+EXECUCAO PARCIAL 03 - ABA 8 E ABA 5
+0be402c8: testes da arvore de Encantos para gaveta vazia e desempate deterministico por ID, preservando o menor requisito.
+Aba 5 CombatTab.kt: titulo 'Contador de iniciativa' ja admite duas linhas e largura integral; nenhuma mudanca visual feita sem evidencia de defeito.
+Aba 8 AbilityCharmTreeDialog.kt: arvore usa renderizador unico e separa Artes Marciais; nenhuma alteracao mecanica necessaria nesta revisao.
+PENDENTE: auditoria abrangente das abas restantes, testes executados, validacao em dispositivo e avaliacao final de compilacao. Sem CI.
+
+EXECUCAO PARCIAL 04 - MAPAS
+f8d4f581: testes de calibragem para zoom/viewport invalidos e equivalencia de escala visual em diferentes larguras e zooms.
+Revisao: MapTab.kt ja centraliza contrato de calibracao em MAP_REFERENCE_PX/KM e usa screenPixelsToMapKm no modo tela cheia.
+Nao houve compilacao ou execucao de testes nesta rodada. Pacote unico continua aberto: auditoria das demais abas, desempenho e validacao integrada pendentes.

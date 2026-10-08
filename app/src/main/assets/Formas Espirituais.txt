@@ -1,0 +1,618 @@
+# ================================================================================
+LISTAS DE ANIMAIS (PORTUGUÊS / INGLÊS) POR CATEGORIA DE PESO
+(Sem referências geográficas e com nomes simplificados sem adjetivos)
+
+================================================================================
+1. ANIMAIS COM MAIS DE 2 TONELADAS (2.000 KG)
+================================================================================
+
+  1. Blue Whale - Baleia-azul
+  2. Fin Whale - Baleia-comum
+  3. Right Whale - Baleia-franca
+  4. Sperm Whale - Cachalote
+  5. Humpback Whale - Baleia-jubarte
+  6. Sei Whale - Baleia-seil
+  7. Gray Whale - Baleia-cinzenta
+  8. Minke Whale - Baleia-minke
+  9. Pygmy Right Whale - Baleia-franca-pigmeia
+ 10. Hippopotamus - Hipopótamo
+ 11. White Rhinoceros - Rinoceronte-branco
+ 12. Black Rhinoceros - Rinoceronte-negro
+ 13. Ocean Sunfish - Peixe-lua
+ 14. Whale Shark - Tubarão-baleia
+ 15. Basking Shark - Tubarão-peregrino
+ 16. Great White Shark - Tubarão-branco
+ 17. Manta Ray - Arraia-manta
+ 18. Colossal Squid - Lula-colossal
+ 19. Giant Squid - Lula-gigante
+ 20. Megamouth Shark - Tubarão-boca-grande
+ 21. Tiger Shark - Tubarão-tigre
+ 22. False Killer Whale - Falsa-orca
+ 23. Orca - Orca
+ 24. Sawfish - Peixe-serra
+ 25. Beluga Sturgeon - Esturjão-beluga
+ 26. Woolly Mammoth - Mamute-lanoso
+ 27. Mastodon - Mastodonte
+ 28. Steppe Mammoth - Mamute-das-estepes
+ 29. Straight-tusked Elephant - Elefante-de-presas-retas
+ 30. Deinotherium - Deinotério
+ 31. Gomphothere - Gonfotério
+ 32. Paraceratherium - Paraceratério
+ 33. Diprotodon - Diprotodonte
+ 34. Woolly Rhinoceros - Rinoceronte-lanudo
+ 35. Elasmotherium - Elasmotério
+ 36. Titanoboa - Titanoboa
+ 37. Megalodon - Megalodonte
+ 38. Basilosaurus - Basilossauro
+ 39. Mosasaurus - Mossassauro
+ 40. Liopleurodon - Liopleurodonte
+ 41. Pliosaurus - Pliossauro
+ 42. Kronosaurus - Kronossauro
+ 43. Shonisaurus - Shonissauro
+ 44. Shastasaurus - Shastassauro
+ 45. Argentinosaurus - Argentinossauro
+ 46. Patagotitan - Patagotitan
+ 47. Dreadnoughtus - Dreadnoughtus
+ 48. Sauroposeidon - Sauroposeidon
+ 49. Brachiosaurus - Braquiossauro
+ 50. Apatosaurus - Apatossauro
+ 51. Diplodocus - Diplodoco
+ 52. Supersaurus - Superssauro
+ 53. Titanosaurus - Titanossauro
+ 54. Camarasaurus - Camarassauro
+ 55. Giraffatitan - Giraffatitan
+ 56. Tyrannosaurus Rex - Tiranossauro-rex
+ 57. Giganotosaurus - Giganotossauro
+ 58. Carcharodontosaurus - Carcharodontossauro
+ 59. Spinosaurus - Espinossauro
+ 60. Mapusaurus - Mapussauro
+ 61. Tarbosaurus - Tarbossauro
+ 62. Triceratops - Tricerátops
+ 63. Torosaurus - Torossauro
+ 64. Ankylosaurus - Anquilossauro
+ 65. Stegosaurus - Estegossauro
+ 66. Therizinosaurus - Terizinossauro
+ 67. Iguanodon - Iguanodonte
+ 68. Edmontosaurus - Edmontossauro
+ 69. Parasaurolophus - Parasaurolofo
+ 70. Corythosaurus - Coritossauro
+ 71. Lambeosaurus - Lambeossauro
+ 72. Pachyrhinosaurus - Paquirrinossauro
+ 73. Styracosaurus - Estiracossauro
+ 74. Alamosaurus - Alamossauro
+ 75. Amargasaurus - Amargassauro
+ 76. Saltasaurus - Saltassauro
+ 77. Euoplocephalus - Euoplocéfalo
+ 78. Nodosaurus - Nodossauro
+ 79. Barosaurus - Barossauro
+ 80. Brontosaurus - Brontossauro
+ 81. Cetiosaurus - Cetiossauro
+ 82. Omeisaurus - Omeissauro
+ 83. Vulcanodon - Vulcanodonte
+ 84. Plateosaurus - Plateossauro
+ 85. Melanorosaurus - Melanorossauro
+ 86. Tenontosaurus - Tenontossauro
+ 87. Ouranosaurus - Ouranossauro
+ 88. Probactrosaurus - Probactrossauro
+ 89. Bactrosaurus - Bactrossauro
+ 90. Gryposaurus - Gripossauro
+ 91. Kritosaurus - Kritossauro
+ 92. Prosaurolophus - Prossaurolofo
+ 93. Saurolophus - Saurolofo
+ 94. Charonosaurus - Charonossauro
+ 95. Olorotitan - Olorotitan
+ 96. Brachylophosaurus - Braquilofossauro
+ 97. Maiasaura - Maiassaura
+ 98. Telmatosaurus - Telmatossauro
+ 99. Talarurus - Talaruro
+100. Pinacosaurus - Pinacossauro
+101. Saichania - Saichania
+102. Tarchia - Tarchia
+103. Crichtonsaurus - Crichtonssauro
+104. Polacanthus - Polacanto
+105. Gastonia - Gastonia
+106. Gargoyleosaurus - Gargoilossauro
+107. Sauropelta - Sauropelta
+108. Silvisaurus - Silvissauro
+109. Gobisaurus - Gobissauro
+110. Dyoplosaurus - Dioplossauro
+111. Scolosaurus - Escolossauro
+112. Platypterygius - Platipterígio
+113. Temnodontosaurus - Temnodontossauro
+114. Ophthalmosaurus - Oftalmossauro
+115. Brachauchenius - Bracauquênio
+116. Megacephalosaurus - Megacefalossauro
+117. Baryonyx - Barionix
+118. Suchomimus - Sucomimo
+119. Acrocanthosaurus - Acrocantossauro
+120. Saurophaganax - Saurofaganax
+121. Torvosaurus - Torvossauro
+122. Daspletosaurus - Daspletossauro
+123. Gorgosaurus - Gorgossauro
+124. Zhuchengtyrannus - Zhuchengtyrannus
+125. Qianzhousaurus - Qianzhousauro
+126. Rajasaurus - Rajassauro
+127. Majungasaurus - Majungassauro
+128. Carnotaurus - Carnotauro
+129. Ekrixinatosaurus - Ekrixinatossauro
+130. Pycnonemosaurus - Picnonemossauro
+131. Rugops - Rugops
+132. Abelisaurus - Abelissauro
+133. Chasmosaurus - Chasmossauro
+134. Pentaceratops - Pentacerátops
+135. Anchiceratops - Anquicerátops
+136. Arrhinoceratops - Arrinocerátops
+137. Einiosaurus - Einiossauro
+138. Achelousaurus - Aqueloussauro
+139. Centrosaurus - Centrossauro
+140. Xenoceratops - Xenocerátops
+141. Medusaceratops - Medusacerátops
+142. Diabloceratops - Diablocerátops
+143. Machairoceratops - Machairocerátops
+144. Nasutoceratops - Nasutocerátops
+145. Avaceratops - Avacerátops
+146. Kosmoceratops - Kosmocerátops
+147. Vagaceratops - Vagacerátops
+148. Coahuilaceratops - Coahuilacerátops
+149. Ojoceratops - Ojocerátops
+150. Titanoceratops - Titanocerátops
+151. Mojoceratops - Mojocerátops
+152. Bravoceratops - Bravocerátops
+153. Regaliceratops - Regalicerátops
+154. Wendiceratops - Wendicerátops
+155. Yehuecauhceratops - Yehuecauhcerátops
+156. Furcatoceratops - Furcatocerátops
+157. Menefeeceratops - Menefeecerátops
+158. Terminoceratops - Terminocerátops
+159. Stellasaurus - Stellassauro
+160. Spiclypeus - Spiclypeus
+161. Lokiceratops - Lokicerátops
+162. Bustingorrytitan - Bustingorrytitan
+163. Choconsaurus - Choconssauro
+164. Rinconsaurus - Rinconssauro
+165. Muyelensaurus - Muyelenssauro
+166. Overosaurus - Overossauro
+167. Bonitasaura - Bonitassaura
+168. Antarctosaurus - Antarctossauro
+169. Rocasaurus - Rocassauro
+170. Epachthosaurus - Epactossauro
+171. Campylodoniscus - Campylodoniscus
+172. Trigonosaurus - Trigonossauro
+173. Baurutitan - Baurutitan
+174. Uberabatitan - Uberabatitan
+175. Gondwanatitan - Gondwanatitan
+176. Aeolosaurus - Aeolossauro
+177. Maxakalisaurus - Maxakalissauro
+178. Adamantisaurus - Adamantissauro
+179. Tapuiasaurus - Tapuiassauro
+180. Lirainosaurus - Lirainossauro
+181. Ampelosaurus - Ampelossauro
+182. Atsinganosaurus - Atsinganossauro
+183. Lohuecotitan - Lohuecotitan
+184. Paludititan - Paludititan
+185. Transylvanosaurus - Transylvanossauro
+186. Mamenchisaurus - Mamenquissauro
+187. Shunosaurus - Shunossauro
+188. Datousaurus - Datoussauro
+189. Bellusaurus - Bellussauro
+190. Janenschia - Janenschia
+191. Dicraeosaurus - Dicraeossauro
+192. Lingwulong - Lingwulong
+193. Amargatitanis - Amargatitanis
+194. Zapalasaurus - Zapalassauro
+195. Cathartesaura - Cathartessaura
+196. Limaysaurus - Limayssauro
+197. Nopcsaspondylus - Nopcsaspondylus
+198. Rayososaurus - Rayosossauro
+199. Rebbachisaurus - Rebbachissauro
+200. Demandasaurus - Demandassauro
+
+================================================================================
+2. ANIMAIS DE ATÉ DUAS TONELADAS (DE 500 G A 2.000 KG)
+================================================================================
+
+  1. Lion - Leão
+  2. Tiger - Tigre
+  3. Jaguar - Onça
+  4. Leopard - Leopardo
+  5. Cougar - Suçuarana
+  6. Snow Leopard - Leopardo-das-neves
+  7. Cheetah - Guepardo
+  8. Bear - Urso
+  9. Panda - Panda
+ 10. Wolf - Lobo
+ 11. Coyote - Coiote
+ 12. Dingo - Dingo
+ 13. Jackal - Chacal
+ 14. Fox - Raposa
+ 15. Hyena - Hiena
+ 16. Aardwolf - Lobo-da-terra
+ 17. Moose - Alce
+ 18. Deer - Veado
+ 19. Reindeer - Rena
+ 20. Roe Deer - Corça
+ 21. Fallow Deer - Gamo
+ 22. Pronghorn - Antilocapra
+ 23. Boar - Javali
+ 24. Warthog - Facocero
+ 25. Peccary - Cateto
+ 26. Camel - Camelo
+ 27. Dromedary - Dromedário
+ 28. Llama - Lhama
+ 29. Alpaca - Alpaca
+ 30. Guanaco - Guanaco
+ 31. Vicuña - Vicunha
+ 32. Cow - Vaca
+ 33. Ox - Boi
+ 34. Yak - Iaque
+ 35. Zebu - Zebu
+ 36. Goat - Cabra
+ 37. Ibex - Íbex
+ 38. Sheep - Ovelha
+ 39. Mouflon - Muflão
+ 40. Chamois - Camurça
+ 41. Impala - Impala
+ 42. Springbok - Springbok
+ 43. Antelope - Antílope
+ 44. Kudu - Kudu
+ 45. Nyala - Niala
+ 46. Bushbuck - Pongo
+ 47. Topi - Topi
+ 48. Hartebeest - Hartebeest
+ 49. Wildebeest - Gnu
+ 50. Okapi - Okapi
+ 51. Donkey - Jumento
+ 52. <selection-tag>Horse - Cavalo</selection-tag>
+ 53. Tapir - Anta
+ 54. Dugong - Dugongo
+ 55. Seal - Foca
+ 56. Sea Otter - Lontra-marinha
+ 57. Otter - Lontra
+ 58. Wolverine - Carcaju
+ 59. Honey Badger - Ratel
+ 60. Skunk - Cangambá
+ 61. Raccoon - Guaxinim
+ 62. Ringtail - Bassarisco
+ 63. Coati - Quati
+ 64. Kinkajou - Jequitirana
+ 65. Chimpanzee - Chimpanzé
+ 66. Bonobo - Bonobo
+ 67. Mandrill - Mandril
+ 68. Gelada - Gelada
+ 69. Monkey - Macaco
+ 70. Howler Monkey - Bugio
+ 71. Ostrich - Avestruz
+ 72. Emu - Emu
+ 73. Rhea - Ema
+ 74. Penguin - Pinguim
+ 75. Eagle - Águia
+ 76. Albatross - Albatroz
+ 77. Swan - Cisne
+ 78. Komodo Dragon - Dragão-de-komodo
+ 79. Anaconda - Sucuri
+ 80. Python - Píton
+ 81. Boa - Jiboia
+ 82. Cobra - Cobra
+ 83. Mamba - Mamba
+ 84. Bushmaster - Surucucu
+ 85. Caiman - Jacaré
+ 86. Gharial - Gavial
+ 87. Turtle - Tartaruga
+ 88. Frog - Rã
+ 89. Smilodon - Tigre-dentes-de-sabre
+ 90. Homotherium - Cimitarra
+ 91. Megaloceros - Cervo-gigante
+ 92. Thylacoleo - Leão-marsupial
+ 93. Procoptodon - Canguru-gigante
+ 94. Metridiochoerus - Facocero-gigante
+ 95. Sivatherium - Sivatério
+ 96. Pelagornis - Pelagornis
+ 97. Gastornis - Gastornis
+ 98. Phorusrhacos - Ave-do-terror
+ 99. Titanis - Titanis
+100. Quinkana - Quincana
+101. Wonambi - Wonambi
+102. Meiolania - Tartaruga-com-chifres
+103. Andrewsarchus - Andrewsarchus
+104. Entelodont - Porco-do-inferno
+105. Daeodon - Daeodon
+106. Hyaenodon - Hienodonte
+107. Megistotherium - Megistotério
+108. Sarkastodon - Sarkastodon
+109. Uintatherium - Uintatério
+110. Coryphodon - Corifodonte
+111. Brontotherium - Brontotério
+112. Embolotherium - Embolotério
+113. Chalicotherium - Calicotério
+114. Ancylotherium - Anquilotério
+115. Moropus - Moropus
+116. Macrauchenia - Macrauchenia
+117. Homalodotherium - Homalodotério
+118. Nesodon - Nesodonte
+119. Pachycrocuta - Hiena-gigante
+120. Chasmaporthetes - Hiena-corredora
+121. Cave Lion - Leão-das-cavernas
+122. Cave Bear - Urso-das-cavernas
+123. Short-faced Bear - Urso-de-focinho-curto
+124. Phoberomys - Phoberomys
+125. Ground Sloth - Preguiça-terrestre
+126. Glossotherium - Glossotério
+127. Mylodon - Milodonte
+128. Scelidotherium - Escelidotério
+129. Doedicurus - Doedicuro
+130. Glyptodon - Gliptodonte
+131. Panochthus - Panochthus
+132. Propalaeotherium - Propaleotério
+133. Hyracotherium - Hiracotério
+134. Mesohippus - Mesohippus
+135. Miohippus - Miohippus
+136. Merychippus - Merychippus
+137. Pliohippus - Pliohippus
+138. Hipparion - Hipário
+139. Dinohyus - Dinohius
+140. Archaeotherium - Arqueotério
+141. Anthracotherium - Antracotério
+142. Merycoidodon - Merycoidodonte
+143. Promerycochoerus - Promerycochoerus
+144. Procamelus - Procamelo
+145. Titanotylopus - Titanotilopo
+146. Megatylopus - Megatilopo
+147. Hypolagus - Hipolago
+148. Hesperocyon - Hesperocyon
+149. Enhydrocyon - Enhydrocyon
+150. Hoplophoneus - Hoplophoneus
+151. Eusmilus - Eusmilus
+152. Barbourofelis - Barbourofelis
+153. Machairodus - Machairodus
+154. Amphimachairodus - Amphimachairodus
+155. Megantereon - Megantereon
+156. Dinofelis - Dinofelis
+157. Xenosmilus - Xenosmilus
+158. Therailurus - Therailurus
+159. Water Buffalo - Búfalo
+160. Gaur - Gauro
+161. Banteng - Bantengue
+162. Wisent - Bisão
+163. Bongo - Bongo
+164. Eland - Elande
+165. Oryx - Órix
+166. Addax - Adax
+167. Waterbuck - Cobo
+168. Lechwe - Lichia
+169. Reedbuck - Redunca
+170. Puku - Pucu
+171. Gerenuk - Gerenuc
+172. Dik-dik - Dik-dik
+173. Duiker - Duiker
+174. Klipspringer - Sabi
+175. Grysbok - Grisboc
+176. Oribi - Oribi
+177. Steenbok - Estenboque
+178. Serow - Serow
+179. Goral - Goral
+180. Bharal - Bharal
+181. Takin - Takim
+182. Markhor - Markhor
+183. Tahr - Tahr
+184. Barbary Sheep - Arruí
+185. Bighorn Sheep - Bighorn
+186. Dall Sheep - Ovelha-de-dall
+187. Snow Sheep - Ovelha-das-neves
+188. Muskox - Boi-almScar
+189. Saiga - Saiga
+190. Chiru - Chiru
+191. Blackbuck - Antílope-cervicapra
+192. Chousingha - Antílope-de-quatro-chifres
+193. Nilgai - Nilgai
+194. Saola - Saola
+195. Kouprey - Kouprey
+196. Tamaraw - Tamarau
+197. Anoa - Anoa
+198. Babirusa - Babirussa
+199. Bushpig - Porco-do-mato
+200. Peccary - Queixada
+
+================================================================================
+3. ANIMAIS COM MENOS DE 500 G
+================================================================================
+
+  1. Shrew - Musaranho
+  2. Bat - Morcego
+  3. Mouse - Camundongo
+  4. Rat - Rato
+  5. Hamster - Hâmster
+  6. Gerbil - Gerbil
+  7. Mole - Toupeira
+  8. Dormouse - Leirão
+  9. Marmoset - Sagui
+ 10. Gecko - Gecko
+ 11. Chameleon - Camaleão
+ 12. Lizard - Lagarto
+ 13. Anole - Anolis
+ 14. Skink - Scinco
+ 15. Snake - Cobra
+ 16. Rattlesnake - Cascavel
+ 17. Frog - Rã
+ 18. Toad - Sapo
+ 19. Tree Frog - Perereca
+ 20. Salamander - Salamandra
+ 21. Newt - Tritão
+ 22. Hummingbird - Beija-flor
+ 23. Goldcrest - Estrelinha
+ 24. Wren - Corruíra
+ 25. Tit - Chapim
+ 26. Sparrow - Pardal
+ 27. Finch - Tentilhão
+ 28. Canary - Canário
+ 29. Linnet - Pintarroxo
+ 30. Swallow - Andorinha
+ 31. Swift - Andorinhão
+ 32. Parakeet - Periquito
+ 33. Lovebird - Agapornis
+ 34. Cockatiel - Calopsita
+ 35. Guppy - Guppy
+ 36. Tetra - Tetra
+ 37. Zebrafish - Peixe-zebra
+ 38. Betta - Betta
+ 39. Clownfish - Peixe-palhaço
+ 40. Tang - Tang
+ 41. Killifish - Killifish
+ 42. Platy - Plati
+ 43. Molly - Mulinésia
+ 44. Swordtail - Peixe-espada
+ 45. Rasbora - Rasbora
+ 46. Barb - Barbo
+ 47. Loach - Cobrinha
+ 48. Catfish - Coridora
+ 49. Otocinclus - Limpa-vidro
+ 50. Pipefish - Peixe-cachimbo
+ 51. Mudskipper - Saltador-do-lodo
+ 52. Goby - Gobio
+ 53. Blenny - Blênio
+ 54. Butterfly - Borboleta
+ 55. Moth - Mariposa
+ 56. Bee - Abelha
+ 57. Bumblebee - Mamangava
+ 58. Wasp - Vespa
+ 59. Ant - Formiga
+ 60. Beetle - Besouro
+ 61. Scarab - Escaravelho
+ 62. Firefly - Vagalume
+ 63. Ladybug - Joaninha
+ 64. Mantis - Louva-a-deus
+ 65. Stick Insect - Bicho-pau
+ 66. Leaf Insect - Bicho-folha
+ 67. Cricket - Grilo
+ 68. Katydid - Esperança
+ 69. Locust - Gafanhoto
+ 70. Cicada - Cigarra
+ 71. Dragonfly - Libélula
+ 72. Damselfly - Donzelinha
+ 73. Spider - Aranha
+ 74. Scorpion - Escorpião
+ 75. Centipede - Lacraia
+ 76. Millipede - Piolho-de-cobra
+ 77. Snail - Caracol
+ 78. Crab - Caranguejo
+ 79. Shrimp - Camarão
+ 80. Earthworm - Minhoca
+ 81. Morganucodon - Morganucodon
+ 82. Megazostrodon - Megazostrodon
+ 83. Juramaia - Juramaia
+ 84. Eomaia - Eomaia
+ 85. Sinodelphys - Sinodelphys
+ 86. Jeholodens - Jeholodens
+ 87. Repenomamus - Repenomamus
+ 88. Yanoconodon - Yanoconodon
+ 89. Liaoconodon - Liaoconodon
+ 90. Zhangheotherium - Zhangheotherium
+ 91. Volaticotherium - Volaticoterio
+ 92. Castorocauda - Castorocauda
+ 93. Docofossor - Docofossor
+ 94. Agilodocodon - Agilodocodon
+ 95. Zalambdalestes - Zalambdalestes
+ 96. Ukhaatherium - Ukhaatherium
+ 97. Asioryctes - Asioryctes
+ 98. Kennalestes - Kennalestes
+ 99. Deltatheridium - Deltatheridium
+100. Cimolodon - Cimolodon
+101. Ptilodus - Ptilodus
+102. Meniscoessus - Meniscoessus
+103. Catopsalis - Catopsalis
+104. Taeniolabis - Taeniolabis
+105. Ctenacodon - Ctenacodon
+106. Plagiaulax - Plagiaulax
+107. Anchistriodon - Anchistriodon
+108. Archicebus - Archicebus
+109. Teilhardina - Teilhardina
+110. Eosimias - Eosimias
+111. Biretia - Biretia
+112. Algorhitmops - Algorhitmops
+113. Microraptor - Microraptor
+114. Anchiornis - Anchiornis
+115. Aurornis - Aurornis
+116. Xiaotingia - Xiaotingia
+117. Eosinopteryx - Eosinopteryx
+118. Serikornis - Serikornis
+119. Caihong - Caihong
+120. Scansoriopteryx - Scansoriopteryx
+121. Epidexipteryx - Epidexipteryx
+122. Yi qi - Yi-qi
+123. Ambopteryx - Ambopteryx
+124. Confuciusornis - Confuciusornis
+125. Protopteryx - Protopteryx
+126. Flea - Pulga
+127. Louse - Piolho
+128. Tick - Carrapato
+129. Mite - Ácaro
+130. Mosquito - Pernilongo
+131. Fly - Mosca
+132. Dragonfly Nymph - Ninfa-de-libélula
+133. Water Strider - Alfaiate
+134. Backswimmer - Notonecta
+135. Water Boatman - Barqueiro
+136. Bedbug - Percevejo
+137. Aphid - Pulgão
+138. Scale Insect - Cochinilha
+139. Whitefly - Mosca-branca
+140. Thrips - Tripes
+141. Termite - Cupim
+142. Silverfish - Traça
+143. Springtail - Colêmbolo
+144. Bristletail - Maquilis
+145. Earwig - Tesourinha
+146. Webspinner - Embióptero
+147. Stonefly - Plecóptero
+148. Mayfly - Efêmera
+149. Alderfly - Sialídeo
+150. Dobsonfly - Corydalus
+151. Snakefly - Raphidioptera
+152. Lacewing - Crisopídeo
+153. Antlion - Formiga-leão
+154. Scorpionfly - Mecóptero
+155. Caddisfly - Tricóptero
+156. Flea Beetle - Alticínio
+157. Leaf Beetle - Crisomelídeo
+158. Longhorn Beetle - Cerambícideo
+159. Weevil - Gorgulho
+160. Bark Beetle - Escolítine
+161. Click Beetle - Tenebrião
+162. Soldier Beetle - Cantharidae
+163. Blister Beetle - Meloidae
+164. Net-winged Beetle - Lycidae
+165. Checkered Beetle - Cleridae
+166. Jewel Beetle - Buprestídeo
+167. Hide Beetle - Dermestídeo
+168. Rove Beetle - Estafilinídeo
+169. Ground Beetle - Carabídeo
+170. Tiger Beetle - Cicindelídeo
+171. Diving Beetle - Ditiscídeo
+172. Whirligig Beetle - Girinídeo
+173. Water Scavenger - Hidrofilídeo
+174. Glowworm - Têmpora
+175. Sawfly - Sínfita
+176. Horntail - Siricídeo
+177. Gall Wasp - Cinipe
+178. Ichneumon Wasp - Icneumonídeo
+179. Chalcid Wasp - Calcidídeo
+180. Velvet Ant - Formiga-de-veludo
+181. Cuckoo Wasp - Chrysididae
+182. Mud Dauber - Sphecidae
+183. Thread-waisted Wasp - Efipígera
+184. Potter Wasp - Eumeníneo
+185. Mason Bee - Megachilidae
+186. Leafcutter Bee - Cortadeira
+187. Sweat Bee - Halictídeo
+188. Mining Bee - Andrenídeo
+189. Digger Bee - Anthophorini
+190. Cuckoo Bee - Nomadinae
+191. Robber Fly - Asilídeo
+192. Bee Fly - Bombilídeo
+193. Hoverfly - Sirfídeo
+194. Horsefly - Mutuca
+195. Crane Fly - Tipulídeo
+196. Midge - Quironomídeo
+197. Fungus Gnat - Sciaridae
+198. Gall Midge - Cecidomyiidae
+199. Fruit Fly - Drosófila
+200. Blowfly - Califorídeo

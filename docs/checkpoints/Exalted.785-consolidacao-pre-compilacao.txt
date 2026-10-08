@@ -1,0 +1,29 @@
+EXALTED.785 — CONSOLIDACAO PRE-COMPILACAO
+Base: Exalted.784 (compilacao confirmada pelo usuario).
+Politica: nao executar compilacao sem ordem explicita; commits intermediarios com [skip ci].
+
+RODADA 01 — TESTES DA ABA 8
+Commit 8dc1768c: em AbilityCharmTreeDialogTest.kt, dez chamadas assert(...) foram substituidas por org.junit.Assert.assertTrue(...). O assert da linguagem JVM pode ser desabilitado sem -ea, permitindo testes passarem mesmo quando a condicao e falsa. A substituicao torna os contratos de cache, abertura e visualizacao da arvore efetivos nas execucoes normais.
+
+PENDENCIAS DE VALIDACAO
+- Executar testes de regressao e compilacao somente com autorizacao.
+- Revisar geracao e evolucao de NPCs Solar, Sangue de Dragao e Lunar em equivalencia.
+- Revisar Abas 5 e 9 e comportamento visual no celular.
+- Revisar sobreposicao de botoes e pop-ups por aba, sem alterar regras de negocio.
+- Validar no dispositivo: compilacao bem-sucedida nao equivale a teste de interface.
+
+Status: trabalho em andamento; pacote 785 nao declarado pronto.
+
+RODADA 02 — REVISAO DAS ABAS 5 E 9
+- Auditoria de CombatTab.kt: titulo "Contador de iniciativa" ja permite duas linhas com softWrap; acao "Limpar combate" existente.
+- Auditoria de SummaryVitalitySection.kt: trilha agrupada por penalidade, quebra em linhas conforme largura, compartilhamento de cycleHealthDamage e botao Limpar com clearHealthDamage.
+- Commit 2345308e: teste estatico CombatVitalityUiContractTest.kt protege quebra do titulo da Aba 5, sincronizacao da trilha e limpeza da Aba 9. Sem alteracoes de regras de negocio.
+
+VALIDACAO PRE-COMPILACAO
+- A compilacao Exalted.784 foi confirmada no GitHub como completed/success.
+- Codigo revisado estaticamente; nao foi executado teste Gradle da Exalted.785.
+- O proximo passo tecnico de validacao e uma unica compilacao autorizada pelo usuario, que executara os testes do projeto.
+- Testes de interface em dispositivo continuam pendentes mesmo se CI passar.
+
+STATUS: PACOTE EXALTED.785 PRONTO PARA SOLICITAR UMA COMPILACAO DE VALIDACAO.
+Nao alterar rootProject.name nem disparar GitHub Actions antes de autorizacao explicita.

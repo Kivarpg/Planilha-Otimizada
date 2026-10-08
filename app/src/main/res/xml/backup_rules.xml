@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Backup automático desativado: os dados das planilhas são conteúdo
+    privado do usuário e não devem ser copiados pelo mecanismo de backup
+    do sistema. A exportação/compartilhamento continua disponível pelos
+    fluxos explícitos do aplicativo.
+-->
+<full-backup-content>
+    <exclude domain="sharedpref" path="." />
+</full-backup-content>

@@ -1,0 +1,19 @@
+EXALTED.780 — CHECKPOINT DE OTIMIZACAO (SEM COMPILACAO)
+Base compilada confirmada pelo usuario: Exalted.779
+Alteracao implementada: EncounterExperienceLunar.expandLunarRepeated reutiliza o IndiceXpLunar entre lotes enquanto o conjunto de traits espirituais permanecer igual. Se os traits mudarem, o indice e reconstruido.
+Commit: acc90fc09469aa1a7284fa4f6a51a7069b73ed96 [skip ci]
+Impacto pretendido: reduzir chamadas repetidas a LunarCharmArchetypePolicy.prepare e preparacao da ordem de atributos durante progresso multi-lote.
+Escopo: Lunar. Nenhuma alteracao intencional nas regras mecanicas.
+Status: alteracao registrada, ainda nao compilada nem validada por testes de equivalencia ou medicao.
+Pendencias antes de uma recomendacao de compilacao consolidada: revisar cenarios de mudanca de traits/Quimera; testar equivalencia entre expandLunarRepeated e chamadas individuais; avaliar oportunidades seguras Solar e Sangue de Dragao; consolidar o lote.
+Nao iniciar CI sem autorizacao explicita do usuario. Proxima versao de compilacao: Exalted.780.
+
+ADENDO — CONSOLIDACAO MULTITIPO
+- a1a119a72dd3: testes de equivalencia Lunar (3 lotes) e zero lote.
+- 55834c70fb44: Sangue de Dragao reutiliza habilidadesPorAspecto precomputadas no expansor de XP.
+- 5116b9791a20 / 3c943f686959: teste de equivalencia Solar (3 lotes) e callback de vitalidade explicito.
+- Solar: ja reutilizava indice imutavel entre lotes; esta etapa adiciona cobertura de regressao, nao novo algoritmo.
+- Sangue de Dragao: lista de habilidades precomputada; nao altera regra de custo.
+- Lunar: indice preparado reaproveitado quando traits estaveis.
+- Ainda nao ha medicao de desempenho nem execucao de testes; compilacao valida essas mudancas pela primeira vez.
+- CHECKPOINT DE COMPILACAO: Exalted.780, somente quando autorizado pelo usuario.

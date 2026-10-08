@@ -1,0 +1,16 @@
+EXALTED.786 — CHECKPOINT PRE-COMPILACAO
+Base confirmada: Exalted.785, compilada com sucesso segundo o usuario.
+
+ALTERACOES
+1. d1683933: EncounterExperienceLunar.kt — removida copia arvoresAtivas.toList() a cada rodada de compras XP; a lista e ampliada somente apos terminar a iteracao dos ramos ativos. A ordem e as condicoes de compra permanecem inalteradas.
+2. 894def71: EncounterLunarXpLoopContractTest.kt — teste de contrato de iteracao sem copia e ausencia de ampliacao dentro do loop.
+3. Revisao de EncounterExperienceSolar.kt: indice preparado e memo de elegibilidade ja existentes; sem alteracao de regras.
+4. Revisao de CombatTab.kt e SummaryVitalitySection.kt ja realizada na Exalted.785; sem necessidade de refazer o layout sem teste em dispositivo.
+
+VALIDACAO
+- Revisao estatica do trecho alterado realizada; testes nao executados.
+- Compilacao e testes Gradle dependem de autorizacao expressa.
+- Proximo checkpoint recomendado: Exalted.786 em compilacao unica, sem compilar pacotes intermediarios.
+- A validacao de interface em celular e a auditoria de todas as abas permanecem tarefas separadas.
+
+STATUS: PACOTE EXALTED.786 PRONTO PARA COMPILACAO DE VALIDACAO, NAO INICIADA.

@@ -1,0 +1,4319 @@
+{
+  "versao": 1,
+  "formas": [
+    {
+      "nome": "Baleia-azul",
+      "grupo": "large",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Baleia-comum",
+      "grupo": "large",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Baleia-franca",
+      "grupo": "large",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Cachalote",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Baleia-jubarte",
+      "grupo": "large",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Baleia-seil",
+      "grupo": "large",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Baleia-cinzenta",
+      "grupo": "large",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Baleia-minke",
+      "grupo": "large",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Baleia-franca-pigmeia",
+      "grupo": "large",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Hipopótamo",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Rinoceronte-branco",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Rinoceronte-negro",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Peixe-lua",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Tubarão-baleia",
+      "grupo": "large",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Tubarão-peregrino",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Tubarão-branco",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "PREDATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Arraia-manta",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Lula-colossal",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Lula-gigante",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Tubarão-boca-grande",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Tubarão-tigre",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "PREDATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Falsa-orca",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "CACA_EM_GRUPO",
+        "PREDATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Orca",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "CACA_EM_GRUPO",
+        "PREDATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Peixe-serra",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Esturjão-beluga",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Mamute-lanoso",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "BESTA_DE_CARGA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Mastodonte",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Mamute-das-estepes",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "BESTA_DE_CARGA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Elefante-de-presas-retas",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "BESTA_DE_CARGA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Deinotério",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Gonfotério",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Paraceratério",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Diprotodonte",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Rinoceronte-lanudo",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Elasmotério",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Titanoboa",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Megalodonte",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Basilossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Mossassauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Liopleurodonte",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Pliossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Kronossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Shonissauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Shastassauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Argentinossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Patagotitan",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Dreadnoughtus",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Sauroposeidon",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Braquiossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Apatossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Diplodoco",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Superssauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Titanossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Camarassauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Giraffatitan",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Tiranossauro-rex",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "PREDATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Giganotossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Carcharodontossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Espinossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Mapussauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "CACA_EM_GRUPO",
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Tarbossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Tricerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Torossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Anquilossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Estegossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Terizinossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Iguanodonte",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Edmontossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Parasaurolofo",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Coritossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Lambeossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Paquirrinossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Estiracossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Alamossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Amargassauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Saltassauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Euoplocéfalo",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Nodossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Barossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Brontossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Cetiossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Omeissauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Vulcanodonte",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Plateossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Melanorossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Tenontossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Ouranossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Probactrossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Bactrossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Gripossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Kritossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Prossaurolofo",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Saurolofo",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Charonossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Olorotitan",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Braquilofossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Maiassaura",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Telmatossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Talaruro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Pinacossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Saichania",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Tarchia",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Crichtonssauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Polacanto",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Gastonia",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Gargoilossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Sauropelta",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Silvissauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Gobissauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Dioplossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Escolossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Platipterígio",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Temnodontossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Oftalmossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Bracauquênio",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Megacefalossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Barionix",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Sucomimo",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Acrocantossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Saurofaganax",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Torvossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Daspletossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Gorgossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Zhuchengtyrannus",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Qianzhousauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Rajassauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Majungassauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Carnotauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Ekrixinatossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Picnonemossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Rugops",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Abelissauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Chasmossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Pentacerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Anquicerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Arrinocerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Einiossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Aqueloussauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Centrossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Xenocerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Medusacerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Diablocerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Machairocerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Nasutocerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Avacerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Kosmocerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Vagacerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Coahuilacerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Ojocerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Titanocerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Mojocerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Bravocerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Regalicerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Wendicerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Yehuecauhcerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Furcatocerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Menefeecerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Terminocerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Stellassauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Spiclypeus",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Lokicerátops",
+      "grupo": "large",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Bustingorrytitan",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Choconssauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Rinconssauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Muyelenssauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Overossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Bonitassaura",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Antarctossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Rocassauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Epactossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Campylodoniscus",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Trigonossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Baurutitan",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Uberabatitan",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Gondwanatitan",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Aeolossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Maxakalissauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Adamantissauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Tapuiassauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Lirainossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Ampelossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Atsinganossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Lohuecotitan",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Paludititan",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Transylvanossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Mamenquissauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Shunossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Datoussauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Bellussauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Janenschia",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Dicraeossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Lingwulong",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Amargatitanis",
+      "grupo": "large",
+      "caracteristicas": [
+        "PREDATORIO",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Zapalassauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Cathartessaura",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Limayssauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Nopcsaspondylus",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Rayosossauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Rebbachissauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Demandassauro",
+      "grupo": "large",
+      "caracteristicas": [
+        "TAMANHO_LENDARIO"
+      ]
+    },
+    {
+      "nome": "Leão",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "CACA_EM_GRUPO",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Tigre",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Onça",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "PREDATORIO",
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Leopardo",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO",
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Suçuarana",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Leopardo-das-neves",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO",
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Guepardo",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Urso",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO"
+      ]
+    },
+    {
+      "nome": "Panda",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Lobo",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "CACA_EM_GRUPO",
+        "PREDATORIO",
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Coiote",
+      "grupo": "medium",
+      "caracteristicas": [
+        "CACA_EM_GRUPO",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Dingo",
+      "grupo": "medium",
+      "caracteristicas": [
+        "CACA_EM_GRUPO",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Chacal",
+      "grupo": "medium",
+      "caracteristicas": [
+        "CACA_EM_GRUPO",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Raposa",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO",
+        "RESPIRA_AGUA",
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Hiena",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "CACA_EM_GRUPO",
+        "CARNICEIRO",
+        "PREDATORIO",
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Lobo-da-terra",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "CACA_EM_GRUPO",
+        "PREDATORIO",
+        "RESPIRA_AGUA",
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Alce",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Veado",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Rena",
+      "grupo": "medium",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Corça",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "CACA_EM_GRUPO",
+        "PREDATORIO",
+        "PRESA",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Gamo",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Antilocapra",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Javali",
+      "grupo": "medium",
+      "caracteristicas": [
+        "FURIA"
+      ]
+    },
+    {
+      "nome": "Facocero",
+      "grupo": "medium",
+      "caracteristicas": [
+        "FURIA"
+      ]
+    },
+    {
+      "nome": "Cateto",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Camelo",
+      "grupo": "medium",
+      "caracteristicas": [
+        "BESTA_DE_CARGA"
+      ]
+    },
+    {
+      "nome": "Dromedário",
+      "grupo": "medium",
+      "caracteristicas": [
+        "BESTA_DE_CARGA"
+      ]
+    },
+    {
+      "nome": "Lhama",
+      "grupo": "medium",
+      "caracteristicas": [
+        "BESTA_DE_CARGA"
+      ]
+    },
+    {
+      "nome": "Alpaca",
+      "grupo": "medium",
+      "caracteristicas": [
+        "BESTA_DE_CARGA"
+      ]
+    },
+    {
+      "nome": "Guanaco",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Vicunha",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Vaca",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Boi",
+      "grupo": "medium",
+      "caracteristicas": [
+        "BESTA_DE_CARGA"
+      ]
+    },
+    {
+      "nome": "Iaque",
+      "grupo": "medium",
+      "caracteristicas": [
+        "BESTA_DE_CARGA"
+      ]
+    },
+    {
+      "nome": "Zebu",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Cabra",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Íbex",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Ovelha",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Muflão",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Camurça",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Impala",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Springbok",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Antílope",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Kudu",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Niala",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Pongo",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Topi",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Hartebeest",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Gnu",
+      "grupo": "medium",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Okapi",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Jumento",
+      "grupo": "medium",
+      "caracteristicas": [
+        "BESTA_DE_CARGA"
+      ]
+    },
+    {
+      "nome": "Cavalo",
+      "grupo": "medium",
+      "caracteristicas": [
+        "BESTA_DE_CARGA"
+      ]
+    },
+    {
+      "nome": "Anta",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Dugongo",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Foca",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Lontra-marinha",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Lontra",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Carcaju",
+      "grupo": "medium",
+      "caracteristicas": [
+        "FURIA",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Ratel",
+      "grupo": "medium",
+      "caracteristicas": [
+        "FURIA",
+        "PREDATORIO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Cangambá",
+      "grupo": "medium",
+      "caracteristicas": [
+        "FINGE_MORTE"
+      ]
+    },
+    {
+      "nome": "Guaxinim",
+      "grupo": "medium",
+      "caracteristicas": [
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Bassarisco",
+      "grupo": "medium",
+      "caracteristicas": [
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Quati",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Jequitirana",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA",
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Chimpanzé",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Bonobo",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Mandril",
+      "grupo": "medium",
+      "caracteristicas": [
+        "FURIA"
+      ]
+    },
+    {
+      "nome": "Gelada",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Macaco",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Bugio",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Avestruz",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Emu",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Ema",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Pinguim",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Águia",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO",
+        "VISAO_APRIMORADA"
+      ]
+    },
+    {
+      "nome": "Albatroz",
+      "grupo": "medium",
+      "caracteristicas": [
+        "MIGRATORIO"
+      ]
+    },
+    {
+      "nome": "Cisne",
+      "grupo": "medium",
+      "caracteristicas": [
+        "MIGRATORIO"
+      ]
+    },
+    {
+      "nome": "Dragão-de-komodo",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Sucuri",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Píton",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Jiboia",
+      "grupo": "medium",
+      "caracteristicas": [
+        "BESTA_DE_CARGA",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Cobra",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO",
+        "RESPIRA_AGUA",
+        "VENENOSO"
+      ]
+    },
+    {
+      "nome": "Mamba",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO",
+        "VENENOSO"
+      ]
+    },
+    {
+      "nome": "Surucucu",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO",
+        "VENENOSO"
+      ]
+    },
+    {
+      "nome": "Jacaré",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Gavial",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Tartaruga",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Rã",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Tigre-dentes-de-sabre",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Cimitarra",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Cervo-gigante",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Leão-marsupial",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "CACA_EM_GRUPO",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Canguru-gigante",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Facocero-gigante",
+      "grupo": "medium",
+      "caracteristicas": [
+        "FURIA"
+      ]
+    },
+    {
+      "nome": "Sivatério",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Pelagornis",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Gastornis",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Ave-do-terror",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Titanis",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Quincana",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Wonambi",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Tartaruga-com-chifres",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Andrewsarchus",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Porco-do-inferno",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Daeodon",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Hienodonte",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Megistotério",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Sarkastodon",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Uintatério",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Corifodonte",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Brontotério",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Embolotério",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Calicotério",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Anquilotério",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Moropus",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Macrauchenia",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Homalodotério",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Nesodonte",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Hiena-gigante",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "CACA_EM_GRUPO",
+        "CARNICEIRO",
+        "PREDATORIO",
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Hiena-corredora",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "CACA_EM_GRUPO",
+        "CARNICEIRO",
+        "PREDATORIO",
+        "RESPIRA_AGUA",
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Leão-das-cavernas",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "CACA_EM_GRUPO",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Urso-das-cavernas",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO"
+      ]
+    },
+    {
+      "nome": "Urso-de-focinho-curto",
+      "grupo": "medium",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Phoberomys",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Preguiça-terrestre",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Glossotério",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Milodonte",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Escelidotério",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Doedicuro",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Gliptodonte",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Panochthus",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Propaleotério",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Hiracotério",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Mesohippus",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Miohippus",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Merychippus",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Pliohippus",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Hipário",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Dinohius",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Arqueotério",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Antracotério",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Merycoidodonte",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Promerycochoerus",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Procamelo",
+      "grupo": "medium",
+      "caracteristicas": [
+        "BESTA_DE_CARGA"
+      ]
+    },
+    {
+      "nome": "Titanotilopo",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Megatilopo",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Hipolago",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Hesperocyon",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Enhydrocyon",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Hoplophoneus",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Eusmilus",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Barbourofelis",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Machairodus",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Amphimachairodus",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Megantereon",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Dinofelis",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Xenosmilus",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Therailurus",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PREDATORIO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Búfalo",
+      "grupo": "medium",
+      "caracteristicas": [
+        "BESTA_DE_CARGA"
+      ]
+    },
+    {
+      "nome": "Gauro",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Bantengue",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Bisão",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Bongo",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Elande",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Órix",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Adax",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Cobo",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Lichia",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Redunca",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Pucu",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Gerenuc",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Dik-dik",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Duiker",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Sabi",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Grisboc",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Oribi",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Estenboque",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Serow",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Goral",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Bharal",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Takim",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Markhor",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Tahr",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Arruí",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Bighorn",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Ovelha-de-dall",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Ovelha-das-neves",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Boi-almScar",
+      "grupo": "medium",
+      "caracteristicas": [
+        "BESTA_DE_CARGA"
+      ]
+    },
+    {
+      "nome": "Saiga",
+      "grupo": "medium",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Chiru",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Antílope-cervicapra",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Antílope-de-quatro-chifres",
+      "grupo": "medium",
+      "caracteristicas": [
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Nilgai",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Saola",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Kouprey",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Tamarau",
+      "grupo": "medium",
+      "caracteristicas": [
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Anoa",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Babirussa",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Porco-do-mato",
+      "grupo": "medium",
+      "caracteristicas": []
+    },
+    {
+      "nome": "Queixada",
+      "grupo": "medium",
+      "caracteristicas": [
+        "FURIA"
+      ]
+    },
+    {
+      "nome": "Musaranho",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Morcego",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Camundongo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Rato",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "PRESA",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Hâmster",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Gerbil",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "PRESA"
+      ]
+    },
+    {
+      "nome": "Toupeira",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Leirão",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA",
+        "VISAO_NOTURNA"
+      ]
+    },
+    {
+      "nome": "Sagui",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Gecko",
+      "grupo": "small",
+      "caracteristicas": [
+        "ESCALADOR_ADERENTE",
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Camaleão",
+      "grupo": "small",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "CACA_EM_GRUPO",
+        "CAMUFLAGEM",
+        "IMITA_APARENCIA",
+        "MINUSCULO",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Lagarto",
+      "grupo": "small",
+      "caracteristicas": [
+        "ESCALADOR_ADERENTE",
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Anolis",
+      "grupo": "small",
+      "caracteristicas": [
+        "ESCALADOR_ADERENTE",
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Scinco",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Cobra",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "PREDATORIO",
+        "RESPIRA_AGUA",
+        "VENENOSO"
+      ]
+    },
+    {
+      "nome": "Cascavel",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "VENENOSO"
+      ]
+    },
+    {
+      "nome": "Rã",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Sapo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Perereca",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Salamandra",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Tritão",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Beija-flor",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Estrelinha",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Corruíra",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Chapim",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Pardal",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Tentilhão",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Canário",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Pintarroxo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Andorinha",
+      "grupo": "small",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Andorinhão",
+      "grupo": "small",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Periquito",
+      "grupo": "small",
+      "caracteristicas": [
+        "IMITA_SONS",
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Agapornis",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Calopsita",
+      "grupo": "small",
+      "caracteristicas": [
+        "IMITA_SONS",
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Guppy",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Tetra",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Peixe-zebra",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Betta",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Peixe-palhaço",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Tang",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Killifish",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Plati",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Mulinésia",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Peixe-espada",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Rasbora",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Barbo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Cobrinha",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Coridora",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Limpa-vidro",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Peixe-cachimbo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Saltador-do-lodo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Gobio",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Blênio",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Borboleta",
+      "grupo": "small",
+      "caracteristicas": [
+        "MIGRATORIO",
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Mariposa",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Abelha",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "VIVE_EM_COLMEIA"
+      ]
+    },
+    {
+      "nome": "Mamangava",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "VIVE_EM_COLMEIA"
+      ]
+    },
+    {
+      "nome": "Vespa",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "VIVE_EM_COLMEIA"
+      ]
+    },
+    {
+      "nome": "Formiga",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "VIVE_EM_COLMEIA"
+      ]
+    },
+    {
+      "nome": "Besouro",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Escaravelho",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Vagalume",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Joaninha",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Louva-a-deus",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Bicho-pau",
+      "grupo": "small",
+      "caracteristicas": [
+        "CAMUFLAGEM",
+        "IMITA_APARENCIA",
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Bicho-folha",
+      "grupo": "small",
+      "caracteristicas": [
+        "CAMUFLAGEM",
+        "IMITA_APARENCIA",
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Grilo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Esperança",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Gafanhoto",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Cigarra",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Libélula",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA",
+        "VISAO_APRIMORADA"
+      ]
+    },
+    {
+      "nome": "Donzelinha",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "VISAO_APRIMORADA"
+      ]
+    },
+    {
+      "nome": "Aranha",
+      "grupo": "small",
+      "caracteristicas": [
+        "ESCALADOR_ADERENTE",
+        "MINUSCULO",
+        "PREDATORIO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Escorpião",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "PREDATORIO",
+        "VENENOSO"
+      ]
+    },
+    {
+      "nome": "Lacraia",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "PREDATORIO",
+        "RESPIRA_AGUA",
+        "VENENOSO"
+      ]
+    },
+    {
+      "nome": "Piolho-de-cobra",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "PREDATORIO",
+        "RESPIRA_AGUA",
+        "VENENOSO"
+      ]
+    },
+    {
+      "nome": "Caracol",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Caranguejo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Camarão",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Minhoca",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Morganucodon",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Megazostrodon",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Juramaia",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Eomaia",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Sinodelphys",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Jeholodens",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Repenomamus",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Yanoconodon",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Liaoconodon",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Zhangheotherium",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Volaticoterio",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Castorocauda",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Docofossor",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Agilodocodon",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Zalambdalestes",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Ukhaatherium",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Asioryctes",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Kennalestes",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Deltatheridium",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Cimolodon",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Ptilodus",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Meniscoessus",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Catopsalis",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Taeniolabis",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Ctenacodon",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Plagiaulax",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Anchistriodon",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Archicebus",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Teilhardina",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Eosimias",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Biretia",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Algorhitmops",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Microraptor",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA",
+        "VISAO_APRIMORADA"
+      ]
+    },
+    {
+      "nome": "Anchiornis",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Aurornis",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Xiaotingia",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Eosinopteryx",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Serikornis",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Caihong",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Scansoriopteryx",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Epidexipteryx",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Yi-qi",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Ambopteryx",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Confuciusornis",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Protopteryx",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Pulga",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Piolho",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Carrapato",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Ácaro",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Pernilongo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Mosca",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Ninfa-de-libélula",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA",
+        "VISAO_APRIMORADA"
+      ]
+    },
+    {
+      "nome": "Alfaiate",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Notonecta",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Barqueiro",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Percevejo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Pulgão",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Cochinilha",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Mosca-branca",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Tripes",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Cupim",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "VIVE_EM_COLMEIA"
+      ]
+    },
+    {
+      "nome": "Traça",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Colêmbolo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Maquilis",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Tesourinha",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Embióptero",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Plecóptero",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Efêmera",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Sialídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Corydalus",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Raphidioptera",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Crisopídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Formiga-leão",
+      "grupo": "small",
+      "caracteristicas": [
+        "AMEACA_OU_INTIMIDACAO",
+        "CACA_EM_GRUPO",
+        "MINUSCULO",
+        "PREDATORIO",
+        "VIVE_EM_COLMEIA"
+      ]
+    },
+    {
+      "nome": "Mecóptero",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Tricóptero",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Alticínio",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Crisomelídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Cerambícideo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Gorgulho",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Escolítine",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Tenebrião",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Cantharidae",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Meloidae",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "VENENOSO"
+      ]
+    },
+    {
+      "nome": "Lycidae",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Cleridae",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Buprestídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Dermestídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Estafilinídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Carabídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Cicindelídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "PREDATORIO",
+        "VISAO_APRIMORADA"
+      ]
+    },
+    {
+      "nome": "Ditiscídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Girinídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Hidrofilídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Têmpora",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Sínfita",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Siricídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Cinipe",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Icneumonídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Calcidídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Formiga-de-veludo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "VENENOSO",
+        "VIVE_EM_COLMEIA"
+      ]
+    },
+    {
+      "nome": "Chrysididae",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Sphecidae",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Efipígera",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Eumeníneo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Megachilidae",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Cortadeira",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "RESPIRA_AGUA"
+      ]
+    },
+    {
+      "nome": "Halictídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Andrenídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Anthophorini",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Nomadinae",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Asilídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO",
+        "PREDATORIO"
+      ]
+    },
+    {
+      "nome": "Bombilídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Sirfídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Mutuca",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Tipulídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Quironomídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Sciaridae",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Cecidomyiidae",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Drosófila",
+      "grupo": "small",
+      "caracteristicas": [
+        "MINUSCULO"
+      ]
+    },
+    {
+      "nome": "Califorídeo",
+      "grupo": "small",
+      "caracteristicas": [
+        "CARNICEIRO",
+        "MINUSCULO"
+      ]
+    }
+  ]
+}

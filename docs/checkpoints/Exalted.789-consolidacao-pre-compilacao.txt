@@ -1,0 +1,19 @@
+EXALTED.789 — CHECKPOINT DE COMPILACAO
+Base: Exalted.788, sucesso informado pelo usuario.
+Estado: alterações consolidadas no GitHub, commits [skip ci]. NENHUMA compilacao autorizada ou iniciada nesta etapa.
+
+CORRECOES
+428be58f: EncounterNpcCard.kt — estado dos dialogos de detalhes de Encantos e Feiticos vinculado a npc.id alem do nome.
+9f422f91: EncounterNpcCacheContractTest.kt — cobertura estatica das chaves de estado.
+3915551a: EncounterNpcCard.kt — pointerInput vinculado a npc.id e nome, invalidando o reconhecedor de gesto ao trocar NPC.
+8c8f9558: EncounterNpcCacheContractTest.kt — cobertura das chaves pointerInput.
+
+REVISAO
+- Inspecionado fluxo de gavetas de Encantos, que usa chaves de remember(viewModel, npc.charms, npc.tipoExaltado) e cores de titulo diferenciadas.
+- Inspecionado fluxo de Feitico inicial: UI condiciona dialogo e botao a podeGerenciarFeiticoInicial; validacao em dispositivo permanece pendente.
+- Nao foram alteradas regras de XP, catalogos, requisitos, nem resultados de geracao.
+
+ANTES DE COMPILAR
+- Verificar por CI os testes e build da Exalted.789, apenas quando usuario disser compile.
+- Validar visualmente no aparelho a troca entre NPCs com Encantos/Feiticos de mesmo nome.
+- As tarefas gerais de auditoria das 15 abas e testes reais em dispositivo permanecem pendentes: este checkpoint NAO equivale a conclusao do projeto.

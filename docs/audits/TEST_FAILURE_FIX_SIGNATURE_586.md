@@ -1,0 +1,2 @@
+# Exalted.586
+O log da 585 confirma que produção e testes compilam; a falha ocorre em execução de testes. Corrigida a normalização de nomes de Habilidade na política de segunda Assinatura e alinhados os testes à grafia canônica `Armas Brancas`. Acrescentado caso de Habilidade Favorecida fora do Aspecto. O CI agora lê os XMLs JUnit via Python e imprime classe, teste, mensagem e stack trace da falha, evitando novo log sem identificação do teste.

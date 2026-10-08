@@ -1,0 +1,2 @@
+# Exalted.588
+O log da 587 identificou a falha em `EncounterNpcActionsProgressionIntegrationTest`: os testes ainda aguardavam `prefetchCompleted >= 1`, embora o prefetch especulativo tenha sido removido preventivamente do runtime. O timeout na linha 227 era portanto determinístico. Os testes foram alinhados ao contrato atual: progressão direta equivalente, zero prefetch especulativo, preservação de equipamento manual entre expansões e nova expansão direta após redução de XP. Comentários e bloco vazio residuais de prefetch também foram removidos do runtime.

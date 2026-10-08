@@ -1,0 +1,225 @@
+# Build de CI — testes unitários + APK debug
+# Dispara em push/PR para qualquer branch e também manualmente (workflow_dispatch).
+name: Build APK
+# O título de cada execução acompanha exatamente a mensagem do commit de
+# versão (ex.: Exalted.766), sem o antigo "Build APK" no nome visível.
+run-name: ${{ github.event.head_commit.message || github.ref_name }}
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-build:
+    name: Test + assembleRelease
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      EXALTED_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      EXALTED_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      EXALTED_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Verify project version contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          project_name="$(sed -n 's/^rootProject\.name = "\(Exalted\.[0-9][0-9]*\)"$/\1/p' settings.gradle.kts)"
+          test -n "$project_name"
+          grep -Fq 'val exaltedProjectName = rootProject.name' app/build.gradle.kts
+          grep -Fq 'targetApk.set(layout.buildDirectory.file("outputs/apk/release/$exaltedProjectName.apk"))' app/build.gradle.kts
+          grep -Fq 'versionCode = exaltedVersionNumber' app/build.gradle.kts
+          grep -Fq 'versionName = exaltedVersionNumber.toString()' app/build.gradle.kts
+          echo "Versão canônica do projeto: $project_name"
+
+      - name: Resolve canonical project version
+        id: project-version
+        shell: bash
+        run: |
+          set -euo pipefail
+          project_name="$(sed -n 's/^rootProject\.name = "\(Exalted\.[0-9][0-9]*\)"$/\1/p' settings.gradle.kts)"
+          test -n "$project_name"
+          version_number="${project_name#Exalted.}"
+          echo "name=$project_name" >> "$GITHUB_OUTPUT"
+          echo "number=$version_number" >> "$GITHUB_OUTPUT"
+
+      - name: Materialize persistent signing key
+        shell: bash
+        env:
+          EXALTED_KEYSTORE_BASE64: ${{ secrets.SIGNING_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "${EXALTED_KEYSTORE_BASE64:-}" ] || [ -z "${EXALTED_KEYSTORE_PASSWORD:-}" ] || [ -z "${EXALTED_KEY_ALIAS:-}" ] || [ -z "${EXALTED_KEY_PASSWORD:-}" ]; then
+            echo "::warning::Persistent signing secrets are not configured; this run will use the Android debug key."
+            exit 0
+          fi
+          mkdir -p "$RUNNER_TEMP/exalted-signing"
+          printf '%s' "$EXALTED_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/exalted-signing/exalted-release.jks"
+          chmod 600 "$RUNNER_TEMP/exalted-signing/exalted-release.jks"
+          echo "EXALTED_KEYSTORE_PATH=$RUNNER_TEMP/exalted-signing/exalted-release.jks" >> "$GITHUB_ENV"
+          echo "Persistent signing key materialized for this runner only."
+
+      - name: Test + engineering gate + assemble APK
+        shell: bash
+        run: |
+          set +e
+          started_at="$(date +%s)"
+          ./gradlew testDebugUnitTest renameReleaseApk --stacktrace --console=plain --no-configuration-cache 2>&1 | tee gradle-ci.log
+          status=${PIPESTATUS[0]}
+          finished_at="$(date +%s)"
+          echo "Gradle CI duration: $((finished_at - started_at))s"
+          if [ "$status" -ne 0 ]; then
+            echo
+            echo "===== TESTES QUE FALHARAM ====="
+            if compgen -G "app/build/test-results/testDebugUnitTest/TEST-*.xml" > /dev/null; then
+              python3 -c 'import glob, xml.etree.ElementTree as ET; files=glob.glob("app/build/test-results/testDebugUnitTest/TEST-*.xml"); [(lambda root: [(print("FAILED: %s.%s" % (case.get("classname",""), case.get("name",""))), print((case.find("failure") if case.find("failure") is not None else case.find("error")).get("message","")), print((((case.find("failure") if case.find("failure") is not None else case.find("error")).text or "").strip())[-6000:]), print("---")) for case in root.findall(".//testcase") if case.find("failure") is not None or case.find("error") is not None])(ET.parse(path).getroot()) for path in files]'
+            fi
+            echo
+            echo "===== RESUMO DE ERROS DO GRADLE ====="
+            grep -E -i -B 3 -A 8 '(^e: |error:|FAILURE:|What went wrong|Execution failed|A problem was found|Could not|Unresolved reference|Compilation error|AssertionError|expected:|but was:)' gradle-ci.log | tail -n 240 || true
+          fi
+          exit "$status"
+
+      - name: Verify engineering/performance gate coverage
+        shell: bash
+        run: |
+          set -euo pipefail
+          results_dir="app/build/test-results/testDebugUnitTest"
+          gate_classes=(
+            EncounterEngineeringBaselineTest
+            CanonicalEncounterRulesTest
+            EncounterCustomizationRegressionTest
+            EncounterGenerationRulesRegressionTest
+            EncounterRouteEligibilityRegressionTest
+            LunarSpiritFormPreparedContextCacheTest
+            EncounterOptimizerCompactStatePropagationTest
+            EncounterNpcAuditorContractTest
+            EncounterMechanicalGoldenSnapshotTest
+            EncounterArchetypeMatrixTest
+            EncounterSorceryRoutePolicyTest
+            EncounterSpecializationBoundaryTest
+            EncounterPostCycleConvergenceTest
+            EncounterCpuSafetyBudgetTest
+            AndroidSecurityBaselineTest
+            EncounterGenerationDiagnosticsTest
+            DragonBloodedSignaturePolicyTest
+            SmartphoneInstallabilityContractTest
+          )
+          for class_name in "${gate_classes[@]}"; do
+            if ! compgen -G "$results_dir/TEST-*${class_name}.xml" > /dev/null; then
+              echo "::error::Engineering gate result missing: $class_name"
+              exit 1
+            fi
+          done
+          echo "Engineering/performance gate coverage confirmed inside the full unit/regression run."
+
+      - name: Upload unit-test reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.project-version.outputs.name }}-unit-test-reports
+          path: |
+            app/build/reports/tests/testDebugUnitTest/
+            app/build/test-results/testDebugUnitTest/
+            gradle-ci.log
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Verify named debug APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected_apk="$(sed -n 's/^rootProject\.name = "\(Exalted\.[0-9][0-9]*\)"$/\1.apk/p' settings.gradle.kts)"
+          test -n "$expected_apk"
+          test -f "app/build/outputs/apk/release/$expected_apk"
+          test ! -f app/build/outputs/apk/release/app-release.apk
+          echo "APK esperado: $expected_apk"
+
+      - name: Smartphone installability gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected_apk="$(sed -n 's/^rootProject\.name = "\(Exalted\.[0-9][0-9]*\)"$/\1.apk/p' settings.gradle.kts)"
+          version_number="${expected_apk#Exalted.}"; version_number="${version_number%.apk}"
+          apk="app/build/outputs/apk/release/$expected_apk"; test -f "$apk"
+          build_tools="$(ls -1 "${ANDROID_HOME}/build-tools" | sort -V | tail -1)"
+          apksigner="${ANDROID_HOME}/build-tools/${build_tools}/apksigner"
+          aapt="${ANDROID_HOME}/build-tools/${build_tools}/aapt"
+          zipalign="${ANDROID_HOME}/build-tools/${build_tools}/zipalign"
+          "$apksigner" verify --verbose --print-certs "$apk" | tee apk-signature.txt
+          if [ -n "${EXALTED_KEYSTORE_PATH:-}" ]; then
+            echo "PERSISTENT_SIGNING=true" | tee apk-signing-mode.txt
+          else
+            echo "PERSISTENT_SIGNING=false" | tee apk-signing-mode.txt
+          fi
+          grep -Eq 'Verified using v2 scheme.*true|Verified using v3 scheme.*true|Verified using v4 scheme.*true' apk-signature.txt
+          "$zipalign" -c -P 16 -v 4 "$apk" | tee apk-zipalign.txt
+          "$aapt" dump badging "$apk" | tee apk-badging.txt
+          grep -Fq "package: name='com.aistudio.exalted3e.rwmaor'" apk-badging.txt
+          grep -Fq "versionCode='$version_number'" apk-badging.txt
+          grep -Fq "versionName='$version_number'" apk-badging.txt
+          grep -Fq "sdkVersion:'26'" apk-badging.txt
+          grep -Fq "targetSdkVersion:'36'" apk-badging.txt
+          sha256sum "$apk" | tee apk-sha256.txt
+          printf 'APK=%s\nPACKAGE=com.aistudio.exalted3e.rwmaor\nVERSION_CODE=%s\nVERSION_NAME=%s\nMIN_SDK=26\nTARGET_SDK=36\n' "$expected_apk" "$version_number" "$version_number" | tee apk-installability.txt
+
+      - name: Upload installability diagnostics
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.project-version.outputs.name }}-installability
+          path: |
+            apk-signature.txt
+            apk-zipalign.txt
+            apk-badging.txt
+            apk-sha256.txt
+            apk-installability.txt
+            apk-signing-mode.txt
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Package source snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          project_name="${{ steps.project-version.outputs.name }}"
+          source_zip="${project_name}.zip"
+          git archive --format=zip --output="$source_zip" HEAD
+          test -s "$source_zip"
+          unzip -p "$source_zip" settings.gradle.kts | grep -Fq "rootProject.name = \"$project_name\""
+          echo "Source snapshot: $source_zip"
+
+      - name: Upload source snapshot
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.project-version.outputs.name }}-source
+          path: ${{ steps.project-version.outputs.name }}.zip
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload release APK
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.project-version.outputs.name }}
+          path: app/build/outputs/apk/release/Exalted.*.apk
+          if-no-files-found: error
+          retention-days: 14
