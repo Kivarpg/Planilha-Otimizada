@@ -60,8 +60,8 @@ internal object CharmPrerequisiteReferenceParser {
                 }
             }
 
+            // Accepted matches already follow source order; avoid re-sorting them.
             val ids = selected
-                .sortedBy { it.start }
                 .map { it.candidate.targetId }
                 .distinct()
 
