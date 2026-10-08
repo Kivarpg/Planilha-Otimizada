@@ -81,9 +81,15 @@ jobs:
           EXALTED_KEYSTORE_BASE64: ${{ secrets.SIGNING_KEY }}
         run: |
           set -euo pipefail
-          if [ -z "${EXALTED_KEYSTORE_BASE64:-}" ] || [ -z "${EXALTED_KEYSTORE_PASSWORD:-}" ] || [ -z "${EXALTED_KEY_ALIAS:-}" ] || [ -z "${EXALTED_KEY_PASSWORD:-}" ]; then
-            echo "::warning::Persistent signing secrets are not configured; this run will use the Android debug key."
-            exit 0
+          missing=()
+          [ -n "${EXALTED_KEYSTORE_BASE64:-}" ] || missing+=(SIGNING_KEY)
+          [ -n "${EXALTED_KEYSTORE_PASSWORD:-}" ] || missing+=(KEYSTORE_PASSWORD)
+          [ -n "${EXALTED_KEY_ALIAS:-}" ] || missing+=(KEY_ALIAS)
+          [ -n "${EXALTED_KEY_PASSWORD:-}" ] || missing+=(KEY_PASSWORD)
+          if [ "${#missing[@]}" -ne 0 ]; then
+            echo "::error::Release signing is not configured. Missing GitHub Actions secrets: ${missing[*]}"
+            echo "::error::Refusing to produce a release APK with the Android debug key."
+            exit 1
           fi
           mkdir -p "$RUNNER_TEMP/exalted-signing"
           printf '%s' "$EXALTED_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/exalted-signing/exalted-release.jks"
@@ -179,11 +185,8 @@ jobs:
           aapt="${ANDROID_HOME}/build-tools/${build_tools}/aapt"
           zipalign="${ANDROID_HOME}/build-tools/${build_tools}/zipalign"
           "$apksigner" verify --verbose --print-certs "$apk" | tee apk-signature.txt
-          if [ -n "${EXALTED_KEYSTORE_PATH:-}" ]; then
-            echo "PERSISTENT_SIGNING=true" | tee apk-signing-mode.txt
-          else
-            echo "PERSISTENT_SIGNING=false" | tee apk-signing-mode.txt
-          fi
+          test -s "${EXALTED_KEYSTORE_PATH:-}" || { echo "::error::Release signing key was not materialized"; exit 1; }
+          echo "PERSISTENT_SIGNING=true" | tee apk-signing-mode.txt
           grep -Eq 'Verified using v2 scheme.*true|Verified using v3 scheme.*true|Verified using v4 scheme.*true' apk-signature.txt
           "$zipalign" -c -P 16 -v 4 "$apk" | tee apk-zipalign.txt
           "$aapt" dump badging "$apk" | tee apk-badging.txt
