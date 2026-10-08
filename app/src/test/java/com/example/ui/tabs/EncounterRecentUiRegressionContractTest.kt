@@ -79,7 +79,7 @@ class EncounterRecentUiRegressionContractTest {
         assertTrue(xp.contains("Modifier.weight(1f)"))
         assertTrue(!xp.contains("Column("))
 
-        val actionStart = card.indexOf("val compactActions")
+        val actionStart = card.indexOf("BoxWithConstraints(", card.indexOf("val npcIoScope"))
         val actionEnd = card.indexOf("// Exportar / Salvar / Carregar: sempre na mesma linha", actionStart)
         assertTrue(actionStart >= 0 && actionEnd > actionStart)
         val actions = card.substring(actionStart, actionEnd)
