@@ -335,7 +335,9 @@ fun EncounterGeneratorTab(
 
     if (mostrarCatalogoArmas) {
         val npc = npcEquipamentoPendente
-        val armasCatalogo = npc?.let { com.example.data.WeaponCatalog.candidatasPorHabilidade(it.habilidadePrincipal) }.orEmpty()
+        val armasCatalogo = remember(npc?.habilidadePrincipal) {
+            npc?.let { com.example.data.WeaponCatalog.candidatasPorHabilidade(it.habilidadePrincipal) }.orEmpty()
+        }
         AlertDialog(
             onDismissRequest = { mostrarCatalogoArmas = false; mostrarCatalogoArmaduras = true },
             title = { AppText(modifier = Modifier.fillMaxWidth(), text = "Equipamento — Arma", textAlign = TextAlign.Center) },
