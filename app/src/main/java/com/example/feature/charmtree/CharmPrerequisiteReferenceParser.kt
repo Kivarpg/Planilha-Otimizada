@@ -53,7 +53,9 @@ internal object CharmPrerequisiteReferenceParser {
             val selected = mutableListOf<Match>()
             for (match in matches) {
                 if (!isBoundaryMatch(normalizedText, match.start, match.end)) continue
-                if (selected.none { it.start < match.end && match.start < it.end }) {
+                // Matches are ordered by start; accepted matches never overlap.
+                // Only the most recent accepted interval can conflict.
+                if (selected.lastOrNull()?.end?.let { match.start < it } != true) {
                     selected += match
                 }
             }
