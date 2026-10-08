@@ -536,7 +536,10 @@ fun NpcEncontroCard(
             }
 
             Spacer(modifier = Modifier.height(18.dp))
-            val penalidadeFerimento = remember(npc.healthBoxes, npc.dano) {
+            val penalidadeFerimento = remember(npc) {
+                // A regra pode depender de outros campos da ficha além das
+                // caixas e do texto de dano; a identidade completa evita
+                // manter um valor obsoleto após alterações do NPC.
                 npc.penalidadeFerimentoAtual()
             }
             val penalidade = penalidadeFerimento + npc.penalidadeClashDefesa + npc.penalidadeAtaquesDefesa
