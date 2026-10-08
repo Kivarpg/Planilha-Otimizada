@@ -530,7 +530,10 @@ fun NpcEncontroCard(
             }
 
             Spacer(modifier = Modifier.height(18.dp))
-            val penalidade = npc.penalidadeFerimentoAtual() + npc.penalidadeClashDefesa + npc.penalidadeAtaquesDefesa
+            val penalidadeFerimento = remember(npc.healthBoxes) {
+                npc.penalidadeFerimentoAtual()
+            }
+            val penalidade = penalidadeFerimento + npc.penalidadeClashDefesa + npc.penalidadeAtaquesDefesa
             val destrezaNpc = npc.attributes["Destreza"] ?: 1
             // Contador simples de linha, pra alternar o fundo zebrado — é uma
             // var local comum (não remember), porque precisa reiniciar do
