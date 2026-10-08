@@ -40,7 +40,11 @@ object EncounterNpcSpellManagement {
 
     fun disponiveis(npc: NpcEncontro, catalogo: FeiticariaCatalog): List<FeiticoDefinition> {
         if (!podeGerenciarFeiticoInicial(npc)) return emptyList()
-        return circulosDesbloqueados(npc).flatMap(catalogo::paraCirculo)
+        // A vaga gratuita concedida pelo Círculo Terrestre só permite
+        // trocar por outro Feitiço Terrestre, mesmo que o NPC já tenha
+        // desbloqueado Círculos superiores para aquisições com XP.
+        if ("Terrestre" !in circulosDesbloqueados(npc)) return emptyList()
+        return catalogo.paraCirculo("Terrestre")
     }
 
     fun podeGerenciarFeiticoInicial(npc: NpcEncontro): Boolean = npc.podeGerenciarFeiticoInicial()
@@ -108,7 +112,7 @@ object EncounterNpcSpellManagement {
      */
     fun atualizarInicial(npc: NpcEncontro, def: FeiticoDefinition, adicionar: Boolean): NpcEncontro {
         if (!podeGerenciarFeiticoInicial(npc)) return npc
-        if (def.circulo !in circulosDesbloqueados(npc)) return npc
+        if (def.circulo != "Terrestre" || "Terrestre" !in circulosDesbloqueados(npc)) return npc
 
         val ehInicialAtual = npc.feiticoInicialNome?.let {
             EncantosSolaresCatalog.sameName(it, def.nome)
