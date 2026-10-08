@@ -1296,7 +1296,6 @@ fun NpcEncontroCard(
     val npcIoScope = rememberCoroutineScope()
     var operacaoNpcEmAndamento by remember { mutableStateOf(false) }
 
-    val compactActions = LocalConfiguration.current.screenWidthDp < 480
     BoxWithConstraints(
         modifier = Modifier
             .align(Alignment.TopEnd)
