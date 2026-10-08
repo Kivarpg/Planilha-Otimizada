@@ -132,8 +132,10 @@ internal fun buildEquipamentoDetalhesAba7(npc: NpcEncontro): String = buildStrin
         val nomeCatalogo = arma.nome.substringBeforeLast(" (").trim()
         val catalogoArtefato = com.example.data.WeaponCatalog.candidatasPorHabilidade(habilidade)
             .firstOrNull { it.nome.equals(nomeCatalogo, ignoreCase = true) && it.peso == arma.peso }
-        val catalogoMundano = com.example.data.WeaponCatalogMundano.candidatasPorHabilidade(habilidade)
-            .firstOrNull { it.nome.equals(nomeCatalogo, ignoreCase = true) && it.peso == arma.peso }
+        val catalogoMundano = if (catalogoArtefato == null) {
+            com.example.data.WeaponCatalogMundano.candidatasPorHabilidade(habilidade)
+                .firstOrNull { it.nome.equals(nomeCatalogo, ignoreCase = true) && it.peso == arma.peso }
+        } else null
 
         when {
             catalogoArtefato != null -> {
@@ -183,8 +185,10 @@ internal fun buildEquipamentoDetalhesAba7(npc: NpcEncontro): String = buildStrin
         val nomeCatalogo = armadura.nome.substringBeforeLast(" (").trim()
         val catalogoArtefato = com.example.data.ArmorCatalog.candidatas(armadura.peso)
             .firstOrNull { it.nome.equals(nomeCatalogo, ignoreCase = true) }
-        val catalogoMundano = com.example.data.ArmorCatalogMundano.candidatas(armadura.peso)
-            .firstOrNull { it.nome.equals(nomeCatalogo, ignoreCase = true) }
+        val catalogoMundano = if (catalogoArtefato == null) {
+            com.example.data.ArmorCatalogMundano.candidatas(armadura.peso)
+                .firstOrNull { it.nome.equals(nomeCatalogo, ignoreCase = true) }
+        } else null
 
         when {
             catalogoArtefato != null -> {
