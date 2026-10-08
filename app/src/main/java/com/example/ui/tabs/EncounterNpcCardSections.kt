@@ -353,8 +353,10 @@ private fun NpcSpecialIndicator(
     // O marcador pertence semanticamente ao Exaltado, não à área visual
     // atualmente aberta. Assim, Favorecida/Casta/Aspecto sempre usa a
     // paleta do próprio NPC mesmo quando o card estiver sob outro tema.
-    val exaltadoTemplate = visualTemplateParaExaltado(npc.tipoExaltado)
-    val markerColor = exaltadoTemplate.accentBright
+    // O template recebido já pertence ao Tipo de Exaltado do NPC.
+    // Evitar uma nova resolução da paleta para cada marcador de atributo
+    // ou habilidade renderizado na ficha.
+    val markerColor = visualTemplate.accentBright
     Box(
         modifier = Modifier
             .size(if (compact) 11.dp else 14.dp)
