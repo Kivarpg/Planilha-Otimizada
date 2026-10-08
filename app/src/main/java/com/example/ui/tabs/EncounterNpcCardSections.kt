@@ -473,6 +473,10 @@ run {
         val tamanhoColuna = kotlin.math.ceil(habilidadesOrdenadas.size / numeroColunas.toDouble()).toInt().coerceAtLeast(1)
         habilidadesOrdenadas.chunked(tamanhoColuna)
     }
+    val habilidadesEspeciaisMarcadas = remember(npc.tipoExaltado, npc.casta, npc.habilidadesFavorecidas) {
+        if (npc.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR) emptySet()
+        else habilidadesDeCastaOuAspecto(npc) + npc.habilidadesFavorecidas.toSet()
+    }
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(if (compactPhone) 8.dp else 14.dp)
@@ -488,7 +492,7 @@ run {
                     ) {
                         if (npc.tipoExaltado != com.example.model.TipoExaltadoEncontro.LUNAR) {
                             NpcSpecialIndicator(
-                                marked = habilidadeSolarOuDragonEspecial(npc, k),
+                                marked = k in habilidadesEspeciaisMarcadas,
                                 npc = npc,
                                 visualTemplate = visualTemplate
                             )
