@@ -1038,13 +1038,17 @@ fun NpcEncontroCard(
             val podeGerenciarFeiticoInicial = npc.podeGerenciarFeiticoInicial()
             // Após o primeiro XP, a troca gratuita está bloqueada. Evita
             // consultar o catálogo de feitiços durante a abertura da ficha.
-            val feiticosDisponiveis = remember(viewModel, npc.id, npc.tipoExaltado, npc.charms, npc.feiticos, npc.primeiroXpRecebido, podeGerenciarFeiticoInicial) {
-                if (podeGerenciarFeiticoInicial) viewModel.feiticosDisponiveisNpcEncontro(npc.id)
-                else emptyList()
+            // Não consultar o catálogo até o usuário abrir a gaveta de Feitiços.
+            // A existência da gaveta é determinada pelos Feitiços já adquiridos
+            // ou pelo direito de gerenciar o Feitiço inicial.
+            var feiticosExpandidos by remember(npc.id) { mutableStateOf(false) }
+            var gerenciarFeiticos by remember(npc.id) { mutableStateOf(false) }
+            val feiticosDisponiveis = remember(viewModel, npc.id, npc.tipoExaltado, npc.charms, npc.feiticos, npc.primeiroXpRecebido, podeGerenciarFeiticoInicial, feiticosExpandidos) {
+                if (podeGerenciarFeiticoInicial && feiticosExpandidos) {
+                    viewModel.feiticosDisponiveisNpcEncontro(npc.id)
+                } else emptyList()
             }
-            if (npc.feiticos.isNotEmpty() || feiticosDisponiveis.isNotEmpty()) {
-                var feiticosExpandidos by remember(npc.id) { mutableStateOf(false) }
-                var gerenciarFeiticos by remember(npc.id) { mutableStateOf(false) }
+            if (npc.feiticos.isNotEmpty() || podeGerenciarFeiticoInicial) {
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
