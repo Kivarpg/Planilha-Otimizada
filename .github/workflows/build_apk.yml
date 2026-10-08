@@ -49,6 +49,7 @@ jobs:
           set -euo pipefail
           project_name="$(sed -n 's/^rootProject\.name = "\(Exalted\.[0-9][0-9]*\)"$/\1/p' settings.gradle.kts)"
           test -n "$project_name"
+          test "$project_name" = "Exalted.${{ inputs.version }}" || { echo "::error::Versão informada não corresponde ao projeto: $project_name"; exit 1; }
           grep -Fq 'val exaltedProjectName = rootProject.name' app/build.gradle.kts
           grep -Fq 'targetApk.set(layout.buildDirectory.file("outputs/apk/release/$exaltedProjectName.apk"))' app/build.gradle.kts
           grep -Fq 'versionCode = exaltedVersionNumber' app/build.gradle.kts
