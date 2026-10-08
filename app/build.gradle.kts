@@ -104,8 +104,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            if (persistentSigningAvailable) {
-                signingConfig = signingConfigs.getByName("persistent")
+            // Sem secrets, gerar release instalavel usando a chave debug.
+            signingConfig = if (persistentSigningAvailable) {
+                signingConfigs.getByName("persistent")
+            } else {
+                signingConfigs.getByName("debug")
             }
         }
         debug {
