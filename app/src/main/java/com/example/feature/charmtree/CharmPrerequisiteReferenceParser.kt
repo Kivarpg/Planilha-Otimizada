@@ -43,8 +43,9 @@ internal object CharmPrerequisiteReferenceParser {
             val matches = candidates
                 .asSequence()
                 .flatMap { candidate ->
-                    allOccurrences(normalizedText, candidate.normalized).asSequence().map { start ->
-                        Match(start, start + candidate.normalized.length, candidate)
+                    allOccurrences(normalizedText, candidate.normalized).asSequence().mapNotNull { start ->
+                        val end = start + candidate.normalized.length
+                        if (isBoundaryMatch(normalizedText, start, end)) Match(start, end, candidate) else null
                     }
                 }
                 .sortedWith(compareBy<Match> { it.start }.thenByDescending { it.end - it.start })
@@ -52,7 +53,6 @@ internal object CharmPrerequisiteReferenceParser {
 
             val selected = mutableListOf<Match>()
             for (match in matches) {
-                if (!isBoundaryMatch(normalizedText, match.start, match.end)) continue
                 // Matches are ordered by start; accepted matches never overlap.
                 // Only the most recent accepted interval can conflict.
                 if (selected.lastOrNull()?.end?.let { match.start < it } != true) {
