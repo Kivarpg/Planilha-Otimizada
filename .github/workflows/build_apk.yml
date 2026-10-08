@@ -1,12 +1,17 @@
 # Build manual — testes unitários + APK release
 # Nunca compilar em push ou pull request. Somente execução manual autorizada.
 name: Build APK
-# O título de cada execução acompanha exatamente a mensagem do commit de
-# versão (ex.: Exalted.766), sem o antigo "Build APK" no nome visível.
-run-name: ${{ github.event.head_commit.message || github.ref_name }}
+# O título da execução manual usa o número da versão escolhido explicitamente.
+# GitHub Actions não permite ler settings.gradle.kts na expressão run-name.
+run-name: Exalted.${{ inputs.version }}
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Número da versão (ex.: 797)"
+        required: true
+        type: string
 
 concurrency:
   group: build-${{ github.ref }}
