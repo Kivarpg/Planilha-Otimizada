@@ -340,7 +340,9 @@ fun NpcEncontroCard(
         }
     }
 
-    val visualTemplate = visualTemplateParaExaltado(npc.tipoExaltado)
+    val visualTemplate = remember(npc.tipoExaltado) {
+        visualTemplateParaExaltado(npc.tipoExaltado)
+    }
     val especialidadesSet = remember(npc.especialidades) {
         npc.especialidades.asSequence().map { it.habilidade }.toSet()
     }
