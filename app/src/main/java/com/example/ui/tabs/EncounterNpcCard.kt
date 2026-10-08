@@ -1026,10 +1026,13 @@ fun NpcEncontroCard(
             // Gaveta exclusiva de Feitiços da Aba 11. Feitiços não são
             // misturados às gavetas de Encantos porque são poderes de
             // Feitiçaria e possuem seu próprio círculo/custo.
-            val feiticosDisponiveis = remember(viewModel, npc.id, npc.tipoExaltado, npc.charms, npc.feiticos, npc.primeiroXpRecebido) {
-                viewModel.feiticosDisponiveisNpcEncontro(npc.id)
-            }
             val podeGerenciarFeiticoInicial = npc.podeGerenciarFeiticoInicial()
+            // Após o primeiro XP, a troca gratuita está bloqueada. Evita
+            // consultar o catálogo de feitiços durante a abertura da ficha.
+            val feiticosDisponiveis = remember(viewModel, npc.id, npc.tipoExaltado, npc.charms, npc.feiticos, npc.primeiroXpRecebido, podeGerenciarFeiticoInicial) {
+                if (podeGerenciarFeiticoInicial) viewModel.feiticosDisponiveisNpcEncontro(npc.id)
+                else emptyList()
+            }
             if (npc.feiticos.isNotEmpty() || feiticosDisponiveis.isNotEmpty()) {
                 var feiticosExpandidos by remember(npc.id) { mutableStateOf(false) }
                 var gerenciarFeiticos by remember(npc.id) { mutableStateOf(false) }
