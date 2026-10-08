@@ -1132,7 +1132,10 @@ fun NpcEncontroCard(
                                     forceStroke = true
                                 )
                                 Spacer(modifier = Modifier.height(8.dp))
-                                feiticosDisponiveis.groupBy { it.circulo }.forEach { (circulo, defs) ->
+                                val feiticosPorCirculo = remember(feiticosDisponiveis) {
+                                    feiticosDisponiveis.groupBy { it.circulo }
+                                }
+                                feiticosPorCirculo.forEach { (circulo, defs) ->
                                     AppText("Círculo $circulo", fontWeight = FontWeight.Bold, color = ExaltedGold, forceStroke = true)
                                     defs.forEach { def ->
                                         val marcado = npc.feiticoInicialNome?.let {
