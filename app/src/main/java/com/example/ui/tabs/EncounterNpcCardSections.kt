@@ -383,10 +383,6 @@ private fun atributoLunarEspecial(npc: NpcEncontro, nome: String): Boolean =
     npc.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR &&
         nome in (npc.lunarAtributosCasta + npc.habilidadesFavorecidas)
 
-private fun habilidadeSolarOuDragonEspecial(npc: NpcEncontro, nome: String): Boolean =
-    npc.tipoExaltado != com.example.model.TipoExaltadoEncontro.LUNAR &&
-        (nome in habilidadesDeCastaOuAspecto(npc) || nome in npc.habilidadesFavorecidas)
-
 // APPROVED VISUAL CUSTOMIZATION
 // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
 @Composable
