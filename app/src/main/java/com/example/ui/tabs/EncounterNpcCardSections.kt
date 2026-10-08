@@ -379,10 +379,6 @@ private fun habilidadesDeCastaOuAspecto(npc: NpcEncontro): Set<String> = when (n
     com.example.model.TipoExaltadoEncontro.LUNAR -> emptySet()
 }
 
-private fun atributoLunarEspecial(npc: NpcEncontro, nome: String): Boolean =
-    npc.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR &&
-        nome in (npc.lunarAtributosCasta + npc.habilidadesFavorecidas)
-
 // APPROVED VISUAL CUSTOMIZATION
 // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
 @Composable
@@ -392,6 +388,11 @@ internal fun NpcCardAttributes(npc: NpcEncontro, visualTemplate: ExaltVisualTemp
 EncounterCardTitle("Atributos", color = visualTemplate.accentBright)
 Spacer(modifier = Modifier.height(28.dp))
 val compactPhone = LocalConfiguration.current.screenWidthDp < 480
+val atributosLunaresEspeciais = remember(npc.tipoExaltado, npc.lunarAtributosCasta, npc.habilidadesFavorecidas) {
+    if (npc.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR) {
+        (npc.lunarAtributosCasta + npc.habilidadesFavorecidas).toSet()
+    } else emptySet()
+}
 Row(
     modifier = Modifier.fillMaxWidth(),
     horizontalArrangement = Arrangement.spacedBy(if (compactPhone) 4.dp else 12.dp)
@@ -407,7 +408,7 @@ Row(
                 ) {
                     if (npc.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR) {
                         NpcSpecialIndicator(
-                            marked = atributoLunarEspecial(npc, nomeAtributo),
+                            marked = nomeAtributo in atributosLunaresEspeciais,
                             npc = npc,
                             visualTemplate = visualTemplate,
                             compact = compactPhone
