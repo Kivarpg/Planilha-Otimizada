@@ -1059,11 +1059,17 @@ fun NpcEncontroCard(
             // ou pelo direito de gerenciar o Feitiço inicial.
             var feiticosExpandidos by remember(npc.id) { mutableStateOf(false) }
             var gerenciarFeiticos by remember(npc.id) { mutableStateOf(false) }
-            val feiticosDisponiveis = remember(viewModel, npc.id, npc.tipoExaltado, npc.charms, npc.feiticos, npc.primeiroXpRecebido, podeGerenciarFeiticoInicial, feiticosExpandidos) {
-                if (podeGerenciarFeiticoInicial && feiticosExpandidos) {
-                    viewModel.feiticosDisponiveisNpcEncontro(npc.id)
-                } else emptyList()
+            // Carregamento sob demanda: ao fechar e reabrir a gaveta,
+            // reutilizar o catálogo já consultado para o mesmo estado do NPC.
+            val consultarFeiticosDisponiveis = remember(
+                viewModel, npc.id, npc.tipoExaltado, npc.charms,
+                npc.feiticos, npc.primeiroXpRecebido, podeGerenciarFeiticoInicial
+            ) {
+                lazy { viewModel.feiticosDisponiveisNpcEncontro(npc.id) }
             }
+            val feiticosDisponiveis = if (podeGerenciarFeiticoInicial && feiticosExpandidos) {
+                consultarFeiticosDisponiveis.value
+            } else emptyList()
             if (npc.feiticos.isNotEmpty() || podeGerenciarFeiticoInicial) {
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(
