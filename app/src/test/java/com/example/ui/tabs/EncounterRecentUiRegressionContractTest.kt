@@ -66,11 +66,15 @@ class EncounterRecentUiRegressionContractTest {
         assertTrue(!xp.contains("Column("))
 
         val actionStart = card.indexOf("val compactActions")
-        val actionEnd = card.indexOf("// Exportar / Salvar / Carregar: exceção explícita", actionStart)
+        val actionEnd = card.indexOf("// Exportar / Salvar / Carregar: sempre na mesma linha", actionStart)
+        assertTrue(actionStart >= 0 && actionEnd > actionStart)
         val actions = card.substring(actionStart, actionEnd)
+        assertTrue(actions.contains("BoxWithConstraints("))
         assertTrue(actions.contains("Row("))
         assertTrue(!actions.contains("FlowRow("))
-        assertTrue(actions.contains("Arrangement.SpaceEvenly"))
+        assertTrue(actions.contains("val actionButtonWidth = if (compactActions)"))
+        assertTrue(actions.contains("((maxWidth - 8.dp) / 3)"))
+        assertTrue(Regex("customWidth = if \\(compactActions\\) actionButtonWidth").findAll(actions).count() == 3)
 
         val archetypeStart = generator.indexOf("AppText(\"3. Arquétipo\"")
         val archetypeEnd = generator.indexOf("if (tipoSangueDeDragao)", archetypeStart)
