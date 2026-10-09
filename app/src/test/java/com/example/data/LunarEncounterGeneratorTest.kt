@@ -132,7 +132,7 @@ class LunarEncounterGeneratorTest {
             random = Random(17),
             arquetipo = ArquetipoEncontro.FISICO
         ).charms
-        assertTrue(selecionados.count { it.nome == com.example.model.NOME_CORPO_DE_TOURO } <= 1)
+        assertEquals(1, selecionados.count { it.nome == com.example.model.NOME_CORPO_DE_TOURO })
     }
 
     @Test
