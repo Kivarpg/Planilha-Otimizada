@@ -134,7 +134,9 @@ internal object LunarEncounterCharmSelection {
         // A projecao considera Essencia futura (ate 5), mas nunca inventa
         // aumentos de Atributo ou ignora prerequisitos.
         val ataqueEscolhido = if (arquetipo == ArquetipoEncontro.FISICO) {
-            val foco = atributoFocoUsuario?.takeIf { it == "Força" || it == "Destreza" }
+            val foco = atributoFocoUsuario?.let { solicitado ->
+                listOf("Força", "Destreza").firstOrNull { it.equals(solicitado.trim(), ignoreCase = true) }
+            }
             foco ?: run {
                 val ofensivos = listOf("Força", "Destreza")
                 val pontuacoes = ofensivos.associateWith { atributo ->
