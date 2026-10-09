@@ -106,3 +106,10 @@ PREPARAÇÃO DOS TESTES — 2026-10-08
 - EncounterNpcSpellManagementTest.kt já contém testes de atribuição automática de Feitiço Terrestre, repetibilidade do sorteio, não duplicação, preservação de outros Feitiços e bloqueio depois do primeiro XP.
 - Nos três geradores, garantirInicialNaCriacao é chamado após a auditoria do NPC e antes de validar a identidade estrutural e retornar o NPC final.
 - Os testes permanecem não executados. A inspeção não prova ausência de outros problemas de compilação.
+
+INVENTÁRIO E REVISÃO ESTÁTICA DE TESTES — 2026-10-08
+- A árvore recursiva da branch final-audit-797 contém 212 arquivos Kotlin sob app/src/test/.
+- Inspecionadas as importações de EncounterSpellSelectionServiceTest.kt, EncounterNpcSpellManagementTest.kt e CharmPrerequisiteReferenceParserTest.kt. Não há importações simultâneas de org.junit.Assert.assertEquals e kotlin.test.assertEquals nesses três arquivos após a correção anterior.
+- Os arquivos cobrem, respectivamente, regras de seleção de Feitiços, atribuição/bloqueio de Feitiço inicial e reconhecimento de pré-requisitos de Encantos.
+- Inventário não equivale à execução nem a cobertura efetiva das 15 abas. Não há resultados de Gradle/JUnit ou testes instrumentados nesta etapa.
+- Próximo portão técnico: rodar testDebugUnitTest e gates de release quando a compilação final for autorizada; investigar falhas concretas antes de declarar conclusão.
