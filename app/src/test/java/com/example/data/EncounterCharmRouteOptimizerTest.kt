@@ -810,4 +810,21 @@ class EncounterCharmRouteOptimizerTest {
         )
     }
 
+    @Test
+    fun `contagem agregada igual nao distingue qual encanto foi repetido`() {
+        val (corpo, _) = encanto("Corpo de Touro", 10, habilidade = "Resistência")
+        val (outro, _) = encanto("Outro de Resistência", 10, habilidade = "Resistência")
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            listOf(corpo, outro), { it.nome }, { it.habilidade }
+        )
+        val base = prepared.compactKey(
+            setOf(corpo.nome, outro.nome), mapOf("resistência" to 2)
+        )
+        val repetiuCorpo = prepared.compactKeyAfter(base, corpo.nome, "Resistência")
+        val repetiuOutro = prepared.compactKeyAfter(base, outro.nome, "Resistência")
+        // Este teste documenta a limitacao existente: a chave compacta nao
+        // armazena a multiplicidade individual de Encantos ja selecionados.
+        assertEquals(repetiuCorpo, repetiuOutro)
+    }
+
 }
