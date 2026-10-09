@@ -1,10 +1,16 @@
-# Compilação somente por acionamento manual explícito.
+# Compilação automática quando a versão ou o próprio workflow mudar.
 # Alterações comuns de código NÃO iniciam compilação.
 name: Build APK
 # Nome da execução; a versão canônica vem de settings.gradle.kts.
 run-name: Build APK (versão do projeto)
 
 on:
+  push:
+    branches:
+      - final-audit-797
+    paths:
+      - settings.gradle.kts
+      - .github/workflows/build_apk.yml
   workflow_dispatch:
 
 concurrency:
