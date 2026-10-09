@@ -144,7 +144,15 @@ internal object LunarEncounterCharmSelection {
                     .groupBy { it.atributo }
                 candidatosOfensivos.maxWithOrNull(
                     compareBy<String> { atributo ->
-                        disponiveisPorAtributo[atributo].orEmpty().let { disponiveis -> if (disponiveis.any { it.minEssencia <= 1 }) disponiveis.maxOfOrNull { it.minEssencia } ?: 0 else 0 }
+                        disponiveisPorAtributo[atributo].orEmpty().let { disponiveis ->
+                            val niveis = disponiveis.mapTo(hashSetOf()) { it.minEssencia }
+                            var nivelContinuo = 0
+                            for (nivel in 1..essencia) {
+                                if (nivel !in niveis) break
+                                nivelContinuo = nivel
+                            }
+                            nivelContinuo
+                        }
                     }.thenBy { atributo ->
                         disponiveisPorAtributo[atributo].orEmpty().size
                     }.thenBy { atributo -> attributes[atributo] ?: 0 }
