@@ -168,7 +168,7 @@ internal object EncounterExperienceLunar {
     // Lunar não tem fase de fallback (100% do XP vai pra Encantos), então
     // aqui a função cobre o lote inteiro, não só uma fase.
     private fun custoXpEncantoLunar(castaOuFavorecidos: Set<String>, atributoAquisicao: String): Int =
-        if (castaOuFavorecidos.any { it.equals(atributoAquisicao, ignoreCase = true) } || atributoAquisicao.equals("Universal", ignoreCase = true)) 8 else 10
+        if (atributoAquisicao.lowercase() in castaOuFavorecidos || atributoAquisicao.equals("Universal", ignoreCase = true)) 8 else 10
 
     private data class ResultadoCompraCharmsLunar(
         val xpDisponivel: Int,
@@ -201,7 +201,8 @@ internal object EncounterExperienceLunar {
         val nomesCharmsNesteLote = mutableListOf<String>()
         // O conjunto de Casta/Favorecidas nao muda dentro de um lote de XP.
         // Construir uma vez evita alocacoes por rota avaliada, sem mudar custos.
-        val castaOuFavorecidos = (npc.lunarAtributosCasta + npc.habilidadesFavorecidas).toSet()
+        val castaOuFavorecidos = (npc.lunarAtributosCasta + npc.habilidadesFavorecidas)
+            .mapTo(hashSetOf()) { it.lowercase() }
         var routeContextAtual = indice.routeContext
         var spiritTraitsEfetivos = indice.spiritTraits
         var formaSecundariaAdquirida: SpiritualFormService.Animal? = null
