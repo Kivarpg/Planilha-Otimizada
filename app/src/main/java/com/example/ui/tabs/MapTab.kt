@@ -952,8 +952,10 @@ private fun MapaInterativo(
                 // devem crescer junto com o zoom. Como este Canvas está dentro da
                 // graphicsLayer escalada, compensamos o scale e ainda reduzimos
                 // suavemente o tamanho visual conforme a aproximação aumenta.
-                val markerVisualScale = (1f / kotlin.math.sqrt(effectiveScale))
-                    .coerceIn(0.34f, 1f)
+                // Marcadores ligeiramente maiores e com redução mais suave no zoom:
+                // mantêm-se visíveis acima da linha de rota (3dp), sem cobrir o mapa.
+                val markerVisualScale = (1f / kotlin.math.sqrt(kotlin.math.sqrt(effectiveScale)))
+                    .coerceIn(0.60f, 1.15f)
                 val markerLayerScale = markerVisualScale / effectiveScale
                 routePoints.forEach { p ->
                     val c = toScreen(p)
