@@ -371,6 +371,48 @@ class LunarEncounterGeneratorTest {
     }
 
     @Test
+    fun `xp lunar limita Vigor a tres encantos acima da arvore ofensiva`() {
+        fun encanto(atributo: String, indice: Int) = EncantoLunarDefinition(
+            id = "$atributo-$indice", atributo = atributo, subdivisao = null,
+            nome = "$atributo progressao $indice", nomeIngles = "", custo = "1",
+            minsTexto = "$atributo 3, Essência 1", minAtributo = 3, minEssencia = 1,
+            tipo = "Reflexivo", palavrasChave = "", duracao = "",
+            preRequisitos = if (indice == 1) "Nenhum" else "$atributo progressao ${indice - 1}",
+            descricao = ""
+        )
+        val catalogo = (1..12).map { encanto("Vigor", it) } +
+            (1..12).map { encanto("Força", it) }
+        val inicial = EncounterGenerator.gerarLunar(
+            nomeManual = "Lunar equilibrio Vigor",
+            arquetipo = ArquetipoEncontro.FISICO,
+            encantosLunares = emptyList(),
+            random = Random(83)
+        )
+        val npc = inicial.copy(
+            charms = emptyList(),
+            attributes = inicial.attributes + mapOf("Força" to 4, "Vigor" to 4),
+            lunarAtaqueEscolhido = "Força",
+            focoProgressaoExplicito = "Força"
+        )
+        val evoluido = EncounterExperienceLunar.expandLunarRepeated(
+            npc, catalogo, listOf("Vigor", "Força"), 12
+        )
+        val quantidadeVigor = evoluido.charms.count {
+            it.habilidadeVinculada.equals("Vigor", ignoreCase = true)
+        }
+        val quantidadeForca = evoluido.charms.count {
+            it.habilidadeVinculada.equals("Força", ignoreCase = true)
+        }
+        assertTrue("O cenário deve adquirir Encantos de ambas as árvores",
+            quantidadeVigor > 0 && quantidadeForca > 0)
+        assertTrue("Vigor não pode ultrapassar o ataque escolhido em mais de três Encantos",
+            quantidadeVigor <= quantidadeForca + 3)
+        assertTrue(evoluido.charms.none {
+            it.habilidadeVinculada.equals("Destreza", ignoreCase = true)
+        })
+    }
+
+    @Test
     fun `Lunar possui dois atributos de casta e dois favorecidos adicionais distintos`() {
         ArquetipoEncontro.entries.forEach { arquetipo ->
             repeat(EncounterTestSamples.count(100)) { seed ->
