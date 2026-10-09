@@ -194,7 +194,12 @@ internal object EncounterExperienceSolar {
                     nomesSelecionados += candidato.nome
                     nomesCharmsNesteLote += candidato.nome
                     categoriasSelecionadas[categoriaRamo] = (categoriasSelecionadas[categoriaRamo] ?: 0) + 1
-                    if (candidato.nome == NOME_CORPO_DE_TOURO) corpoDeTouro++
+                    if (candidato.nome == NOME_CORPO_DE_TOURO) {
+                        corpoDeTouro++
+                        // A elegibilidade de compras repetidas depende deste contador,
+                        // que não faz parte da chave compacta do otimizador.
+                        elegibilidadeMemo.clear()
+                    }
                     encantoCompradoNesteLote = true
                     encantoElegivelNesteLote = true
                     // A compra altera o estado usado pelo otimizador. Ramos que
