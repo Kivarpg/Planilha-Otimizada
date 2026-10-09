@@ -192,6 +192,7 @@ class LunarEncounterGeneratorTest {
         )
         val npc = inicial.copy(
             charms = emptyList(),
+            attributes = inicial.attributes + mapOf("Força" to 4, "Destreza" to 4),
             lunarAtaqueEscolhido = "Força",
             focoProgressaoExplicito = "Força"
         )
@@ -200,6 +201,8 @@ class LunarEncounterGeneratorTest {
         )
         val depois = expandido.npcResultante
         assertEquals("Força", depois.lunarAtaqueEscolhido)
+        assertTrue("O cenário deve comprar ao menos um Encanto", depois.charms.isNotEmpty())
+        assertTrue("A progressão deve iniciar pela raiz ofensiva", depois.charms.any { it.nome == "Forca XP 1" })
         assertTrue(depois.charms.none { it.habilidadeVinculada.equals("Destreza", ignoreCase = true) })
         assertEquals(
             npc.xpAtual + EncounterExperienceService.XP_POR_CHAMADA,
