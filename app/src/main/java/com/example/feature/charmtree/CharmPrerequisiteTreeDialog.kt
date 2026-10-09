@@ -176,6 +176,8 @@ private fun CharmPrerequisiteTreeDialogEntries(
 ) {
     var result by remember(rootCharmId, charms, includeFullCatalog, preparedResult) { mutableStateOf(preparedResult) }
     var buildFinished by remember(rootCharmId, charms, includeFullCatalog, preparedResult) { mutableStateOf(preparedResult != null) }
+    // A callback pode mudar sem invalidar a construção já calculada.
+    val currentOnTreePrepared by androidx.compose.runtime.rememberUpdatedState(onTreePrepared)
 
     LaunchedEffect(rootCharmId, charms, includeFullCatalog, preparedResult) {
         if (preparedResult == null && !buildFinished) {
@@ -183,7 +185,7 @@ private fun CharmPrerequisiteTreeDialogEntries(
                 CharmPrerequisiteTreeBuilder.build(rootCharmId, charms, includeFullCatalog)
             }
             result = built
-            built?.let { onTreePrepared?.invoke(it) }
+            built?.let { currentOnTreePrepared?.invoke(it) }
             buildFinished = true
         }
     }
