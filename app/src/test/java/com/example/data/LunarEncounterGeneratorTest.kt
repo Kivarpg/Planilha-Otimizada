@@ -325,6 +325,42 @@ class LunarEncounterGeneratorTest {
     }
 
     @Test
+    fun `xp lunar respeita Destreza como unica arvore ofensiva escolhida`() {
+        fun raiz(atributo: String) = EncantoLunarDefinition(
+            id = "raiz-$atributo", atributo = atributo, subdivisao = null,
+            nome = "Raiz $atributo", nomeIngles = "", custo = "1",
+            minsTexto = "$atributo 3, Essência 1", minAtributo = 3, minEssencia = 1,
+            tipo = "Reflexivo", palavrasChave = "", duracao = "",
+            preRequisitos = "Nenhum", descricao = ""
+        )
+        val inicial = EncounterGenerator.gerarLunar(
+            nomeManual = "Lunar Destreza XP",
+            arquetipo = ArquetipoEncontro.FISICO,
+            encantosLunares = emptyList(),
+            random = Random(82)
+        )
+        val npc = inicial.copy(
+            charms = emptyList(),
+            attributes = inicial.attributes + mapOf("Força" to 4, "Destreza" to 4),
+            lunarAtaqueEscolhido = "Destreza",
+            focoProgressaoExplicito = "Destreza"
+        )
+        val resultado = EncounterExperienceLunar.expandLunarWithBatch(
+            npc, listOf(raiz("Força"), raiz("Destreza")),
+            listOf("Força", "Destreza", "Vigor")
+        )
+        assertEquals("Destreza", resultado.npcResultante.lunarAtaqueEscolhido)
+        assertTrue(
+            "A árvore ofensiva escolhida deve poder adquirir sua raiz",
+            resultado.npcResultante.charms.any { it.nome == "Raiz Destreza" }
+        )
+        assertTrue(
+            "Força deve permanecer excluída mesmo quando aparece primeiro na prioridade",
+            resultado.npcResultante.charms.none { it.habilidadeVinculada.equals("Força", ignoreCase = true) }
+        )
+    }
+
+    @Test
     fun `Lunar possui dois atributos de casta e dois favorecidos adicionais distintos`() {
         ArquetipoEncontro.entries.forEach { arquetipo ->
             repeat(EncounterTestSamples.count(100)) { seed ->
