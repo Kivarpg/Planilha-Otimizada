@@ -211,7 +211,20 @@ internal object EncounterExperienceLunar {
         // e aprofunda as três primeiras Árvores prioritárias antes de espalhar
         // a progressão.
         var tentativas = 0
-        val ramos = indice.ordemAtributos
+        // Preservar a especialização física da seleção inicial ao evoluir XP.
+        // A rota já adquirida é autoritativa; sem ela, usar a prioridade do NPC.
+        val ofensivos = listOf("Força", "Destreza")
+        val ataqueEscolhido = if (npc.arquetipo == com.example.model.ArquetipoEncontro.FISICO) {
+            ofensivos.maxWithOrNull(
+                compareBy<String> { categoriasSelecionadas[it.lowercase()] ?: 0 }
+                    .thenBy { if (it in indice.ordemAtributos) -indice.ordemAtributos.indexOf(it) else Int.MIN_VALUE }
+            )
+        } else null
+        val ataqueDescartado = ofensivos.firstOrNull { it != ataqueEscolhido }
+        fun vigorPermitido(contagens: Map<String, Int>): Boolean =
+            ataqueEscolhido == null ||
+                (contagens["vigor"] ?: 0) < (contagens[ataqueEscolhido.lowercase()] ?: 0) + 3
+        val ramos = indice.ordemAtributos.filter { ataqueEscolhido == null || it != ataqueDescartado }
         val arvoresAtivas = ramos.take(3).toMutableList()
         if (ramos.isEmpty()) return ResultadoCompraCharmsLunar(
             xpDisponivel, xpGastoTotal, corpoDeTouro, contagemAtributoMentalSelecionada,
@@ -219,6 +232,7 @@ internal object EncounterExperienceLunar {
         )
 
         fun comprarBloco(atributoRamo: String): Boolean {
+            if (atributoRamo == ataqueDescartado) return false
             var progresso = false
             // A chave da categoria nao muda durante as tentativas deste bloco.
             val chaveCategoriaRamo = atributoRamo.lowercase()
@@ -247,6 +261,8 @@ internal object EncounterExperienceLunar {
                     )
                     val rota = rotasElegiveis.firstOrNull { route ->
                         route.atributo.equals(atributoRamo, ignoreCase = true) &&
+                            (ataqueEscolhido == null || !route.atributo.equals(ataqueDescartado, ignoreCase = true)) &&
+                            (!route.atributo.equals("Vigor", ignoreCase = true) || vigorPermitido(categoriasSelecionadas)) &&
                             custoXpEncantoLunar(castaOuFavorecidos, route.atributo) <= xpDisponivel
                     } ?: continue
                     candidato = def
