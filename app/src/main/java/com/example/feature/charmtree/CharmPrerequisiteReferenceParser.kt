@@ -43,7 +43,7 @@ internal object CharmPrerequisiteReferenceParser {
             val matches = candidates
                 .asSequence()
                 .flatMap { candidate ->
-                    allOccurrences(normalizedText, candidate.normalized).asSequence().mapNotNull { start ->
+                    allOccurrences(normalizedText, candidate.normalized).mapNotNull { start ->
                         val end = start + candidate.normalized.length
                         if (isBoundaryMatch(normalizedText, start, end)) Match(start, end, candidate) else null
                     }
@@ -104,17 +104,15 @@ internal object CharmPrerequisiteReferenceParser {
             .sortedByDescending { it.normalized.length }
     }
 
-    private fun allOccurrences(text: String, needle: String): List<Int> {
-        if (needle.isBlank()) return emptyList()
-        val result = mutableListOf<Int>()
+    private fun allOccurrences(text: String, needle: String): Sequence<Int> = sequence {
+        if (needle.isBlank()) return@sequence
         var from = 0
         while (from <= text.length - needle.length) {
             val index = text.indexOf(needle, from)
             if (index < 0) break
-            result += index
+            yield(index)
             from = index + 1
         }
-        return result
     }
 
     private fun isBoundaryMatch(text: String, start: Int, end: Int): Boolean {
