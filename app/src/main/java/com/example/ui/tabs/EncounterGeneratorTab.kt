@@ -930,7 +930,9 @@ fun EncounterGeneratorTab(
                 saver = ScrollState.Saver
             ) { ScrollState(0) }
 
-            val npcTabTemplates = remember(npcsGerados.map { it.tipoExaltado }) {
+            // A chave inclui a identidade dos NPCs: substituir um NPC por outro
+            // do mesmo tipo também deve reconstruir o mapa indexado por id.
+            val npcTabTemplates = remember(npcsGerados.map { it.id to it.tipoExaltado }) {
                 npcsGerados.associate { it.id to visualTemplateParaExaltado(it.tipoExaltado) }
             }
             Box(
