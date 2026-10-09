@@ -5,7 +5,7 @@ import kotlin.random.Random
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import kotlin.test.assertEquals
+import org.junit.Assert.assertEquals
 
 class EncounterSpellSelectionServiceTest {
 
