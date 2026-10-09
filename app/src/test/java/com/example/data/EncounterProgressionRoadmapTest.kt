@@ -550,6 +550,23 @@ class EncounterProgressionRoadmapTest {
     }
 
     @Test
+    fun `roadmap Lunar preserva escolha ofensiva ao aplicar XP`() {
+        val base = npcBase().copy(tipoExaltado = TipoExaltadoEncontro.LUNAR)
+        val planejado = EncounterProgressionRoadmapService.construir(
+            base, emptyList(), emptyList(), emptyList()
+        )
+        val passo = EncounterProgressionRoadmapService.proximo(base, planejado)
+            ?: error("Passo Lunar esperado")
+        assertEquals("Força", passo.lunarAtaqueEscolhido)
+        val aplicado = EncounterExperienceService.aplicarPassoRoadmap(base, passo)
+            ?: error("Passo Lunar deveria ser aplicavel")
+        assertEquals(passo.lunarAtaqueEscolhido, aplicado.lunarAtaqueEscolhido)
+        assertEquals(null, EncounterProgressionRoadmapService.proximo(
+            base.copy(lunarAtaqueEscolhido = "Destreza"), planejado
+        ))
+    }
+
+    @Test
     fun `roadmap invalida versao antiga`() {
         val planejado = EncounterProgressionRoadmapService.construir(
             npcBase(), catalogoSolarDeTeste(), emptyList(), emptyList()
