@@ -209,6 +209,10 @@ class LunarEncounterGeneratorTest {
             depois.xpAtual + (depois.xpGastoTotal - npc.xpGastoTotal)
         )
         assertEquals(depois.xpGastoTotal - npc.xpGastoTotal, expandido.batchAplicado.xpGasto)
+        assertEquals(
+            depois.charms.map { it.nome },
+            expandido.batchAplicado.nomesEncantosAdicionados
+        )
         val adquiridos = depois.charms.map { it.nome }.toSet()
         val segundaExpansao = EncounterExperienceLunar.expandLunarWithBatch(
             depois, catalogo, listOf("Força", "Destreza", "Vigor")
@@ -221,6 +225,10 @@ class LunarEncounterGeneratorTest {
             segundo.xpAtual + (segundo.xpGastoTotal - depois.xpGastoTotal)
         )
         assertEquals(segundo.xpGastoTotal - depois.xpGastoTotal, segundaExpansao.batchAplicado.xpGasto)
+        assertEquals(
+            segundo.charms.drop(depois.charms.size).map { it.nome },
+            segundaExpansao.batchAplicado.nomesEncantosAdicionados
+        )
         assertEquals(2, segundo.historicoXpBatches.size - npc.historicoXpBatches.size)
         assertEquals(
             expandido.batchAplicado.xpGasto + segundaExpansao.batchAplicado.xpGasto,
