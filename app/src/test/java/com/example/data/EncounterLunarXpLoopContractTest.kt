@@ -133,6 +133,7 @@ class EncounterLunarXpLoopContractTest {
             .substringBefore("fun comprarBloco(atributoRamo: String)")
         assertTrue(ranking.contains("EncounterExperienceService.essenciaPara(npc, xpGastoTotal)"))
         assertTrue(ranking.contains("essenciaPontuacaoCache != essenciaPontuacao"))
+        assertTrue(ranking.contains("if (ataqueEscolhido != null && essenciaPontuacaoCache != essenciaPontuacao)"))
         assertTrue(ranking.contains("candidatosPorRamo.clear()"))
         assertTrue(ranking.contains("alcanceAtualPorEncanto.clear()"))
         assertTrue(ranking.contains("attributesAtuais, essenciaPontuacao"))
