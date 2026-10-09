@@ -221,7 +221,9 @@ internal object EncounterExperienceLunar {
                 ?: ofensivos.maxWithOrNull(
                     compareBy<String> { categoriasSelecionadas[it.lowercase()] ?: 0 }
                         .thenBy {
-                            val posicao = indice.ordemAtributos.indexOf(it)
+                            val posicao = indice.ordemAtributos.indexOfFirst { atributo ->
+                                atributo.equals(it, ignoreCase = true)
+                            }
                             if (posicao >= 0) -posicao else Int.MIN_VALUE
                         }
                 )
