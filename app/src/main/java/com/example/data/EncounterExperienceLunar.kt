@@ -214,13 +214,16 @@ internal object EncounterExperienceLunar {
         // Preservar a especialização física da seleção inicial ao evoluir XP.
         // A rota já adquirida é autoritativa; sem ela, usar a prioridade do NPC.
         val ofensivos = listOf("Força", "Destreza")
+        // O foco declarado prevalece; sem foco, a arvore ja iniciada prevalece.
+        // Em empate, a prioridade original do NPC e estavel entre lotes.
         val ataqueEscolhido = if (npc.arquetipo == com.example.model.ArquetipoEncontro.FISICO) {
-            // O foco explícito ofensivo é autoritativo mesmo quando a árvore
-            // ainda não possui Encantos; a contagem só desempata o automático.
             npc.focoProgressaoExplicito?.takeIf { it in ofensivos }
                 ?: ofensivos.maxWithOrNull(
                     compareBy<String> { categoriasSelecionadas[it.lowercase()] ?: 0 }
-                        .thenBy { if (it in indice.ordemAtributos) -indice.ordemAtributos.indexOf(it) else Int.MIN_VALUE }
+                        .thenBy {
+                            val posicao = indice.ordemAtributos.indexOf(it)
+                            if (posicao >= 0) -posicao else Int.MIN_VALUE
+                        }
                 )
         } else null
         val ataqueDescartado = ofensivos.firstOrNull { it != ataqueEscolhido }
