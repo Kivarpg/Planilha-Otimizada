@@ -303,7 +303,9 @@ object EncounterCharmRouteOptimizer {
             // A chave incremental carrega a multiplicidade de Encantos repetidos.
             // Reconstruí-la apenas com nomes e categorias apagaria esse histórico.
             val compactKey = compactCache?.let { stateKey ?: prepared.compactKey(selecionados, contagens) }
-            val legacyKey = if (legacyEligibilityCache != null) EligibilityKey(selecionados, contagens) else null
+            val legacyKey = if (legacyEligibilityCache != null &&
+                stateKey?.repeatedAcquisitions.isNullOrEmpty())
+                EligibilityKey(selecionados, contagens) else null
             (compactKey?.let { compactCache[it] } ?: legacyKey?.let { key -> legacyEligibilityCache?.get(key) })?.let {
                 metrics?.recordEligibilityCacheHit()
                 return it
@@ -349,7 +351,11 @@ object EncounterCharmRouteOptimizer {
         ):UnlockCounts {
             val started = if (metrics != null) System.nanoTime() else 0L
             val afterCompactKey = compactCache?.let { derivedCompactKey ?: prepared.compactKey(afterSelected, afterCounts) }
-            val afterLegacyKey = if (legacyEligibilityCache != null) EligibilityKey(afterSelected, afterCounts) else null
+            // O memo legado não representa multiplicidade individual: não o use
+            // para estados derivados com aquisições repetidas.
+            val afterLegacyKey = if (legacyEligibilityCache != null &&
+                derivedCompactKey?.repeatedAcquisitions.isNullOrEmpty())
+                EligibilityKey(afterSelected, afterCounts) else null
             val cachedAfter = afterCompactKey?.let { compactCache[it] }
                 ?: afterLegacyKey?.let { key -> legacyEligibilityCache?.get(key) }
             val after = if (monotonicEligibility) {
@@ -396,7 +402,7 @@ object EncounterCharmRouteOptimizer {
                     next
                 }
             } else {
-                eligibleNames(afterSelected,afterCounts)
+                eligibleNames(afterSelected,afterCounts,derivedCompactKey)
             }
             var total = 0
             var sameRoute = 0
