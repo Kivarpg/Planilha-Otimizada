@@ -1,8 +1,7 @@
-# Compilação automática quando a versão ou o próprio workflow mudar.
-# Alterações comuns de código NÃO iniciam compilação.
+# Somente alteração da versão inicia build automático.
+# Para evitar nomes incorretos, commits de versão devem ter título Exalted.N.
 name: Build APK
-# Nome da execução; a versão canônica vem de settings.gradle.kts.
-run-name: Exalted.808
+run-name: ${{ github.event_name == 'workflow_dispatch' && inputs.version || github.event.head_commit.message }}
 
 on:
   push:
@@ -10,8 +9,12 @@ on:
       - final-audit-797
     paths:
       - settings.gradle.kts
-      - .github/workflows/build_apk.yml
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Nome exato da versão, por exemplo Exalted.808'
+        required: true
+        type: string
 
 concurrency:
   group: build-${{ github.ref }}
@@ -55,6 +58,18 @@ jobs:
           grep -Fq 'versionCode = exaltedVersionNumber' app/build.gradle.kts
           grep -Fq 'versionName = exaltedVersionNumber.toString()' app/build.gradle.kts
           echo "Versão canônica do projeto: $project_name"
+
+      - name: Enforce exact workflow display name
+        shell: bash
+        env:
+          DISPLAY_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.version || github.event.head_commit.message }}
+        run: |
+          set -euo pipefail
+          canonical="$(sed -n 's/^rootProject\\.name = "\\(Exalted\\.[0-9][0-9]*\\)"$/\\1/p' settings.gradle.kts)"
+          if [[ -z "$canonical" || "$DISPLAY_NAME" != "$canonical" ]]; then
+            echo "::error::Nome da execução '$DISPLAY_NAME' deve ser exatamente '$canonical'."
+            exit 1
+          fi
 
       - name: Resolve canonical project version
         id: project-version
