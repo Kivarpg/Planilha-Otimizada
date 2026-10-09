@@ -110,7 +110,7 @@ fun CharmPrerequisiteTreeDialog(
     }
 
     LaunchedEffect(charms, canonicalPrerequisites, preparedEntries) {
-        if (preparedEntries == null) {
+        if (preparedEntries == null && entries == null) {
             entries = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
                 charms.paraArvoreDePreRequisitos(canonicalPrerequisites)
             }
