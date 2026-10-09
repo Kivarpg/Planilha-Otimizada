@@ -11,6 +11,13 @@ import java.io.File
  */
 class EncounterLunarXpLoopContractTest {
     @Test
+    fun `xp lunar reconhece atributos favorecidos sem distinguir maiusculas`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        assertTrue(source.contains("castaOuFavorecidos.any { it.equals(atributoAquisicao, ignoreCase = true) }"))
+        assertTrue(source.contains("atributoAquisicao.equals(\"Universal\", ignoreCase = true)"))
+    }
+
+    @Test
     fun `xp lunar encontra gaveta de encantos com capitalizacao diferente`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         assertTrue(source.contains("routeContextAtual.charmsByAttribute[atributoRamo]"))
