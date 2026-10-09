@@ -14,6 +14,7 @@ on:
       - app/src/main/java/com/example/data/EncounterNpcPersistenceCoordinator.kt
       - app/src/test/java/com/example/data/EncounterNpcPersistenceCoordinatorTest.kt
       - app/src/main/java/com/example/data/EncounterPerformanceMetrics.kt
+      - app/src/main/java/com/example/data/LunarEncounterCharmSelection.kt
       - app/src/test/java/com/example/data/EncounterPerformanceMetricsTest.kt
 
 permissions:
