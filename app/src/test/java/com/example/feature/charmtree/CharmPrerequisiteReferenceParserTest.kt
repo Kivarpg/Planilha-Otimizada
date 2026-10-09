@@ -185,6 +185,39 @@ class CharmPrerequisiteReferenceParserTest {
     }
 
     @Test
+    fun shortPrerequisiteTextSkipsLongerCatalogNames() {
+        val catalog = listOf(
+            CharmTreeEntry("long", "Técnica da Defesa Perfeita e Absoluta"),
+            CharmTreeEntry("short", "Golpe")
+        )
+        val result = CharmPrerequisiteReferenceParser.resolve("Golpe", catalog)
+
+        assertEquals(listOf("short"), result.prerequisiteIds)
+    }
+
+    @Test
+    fun unmatchedShortTextStillReportsUnresolvedRequirement() {
+        val catalog = listOf(
+            CharmTreeEntry("long", "Técnica da Defesa Perfeita e Absoluta")
+        )
+        val result = CharmPrerequisiteReferenceParser.resolve("Golpe", catalog)
+
+        assertTrue(result.prerequisiteIds.isEmpty())
+        assertEquals("Golpe", result.unresolvedText)
+    }
+
+    @Test
+    fun genericRequirementWithOnlyOversizedCandidatesStaysGeneric() {
+        val catalog = listOf(
+            CharmTreeEntry("long", "Técnica da Defesa Perfeita e Absoluta")
+        )
+        val result = CharmPrerequisiteReferenceParser.resolve("Quaisquer dois", catalog)
+
+        assertTrue(result.prerequisiteIds.isEmpty())
+        assertEquals(null, result.unresolvedText)
+    }
+
+    @Test
     fun punctuationDelimitsCompleteCharmNames() {
         val catalog = listOf(
             CharmTreeEntry("a", "Defesa"),
