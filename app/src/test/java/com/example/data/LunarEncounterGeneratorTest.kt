@@ -232,6 +232,18 @@ class LunarEncounterGeneratorTest {
 
         assertTrue("A progressão não deve remover Encantos anteriores",
             segundo.charms.map { it.nome }.containsAll(adquiridos))
+        val revertidoUm = EncounterExperienceLunar.reduceLunar(segundo)
+        assertEquals("Força", revertidoUm.lunarAtaqueEscolhido)
+        assertEquals(depois.xpAtual, revertidoUm.xpAtual)
+        assertEquals(depois.xpGastoTotal, revertidoUm.xpGastoTotal)
+        assertEquals(depois.charms.map { it.nome }, revertidoUm.charms.map { it.nome })
+        assertEquals(depois.historicoXpBatches.size, revertidoUm.historicoXpBatches.size)
+        val revertidoDois = EncounterExperienceLunar.reduceLunar(revertidoUm)
+        assertEquals(npc.xpAtual, revertidoDois.xpAtual)
+        assertEquals(npc.xpGastoTotal, revertidoDois.xpGastoTotal)
+        assertEquals(npc.charms.map { it.nome }, revertidoDois.charms.map { it.nome })
+        assertEquals(npc.historicoXpBatches.size, revertidoDois.historicoXpBatches.size)
+
         segundo.charms.forEach { encanto ->
             val indice = encanto.nome.removePrefix("Forca XP ").toIntOrNull() ?: return@forEach
             if (indice > 1) assertTrue(
