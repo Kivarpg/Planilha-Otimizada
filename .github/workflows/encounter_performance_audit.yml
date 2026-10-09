@@ -6,6 +6,9 @@ on:
       - final-audit-797
     paths:
       - .github/workflows/encounter_performance_audit.yml
+      - app/src/main/java/com/example/data/LunarEncounterCharmSelection.kt
+      - app/src/main/java/com/example/data/LunarEncounterGenerator.kt
+      - app/src/test/java/com/example/data/EncounterGenerationPerformanceAuditTest.kt
 permissions:
   contents: read
 jobs:
