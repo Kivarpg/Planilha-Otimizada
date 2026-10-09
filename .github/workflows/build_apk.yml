@@ -65,7 +65,7 @@ jobs:
           DISPLAY_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.version || github.event.head_commit.message }}
         run: |
           set -euo pipefail
-          canonical="$(sed -n 's/^rootProject\\.name = "\\(Exalted\\.[0-9][0-9]*\\)"$/\\1/p' settings.gradle.kts)"
+          canonical="$(sed -n 's/^rootProject\.name = "\(Exalted\.[0-9][0-9]*\)"$/\1/p' settings.gradle.kts)"
           if [[ -z "$canonical" || "$DISPLAY_NAME" != "$canonical" ]]; then
             echo "::error::Nome da execução '$DISPLAY_NAME' deve ser exatamente '$canonical'."
             exit 1
