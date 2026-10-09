@@ -237,6 +237,31 @@ class NpcEncontroJsonCodecTest {
 
 
     @Test
+    fun `round trip preserva arvore ofensiva Lunar sem foco explicito`() {
+        val original = NpcEncontro(
+            nome = "Lunar especializado",
+            tipoExaltado = TipoExaltadoEncontro.LUNAR,
+            arquetipo = ArquetipoEncontro.FISICO,
+            lunarAtaqueEscolhido = "Destreza"
+        )
+        val restaurado = NpcEncontroJsonCodec.decode(NpcEncontroJsonCodec.encode(original))
+        assertEquals("Destreza", restaurado.lunarAtaqueEscolhido)
+        assertEquals(original, restaurado)
+    }
+
+    @Test
+    fun `schema 5 migra sem inventar arvore ofensiva Lunar`() {
+        val v5 = NpcEncontroJsonCodec.encodeObject(
+            NpcEncontro(nome = "Legado Lunar", lunarAtaqueEscolhido = "Força")
+        ).apply {
+            put("schemaVersion", 5)
+            remove("lunarAtaqueEscolhido")
+        }
+        val restaurado = NpcEncontroJsonCodec.decode(v5.toString())
+        assertEquals(null, restaurado.lunarAtaqueEscolhido)
+    }
+
+    @Test
     fun `round trip preserva foco explicito de progressao`() {
         val original = NpcEncontro(nome = "Foco", focoProgressaoExplicito = "Destreza")
         val restaurado = NpcEncontroJsonCodec.decode(NpcEncontroJsonCodec.encode(original))
@@ -270,6 +295,6 @@ class NpcEncontroJsonCodecTest {
             put("schemaVersion", 2)
         }
         assertEquals(original, NpcEncontroJsonCodec.decode(v2.toString()))
-        assertEquals(5, NpcEncontroSchema.CURRENT_VERSION)
+        assertEquals(6, NpcEncontroSchema.CURRENT_VERSION)
     }
 }
