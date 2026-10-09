@@ -221,6 +221,15 @@ class LunarEncounterGeneratorTest {
             segundo.xpAtual + (segundo.xpGastoTotal - depois.xpGastoTotal)
         )
         assertEquals(segundo.xpGastoTotal - depois.xpGastoTotal, segundaExpansao.batchAplicado.xpGasto)
+        assertEquals(2, segundo.historicoXpBatches.size - npc.historicoXpBatches.size)
+        assertEquals(
+            expandido.batchAplicado.xpGasto + segundaExpansao.batchAplicado.xpGasto,
+            segundo.xpGastoTotal - npc.xpGastoTotal
+        )
+        assertTrue("Nenhum lote pode gastar XP negativo",
+            expandido.batchAplicado.xpGasto >= 0 && segundaExpansao.batchAplicado.xpGasto >= 0)
+        assertTrue("O saldo de XP não pode ficar negativo", segundo.xpAtual >= 0)
+
         assertTrue("A progressão não deve remover Encantos anteriores",
             segundo.charms.map { it.nome }.containsAll(adquiridos))
         segundo.charms.forEach { encanto ->
