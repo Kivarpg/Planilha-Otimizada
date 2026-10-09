@@ -35,7 +35,7 @@ class EncounterGenerationPerformanceAuditTest {
         val ordem = ArquetipoEncontro.entries.flatMap { arquetipo ->
             tipos.map { tipo -> tipo to arquetipo }
         }
-        val amostrasPorConfiguracao = ordem.associateWith { ArrayList<Long>(repeticoes) }
+        val amostrasPorConfiguracao = ordem.associateWith { ArrayList<Pair<Int, Long>>(repeticoes) }
         repeat(repeticoes + 1) { rodada ->
             val sequencia = if (rodada % 2 == 0) ordem else ordem.reversed()
             for ((tipo, arquetipo) in sequencia) {
@@ -60,19 +60,20 @@ class EncounterGenerationPerformanceAuditTest {
                         }
                         check(npc.id.isNotBlank())
                     }
-                    if (rodada > 0) amostrasPorConfiguracao.getValue(tipo to arquetipo).add(tempo)
+                    if (rodada > 0) amostrasPorConfiguracao.getValue(tipo to arquetipo).add(seed to tempo)
             }
         }
         for ((tipo, arquetipo) in ordem) {
             val amostras = amostrasPorConfiguracao.getValue(tipo to arquetipo)
-            amostras.sort()
-                fun percentile(p: Int): Long =
-                    amostras[((p * amostras.size + 99) / 100 - 1).coerceIn(0, amostras.lastIndex)]
+            amostras.sortBy { it.second }
+            fun percentile(p: Int): Long =
+                amostras[((p * amostras.size + 99) / 100 - 1).coerceIn(0, amostras.lastIndex)].second
                 println(
                     "EXALTED_PERF tipo=$tipo arquetipo=$arquetipo n=$repeticoes " +
                         "p50_ms=${percentile(50) / 1_000_000.0} " +
                         "p95_ms=${percentile(95) / 1_000_000.0} " +
-                        "max_ms=${amostras.last() / 1_000_000.0}"
+                        "max_ms=${amostras.last().second / 1_000_000.0} " +
+                        "slowest_seed=${amostras.last().first}"
                 )
         }
     }
