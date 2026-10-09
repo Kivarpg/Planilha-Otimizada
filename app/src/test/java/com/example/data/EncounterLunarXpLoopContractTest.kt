@@ -54,6 +54,20 @@ class EncounterLunarXpLoopContractTest {
     }
 
     @Test
+    fun `lunar advanced charms recheck essence and prerequisites after every purchase`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        val purchase = source.substringAfter("fun comprarBloco(atributoRamo: String): Boolean {")
+            .substringBefore("while (tentativas++ < 500")
+        val essence = purchase.indexOf("val essenciaAtual = EncounterExperienceService.essenciaPara(npc, xpGastoTotal)")
+        val eligible = purchase.indexOf("LunarCharmArchetypePolicy.eligibleRoutes(")
+        val spend = purchase.indexOf("xpGastoTotal += custoXp")
+        val acquired = purchase.indexOf("nomesSelecionados += candidatoSelecionado.nome")
+        assertTrue(essence >= 0 && eligible > essence && spend > eligible && acquired > spend)
+        assertTrue(purchase.contains("essenciaAtual, nomesSelecionados, catalogo"))
+        assertTrue(purchase.contains("tentativasBloco++ < 100"))
+    }
+
+    @Test
     fun `lunar active trees are iterated without a redundant snapshot`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         assertTrue(source.contains("for (atributo in arvoresAtivas) {"))
