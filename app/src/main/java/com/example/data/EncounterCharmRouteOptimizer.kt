@@ -304,11 +304,19 @@ object EncounterCharmRouteOptimizer {
             if (hasDynamicRepeatLimits) HashMap()
             else compactEligibilityMemo ?: if (eligibilityMemo == null) HashMap() else null
 
-        fun reachedRepeatLimit(def:D, stateKey:CompactEligibilityKey?):Boolean {
+        fun reachedRepeatLimit(
+            def:D,
+            stateKey:CompactEligibilityKey?,
+            selectedNames:Set<String>
+        ):Boolean {
             if (!permiteAquisicaoRepetida(def)) return false
             val limit = repeatableAcquisitionLimit?.invoke(def) ?: return false
             val name = nome(def)
-            return (initialAcquisitionCounts[name] ?: 0) +
+            // repeatedAcquisitions registra apenas compras de nomes já presentes.
+            // A primeira compra simulada de um nome ausente na raiz também
+            // precisa contar para o teto, inclusive em rotas profundas.
+            val firstSimulated = if (name in selectedNames && name !in nomesSelecionados) 1 else 0
+            return (initialAcquisitionCounts[name] ?: 0) + firstSimulated +
                 (stateKey?.repeatedAcquisitions?.get(name) ?: 0) >= limit
         }
 
@@ -334,7 +342,7 @@ object EncounterCharmRouteOptimizer {
             for (def in catalogoCompleto) {
                 val defName = nome(def)
                 if (defName in selecionados && !permiteAquisicaoRepetida(def)) continue
-                if (reachedRepeatLimit(def, stateKey)) continue
+                if (reachedRepeatLimit(def, stateKey, selecionados)) continue
                 if (!consumeWork()) {
                     avaliacaoCompleta = false
                     break
@@ -385,7 +393,7 @@ object EncounterCharmRouteOptimizer {
                     // a elegibilidade legada observa nomes/categorias, não a
                     // multiplicidade individual da chave compacta.
                     for (def in cappedRepeatables) {
-                        if (reachedRepeatLimit(def, derivedCompactKey)) next.remove(nome(def))
+                        if (reachedRepeatLimit(def, derivedCompactKey, afterSelected)) next.remove(nome(def))
                     }
                     var checks = 0
                     val affectedNames = monotonicAffectedNames
@@ -405,7 +413,7 @@ object EncounterCharmRouteOptimizer {
                             next.remove(defName)
                             continue
                         }
-                        if (reachedRepeatLimit(def, derivedCompactKey)) {
+                        if (reachedRepeatLimit(def, derivedCompactKey, afterSelected)) {
                             next.remove(defName)
                             continue
                         }
@@ -567,9 +575,7 @@ object EncounterCharmRouteOptimizer {
                         if (repeatableOnlyAtRoot && level > 0) continue
                         val limit = repeatableAcquisitionLimit?.invoke(candidate)
                         if (limit != null) {
-                            val acquired = (initialAcquisitionCounts[candidateName] ?: 0) +
-                                (state.compactKey.repeatedAcquisitions[candidateName] ?: 0)
-                            if (acquired >= limit) continue
+                            if (reachedRepeatLimit(candidate, state.compactKey, state.selecionados)) continue
                         }
                     }
                     // Ao atingir o orçamento, nenhuma outra expansão poderá
