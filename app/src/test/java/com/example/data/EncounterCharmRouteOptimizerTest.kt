@@ -651,4 +651,30 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals("A", escolhido?.nome)
     }
 
+    @Test
+    fun `catalogo preparado rejeita definicao substituida com mesmo nome`() {
+        val (original, _) = encanto("Mesmo Nome", 8)
+        val (substituto, _) = encanto("Mesmo Nome", 8, preRequisitos = "Outro Encanto")
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            listOf(original), { it.nome }, { it.habilidade }
+        )
+        var rejeitado = false
+        try {
+            EncounterCharmRouteOptimizer.escolher(
+                candidatos = listOf(substituto),
+                catalogoCompleto = listOf(substituto),
+                nomesSelecionados = emptySet(),
+                contagensCategorias = emptyMap(),
+                elegivel = { _, _, _ -> true },
+                nome = { it.nome },
+                categoria = { it.habilidade },
+                custoXp = { 8 },
+                preparedCatalog = prepared
+            )
+        } catch (e: IllegalArgumentException) {
+            rejeitado = true
+        }
+        assertTrue("definicao substituida nao pode herdar catalogo antigo", rejeitado)
+    }
+
 }
