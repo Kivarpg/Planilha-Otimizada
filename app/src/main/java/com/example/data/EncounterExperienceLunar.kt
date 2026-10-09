@@ -261,6 +261,9 @@ internal object EncounterExperienceLunar {
         // de descendentes novamente em cada gaveta.
         val alcancePorEncanto = mutableMapOf<String, Int>()
         val alcanceAtualPorEncanto = mutableMapOf<String, Int>()
+        // Guardar a pontuação por patamar de Essência; voltar a um patamar
+        // já visto não exige recalcular os descendentes de cada Encanto.
+        val alcancePorEssencia = mutableMapOf<Int, MutableMap<String, Int>>()
         var essenciaPontuacaoCache: Int? = null
         // A ordenação por alcance é necessária apenas no Físico.
         // Nos demais arquétipos, não executar os cálculos de profundidade.
@@ -298,6 +301,7 @@ internal object EncounterExperienceLunar {
                 // Não reutilizar uma classificação baseada na Essência anterior.
                 candidatosPorRamo.clear()
                 alcanceAtualPorEncanto.clear()
+                alcanceAtualPorEncanto.putAll(alcancePorEssencia[essenciaPontuacao].orEmpty())
                 essenciaPontuacaoCache = essenciaPontuacao
             }
             return candidatosPorRamo.getOrPut(atributoRamo.lowercase()) {
@@ -326,6 +330,7 @@ internal object EncounterExperienceLunar {
                         )
                     }
                 }
+                alcancePorEssencia[essenciaPontuacao] = alcanceAtualPorEncanto.toMutableMap()
                 encantos.sortedWith(
                     compareByDescending<EncantoLunarDefinition> { alcanceAtualPorEncanto[it.nome] ?: 0 }
                         .thenByDescending { alcancePorEncanto[it.nome] ?: 0 }
@@ -424,6 +429,7 @@ internal object EncounterExperienceLunar {
                         rotaViavelPorRamo.clear() // Quimera pode abrir rotas antes inviáveis
                         alcancePorEncanto.clear() // dependências podem mudar
                         alcanceAtualPorEncanto.clear()
+                        alcancePorEssencia.clear()
                         definicoesPorNome = definicoesPermitidas()
                     }
                 }
