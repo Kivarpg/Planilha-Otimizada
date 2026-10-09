@@ -512,8 +512,17 @@ object EncounterCharmRouteOptimizer {
             var combatAffinity = 0
             for (selectedName in selecionados) {
                 val selectedTags = combatTagsPorNome[selectedName].orEmpty()
+                // Para rotas de categoria dinâmica (ex.: Lunar), o Encanto já
+                // selecionado também deve ser interpretado no estado atual.
+                // A categoria preparada só é válida para catálogos estáticos.
+                val selectedCategory = if (categoriaNoEstado == null) {
+                    normalizedCategoryPorNome[selectedName].orEmpty()
+                } else {
+                    catalogoPorNome[selectedName]?.let { cat(it, selecionados, contagens) }
+                        ?: normalizedCategoryPorNome[selectedName].orEmpty()
+                }
                 if (EncounterCombatSynergy.categoriesCanSynergize(
-                        candidateCategory, categoryPorNome[selectedName].orEmpty(),
+                        candidateCategory, selectedCategory,
                         martialStyleResolver = martialStyleResolver
                     )
                 ) {
