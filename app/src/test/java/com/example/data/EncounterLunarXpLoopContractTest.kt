@@ -11,6 +11,13 @@ import java.io.File
  */
 class EncounterLunarXpLoopContractTest {
     @Test
+    fun `desempate ofensivo lunar respeita prioridade ignorando capitalizacao`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        assertTrue(source.contains("indice.ordemAtributos.indexOfFirst { atributo ->"))
+        assertTrue(source.contains("atributo.equals(it, ignoreCase = true)"))
+    }
+
+    @Test
     fun `xp lunar reconhece atributos favorecidos sem distinguir maiusculas`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         assertTrue(source.contains("atributoAquisicao.lowercase() in castaOuFavorecidos"))
