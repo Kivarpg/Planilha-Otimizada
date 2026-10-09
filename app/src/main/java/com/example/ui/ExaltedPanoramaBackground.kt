@@ -24,9 +24,10 @@ import kotlin.math.roundToInt
  * O início corresponde à aba 1 e o fim à última aba.
  * A imagem não acompanha a rolagem vertical do conteúdo.
  *
- * Recursos opcionais: drawable-nodpi/panorama_solar.webp,
- * panorama_dragao.webp e panorama_lunar.webp.
- * Se um recurso não estiver presente, mantém o fundo Onyx existente.
+ * Recursos integrados: drawable-nodpi/panorama_solar.xml,
+ * panorama_dragao.xml e panorama_lunar.xml (vetores panorâmicos).
+ * Quando forem disponibilizadas as artes finais em WebP, substituir os vetores
+ * mantendo os mesmos nomes de recursos. O fundo Onyx é apenas contingência.
  */
 @Composable
 internal fun ExaltedPanoramaBackground(
