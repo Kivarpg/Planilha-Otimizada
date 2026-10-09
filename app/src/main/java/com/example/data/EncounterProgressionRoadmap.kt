@@ -236,7 +236,9 @@ object EncounterProgressionRoadmapService {
                 pontosGanhosNaHabilidade = lote.pontosGanhosNaHabilidade,
                 especializacaoAdicionada = lote.especializacaoAdicionada,
                 pontosForcaDeVontadeComprados = lote.pontosForcaDeVontadeComprados,
-                lunarAtaqueEscolhido = atual.lunarAtaqueEscolhido
+                lunarAtaqueEscolhido = atual.lunarAtaqueEscolhido,
+                formaEspiritualSecundariaLunar = if (atual.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR) atual.formaEspiritualSecundaria else null,
+                lunarArchetypeTraits = if (atual.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR) atual.lunarArchetypeTraits else null
             )
         }
         // Evita devolver um planejamento cancelado durante a montagem do último passo.
