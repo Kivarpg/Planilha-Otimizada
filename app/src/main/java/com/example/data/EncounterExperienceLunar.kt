@@ -458,6 +458,8 @@ internal object EncounterExperienceLunar {
             }
         }
         val npcAtualizado = npc.copy(
+            // A reversao de XP nao desfaz a escolha da arvore ofensiva feita na geracao.
+            lunarAtaqueEscolhido = npc.lunarAtaqueEscolhido,
             charms = charmsRestantes, attributes = attributesRevertidos, especialidades = especialidadesRevertidas,
             corpoDeTouroCount = corpoDeTouroRestante, essencia = essenciaNova, xpAtual = xpAtualRevertido,
             xpGastoTotal = xpGastoTotalNovo, healthBoxes = healthFinal,
