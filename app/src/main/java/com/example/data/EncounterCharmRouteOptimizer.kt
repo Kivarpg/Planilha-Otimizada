@@ -296,6 +296,9 @@ object EncounterCharmRouteOptimizer {
         // chamada. Um memo externo pode ter sido preenchido com outro limite ou
         // outra quantidade inicial; nesse caso, use apenas um memo local novo.
         val hasDynamicRepeatLimits = repeatableAcquisitionLimit != null
+        // Evita percorrer o catálogo inteiro em cada expansão incremental.
+        val cappedRepeatables = if (hasDynamicRepeatLimits)
+            catalogoCompleto.filter(permiteAquisicaoRepetida) else emptyList()
         val legacyEligibilityCache = if (hasDynamicRepeatLimits) null else eligibilityMemo
         val compactCache: MutableMap<CompactEligibilityKey, Set<String>>? =
             if (hasDynamicRepeatLimits) HashMap()
@@ -381,7 +384,7 @@ object EncounterCharmRouteOptimizer {
                     // Não herde um repetível que atingiu seu teto após a compra:
                     // a elegibilidade legada observa nomes/categorias, não a
                     // multiplicidade individual da chave compacta.
-                    for (def in catalogoCompleto) {
+                    for (def in cappedRepeatables) {
                         if (reachedRepeatLimit(def, derivedCompactKey)) next.remove(nome(def))
                     }
                     var checks = 0
