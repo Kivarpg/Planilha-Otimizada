@@ -1218,4 +1218,47 @@ class EncounterCharmRouteOptimizerTest {
         }
     }
 
+    @Test
+    fun `contagem real maior que um prevalece sobre minimo inferido`() {
+        val (corpo, _) = encanto("Corpo de Touro", 8, habilidade = "Resistência")
+        for (monotona in listOf(false, true)) {
+            var chamadas = 0
+            val escolhido = EncounterCharmRouteOptimizer.escolher(
+                candidatos = listOf(corpo),
+                catalogoCompleto = listOf(corpo),
+                nomesSelecionados = setOf(corpo.nome),
+                contagensCategorias = mapOf("resistência" to 3),
+                elegivel = { _, _, _ -> chamadas++; true },
+                nome = { it.nome },
+                categoria = { it.habilidade },
+                custoXp = { 8 },
+                permiteAquisicaoRepetida = { true },
+                repeatableAcquisitionLimit = { 3 },
+                initialAcquisitionCounts = mapOf(corpo.nome to 3),
+                monotonicEligibility = monotona
+            )
+            assertEquals("modo monotono=$monotona", null, escolhido)
+            assertEquals(0, chamadas)
+        }
+    }
+
+    @Test
+    fun `contagem inicial inferior ao minimo selecionado nao libera compra extra`() {
+        val (corpo, _) = encanto("Corpo de Touro", 8, habilidade = "Resistência")
+        val escolhido = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(corpo),
+            catalogoCompleto = listOf(corpo),
+            nomesSelecionados = setOf(corpo.nome),
+            contagensCategorias = mapOf("resistência" to 1),
+            elegivel = { _, _, _ -> true },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { 8 },
+            permiteAquisicaoRepetida = { true },
+            repeatableAcquisitionLimit = { 1 },
+            initialAcquisitionCounts = mapOf(corpo.nome to 0)
+        )
+        assertEquals(null, escolhido)
+    }
+
 }
