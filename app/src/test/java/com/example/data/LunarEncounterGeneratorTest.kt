@@ -270,6 +270,24 @@ class LunarEncounterGeneratorTest {
         assertEquals(npc.essencia, revertidoDois.essencia)
         assertEquals(npc.formaEspiritualSecundaria, revertidoDois.formaEspiritualSecundaria)
 
+        assertEquals(
+            "A expansão não deve comprar o mesmo Encanto mais de uma vez",
+            segundo.charms.size,
+            segundo.charms.map { it.nome }.distinct().size
+        )
+        assertEquals(
+            "O histórico dos dois lotes não deve repetir Encantos",
+            (expandido.batchAplicado.nomesEncantosAdicionados +
+                segundaExpansao.batchAplicado.nomesEncantosAdicionados).size,
+            (expandido.batchAplicado.nomesEncantosAdicionados +
+                segundaExpansao.batchAplicado.nomesEncantosAdicionados).distinct().size
+        )
+        assertEquals(
+            "Reverter sem histórico não deve alterar a ficha",
+            revertidoDois,
+            EncounterExperienceLunar.reduceLunar(revertidoDois)
+        )
+
         val nomesNaOrdem = segundo.charms.map { it.nome }
         nomesNaOrdem.forEachIndexed { posicao, nome ->
             val indice = nome.removePrefix("Forca XP ").toIntOrNull() ?: return@forEachIndexed
