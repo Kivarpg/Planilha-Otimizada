@@ -255,10 +255,14 @@ internal object EncounterExperienceLunar {
                     ?: routeContextAtual.charmsByAttribute.entries.firstOrNull {
                         it.key.equals(atributoRamo, ignoreCase = true)
                     }?.value.orEmpty()
+                // Calcular alcance uma vez por Encanto, não a cada comparação
+                // do sort (que pode comparar o mesmo Encanto repetidamente).
+                val alcance = encantos.associate { def ->
+                    def.nome to routeContextAtual.transitiveCharmDependentCount(def.nome)
+                }
                 encantos.sortedWith(
-                    compareByDescending<EncantoLunarDefinition> {
-                        routeContextAtual.transitiveCharmDependentCount(it.nome)
-                    }.thenBy { it.minEssencia }.thenBy { it.nome }
+                    compareByDescending<EncantoLunarDefinition> { alcance[it.nome] ?: 0 }
+                        .thenBy { it.minEssencia }.thenBy { it.nome }
                 )
             }
 
