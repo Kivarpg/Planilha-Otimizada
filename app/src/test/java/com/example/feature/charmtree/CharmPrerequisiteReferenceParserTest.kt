@@ -86,4 +86,28 @@ class CharmPrerequisiteReferenceParserTest {
         assertEquals("json-root", entries.first().id)
         assertEquals("json-prereq", entries[1].id)
     }
+    @Test
+    fun doesNotResolveCharmNameEmbeddedInsideAnotherWord() {
+        val catalog = listOf(CharmTreeEntry("a", "Sol"))
+        val result = CharmPrerequisiteReferenceParser.resolve("Consolidação", catalog)
+
+        assertTrue(result.prerequisiteIds.isEmpty())
+        assertEquals("Consolidação", result.unresolvedText)
+    }
+
+    @Test
+    fun overlappingNamesPreferLongestMatchAndPreserveTextOrder() {
+        val catalog = listOf(
+            CharmTreeEntry("short", "Golpe"),
+            CharmTreeEntry("long", "Golpe Perfeito"),
+            CharmTreeEntry("other", "Defesa")
+        )
+        val result = CharmPrerequisiteReferenceParser.resolve(
+            "Defesa e Golpe Perfeito; Golpe",
+            catalog
+        )
+
+        assertEquals(listOf("other", "long", "short"), result.prerequisiteIds)
+    }
+
 }
