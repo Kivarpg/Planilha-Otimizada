@@ -1365,4 +1365,33 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals(escolher(false), escolher(true))
     }
 
+    @Test
+    fun `cadeia de pre requisitos preserva escolha entre modos de elegibilidade`() {
+        val (raiz, _) = encanto("Raiz", 8, habilidade = "Briga")
+        val (intermediario, _) = encanto("Intermediario", 8, "Raiz", "Briga")
+        val (final, _) = encanto("Final", 8, "Intermediario", "Briga")
+        val (alternativa, _) = encanto("Alternativa", 10, habilidade = "Armas Brancas")
+        val catalogo = listOf(raiz, intermediario, final, alternativa)
+        fun escolher(monotona: Boolean): String? = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(alternativa, raiz),
+            catalogoCompleto = catalogo,
+            nomesSelecionados = emptySet(),
+            contagensCategorias = emptyMap(),
+            elegivel = { def, nomes, _ ->
+                def.preRequisitos.isBlank() || def.preRequisitos in nomes
+            },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { if (it.nome == alternativa.nome) 10 else 8 },
+            monotonicEligibility = monotona,
+            monotonicAffectedNames = if (monotona) {
+                { _, _, _, _ -> catalogo.map { it.nome }.toSet() }
+            } else null,
+            profundidade = 3,
+            beamWidth = 6
+        )?.nome
+        assertEquals("Raiz", escolher(false))
+        assertEquals(escolher(false), escolher(true))
+    }
+
 }
