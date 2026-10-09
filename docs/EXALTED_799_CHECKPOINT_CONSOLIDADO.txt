@@ -86,3 +86,10 @@ AUDITORIA INCREMENTAL — 2026-10-08 — APÓS CONSOLIDAÇÃO
 - Revisado o parser: o filtro dropWhile de candidatos mais longos é compatível com a ordenação decrescente de comprimento existente; os três testes adicionados verificam correspondência curta, texto não resolvido e requisito genérico.
 - Atenção: esta revisão é estática. Não demonstra ausência de travamentos, sobreposição visual ou erros de execução. Os testes recém-adicionados não foram executados.
 - Decisão: não fazer outra microalteração sem falha concreta; priorizar testes, instalação e verificação das 15 abas na validação final autorizada.
+
+AUDITORIA DA FICHA DE NPC — 2026-10-08
+- Inspecionado EncounterNpcCard.kt: agrupamento de Encantos por Habilidade (Solar/Sangue de Dragão) e por Atributo recuperado do catálogo (Lunar); ordenação das gavetas por quantidade e nome; cor distinta para o título de cada gaveta.
+- A seção de Feitiços é separada das gavetas de Encantos. A opção Gerenciar Feitiço Inicial depende de npc.podeGerenciarFeiticoInicial(); o diálogo comunica o bloqueio após os primeiros 5 XP.
+- Os detalhes de Feitiços já adquiridos consultam o catálogo completo, independentemente da lista de opções gratuitas disponível antes do XP.
+- Ponto a validar manualmente: NPC com círculo Terrestre recebe automaticamente um Feitiço inicial válido na geração; a inspeção desta UI não comprova a atribuição no gerador.
+- A auditoria é estática e não executou os testes ou o APK. Nenhuma mudança funcional introduzida por esta anotação.
