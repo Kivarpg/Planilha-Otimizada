@@ -136,7 +136,7 @@ class EncounterLunarXpLoopContractTest {
         assertTrue(ranking.contains("if (ataqueEscolhido != null && essenciaPontuacaoCache != essenciaPontuacao)"))
         assertTrue(ranking.contains("candidatosPorRamo.clear()"))
         assertTrue(ranking.contains("alcanceAtualPorEncanto.clear()"))
-        assertTrue(ranking.contains("attributesAtuais, essenciaPontuacao"))
+        assertTrue(ranking.contains("atributosParaPontuacao, essenciaPontuacao"))
         assertTrue(source.contains("fun candidatosOrdenados(atributoRamo: String, essenciaAtual: Int)"))
     }
 
