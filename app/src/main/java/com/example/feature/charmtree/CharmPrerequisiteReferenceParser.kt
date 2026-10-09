@@ -96,9 +96,13 @@ internal object CharmPrerequisiteReferenceParser {
             val name = entry.name.trim()
             NormalizedEntry(id, name, normalize(id), normalize(name))
         }
-        val idsByNormalizedName = entries
-            .groupBy { it.normalizedName }
-            .mapValues { (_, grouped) -> grouped.map { it.id }.filter { it.isNotBlank() }.distinct() }
+        // Apenas a unicidade importa: dispensar listas intermediárias por nome.
+        val idsByNormalizedName = HashMap<String, MutableSet<String>>()
+        for (entry in entries) {
+            if (entry.id.isNotBlank()) {
+                idsByNormalizedName.getOrPut(entry.normalizedName) { HashSet() }.add(entry.id)
+            }
+        }
 
         return entries.flatMap { entry ->
             buildList {
