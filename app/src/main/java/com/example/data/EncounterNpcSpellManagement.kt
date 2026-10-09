@@ -132,7 +132,7 @@ object EncounterNpcSpellManagement {
         val preservados = if (antigoInicial.isNullOrBlank()) {
             npc.feiticos
         } else {
-            npc.feiticos.filterNot { EncantosSolaresCatalog.sameName(it.nome, antigoInicial) }
+            npc.feiticos.filterNot { it.circulo == "Terrestre" && EncantosSolaresCatalog.sameName(it.nome, antigoInicial) }
         }
         val alvoJaExiste = preservados.any { it.circulo == def.circulo && EncantosSolaresCatalog.sameName(it.nome, def.nome) }
         val novos = if (alvoJaExiste) preservados else preservados + FeiticoEncontro(def.nome, def.circulo, def.custo)
