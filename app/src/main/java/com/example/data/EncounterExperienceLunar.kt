@@ -259,7 +259,12 @@ internal object EncounterExperienceLunar {
             contexto.charmsByAttribute.forEach { (atributo, encantos) ->
                 porRamo.getOrPut(atributo.lowercase()) { mutableListOf() }.addAll(encantos)
             }
-            return porRamo.mapValues { (_, encantos) -> encantos.distinctBy { it.nome } }
+            // Deduplicar apenas quando a mesma definição aparece mais de uma
+            // vez no ramo; manter a primeira rota e a ordem original.
+            return porRamo.mapValues { (_, encantos) ->
+                val nomes = HashSet<String>(encantos.size)
+                encantos.filter { nomes.add(it.nome) }
+            }
         }
         var encantosPorRamoNormalizado = normalizarEncantosPorRamo(routeContextAtual)
         // O mesmo Encanto pode aparecer em várias gavetas por rotas de
