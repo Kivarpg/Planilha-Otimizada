@@ -34,7 +34,9 @@ class EncounterLunarXpLoopContractTest {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         val selection = source.substringAfter("val ataqueEscolhido = if (npc.arquetipo")
             .substringBefore("val ataqueDescartado")
+        assertTrue(selection.contains("npc.lunarAtaqueEscolhido?.takeIf { it in ofensivos }"))
         assertTrue(selection.contains("npc.focoProgressaoExplicito?.takeIf { it in ofensivos }"))
+        assertTrue(selection.indexOf("npc.lunarAtaqueEscolhido") < selection.indexOf("npc.focoProgressaoExplicito"))
         assertTrue(selection.indexOf("npc.focoProgressaoExplicito") < selection.indexOf("ofensivos.maxWithOrNull"))
     }
 
