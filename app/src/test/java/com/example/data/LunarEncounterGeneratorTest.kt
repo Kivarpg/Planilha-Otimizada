@@ -418,6 +418,20 @@ class LunarEncounterGeneratorTest {
         )
         assertEquals(npc.attributes, evoluido.attributes)
         assertTrue("O XP disponível deve permanecer não negativo", evoluido.xpAtual >= 0)
+
+        // O expansor otimizado deve produzir o mesmo resultado da aplicação
+        // sequencial de lotes independentes, inclusive no histórico.
+        var sequencial = npc
+        repeat(12) {
+            sequencial = EncounterExperienceLunar.expandLunarWithBatch(
+                sequencial, catalogo, listOf("Vigor", "Força")
+            ).npcResultante
+        }
+        assertEquals(sequencial.charms, evoluido.charms)
+        assertEquals(sequencial.xpAtual, evoluido.xpAtual)
+        assertEquals(sequencial.xpGastoTotal, evoluido.xpGastoTotal)
+        assertEquals(sequencial.historicoXpBatches, evoluido.historicoXpBatches)
+        assertEquals(sequencial.lunarAtaqueEscolhido, evoluido.lunarAtaqueEscolhido)
     }
 
     @Test
