@@ -178,7 +178,8 @@ internal object EncounterExperienceLunar {
         val contagemAtributoMentalSelecionada: Int,
         val nomesCharmsNesteLote: List<String>,
         val formaEspiritualSecundaria: SpiritualFormService.Animal?,
-        val spiritTraitsEfetivos: Set<LunarSpiritTrait>
+        val spiritTraitsEfetivos: Set<LunarSpiritTrait>,
+        val ataqueEscolhido: String?
     )
 
     private fun tentarComprarCharmsLunar(
@@ -240,7 +241,7 @@ internal object EncounterExperienceLunar {
         val arvoresAtivas = ramos.take(3).toMutableList()
         if (ramos.isEmpty()) return ResultadoCompraCharmsLunar(
             xpDisponivel, xpGastoTotal, corpoDeTouro, contagemAtributoMentalSelecionada,
-            nomesCharmsNesteLote, formaSecundariaAdquirida, spiritTraitsEfetivos
+            nomesCharmsNesteLote, formaSecundariaAdquirida, spiritTraitsEfetivos, ataqueEscolhido
         )
 
         fun comprarBloco(atributoRamo: String): Boolean {
@@ -334,7 +335,7 @@ internal object EncounterExperienceLunar {
         }
         return ResultadoCompraCharmsLunar(
             xpDisponivel, xpGastoTotal, corpoDeTouro, contagemAtributoMentalSelecionada,
-            nomesCharmsNesteLote, formaSecundariaAdquirida, spiritTraitsEfetivos
+            nomesCharmsNesteLote, formaSecundariaAdquirida, spiritTraitsEfetivos, ataqueEscolhido
         )
     }
 
@@ -406,7 +407,9 @@ internal object EncounterExperienceLunar {
             corpoDeTouroCount = corpoDeTouro, essencia = essenciaFinal, xpAtual = xpDisponivel, xpGastoTotal = xpGastoTotal,
             healthBoxes = healthFinal, historicoXpBatches = npc.historicoXpBatches + batch,
             formaEspiritualSecundaria = secundaria,
-            lunarArchetypeTraits = traitsEfetivosFinais.map { it.name }.sorted()
+            lunarArchetypeTraits = traitsEfetivosFinais.map { it.name }.sorted(),
+            // Fixa a escolha tambem em fichas antigas sem o campo persistido.
+            lunarAtaqueEscolhido = resultadoCompra.ataqueEscolhido ?: npc.lunarAtaqueEscolhido
         )
         val resultado = EncounterExperienceService.recalcularDerivados(EncounterExperienceService.atualizarAlertasValidacao(npcAtualizado))
         return ExpansionResult(npcResultante = resultado, batchAplicado = batch)
