@@ -41,3 +41,8 @@ AUDITORIA DO CONTRATO DE BUILD — 2026-10-08
 - O workflow valida rootProject.name contra Exalted.<version> antes da execução do build. A versão ainda está em Exalted.798, portanto despachar manualmente a versão 799 agora falharia nessa validação.
 - Testes de regressão existentes identificados: EncounterInitialSpellLockTest.kt e EncounterNpcSpellManagementTest.kt; incluem bloqueio do gerenciamento do Feitiço inicial após XP e restrições de círculos por Tipo de Exaltado. Os testes ainda não foram executados neste checkpoint.
 - Próxima etapa necessária: preparar sincronização de versão e executar o fluxo autorizado de testes/build apenas mediante ordem explícita do usuário. Não alterar arquivo de autorização neste checkpoint.
+
+ADENDO FUNCIONAL — 2026-10-08
+- 58beded6aed2f8292568979af54f467d6e16a7ce: botão Gerenciar Feitiço Inicial permanece visível enquanto a regra permite, mesmo com catálogo vazio; diálogo exibe mensagem de ausência de opções.
+- Esta mudança requer teste de interface para os cenários: catálogo vazio, círculo desbloqueado, seleção inicial e primeiro XP.
+- A versão canônica do projeto foi atualizada para Exalted.799 em 28f31c988f381a91eb315d44f9a26a47ec9a36d6, sem disparar workflow.
