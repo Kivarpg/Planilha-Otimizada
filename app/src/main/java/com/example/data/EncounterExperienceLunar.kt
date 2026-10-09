@@ -253,6 +253,7 @@ internal object EncounterExperienceLunar {
         // Arquétipo. Compartilhar a pontuação evita percorrer sua árvore
         // de descendentes novamente em cada gaveta.
         val alcancePorEncanto = mutableMapOf<String, Int>()
+        val alcanceAtualPorEncanto = mutableMapOf<String, Int>()
         // Só o arquétipo Físico utiliza a classificação por profundidade.
         // Evitar índices e varreduras de catálogo para Social e Mental.
         val definicoesPorNome = if (ataqueEscolhido != null) catalogo.associateBy { it.nome } else emptyMap()
@@ -280,8 +281,16 @@ internal object EncounterExperienceLunar {
                         )
                     }
                 }
+                encantos.forEach { def ->
+                    alcanceAtualPorEncanto.getOrPut(def.nome) {
+                        routeContextAtual.reachableDependentCountWithinLimits(
+                            def.nome, definicoesPorNome, attributesAtuais, essenciaAtual
+                        )
+                    }
+                }
                 encantos.sortedWith(
-                    compareByDescending<EncantoLunarDefinition> { alcancePorEncanto[it.nome] ?: 0 }
+                    compareByDescending<EncantoLunarDefinition> { alcanceAtualPorEncanto[it.nome] ?: 0 }
+                        .thenByDescending { alcancePorEncanto[it.nome] ?: 0 }
                         .thenBy { it.minEssencia }.thenBy { it.nome }
                 )
             }
@@ -369,6 +378,7 @@ internal object EncounterExperienceLunar {
                         routeContextAtual = LunarCharmArchetypePolicy.prepare(catalogo, spiritTraitsEfetivos)
                         candidatosPorRamo.clear() // novas rotas após Quimera
                         alcancePorEncanto.clear() // dependências podem mudar
+                        alcanceAtualPorEncanto.clear()
                     }
                 }
 
