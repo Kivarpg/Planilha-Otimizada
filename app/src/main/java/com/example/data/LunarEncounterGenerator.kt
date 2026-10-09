@@ -268,7 +268,8 @@ internal object LunarEncounterGenerator {
             random = random
         )
         val traitsFormaPrincipal = LunarSpiritShapeArchetypeTraits.forAnimal(formaEspiritual)
-        val inicioSelecaoInicialNanos = System.nanoTime()
+        val medirFasesLunares = java.lang.Boolean.getBoolean("exalted.perf.lunar.phases")
+        val inicioSelecaoInicialNanos = if (medirFasesLunares) System.nanoTime() else 0L
         val resultadoPrimeiraPassagem = selecionarEncantosIniciaisComRotas(
             catalogo = encantosLunares,
             attributes = attributes,
@@ -281,7 +282,7 @@ internal object LunarEncounterGenerator {
             spiritTraits = traitsFormaPrincipal,
             exigirFeiticaria = explorarFeiticaria
         )
-        val duracaoPrimeiraPassagemNanos = System.nanoTime() - inicioSelecaoInicialNanos
+        val duracaoPrimeiraPassagemNanos = if (medirFasesLunares) System.nanoTime() - inicioSelecaoInicialNanos else 0L
         val charmsPrimeiraPassagem = resultadoPrimeiraPassagem.charms
         // Expressão da Alma da Quimera faz os DOIS animais contarem como forma
         // espiritual para Encantos de Arquétipo. Portanto, quando ela entra na
@@ -306,7 +307,7 @@ internal object LunarEncounterGenerator {
             traitsFormaPrincipal +
                 formaEspiritualSecundariaInicial?.let { LunarSpiritShapeArchetypeTraits.forAnimal(it) }.orEmpty()
             ).toSet()
-        val inicioSegundaPassagemNanos = System.nanoTime()
+        val inicioSegundaPassagemNanos = if (medirFasesLunares && formaEspiritualSecundariaInicial != null) System.nanoTime() else 0L
         val resultadoSegundaPassagem = if (formaEspiritualSecundariaInicial != null) {
             selecionarEncantosIniciaisComRotas(
                 catalogo = encantosLunares,
@@ -321,7 +322,7 @@ internal object LunarEncounterGenerator {
                 exigirFeiticaria = explorarFeiticaria
             )
         } else resultadoPrimeiraPassagem
-        val duracaoSegundaPassagemNanos = if (formaEspiritualSecundariaInicial != null) System.nanoTime() - inicioSegundaPassagemNanos else 0L
+        val duracaoSegundaPassagemNanos = if (inicioSegundaPassagemNanos != 0L) System.nanoTime() - inicioSegundaPassagemNanos else 0L
         val charmsSegundaPassagem = resultadoSegundaPassagem.charms
         // Se a segunda passagem deixar de conter a própria Quimera, seus traços
         // não podem permanecer habilitados. Nesse caso preservamos a passagem
@@ -346,7 +347,7 @@ internal object LunarEncounterGenerator {
                 sorceryConstructible = (attributes["Inteligência"] ?: 0) >= 3 &&
                     encantosLunares.any { it.nome == com.example.model.NOME_FEITICARIA_TERRESTRE }
             )
-        val inicioComparacaoPuraNanos = System.nanoTime()
+        val inicioComparacaoPuraNanos = if (medirFasesLunares && compararCandidatosFeiticaria) System.nanoTime() else 0L
         val resultadoPuro = if (compararCandidatosFeiticaria) {
             selecionarEncantosIniciaisComRotas(
                 catalogo = encantosLunares,
@@ -365,8 +366,8 @@ internal object LunarEncounterGenerator {
                 exigirFeiticaria = false
             )
         } else resultadoFeiticaria
-        val duracaoComparacaoPuraNanos = if (compararCandidatosFeiticaria) System.nanoTime() - inicioComparacaoPuraNanos else 0L
-        if (java.lang.Boolean.getBoolean("exalted.perf.lunar.phases")) {
+        val duracaoComparacaoPuraNanos = if (inicioComparacaoPuraNanos != 0L) System.nanoTime() - inicioComparacaoPuraNanos else 0L
+        if (medirFasesLunares) {
             println("EXALTED_LUNAR_PHASES archetype=$arquetipoEfetivo first_ms=${duracaoPrimeiraPassagemNanos / 1_000_000.0} second_ms=${duracaoSegundaPassagemNanos / 1_000_000.0} pure_ms=${duracaoComparacaoPuraNanos / 1_000_000.0} chimera=${formaEspiritualSecundariaInicial != null} compare_sorcery=$compararCandidatosFeiticaria")
         }
         val selecionarFeiticaria = if (compararCandidatosFeiticaria) {
