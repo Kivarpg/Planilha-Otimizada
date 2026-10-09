@@ -115,9 +115,13 @@ class EncounterProgressionRoadmapTest {
             base, emptyList(), listOf("Destreza", "Vigor", "Força")
         )
         assertEquals("Destreza", evoluido.lunarAtaqueEscolhido)
+        assertEquals(base.historicoXpBatches.size + 1, evoluido.historicoXpBatches.size)
         val revertido = EncounterExperienceLunar.reduceLunar(evoluido)
         assertEquals("Destreza", revertido.lunarAtaqueEscolhido)
         assertEquals(base.xpGastoTotal, revertido.xpGastoTotal)
+        assertEquals(base.xpAtual, revertido.xpAtual)
+        assertEquals(base.historicoXpBatches, revertido.historicoXpBatches)
+        assertEquals(base.charms, revertido.charms)
     }
 
     @Test
