@@ -11,6 +11,14 @@ import java.io.File
  */
 class EncounterLunarXpLoopContractTest {
     @Test
+    fun `xp lunar encontra gaveta de encantos com capitalizacao diferente`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        assertTrue(source.contains("routeContextAtual.charmsByAttribute[atributoRamo]"))
+        assertTrue(source.contains("it.key.equals(atributoRamo, ignoreCase = true)"))
+        assertTrue(source.contains("for (def in encantosDoRamo)"))
+    }
+
+    @Test
     fun `xp lunar deve preservar restricao de arvore ofensiva e limite de vigor`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         // Contrato de seguranca: a compra por XP nao pode contornar a
