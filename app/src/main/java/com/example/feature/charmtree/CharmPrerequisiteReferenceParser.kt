@@ -84,19 +84,29 @@ internal object CharmPrerequisiteReferenceParser {
     )
 
     private fun buildCandidates(catalog: List<CharmTreeEntry>): List<Candidate> {
-        val idsByNormalizedName = catalog
-            .groupBy { normalize(it.name) }
-            .mapValues { (_, entries) -> entries.map { it.id.trim() }.filter { it.isNotBlank() }.distinct() }
-
-        return catalog.flatMap { entry ->
+        // Normalizar cada nome/ID apenas uma vez por construção do catálogo.
+        data class NormalizedEntry(
+            val id: String,
+            val name: String,
+            val normalizedId: String,
+            val normalizedName: String
+        )
+        val entries = catalog.map { entry ->
             val id = entry.id.trim()
             val name = entry.name.trim()
+            NormalizedEntry(id, name, normalize(id), normalize(name))
+        }
+        val idsByNormalizedName = entries
+            .groupBy { it.normalizedName }
+            .mapValues { (_, grouped) -> grouped.map { it.id }.filter { it.isNotBlank() }.distinct() }
+
+        return entries.flatMap { entry ->
             buildList {
-                if (name.isNotBlank() && idsByNormalizedName[normalize(name)]?.size == 1) {
-                    add(Candidate(normalize(name), id, name))
+                if (entry.name.isNotBlank() && idsByNormalizedName[entry.normalizedName]?.size == 1) {
+                    add(Candidate(entry.normalizedName, entry.id, entry.name))
                 }
-                if (id.isNotBlank() && !normalize(id).equals(normalize(name))) {
-                    add(Candidate(normalize(id), id, id))
+                if (entry.id.isNotBlank() && entry.normalizedId != entry.normalizedName) {
+                    add(Candidate(entry.normalizedId, entry.id, entry.id))
                 }
             }
         }
