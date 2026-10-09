@@ -141,6 +141,7 @@ internal object LunarEncounterCharmSelection {
                     val candidatos = catalogoPorAtributo[atributo].orEmpty()
                         .sortedWith(compareBy<EncantoLunarDefinition> { it.minEssencia }.thenBy { it.nome })
                     val adquiridos = mutableSetOf<String>()
+                    val categoriaNomes = routeContext.charmNamesByCategory
                     var maiorEssencia = 0
                     // Cada passagem adquire ao menos um Encanto ou encerra.
                     // Limitar pelo tamanho do catalogo impede ciclos.
@@ -151,7 +152,7 @@ internal object LunarEncounterCharmSelection {
                                     def, routeContext, attributes, 5, adquiridos, catalogo,
                                     contagemCategoriaSelecionada = { categoria ->
                                         if (categoria.isBlank()) adquiridos.size
-                                        else routeContext.charmNamesByCategory[categoria.trim().lowercase()]
+                                        else categoriaNomes[categoria.trim().lowercase()]
                                             ?.count { it in adquiridos } ?: 0
                                     }
                                 ).any { it.atributo == atributo }
