@@ -42,6 +42,18 @@ class EncounterLunarXpLoopContractTest {
     }
 
     @Test
+    fun `lunar vigor stays within three charms of the chosen attack across xp batches`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        val purchase = source.substringAfter("fun vigorPermitido(contagens: Map<String, Int>): Boolean =")
+            .substringBefore("val ramos =")
+        assertTrue(purchase.contains("(contagens[\"vigor\"] ?: 0) < (contagens[ataqueEscolhido.lowercase()] ?: 0) + 3"))
+        assertTrue(source.contains("vigorPermitido(categoriasSelecionadas)"))
+        assertTrue(source.contains("categoriasSelecionadas[categoriaCandidato] = (categoriasSelecionadas[categoriaCandidato] ?: 0) + 1"))
+        assertTrue(source.contains("distinctBy { it.lowercase() }"))
+        assertTrue(source.contains("arvoresAtivas.none { it.equals(ramo, ignoreCase = true) }"))
+    }
+
+    @Test
     fun `lunar active trees are iterated without a redundant snapshot`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         assertTrue(source.contains("for (atributo in arvoresAtivas) {"))
