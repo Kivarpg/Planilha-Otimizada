@@ -192,7 +192,8 @@ object EncounterCharmRouteOptimizer {
         preparedCatalog: PreparedCatalog<D>? = null,
         monotonicEligibility: Boolean = false,
         monotonicAffectedNames: ((D, Set<String>, Map<String, Int>, Map<String, Int>) -> Set<String>)? = null,
-        maxWorkUnits: Int = DEFAULT_MAX_WORK_UNITS
+        maxWorkUnits: Int = DEFAULT_MAX_WORK_UNITS,
+        repeatableOnlyAtRoot: Boolean = false
     ):D? {
         if(candidatos.isEmpty()) return null
         metrics?.recordOptimizerCall()
@@ -494,6 +495,10 @@ object EncounterCharmRouteOptimizer {
                 for (candidate in pool) {
                     val candidateName = nome(candidate)
                     if (candidateName !in eligibleNamesForState) continue
+                    // Limita compras repetidas na projeção sem bloquear uma
+                    // compra legítima no estado real (primeiro nível).
+                    if (repeatableOnlyAtRoot && level > 0 &&
+                        candidateName in state.selecionados && permiteAquisicaoRepetida(candidate)) continue
                     if (!consumeWork()) continue
                     // O estado pós-aquisição era montado uma vez para calcular
                     // marginalUnlocks e novamente ao expandir o beam. Ele é
