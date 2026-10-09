@@ -1261,4 +1261,31 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals(null, escolhido)
     }
 
+    @Test
+    fun `sinergia consulta categoria dinamica dos encantos ja selecionados`() {
+        val (anterior, _) = encanto("Anterior", 8, habilidade = "Armas Brancas")
+        val (candidato, _) = encanto("Candidato", 8, habilidade = "Briga")
+        val categoriasConsultadas = mutableListOf<String>()
+        val escolhido = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(candidato),
+            catalogoCompleto = listOf(anterior, candidato),
+            nomesSelecionados = setOf(anterior.nome),
+            contagensCategorias = mapOf("briga" to 1),
+            elegivel = { def, nomes, _ -> def.nome !in nomes },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            categoriaNoEstado = { def, _, _ ->
+                categoriasConsultadas += def.nome
+                "Briga"
+            },
+            custoXp = { 8 },
+            profundidade = 1
+        )
+        assertEquals(candidato.nome, escolhido?.nome)
+        assertTrue(
+            "sinergia deve resolver a categoria do Encanto selecionado no estado",
+            anterior.nome in categoriasConsultadas
+        )
+    }
+
 }
