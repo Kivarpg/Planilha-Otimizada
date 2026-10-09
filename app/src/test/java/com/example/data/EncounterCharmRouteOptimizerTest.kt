@@ -1342,4 +1342,27 @@ class EncounterCharmRouteOptimizerTest {
         }
     }
 
+    @Test
+    fun `categoria dinamica equivalente a estatica preserva escolha de combate`() {
+        val (anterior, _) = encanto("Ataque fulminante", 8, habilidade = "Briga")
+        val (ganho, _) = encanto("Ganha iniciativa", 8, habilidade = "Briga")
+        val (outro, _) = encanto("Defesa", 10, habilidade = "Armas Brancas")
+        val catalogo = listOf(anterior, ganho, outro)
+        fun escolher(dinamica: Boolean) = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(ganho, outro),
+            catalogoCompleto = catalogo,
+            nomesSelecionados = setOf(anterior.nome),
+            contagensCategorias = mapOf("briga" to 1),
+            elegivel = { def, nomes, _ -> def.nome !in nomes },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            categoriaNoEstado = if (dinamica) {
+                { def, _, _ -> def.habilidade }
+            } else null,
+            custoXp = { if (it.nome == outro.nome) 10 else 8 },
+            profundidade = 1
+        )?.nome
+        assertEquals(escolher(false), escolher(true))
+    }
+
 }
