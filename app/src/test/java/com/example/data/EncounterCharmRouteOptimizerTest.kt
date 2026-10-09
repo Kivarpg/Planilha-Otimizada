@@ -129,13 +129,13 @@ class EncounterCharmRouteOptimizerTest {
         )
 
         val snapshot = metrics.snapshot()
-        assert(snapshot.eligibilityCacheHits > 0)
-        assert(snapshot.eligibilityCacheMisses > 0)
+        assertTrue(snapshot.eligibilityCacheHits > 0)
+        assertTrue(snapshot.eligibilityCacheMisses > 0)
         // Cada miss avalia apenas aquisições ainda possíveis; depois que um Encanto
         // não repetível é adquirido, ele deixa de integrar o pool daquele estado.
         // Portanto misses * tamanhoDoCatalogo é um limite superior, não uma igualdade.
-        assert(chamadasElegibilidade > 0)
-        assert(chamadasElegibilidade.toLong() <= snapshot.eligibilityCacheMisses * catalogo.size.toLong())
+        assertTrue(chamadasElegibilidade > 0)
+        assertTrue(chamadasElegibilidade.toLong() <= snapshot.eligibilityCacheMisses * catalogo.size.toLong())
     }
 
     @Test
@@ -159,7 +159,7 @@ class EncounterCharmRouteOptimizerTest {
             metrics = metrics
         )
 
-        assert(metrics.snapshot().statesDeduplicated > 0)
+        assertTrue(metrics.snapshot().statesDeduplicated > 0)
     }
 
 
@@ -190,7 +190,7 @@ class EncounterCharmRouteOptimizerTest {
 
         assertEquals(primeiro?.nome, segundo?.nome)
         assertEquals("segunda busca equivalente deve reutilizar toda a legalidade", chamadasPrimeira, chamadas)
-        assert(memo.isNotEmpty())
+        assertTrue(memo.isNotEmpty())
     }
 
     @Test
@@ -223,8 +223,8 @@ class EncounterCharmRouteOptimizerTest {
         val legacy = executar(false)
         val incremental = executar(true)
         assertEquals(legacy.first, incremental.first)
-        assert(incremental.second.eligibilityChecks <= legacy.second.eligibilityChecks)
-        assert(incremental.second.marginalUnlockCalls > 0)
+        assertTrue(incremental.second.eligibilityChecks <= legacy.second.eligibilityChecks)
+        assertTrue(incremental.second.marginalUnlockCalls > 0)
     }
 
     @Test
