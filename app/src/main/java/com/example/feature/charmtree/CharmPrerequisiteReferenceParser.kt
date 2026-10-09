@@ -60,10 +60,11 @@ internal object CharmPrerequisiteReferenceParser {
                 }
             }
 
-            // Accepted matches already follow source order; avoid re-sorting them.
-            val ids = selected
-                .map { it.candidate.targetId }
-                .distinct()
+            // Preservar a ordem e eliminar arestas repetidas numa única passagem.
+            val seenIds = HashSet<String>(selected.size)
+            val ids = selected.mapNotNull { match ->
+                match.candidate.targetId.takeIf { seenIds.add(it) }
+            }
 
             if (ids.isNotEmpty()) return Resolution(ids)
             return if (isGenericRequirement(text)) Resolution(emptyList())
