@@ -25,7 +25,7 @@ jobs:
       - name: Profile nine NPC generation configurations
         run: |
           chmod +x gradlew
-          ./gradlew :app:testDebugUnitTest -Pexalted.runAuditTests=true --tests 'com.example.data.EncounterGenerationPerformanceAuditTest' -Dexalted.perfSamples=5 --console=plain --no-configuration-cache
+          ./gradlew :app:testDebugUnitTest -Pexalted.runAuditTests=true --tests 'com.example.data.EncounterGenerationPerformanceAuditTest' -Dexalted.perfSamples=15 --console=plain --no-configuration-cache
       - name: Publish performance log
         if: always()
         uses: actions/upload-artifact@v4
