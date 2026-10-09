@@ -510,13 +510,15 @@ object EncounterCharmRouteOptimizer {
                     // Limita compras repetidas na projeção sem bloquear uma
                     // compra legítima no estado real (primeiro nível).
                     if (permiteAquisicaoRepetida(candidate)) {
+                        // O callback de elegibilidade ainda recebe somente nomes e
+                        // totais por categoria. Não simule repetições profundas até
+                        // que ele também observe a multiplicidade individual.
+                        if (repeatableOnlyAtRoot && level > 0) continue
                         val limit = repeatableAcquisitionLimit?.invoke(candidate)
                         if (limit != null) {
                             val acquired = (initialAcquisitionCounts[candidateName] ?: 0) +
                                 (state.compactKey.repeatedAcquisitions[candidateName] ?: 0)
                             if (acquired >= limit) continue
-                        } else if (repeatableOnlyAtRoot && level > 0) {
-                            continue
                         }
                     }
                     if (!consumeWork()) continue
