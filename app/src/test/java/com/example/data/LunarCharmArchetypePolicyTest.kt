@@ -88,6 +88,20 @@ class LunarCharmArchetypePolicyTest {
     }
 
     @Test
+    fun `fechamento nominal nao conta encantos independentes da raiz`() {
+        val catalogo = listOf(
+            charm(nome = "Raiz"),
+            charm(nome = "Dependente", pre = "Raiz"),
+            charm(nome = "Independente"),
+            charm(nome = "Outro Independente")
+        )
+        val context = LunarCharmArchetypePolicy.prepare(catalogo, emptySet())
+        assertEquals(1, context.nominallyUnlockableDependentsWithinLimits(
+            "Raiz", catalogo.associateBy { it.nome }, mapOf("Destreza" to 3), 1
+        ))
+    }
+
+    @Test
     fun `rota arquetipo so existe quando forma satisfaz condicao`() {
         val def = charm(routes = listOf(
             LunarCharmArchetypeRoute("Percepção", "VISAO_NOTURNA", 3, "Nenhum")
