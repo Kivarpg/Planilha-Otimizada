@@ -281,6 +281,13 @@ internal object EncounterExperienceLunar {
                 (categoriasSelecionadas[chaveCategoriaRamo] ?: 0) < alvo &&
                 tentativasBloco++ < 100
             ) {
+                // Se Vigor atingiu a margem de três Encantos acima do
+                // ataque, nenhum candidato desta gaveta pode ser comprado.
+                // Evitar varrer o catálogo e avaliar pré-requisitos à toa.
+                if (ataqueEscolhido != null &&
+                    atributoRamo.equals("Vigor", ignoreCase = true) &&
+                    !vigorPermitido(categoriasSelecionadas)
+                ) break
                 val essenciaAtual = EncounterExperienceService.essenciaPara(npc, xpGastoTotal)
                 val limiteCorpoDeTouro = (attributesAtuais["Vigor"] ?: 0).coerceAtLeast(0)
                 var candidato: EncantoLunarDefinition? = null
