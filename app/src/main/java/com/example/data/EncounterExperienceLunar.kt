@@ -347,6 +347,11 @@ internal object EncounterExperienceLunar {
                 // O catálogo não muda durante esta tentativa: consultar uma vez
                 // a lista de candidatos e o índice de rotas por Encanto.
                 val candidatosDoRamo = candidatosOrdenados(atributoRamo, essenciaAtual)
+                // A rota escolhida precisa pertencer ao ramo em compra; calcular
+                // sua viabilidade de XP uma vez por tentativa, antes de avaliar
+                // pré-requisitos potencialmente custosos.
+                val custoRamo = custoXpEncantoLunar(castaOuFavorecidos, atributoRamo)
+                if (custoRamo > xpDisponivel) break
                 for (def in candidatosDoRamo) {
                     if (def.minEssencia > essenciaAtual) continue
                     if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
@@ -370,8 +375,7 @@ internal object EncounterExperienceLunar {
                     val rota = rotasElegiveis.firstOrNull { route ->
                         route.atributo.equals(atributoRamo, ignoreCase = true) &&
                             (ataqueEscolhido == null || !route.atributo.equals(ataqueDescartado, ignoreCase = true)) &&
-                            (!route.atributo.equals("Vigor", ignoreCase = true) || vigorPermitido(categoriasSelecionadas)) &&
-                            custoXpEncantoLunar(castaOuFavorecidos, route.atributo) <= xpDisponivel
+                            (!route.atributo.equals("Vigor", ignoreCase = true) || vigorPermitido(categoriasSelecionadas))
                     } ?: continue
                     candidato = def
                     rotaEscolhida = rota
