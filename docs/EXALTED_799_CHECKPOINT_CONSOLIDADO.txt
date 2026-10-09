@@ -46,3 +46,11 @@ ADENDO FUNCIONAL — 2026-10-08
 - 58beded6aed2f8292568979af54f467d6e16a7ce: botão Gerenciar Feitiço Inicial permanece visível enquanto a regra permite, mesmo com catálogo vazio; diálogo exibe mensagem de ausência de opções.
 - Esta mudança requer teste de interface para os cenários: catálogo vazio, círculo desbloqueado, seleção inicial e primeiro XP.
 - A versão canônica do projeto foi atualizada para Exalted.799 em 28f31c988f381a91eb315d44f9a26a47ec9a36d6, sem disparar workflow.
+
+AUDITORIA DE PRONTIDÃO DO WORKFLOW — 2026-10-08
+- Workflow_dispatch requer input version=799; settings.gradle.kts já declara Exalted.799.
+- A execução começa validando o contrato de versão e a presença dos segredos SIGNING_KEY, KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD. Sem qualquer deles, o workflow falha antes do Gradle, intencionalmente.
+- Com segredos válidos, o workflow executa testDebugUnitTest e renameReleaseApk, exige resultados das classes de engenharia e verifica assinatura, alinhamento, package, versionCode/versionName, SDKs e SHA256 do APK.
+- O workflow publica artefatos Exalted.799.apk e Exalted.799.zip (snapshot do código-fonte); o ZIP é produzido por git archive HEAD e não contém o APK.
+- Não há evidência de execução dos testes ou de validação do APK na branch de auditoria até este checkpoint. Não interpretar inspeção estática como aprovação de release.
+- Correção de navegação de NPCs: commits 415deb713749fefb96b308f6f15594483ab0e3e8 e 834ee20e6ae200dc45f8085b5ef8a7fc31f6596d.
