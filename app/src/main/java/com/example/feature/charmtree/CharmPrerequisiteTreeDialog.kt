@@ -178,7 +178,7 @@ private fun CharmPrerequisiteTreeDialogEntries(
     var buildFinished by remember(rootCharmId, charms, includeFullCatalog, preparedResult) { mutableStateOf(preparedResult != null) }
 
     LaunchedEffect(rootCharmId, charms, includeFullCatalog, preparedResult) {
-        if (preparedResult == null) {
+        if (preparedResult == null && !buildFinished) {
             val built = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
                 CharmPrerequisiteTreeBuilder.build(rootCharmId, charms, includeFullCatalog)
             }
