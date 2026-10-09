@@ -256,7 +256,15 @@ internal object EncounterExperienceLunar {
         val alcanceAtualPorEncanto = mutableMapOf<String, Int>()
         // Só o arquétipo Físico utiliza a classificação por profundidade.
         // Evitar índices e varreduras de catálogo para Social e Mental.
-        val definicoesPorNome = if (ataqueEscolhido != null) catalogo.associateBy { it.nome } else emptyMap()
+        val definicoesPorNome = if (ataqueEscolhido != null) {
+            // Descendentes exclusivos da árvore ofensiva descartada não
+            // representam progressão possível para este NPC.
+            catalogo.filter { def ->
+                routeContextAtual.routesFor(def).any { route ->
+                    !route.atributo.equals(ataqueDescartado, ignoreCase = true)
+                }
+            }.associateBy { it.nome }
+        } else emptyMap()
         val limiteEssenciaCatalogo = if (ataqueEscolhido != null) {
             catalogo.maxOfOrNull { it.minEssencia } ?: 0
         } else 0
