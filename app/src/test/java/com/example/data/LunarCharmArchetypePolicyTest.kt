@@ -37,6 +37,21 @@ class LunarCharmArchetypePolicyTest {
     }
 
     @Test
+    fun `alcance transitivo nao duplica caminhos convergentes nem entra em ciclo`() {
+        val catalogo = listOf(
+            charm(nome = "Raiz", pre = "Folha"),
+            charm(nome = "Ramo A", pre = "Raiz"),
+            charm(nome = "Ramo B", pre = "Raiz"),
+            charm(nome = "Folha", pre = "Ramo A ou Ramo B")
+        )
+        val context = LunarCharmArchetypePolicy.prepare(catalogo, emptySet())
+        assertEquals(3, context.transitiveCharmDependentCount("Raiz"))
+        assertEquals(3, context.transitiveCharmDependentCount("Folha"))
+        assertEquals(1, context.directCharmDependentCount("Ramo A"))
+        assertEquals(1, context.directCharmDependentCount("Ramo B"))
+    }
+
+    @Test
     fun `rota arquetipo so existe quando forma satisfaz condicao`() {
         val def = charm(routes = listOf(
             LunarCharmArchetypeRoute("Percepção", "VISAO_NOTURNA", 3, "Nenhum")
