@@ -563,4 +563,19 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals(expectedExtra, prepared.compactKeyAfter(parent, "Base", "Categoria Extra"))
     }
 
+    @Test
+    fun `chave compacta distingue encantos externos ao catalogo preparado`() {
+        val (base, _) = encanto("Base", 8)
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            listOf(base), { it.nome }, { it.habilidade }
+        )
+        val semExterno = prepared.compactKey(emptySet(), emptyMap())
+        val comExterno = prepared.compactKey(setOf("Encanto Externo"), emptyMap())
+        assertNotEquals(semExterno, comExterno)
+        assertEquals(
+            prepared.compactKey(setOf("Encanto Externo"), mapOf("armas brancas" to 1)),
+            prepared.compactKeyAfter(semExterno, "Encanto Externo", "Armas Brancas")
+        )
+    }
+
 }
