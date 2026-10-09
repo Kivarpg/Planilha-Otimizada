@@ -106,22 +106,24 @@ class EncounterProgressionRoadmapTest {
     }
 
     @Test
-    fun `lunar rollback de XP preserva arvore ofensiva persistida`() {
-        val base = npcBase().copy(
-            tipoExaltado = TipoExaltadoEncontro.LUNAR,
-            lunarAtaqueEscolhido = "Destreza"
-        )
-        val evoluido = EncounterExperienceLunar.expandLunar(
-            base, emptyList(), listOf("Destreza", "Vigor", "Força")
-        )
-        assertEquals("Destreza", evoluido.lunarAtaqueEscolhido)
-        assertEquals(base.historicoXpBatches.size + 1, evoluido.historicoXpBatches.size)
-        val revertido = EncounterExperienceLunar.reduceLunar(evoluido)
-        assertEquals("Destreza", revertido.lunarAtaqueEscolhido)
-        assertEquals(base.xpGastoTotal, revertido.xpGastoTotal)
-        assertEquals(base.xpAtual, revertido.xpAtual)
-        assertEquals(base.historicoXpBatches, revertido.historicoXpBatches)
-        assertEquals(base.charms, revertido.charms)
+    fun `lunar rollback de XP preserva ambas arvores ofensivas persistidas`() {
+        for (ataque in listOf("Força", "Destreza")) {
+            val base = npcBase().copy(
+                tipoExaltado = TipoExaltadoEncontro.LUNAR,
+                lunarAtaqueEscolhido = ataque
+            )
+            val evoluido = EncounterExperienceLunar.expandLunar(
+                base, emptyList(), listOf("Força", "Destreza", "Vigor")
+            )
+            assertEquals(ataque, evoluido.lunarAtaqueEscolhido)
+            assertEquals(base.historicoXpBatches.size + 1, evoluido.historicoXpBatches.size)
+            val revertido = EncounterExperienceLunar.reduceLunar(evoluido)
+            assertEquals(ataque, revertido.lunarAtaqueEscolhido)
+            assertEquals(base.xpGastoTotal, revertido.xpGastoTotal)
+            assertEquals(base.xpAtual, revertido.xpAtual)
+            assertEquals(base.historicoXpBatches, revertido.historicoXpBatches)
+            assertEquals(base.charms, revertido.charms)
+        }
     }
 
     @Test
