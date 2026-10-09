@@ -23,8 +23,11 @@ class EncounterLunarXpLoopContractTest {
         assertTrue(source.contains("traitsCache == traits && ordemCache == ordem"))
         assertTrue(source.contains("traitsAnteriores == traits"))
         assertTrue(source.contains("routeContextAtual = LunarCharmArchetypePolicy.prepare("))
-        assertTrue(source.contains("xpDisponivel -= custoXp"))
-        assertTrue(source.contains("xpGastoTotal += custoXp"))
+        val compra = source.substringAfter("fun comprarBloco(atributoRamo: String): Boolean {")
+            .substringBefore("while (tentativas++ < 500")
+        assertTrue(compra.contains("xpDisponivel -= custoRamo"))
+        assertTrue(compra.contains("xpGastoTotal += custoRamo"))
+        assertTrue(compra.contains("val custoRamo = custoXpEncantoLunar(castaOuFavorecidos, atributoRamo)"))
         assertTrue(source.contains("nomesCharmsNesteLote += candidatoSelecionado.nome"))
         assertTrue(source.contains("xpGasto = xpGastoTotal - npc.xpGastoTotal"))
     }
@@ -164,6 +167,12 @@ class EncounterLunarXpLoopContractTest {
         assertTrue(essence >= 0 && eligible > essence && spend > eligible && acquired > spend)
         assertTrue(purchase.contains("essenciaAtual, nomesSelecionados, catalogo"))
         assertTrue(purchase.contains("tentativasBloco++ < 100"))
+        // O cache guarda somente viabilidade estrutural; a elegibilidade,
+        // que depende dos Encantos já adquiridos, deve ser recalculada.
+        assertTrue(purchase.contains("rotaViavelPorRamo.getOrPut(chaveRota)"))
+        assertFalse(purchase.contains("eligibleRoutesCache.getOrPut"))
+        assertTrue(purchase.indexOf("LunarCharmArchetypePolicy.eligibleRoutes(") <
+            purchase.indexOf("nomesSelecionados += candidatoSelecionado.nome"))
     }
 
     @Test
@@ -186,6 +195,10 @@ class EncounterLunarXpLoopContractTest {
         assertTrue(source.contains("def.nome, definicoesPorNome, atributosParaPontuacao, essenciaPontuacao"))
         assertTrue(source.contains("definicoesPorNome = definicoesPermitidas()"))
         assertTrue(source.contains("!route.atributo.equals(ataqueDescartado, ignoreCase = true)"))
+        assertTrue(source.contains("essenciaAtual.coerceAtMost(limiteEssenciaCatalogo)"))
+        assertTrue(source.contains("val alcanceNoTeto = essenciaPontuacao >= limiteEssenciaCatalogo"))
+        assertTrue(source.contains("if (alcanceNoTeto) alcanceMaximo"))
+        assertTrue(source.contains("rotaViavelPorRamo.clear()"))
         assertTrue(source.contains("candidatosPorRamo.clear()"))
         assertTrue(source.contains("LunarCharmArchetypePolicy.eligibleRoutes("))
     }
