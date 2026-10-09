@@ -23,6 +23,38 @@ class EncounterGeneratorXpTest {
     )
 
     @Test
+    fun `lunar aprofunda cadeia ofensiva quando Essencia aumenta`() {
+        fun encanto(nome: String, essencia: Int, pre: String) = EncantoLunarDefinition(
+            id = nome, atributo = "Destreza", subdivisao = null,
+            nome = nome, nomeIngles = "", custo = "1",
+            minsTexto = "Destreza 2, Essência $essencia",
+            minAtributo = 2, minEssencia = essencia, tipo = "Reflexivo",
+            palavrasChave = "", duracao = "", preRequisitos = pre, descricao = ""
+        )
+        val catalogo = listOf(
+            encanto("Base da cadeia", 1, "Nenhum"),
+            encanto("Meio da cadeia", 1, "Base da cadeia"),
+            encanto("Topo da cadeia", 2, "Meio da cadeia")
+        )
+        val inicial = npcBase().copy(
+            tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
+            lunarAtaqueEscolhido = "Destreza",
+            attributes = mapOf("Força" to 3, "Destreza" to 4, "Vigor" to 3),
+            xpGastoTotal = 47,
+            xpAtual = 30
+        )
+        val evoluido = EncounterExperienceLunar.expandLunar(
+            inicial, catalogo, listOf("Vigor", "Força", "Destreza")
+        )
+        assertEquals(
+            listOf("Base da cadeia", "Meio da cadeia", "Topo da cadeia"),
+            evoluido.charms.map { it.nome }
+        )
+        assertTrue(evoluido.essencia >= 2)
+        assertEquals("Destreza", evoluido.lunarAtaqueEscolhido)
+    }
+
+    @Test
     fun `lunar fisico bloqueia rota alternativa da ofensiva descartada`() {
         val alternativo = EncantoLunarDefinition(
             id = "alternativo", atributo = "Destreza", subdivisao = null,
