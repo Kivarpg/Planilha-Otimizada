@@ -9,6 +9,7 @@ on:
       - app/src/main/java/com/example/data/LunarEncounterCharmSelection.kt
       - app/src/main/java/com/example/data/LunarEncounterGenerator.kt
       - app/src/test/java/com/example/data/EncounterGenerationPerformanceAuditTest.kt
+      - app/src/main/java/com/example/data/EncounterCharmRouteOptimizer.kt
 permissions:
   contents: read
 jobs:
