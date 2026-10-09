@@ -34,7 +34,7 @@ fun MainSheetScreen(viewModel: SheetViewModel, tipoPersonagem: String = Characte
     val tabs=createSheetTabs(sheet,viewModel,abilitiesSubTabIndex,{abilitiesSubTabIndex=it},encontroNomeManual,{encontroNomeManual=it},encontroArquetipo,{encontroArquetipo=it},encontroGenero,{encontroGenero=it},encontroAbaSelecionadaId,{encontroAbaSelecionadaId=it},encontroMensagemLimite,{encontroMensagemLimite=it})
     val navigationKey = tabs.map { it.title to it.iconRes }
     val navigationTabs = remember(navigationKey) { tabs.navigationItems() }
-    OnyxTexturedBackground(Modifier.fillMaxSize()){
+    ExaltedPanoramaBackground(tipoPersonagem, selectedTabIndex, tabs.size) {
         Scaffold(topBar={SheetTopBar(sheet = sheet,
                 viewModel = viewModel,
                 tabs = navigationTabs,
