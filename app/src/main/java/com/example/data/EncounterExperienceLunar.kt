@@ -348,10 +348,8 @@ internal object EncounterExperienceLunar {
                 // a lista de candidatos e o índice de rotas por Encanto.
                 val candidatosDoRamo = candidatosOrdenados(atributoRamo, essenciaAtual)
                 for (def in candidatosDoRamo) {
-                    if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
-                    // Rejeitar candidatos com Essência impossível antes da
-                    // avaliação completa das rotas e dos pré-requisitos.
                     if (def.minEssencia > essenciaAtual) continue
+                    if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
                     // Um Encanto pode estar indexado por rotas alternativas.
                     // Descartar antecipadamente as rotas do ramo cujo mínimo
                     // de Atributo não pode ser satisfeito por este NPC.
