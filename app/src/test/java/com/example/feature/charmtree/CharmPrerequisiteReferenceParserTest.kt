@@ -161,6 +161,30 @@ class CharmPrerequisiteReferenceParserTest {
     }
 
     @Test
+    fun blankIdEntriesCannotProducePrerequisiteEdges() {
+        val catalog = listOf(
+            CharmTreeEntry("", "Encanto Sem Identificador"),
+            CharmTreeEntry("valid-id", "Encanto Válido")
+        )
+        val result = CharmPrerequisiteReferenceParser.resolve(
+            "Encanto Sem Identificador; Encanto Válido", catalog
+        )
+
+        assertEquals(listOf("valid-id"), result.prerequisiteIds)
+    }
+
+    @Test
+    fun blankIdEntriesDoNotMakeValidNamesAmbiguous() {
+        val catalog = listOf(
+            CharmTreeEntry("", "Defesa Perfeita"),
+            CharmTreeEntry("valid-id", "Defesa Perfeita")
+        )
+        val result = CharmPrerequisiteReferenceParser.resolve("Defesa Perfeita", catalog)
+
+        assertEquals(listOf("valid-id"), result.prerequisiteIds)
+    }
+
+    @Test
     fun punctuationDelimitsCompleteCharmNames() {
         val catalog = listOf(
             CharmTreeEntry("a", "Defesa"),
