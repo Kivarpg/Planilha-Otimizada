@@ -260,7 +260,7 @@ object EncounterCharmRouteOptimizer {
         // Uma chave de estado idêntica não identifica qual catálogo foi usado.
         // Falhar explicitamente evita reutilizar legalidade de outra geração/XP.
         require(catalogoCompleto.size == prepared.catalogoPorNome.size &&
-            catalogoCompleto.all { def -> prepared.catalogoPorNome[nome(def)] === def }) {
+            catalogoCompleto.all { def -> prepared.catalogoPorNome[nome(def)] == def }) {
             "preparedCatalog deve corresponder exatamente ao catalogoCompleto."
         }
         val catalogoPorNome=prepared.catalogoPorNome
