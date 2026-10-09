@@ -930,6 +930,9 @@ fun EncounterGeneratorTab(
                 saver = ScrollState.Saver
             ) { ScrollState(0) }
 
+            val npcTabTemplates = remember(npcsGerados.map { it.tipoExaltado }) {
+                npcsGerados.associate { it.id to visualTemplateParaExaltado(it.tipoExaltado) }
+            }
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -943,7 +946,7 @@ fun EncounterGeneratorTab(
                         val selecionada = npc.id == npcAtivo.id
                         // A identidade da aba pertence ao NPC, não à área de origem
                         // nem à skin global atualmente aberta.
-                        val npcTabTemplate = visualTemplateParaExaltado(npc.tipoExaltado)
+                        val npcTabTemplate = npcTabTemplates.getValue(npc.id)
                         val corNome = if (selecionada) {
                             npcTabTemplate.accentBright
                         } else {
