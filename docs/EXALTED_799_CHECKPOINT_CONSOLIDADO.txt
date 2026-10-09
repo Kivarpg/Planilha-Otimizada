@@ -100,3 +100,9 @@ AUDITORIA DA ATRIBUIÇÃO AUTOMÁTICA DO FEITIÇO INICIAL — 2026-10-08
 - EncounterNpcActions.gerarComTratamento persiste o NPC retornado pelo gerador e publica o estado; não realiza seleção adicional nesta camada.
 - Condição residual: se o catálogo não tiver Feitiços Terrestres, garantirInicialNaCriacao retorna o NPC sem atribuição. Isso requer catálogo real válido e teste de integração; não declarar o fluxo 100% validado apenas por inspeção estática.
 - A auditoria não iniciou compilação, testes nem workflow.
+
+PREPARAÇÃO DOS TESTES — 2026-10-08
+- EncounterSpellSelectionServiceTest.kt importava assertEquals tanto de org.junit.Assert quanto de kotlin.test. Removida a importação duplicada de org.junit.Assert.assertEquals; mantida kotlin.test.assertEquals, sem mudar as asserções.
+- EncounterNpcSpellManagementTest.kt já contém testes de atribuição automática de Feitiço Terrestre, repetibilidade do sorteio, não duplicação, preservação de outros Feitiços e bloqueio depois do primeiro XP.
+- Nos três geradores, garantirInicialNaCriacao é chamado após a auditoria do NPC e antes de validar a identidade estrutural e retornar o NPC final.
+- Os testes permanecem não executados. A inspeção não prova ausência de outros problemas de compilação.
