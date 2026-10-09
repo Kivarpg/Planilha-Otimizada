@@ -173,8 +173,8 @@ internal object LunarEncounterCharmSelection {
                     }
                 }
             )?.takeIf { rota ->
-                (arquetipo != ArquetipoEncontro.FISICO || rota.atributo != ataqueDescartado) &&
-                    (rota.atributo != "Vigor" || vigorPermitido(contagens))
+                (arquetipo != ArquetipoEncontro.FISICO || !rota.atributo.equals(ataqueDescartado, ignoreCase = true)) &&
+                    (!rota.atributo.equals("Vigor", ignoreCase = true) || vigorPermitido(contagens))
             }
 
         fun registrar(
@@ -186,6 +186,12 @@ internal object LunarEncounterCharmSelection {
                 "Encanto Lunar registrado sem rota elegível: ${def.nome}"
             }
             val atributoAquisicao = rota.atributo
+            require(
+                arquetipo != ArquetipoEncontro.FISICO ||
+                    (!atributoAquisicao.equals(ataqueDescartado, ignoreCase = true) &&
+                        (!atributoAquisicao.equals("Vigor", ignoreCase = true) ||
+                            vigorPermitido(categoriasSelecionadas)))
+            ) { "Aquisição Lunar física viola árvore ofensiva única ou limite de Vigor: ${def.nome}" }
             nomesSelecionados += def.nome
             atributosAquisicaoSelecionados.putIfAbsent(def.nome, atributoAquisicao)
             val categoria = atributoAquisicao.lowercase()
