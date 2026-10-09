@@ -350,6 +350,16 @@ class LunarEncounterGeneratorTest {
             listOf("Força", "Destreza", "Vigor")
         )
         assertEquals("Destreza", resultado.npcResultante.lunarAtaqueEscolhido)
+        assertEquals(
+            npc.xpAtual + EncounterExperienceService.XP_POR_CHAMADA,
+            resultado.npcResultante.xpAtual +
+                (resultado.npcResultante.xpGastoTotal - npc.xpGastoTotal)
+        )
+        assertEquals(
+            resultado.npcResultante.xpGastoTotal - npc.xpGastoTotal,
+            resultado.batchAplicado.xpGasto
+        )
+        assertEquals(npc.attributes, resultado.npcResultante.attributes)
         assertTrue(
             "A árvore ofensiva escolhida deve poder adquirir sua raiz",
             resultado.npcResultante.charms.any { it.nome == "Raiz Destreza" }
