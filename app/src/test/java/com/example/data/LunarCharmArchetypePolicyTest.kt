@@ -159,4 +159,22 @@ class LunarCharmArchetypePolicyTest {
         assertTrue("Alvo Total" in afetados)
     }
 
+    @Test
+    fun `indice reverso inclui contagem agregada mental apos encanto de percepcao`() {
+        val base = charm(nome = "Base Mental", atributo = "Percepção", min = 2)
+        val alvo = charm(
+            nome = "Alvo Mental",
+            atributo = "Percepção",
+            min = 2,
+            pre = "Quaisquer dois Encantos de Atributo Mental"
+        )
+        val independente = charm(nome = "Independente", atributo = "Destreza", min = 2)
+        val contexto = LunarCharmArchetypePolicy.prepare(
+            listOf(base, alvo, independente), emptySet()
+        )
+        val afetados = contexto.affectedAfterAcquisition("Base Mental", "Percepção")
+        assertTrue("Alvo Mental" in afetados)
+        assertFalse("Independente" in afetados)
+    }
+
 }
