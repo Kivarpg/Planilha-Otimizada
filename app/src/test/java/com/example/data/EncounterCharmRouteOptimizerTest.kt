@@ -1070,4 +1070,24 @@ class EncounterCharmRouteOptimizerTest {
         assertTrue("resultado parcial nao deve contaminar o cache", memo.isEmpty())
     }
 
+    @Test
+    fun `categoria dinamica nao altera escolha quando nao ha sinergia de combate`() {
+        val (a, _) = encanto("A", 8, habilidade = "Força")
+        val (b, _) = encanto("B", 10, habilidade = "Destreza")
+        val catalogo = listOf(a, b)
+        fun escolher(dinamica: Boolean) = EncounterCharmRouteOptimizer.escolher(
+            candidatos = catalogo,
+            catalogoCompleto = catalogo,
+            nomesSelecionados = emptySet(),
+            contagensCategorias = emptyMap(),
+            elegivel = { _, _, _ -> true },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            categoriaNoEstado = if (dinamica) { def, _, _ -> def.habilidade } else null,
+            custoXp = { if (it.nome == a.nome) 8 else 10 },
+            profundidade = 1
+        )?.nome
+        assertEquals(escolher(false), escolher(true))
+    }
+
 }
