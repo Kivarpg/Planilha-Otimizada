@@ -799,7 +799,9 @@ class EncounterCharmRouteOptimizerTest {
         val esperado = prepared.compactKey(
             setOf(corpo.nome), mapOf("resistência" to 2)
         )
-        assertEquals(esperado, aposRepeticao)
+        assertEquals(esperado.selectedBits, aposRepeticao.selectedBits)
+        assertEquals(esperado.categoryCounts, aposRepeticao.categoryCounts)
+        assertEquals(mapOf(corpo.nome to 1), aposRepeticao.repeatedAcquisitions)
         assertNotEquals(
             "contagens diferentes nao podem compartilhar a chave de memo",
             inicial, aposRepeticao
@@ -822,9 +824,12 @@ class EncounterCharmRouteOptimizerTest {
         )
         val repetiuCorpo = prepared.compactKeyAfter(base, corpo.nome, "Resistência")
         val repetiuOutro = prepared.compactKeyAfter(base, outro.nome, "Resistência")
-        // Este teste documenta a limitacao existente: a chave compacta nao
-        // armazena a multiplicidade individual de Encantos ja selecionados.
-        assertEquals(repetiuCorpo, repetiuOutro)
+        // As categorias permanecem iguais, mas a multiplicidade individual
+        // agora impede deduplicar duas rotas semanticamente diferentes.
+        assertEquals(repetiuCorpo.categoryCounts, repetiuOutro.categoryCounts)
+        assertNotEquals(repetiuCorpo, repetiuOutro)
+        assertEquals(mapOf(corpo.nome to 1), repetiuCorpo.repeatedAcquisitions)
+        assertEquals(mapOf(outro.nome to 1), repetiuOutro.repeatedAcquisitions)
     }
 
 }
