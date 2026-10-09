@@ -409,7 +409,9 @@ internal object EncounterExperienceLunar {
             formaEspiritualSecundaria = secundaria,
             lunarArchetypeTraits = traitsEfetivosFinais.map { it.name }.sorted(),
             // Fixa a escolha tambem em fichas antigas sem o campo persistido.
-            lunarAtaqueEscolhido = resultadoCompra.ataqueEscolhido ?: npc.lunarAtaqueEscolhido
+            lunarAtaqueEscolhido = if (npc.arquetipo == com.example.model.ArquetipoEncontro.FISICO) {
+                resultadoCompra.ataqueEscolhido
+            } else null
         )
         val resultado = EncounterExperienceService.recalcularDerivados(EncounterExperienceService.atualizarAlertasValidacao(npcAtualizado))
         return ExpansionResult(npcResultante = resultado, batchAplicado = batch)
