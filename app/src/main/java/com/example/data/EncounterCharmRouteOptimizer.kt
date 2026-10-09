@@ -256,6 +256,13 @@ object EncounterCharmRouteOptimizer {
          * a verdade vem do serviço de elegibilidade, não do texto.
          */
         val prepared = preparedCatalog ?: prepareCatalog(catalogoCompleto, nome, categoria)
+        // O memo compacto só é seguro com o mesmo universo de definições.
+        // Uma chave de estado idêntica não identifica qual catálogo foi usado.
+        // Falhar explicitamente evita reutilizar legalidade de outra geração/XP.
+        require(catalogoCompleto.size == prepared.catalogoPorNome.size &&
+            catalogoCompleto.all { def -> prepared.catalogoPorNome[nome(def)] === def }) {
+            "preparedCatalog deve corresponder exatamente ao catalogoCompleto."
+        }
         val catalogoPorNome=prepared.catalogoPorNome
         val combatTagsPorNome=prepared.combatTagsPorNome
         val socialTagsPorNome=prepared.socialTagsPorNome
