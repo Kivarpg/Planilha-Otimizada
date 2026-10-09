@@ -27,6 +27,10 @@ internal object LunarCharmArchetypePolicy {
         fun routesFor(def: EncantoLunarDefinition): List<AcquisitionRoute> =
             routesByCharm[def.nome].orEmpty()
 
+        /** Quantos Encantos distintos dependem diretamente desta aquisição. */
+        fun directCharmDependentCount(charmName: String): Int =
+            dependentsByCharm[charmName]?.size ?: 0
+
         /**
          * Delta exato para aquisição monotônica: somente Encantos cujo requisito
          * menciona o Encanto comprado, a categoria incrementada ou a contagem
