@@ -582,10 +582,9 @@ object EncounterCharmRouteOptimizer {
                         // totais por categoria. Não simule repetições profundas até
                         // que ele também observe a multiplicidade individual.
                         if (repeatableOnlyAtRoot && level > 0) continue
-                        val limit = repeatableAcquisitionLimit?.invoke(candidate)
-                        if (limit != null) {
-                            if (reachedRepeatLimit(candidate, state.compactKey, state.selecionados)) continue
-                        }
+                        // Centralize a leitura do limite: evita chamar duas
+                        // vezes o callback para o mesmo candidato/estado.
+                        if (reachedRepeatLimit(candidate, state.compactKey, state.selecionados)) continue
                     }
                     // Ao atingir o orçamento, nenhuma outra expansão poderá
                     // ser avaliada nesta chamada. Evite percorrer o restante
