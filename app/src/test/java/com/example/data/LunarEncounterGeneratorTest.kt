@@ -194,7 +194,10 @@ class LunarEncounterGeneratorTest {
             charms = emptyList(),
             attributes = inicial.attributes + mapOf("Força" to 4, "Destreza" to 4),
             lunarAtaqueEscolhido = "Força",
-            focoProgressaoExplicito = "Força"
+            focoProgressaoExplicito = "Força",
+            // Um lote concede 5 XP, mas o Encanto Lunar custa 8 ou 10 XP.
+            // Saldo inicial suficiente para testar aquisição já no primeiro lote.
+            xpAtual = 10
         )
         val expandido = EncounterExperienceLunar.expandLunarWithBatch(
             npc, catalogo, listOf("Força", "Destreza", "Vigor")
@@ -343,7 +346,10 @@ class LunarEncounterGeneratorTest {
             charms = emptyList(),
             attributes = inicial.attributes + mapOf("Força" to 4, "Destreza" to 4),
             lunarAtaqueEscolhido = "Destreza",
-            focoProgressaoExplicito = "Destreza"
+            focoProgressaoExplicito = "Destreza",
+            // Um lote concede 5 XP, mas o Encanto Lunar custa 8 ou 10 XP.
+            // Saldo inicial suficiente para testar aquisição já no primeiro lote.
+            xpAtual = 10
         )
         val resultado = EncounterExperienceLunar.expandLunarWithBatch(
             npc, listOf(raiz("Força"), raiz("Destreza")),
