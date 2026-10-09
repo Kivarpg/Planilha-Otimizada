@@ -784,4 +784,30 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals(escolher(false)?.nome, escolher(true)?.nome)
     }
 
+    @Test
+    fun `chave incremental preserva contagem apos compra repetida`() {
+        val (corpo, _) = encanto("Corpo de Touro", 10, habilidade = "Resistência")
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            listOf(corpo), { it.nome }, { it.habilidade }
+        )
+        val inicial = prepared.compactKey(
+            setOf(corpo.nome), mapOf("resistência" to 1)
+        )
+        val aposRepeticao = prepared.compactKeyAfter(
+            inicial, corpo.nome, "Resistência"
+        )
+        val esperado = prepared.compactKey(
+            setOf(corpo.nome), mapOf("resistência" to 2)
+        )
+        assertEquals(esperado, aposRepeticao)
+        assertNotEquals(
+            "contagens diferentes nao podem compartilhar a chave de memo",
+            inicial, aposRepeticao
+        )
+        assertEquals(
+            "a segunda compra nao cria um novo nome selecionado",
+            inicial.selectedBits, aposRepeticao.selectedBits
+        )
+    }
+
 }
