@@ -10,7 +10,7 @@ class EncounterInitialSpellUiContractTest {
 
     @Test
     fun `initial spell manager is shown only before first xp`() {
-        assertTrue(source.contains("if (feiticosDisponiveis.isNotEmpty() && podeGerenciarFeiticoInicial)"))
+        assertTrue(source.contains("if (podeGerenciarFeiticoInicial)"))
         assertTrue(source.contains("if (gerenciarFeiticos && podeGerenciarFeiticoInicial)"))
     }
 
