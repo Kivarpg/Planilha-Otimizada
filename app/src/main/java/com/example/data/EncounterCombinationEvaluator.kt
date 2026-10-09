@@ -129,12 +129,12 @@ internal object EncounterCombinationEvaluator {
         if (powers.any { it.id.isBlank() || !seenPowerIds.add(it.id) })
             return Result(false,null,"Poderes com ID vazio ou duplicado.",emptyList())
         for(power in powers) {
-            val variantIds=power.variants.map { it.id }
-            if(variantIds.any { it.isBlank() } || variantIds.toSet().size!=variantIds.size)
+            val seenVariantIds = HashSet<String>()
+            if (power.variants.any { it.id.isBlank() || !seenVariantIds.add(it.id) })
                 return Result(false,null,"Variantes com ID vazio ou duplicado em ${power.id}.",emptyList())
             for(variant in power.variants) {
-                val branchIds=variant.branches.map { it.id }
-                if(branchIds.any { it.isBlank() } || branchIds.toSet().size!=branchIds.size)
+                val seenBranchIds = HashSet<String>()
+                if (variant.branches.any { it.id.isBlank() || !seenBranchIds.add(it.id) })
                     return Result(false,null,"Ramos com ID vazio ou duplicado em ${power.id}/${variant.id}.",emptyList())
                 if (variant.choices.any { it.group.isBlank() || it.option.isBlank() } ||
                     variant.branches.any { branch ->
