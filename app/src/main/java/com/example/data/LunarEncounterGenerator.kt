@@ -587,6 +587,7 @@ internal object LunarEncounterGenerator {
             iniciativaAtual = 0,
             dano = dano,
             focoProgressaoExplicito = customizacao?.focoExplicito,
+            lunarAtaqueEscolhido = resultadoSelecaoInicial.ataqueEscolhido,
             alertasValidacao = EncounterValidationService.validar(
                 arquetipo = arquetipoEfetivo,
                 attributes = attributes,
