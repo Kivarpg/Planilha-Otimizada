@@ -802,6 +802,14 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals(esperado.selectedBits, aposRepeticao.selectedBits)
         assertEquals(esperado.categoryCounts, aposRepeticao.categoryCounts)
         assertEquals(mapOf(corpo.nome to 1), aposRepeticao.repeatedAcquisitions)
+        assertEquals(
+            prepared.compactKey(
+                setOf(corpo.nome),
+                mapOf("resistência" to 2),
+                mapOf(corpo.nome to 1)
+            ),
+            aposRepeticao
+        )
         assertNotEquals(
             "contagens diferentes nao podem compartilhar a chave de memo",
             inicial, aposRepeticao
