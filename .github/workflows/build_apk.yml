@@ -2,7 +2,7 @@
 # Alterações comuns de código NÃO iniciam compilação.
 name: Build APK
 # Nome da execução; a versão canônica vem de settings.gradle.kts.
-run-name: Build APK (versão do projeto)
+run-name: Exalted.808
 
 on:
   push:
