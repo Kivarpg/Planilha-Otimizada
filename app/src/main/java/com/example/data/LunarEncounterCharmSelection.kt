@@ -216,7 +216,8 @@ internal object LunarEncounterCharmSelection {
         // orçamento total de Encantos.
         if (elegivelCorpoDeTouro && reservaFeiticaria == 0) {
             val corpoDeTouro = candidatoCorpoDeTouro ?: error("Corpo de Touro elegível sem definição")
-            repeat(limiteCorpoDeTouro.coerceAtMost(limiteDeVagasAntesDaFeiticaria).coerceAtMost(if (arquetipo == ArquetipoEncontro.FISICO) 1 else Int.MAX_VALUE)) {
+            repeat(limiteCorpoDeTouro.coerceAtMost(limiteDeVagasAntesDaFeiticaria)) {
+                if (rotaElegivel(corpoDeTouro) == null) return@repeat
                 selecionados += corpoDeTouro
                 registrar(corpoDeTouro)
             }
@@ -232,7 +233,7 @@ internal object LunarEncounterCharmSelection {
         val atributosPrincipaisEmpatados = categoriaArquetipo.filter { (attributes[it] ?: 0) == maiorValor }
         val atributoPrincipalAutomatico = (if (arquetipo == ArquetipoEncontro.FISICO) listOfNotNull(ataqueEscolhido) else atributosPrincipaisEmpatados.ifEmpty { categoriaArquetipo }.shuffled(random)).firstOrNull()
         val atributoPrincipal = atributoFocoUsuario
-            ?.takeIf { it in EncounterGenerationRules.ALL_ATTRIBUTES }
+            ?.takeIf { it in EncounterGenerationRules.ALL_ATTRIBUTES && (arquetipo != ArquetipoEncontro.FISICO || it != ataqueDescartado) }
             ?: atributoPrincipalAutomatico
         val alvoEncantosAtributoPrincipal = if (atributoFocoUsuario != null) 6 else 3
 
@@ -447,8 +448,10 @@ internal object LunarEncounterCharmSelection {
         ) {
             val corpoDeTouro = candidatoCorpoDeTouro
                 ?: error("Corpo de Touro elegível sem definição")
-            selecionados += corpoDeTouro
-            registrar(corpoDeTouro)
+            if (rotaElegivel(corpoDeTouro) != null) {
+                selecionados += corpoDeTouro
+                registrar(corpoDeTouro)
+            }
         }
 
         // 5) As vagas restantes seguem a diretriz geral da Aba 11:
