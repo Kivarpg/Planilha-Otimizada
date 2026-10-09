@@ -1263,8 +1263,10 @@ class EncounterCharmRouteOptimizerTest {
 
     @Test
     fun `sinergia consulta categoria dinamica dos encantos ja selecionados`() {
-        val (anterior, _) = encanto("Anterior", 8, habilidade = "Armas Brancas")
-        val (candidato, _) = encanto("Candidato", 8, habilidade = "Briga")
+        // Ambos possuem tags de combate; pares sem tags são ignorados
+        // intencionalmente antes da resolução de categorias.
+        val (anterior, _) = encanto("Ataque fulminante", 8, habilidade = "Armas Brancas")
+        val (candidato, _) = encanto("Ganha iniciativa", 8, habilidade = "Briga")
         val categoriasConsultadas = mutableListOf<String>()
         val escolhido = EncounterCharmRouteOptimizer.escolher(
             candidatos = listOf(candidato),
