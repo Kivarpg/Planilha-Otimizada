@@ -410,6 +410,9 @@ object EncounterCharmRouteOptimizer {
                 if (unlockedName in before) continue
                 val unlocked = catalogoPorNome.getValue(unlockedName)
                 if (unlockedName in selecionados && !permiteAquisicaoRepetida(unlocked)) continue
+                // Quando repetições só são permitidas na raiz, não premie
+                // desbloqueios que a própria expansão profunda descartará.
+                if (repeatableOnlyAtRoot && permiteAquisicaoRepetida(unlocked)) continue
                 total++
                 // Solar/Sangue de Dragão têm categoria invariável e já normalizada
                 // no catálogo preparado. Lunar pode resolver a rota pelo estado,
