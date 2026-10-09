@@ -1026,7 +1026,9 @@ fun NpcEncontroCard(
                             forceStroke = false
                         )
                         if (mostrarDetalhes) {
-                            val definicao = viewModel.encantoDefinitionPorNomeParaTipo(c.nome, npc.tipoExaltado)
+                            val definicao = remember(viewModel, c.nome, npc.tipoExaltado) {
+                                viewModel.encantoDefinitionPorNomeParaTipo(c.nome, npc.tipoExaltado)
+                            }
                             if (definicao != null) {
                                 com.example.ui.tabs.CatalogDetailsDialog(
                                     def = definicao,
