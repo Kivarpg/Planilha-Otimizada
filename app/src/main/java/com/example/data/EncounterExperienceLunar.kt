@@ -253,6 +253,8 @@ internal object EncounterExperienceLunar {
         // Arquétipo. Compartilhar a pontuação evita percorrer sua árvore
         // de descendentes novamente em cada gaveta.
         val alcancePorEncanto = mutableMapOf<String, Int>()
+        val definicoesPorNome = catalogo.associateBy { it.nome }
+        val limiteEssenciaCatalogo = catalogo.maxOfOrNull { it.minEssencia } ?: 0
         fun candidatosOrdenados(atributoRamo: String): List<EncantoLunarDefinition> =
             candidatosPorRamo.getOrPut(atributoRamo.lowercase()) {
                 val encantos = routeContextAtual.charmsByAttribute[atributoRamo]
@@ -266,7 +268,12 @@ internal object EncounterExperienceLunar {
                 // do sort (que pode comparar o mesmo Encanto repetidamente).
                 encantos.forEach { def ->
                     alcancePorEncanto.getOrPut(def.nome) {
-                        routeContextAtual.transitiveCharmDependentCount(def.nome)
+                        // Contar somente descendentes cujos mínimos de
+                        // Essência e Atributo podem ser atingidos com a ficha
+                        // atual. Não confundir alcance nominal com rota válida.
+                        routeContextAtual.reachableDependentCountWithinLimits(
+                            def.nome, definicoesPorNome, attributesAtuais, limiteEssenciaCatalogo
+                        )
                     }
                 }
                 encantos.sortedWith(
