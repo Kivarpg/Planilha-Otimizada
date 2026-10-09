@@ -135,6 +135,7 @@ class EncounterLunarXpLoopContractTest {
         assertTrue(source.contains("listOf(\"Vigor\", ataqueEscolhido) + indice.ordemAtributos"))
         assertTrue(source.contains("def.nome to routeContextAtual.transitiveCharmDependentCount(def.nome)"))
         assertTrue(source.contains("val candidatosPorRamo = mutableMapOf"))
+        assertTrue(source.contains("if (ataqueEscolhido == null) return@getOrPut encantos"))
         assertTrue(source.contains("candidatosPorRamo.clear()"))
         assertTrue(source.contains("LunarCharmArchetypePolicy.eligibleRoutes("))
     }
