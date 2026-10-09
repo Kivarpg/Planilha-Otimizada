@@ -63,12 +63,14 @@ internal fun ExaltedPanoramaBackground(
         val panoramaWidth = maxOf(width, maxHeight * aspectRatio)
         val density = androidx.compose.ui.platform.LocalDensity.current
         val travelPx = with(density) { (panoramaWidth - width).toPx() }
+        // requiredWidth permite ultrapassar a largura imposta pelo pai;
+        // width() simples pode ser limitado à largura da tela e impedir a panorâmica.
         Image(
             painter = painter,
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
-                .width(panoramaWidth)
+                .requiredWidth(panoramaWidth)
                 .fillMaxHeight()
                 .offset { IntOffset((-travelPx * progress).roundToInt(), 0) }
                 .align(Alignment.TopStart)
