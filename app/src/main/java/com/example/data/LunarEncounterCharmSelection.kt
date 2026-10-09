@@ -144,21 +144,20 @@ internal object LunarEncounterCharmSelection {
                     // Cada passagem adquire ao menos um Encanto ou encerra.
                     // Limitar pelo tamanho do catalogo impede ciclos.
                     while (adquiridos.size < candidatos.size) {
-                        val proximo = candidatos.firstOrNull { def ->
-                            def.nome !in adquiridos &&
+                        val proximo = candidatos.asSequence()
+                            .filter { it.nome !in adquiridos }
+                            .filter { def ->
                                 LunarCharmArchetypePolicy.eligibleRoutes(
                                     def, routeContext, attributes, 5, adquiridos, catalogo,
                                     contagemCategoriaSelecionada = { categoria ->
-                                        if (categoria.isBlank()) {
-                                            adquiridos.size
-                                        } else {
-                                            routeContext.charmNamesByCategory[categoria.trim().lowercase()]
-                                                ?.count { it in adquiridos } ?: 0
-                                        }
+                                        if (categoria.isBlank()) adquiridos.size
+                                        else routeContext.charmNamesByCategory[categoria.trim().lowercase()]
+                                            ?.count { it in adquiridos } ?: 0
                                     }
                                 ).any { it.atributo == atributo }
-                        }
-                        if (proximo == null) break
+                            }
+                            .minWithOrNull(compareBy<EncantoLunarDefinition> { it.minEssencia }.thenBy { it.nome })
+                                              if (proximo == null) break
                         adquiridos += proximo.nome
                         maiorEssencia = maxOf(maiorEssencia, proximo.minEssencia)
                     }
