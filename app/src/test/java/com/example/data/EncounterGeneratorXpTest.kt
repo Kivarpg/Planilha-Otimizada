@@ -847,4 +847,44 @@ class EncounterGeneratorXpTest {
     }
 
 
+    @Test
+    fun `solar e sangue de dragao preservam saldo e historico apos tres lotes e reversoes`() {
+        val tipos = listOf(
+            com.example.model.TipoExaltadoEncontro.SOLAR,
+            com.example.model.TipoExaltadoEncontro.SANGUE_DE_DRAGAO
+        )
+        tipos.forEach { tipo ->
+            val inicial = npcBase().copy(tipoExaltado = tipo, xpAtual = 15)
+            val ordem = listOf("Armas Brancas")
+            val trilha: (Int, Int) -> List<com.example.model.CaixaVitalidade> =
+                if (tipo == com.example.model.TipoExaltadoEncontro.SANGUE_DE_DRAGAO) {
+                    EncounterGenerator::trilhaVitalidadeSangueDeDragaoPorVigor
+                } else {
+                    EncounterGenerator::trilhaVitalidadePorVigor
+                }
+            val custo: (String) -> Int = { 10 }
+            val sequencial = (1..3).fold(inicial) { atual, _ ->
+                EncounterExperienceService.expand(atual, emptyList(), ordem, custo, trilha)
+            }
+            val repetido = EncounterExperienceService.expandRepeated(
+                inicial, emptyList(), ordem, custo, trilha, 3
+            )
+            assertEquals("tipo=$tipo: expansao repetida divergiu", sequencial, repetido)
+            assertEquals("tipo=$tipo: historico incompleto", 3, repetido.historicoXpBatches.size)
+            assertEquals(
+                "tipo=$tipo: conservacao de XP",
+                inicial.xpAtual + 3 * EncounterExperienceService.XP_POR_CHAMADA,
+                repetido.xpAtual + repetido.xpGastoTotal - inicial.xpGastoTotal
+            )
+            var revertido = repetido
+            repeat(3) { revertido = EncounterExperienceService.reduce(revertido) }
+            assertTrue("tipo=$tipo: historico nao foi esvaziado", revertido.historicoXpBatches.isEmpty())
+            assertEquals("tipo=$tipo: saldo nao restaurado", inicial.xpAtual, revertido.xpAtual)
+            assertEquals("tipo=$tipo: gasto nao restaurado", inicial.xpGastoTotal, revertido.xpGastoTotal)
+            assertEquals("tipo=$tipo: habilidades nao restauradas", inicial.abilities, revertido.abilities)
+            assertEquals("tipo=$tipo: encantos nao restaurados", inicial.charms, revertido.charms)
+            assertEquals("tipo=$tipo: reversao nao idempotente", revertido, EncounterExperienceService.reduce(revertido))
+        }
+    }
+
 }
