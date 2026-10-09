@@ -1,0 +1,32 @@
+name: Encounter Performance Audit
+run-name: NPC generation performance (no APK)
+on:
+  push:
+    branches:
+      - final-audit-797
+    paths:
+      - .github/workflows/encounter_performance_audit.yml
+permissions:
+  contents: read
+jobs:
+  profile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v5
+      - name: Profile nine NPC generation configurations
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:testDebugUnitTest -Pexalted.runAuditTests=true --tests 'com.example.data.EncounterGenerationPerformanceAuditTest' -Dexalted.perfSamples=5 --console=plain --no-configuration-cache
+      - name: Publish performance log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: encounter-performance-log
+          path: app/build/test-results/testDebugUnitTest/
+          if-no-files-found: warn
