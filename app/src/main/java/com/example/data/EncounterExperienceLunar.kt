@@ -330,9 +330,12 @@ internal object EncounterExperienceLunar {
             // A chave da categoria nao muda durante as tentativas deste bloco.
             val chaveCategoriaRamo = atributoRamo.lowercase()
             val alvo = (categoriasSelecionadas[chaveCategoriaRamo] ?: 0) + 3
+            // O custo do atributo é constante enquanto o lote é processado.
+            // Evitar novas consultas a cada compra ou rota candidata.
+            val custoRamo = custoXpEncantoLunar(castaOuFavorecidos, atributoRamo)
             var tentativasBloco = 0
             while (
-                xpDisponivel >= CUSTO_XP_ENCANTO_LUNAR_FAVORECIDO &&
+                xpDisponivel >= custoRamo &&
                 (categoriasSelecionadas[chaveCategoriaRamo] ?: 0) < alvo &&
                 tentativasBloco++ < 100
             ) {
@@ -350,11 +353,6 @@ internal object EncounterExperienceLunar {
                 // O catálogo não muda durante esta tentativa: consultar uma vez
                 // a lista de candidatos e o índice de rotas por Encanto.
                 val candidatosDoRamo = candidatosOrdenados(atributoRamo, essenciaAtual)
-                // A rota escolhida precisa pertencer ao ramo em compra; calcular
-                // sua viabilidade de XP uma vez por tentativa, antes de avaliar
-                // pré-requisitos potencialmente custosos.
-                val custoRamo = custoXpEncantoLunar(castaOuFavorecidos, atributoRamo)
-                if (custoRamo > xpDisponivel) break
                 for (def in candidatosDoRamo) {
                     if (def.minEssencia > essenciaAtual) continue
                     if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
@@ -389,9 +387,8 @@ internal object EncounterExperienceLunar {
                 }
                 val candidatoSelecionado = candidato ?: break
                 val atributoAquisicao = rotaEscolhida?.atributo ?: candidatoSelecionado.atributo
-                val custoXp = custoXpEncantoLunar(castaOuFavorecidos, atributoAquisicao)
-                xpDisponivel -= custoXp
-                xpGastoTotal += custoXp
+                xpDisponivel -= custoRamo
+                xpGastoTotal += custoRamo
                 charmsAtuais += com.example.model.EncantoEncontro(candidatoSelecionado.nome, atributoAquisicao, candidatoSelecionado.custo)
                 nomesSelecionados += candidatoSelecionado.nome
                 nomesCharmsNesteLote += candidatoSelecionado.nome
