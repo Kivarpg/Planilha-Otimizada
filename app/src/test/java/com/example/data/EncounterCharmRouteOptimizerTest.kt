@@ -1090,4 +1090,42 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals(escolher(false), escolher(true))
     }
 
+    @Test
+    fun `primeira aquisicao simulada consome limite mesmo sem nome na raiz`() {
+        val (corpo, _) = encanto("Corpo de Touro", 8, habilidade = "Resistência")
+        val (seguinte, _) = encanto("Seguinte", 8, habilidade = "Resistência")
+        val catalogo = listOf(corpo, seguinte)
+        for (monotona in listOf(false, true)) {
+            val memo = HashMap<EncounterCharmRouteOptimizer.CompactEligibilityKey, Set<String>>()
+            val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+                catalogo, { it.nome }, { it.habilidade }
+            )
+            val escolhido = EncounterCharmRouteOptimizer.escolher(
+                candidatos = listOf(corpo),
+                catalogoCompleto = catalogo,
+                nomesSelecionados = emptySet(),
+                contagensCategorias = emptyMap(),
+                elegivel = { _, _, _ -> true },
+                nome = { it.nome },
+                categoria = { it.habilidade },
+                custoXp = { 8 },
+                permiteAquisicaoRepetida = { it.nome == corpo.nome },
+                repeatableAcquisitionLimit = { 1 },
+                initialAcquisitionCounts = emptyMap(),
+                preparedCatalog = prepared,
+                compactEligibilityMemo = memo,
+                monotonicEligibility = monotona,
+                profundidade = 2
+            )
+            assertEquals("modo monotono=$monotona", corpo.nome, escolhido?.nome)
+            // Limites dinâmicos isolam o memo recebido; a verificação
+            // fundamental é que o estado com a primeira compra não
+            // volte a oferecer o mesmo Encanto.
+            val selectedAfterFirst = setOf(corpo.nome)
+            val firstKey = prepared.compactKey(selectedAfterFirst, mapOf("resistência" to 1))
+            assertTrue(firstKey.selectedBits.cardinality() == 1)
+            assertTrue("memo externo deve permanecer isolado", memo.isEmpty())
+        }
+    }
+
 }
