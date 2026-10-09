@@ -53,7 +53,7 @@ val exaltedVersionNumber = exaltedProjectName.substringAfter("Exalted.").toInt()
 
 android {
     namespace = "com.example"
-    compileSdk = 36
+    compileSdk = 37
 
     // Assinatura persistente opcional. No CI, o workflow materializa o keystore
     // a partir de GitHub Actions Secrets e fornece estas quatro variáveis.
