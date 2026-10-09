@@ -50,12 +50,11 @@ internal object EncounterExperienceLunar {
             LunarSpiritShapeArchetypeTraits.forDisplayName(npc.formaEspiritualSecundaria)).toSet()
     }
 
-    // Versão adaptada de expand() pra Lunar — mesma mecânica (reserva pra
-    // habilidade+especialização, depois compra de Encantos com o restante),
-    // mas checando Atributos em vez de Habilidades (diferença central do
-    // Lunar, confirmada pelo usuário). Não reaproveita expand() diretamente
-    // porque a elegibilidade e a "habilidade a melhorar" são baseadas em
-    // abilities ali, sem parametrização pra trocar por attributes.
+    // Evolução Lunar usa árvores de Atributos, não de Habilidades.
+    // Diferentemente do caminho Solar, não reserva XP para aumentar
+    // Atributos ou Especialidades: o saldo é destinado à compra de Encantos.
+    // A elegibilidade, as rotas de aquisição e o limite entre Vigor e a
+    // única árvore ofensiva do arquétipo Físico são tratados aqui.
     fun expandLunar(
         npc: NpcEncontro,
         catalogo: List<EncantoLunarDefinition>,
