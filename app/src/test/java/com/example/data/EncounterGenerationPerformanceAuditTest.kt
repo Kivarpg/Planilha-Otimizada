@@ -30,10 +30,15 @@ class EncounterGenerationPerformanceAuditTest {
         val repeticoes = System.getProperty("exalted.perfSamples")?.toIntOrNull()
             ?.coerceIn(3, 100) ?: 5
         val tipos = listOf("Solar", "Sangue de Dragao", "Lunar")
-        for (tipo in tipos) {
-            for (arquetipo in ArquetipoEncontro.entries) {
-                val amostras = ArrayList<Long>(repeticoes)
-                repeat(repeticoes + 1) { rodada ->
+        // Intercalar as configuracoes reduz o vies de aquecimento da JVM e
+        // de variacoes de carga do runner durante a medicao.
+        val ordem = ArquetipoEncontro.entries.flatMap { arquetipo ->
+            tipos.map { tipo -> tipo to arquetipo }
+        }
+        val amostrasPorConfiguracao = ordem.associateWith { ArrayList<Long>(repeticoes) }
+        repeat(repeticoes + 1) { rodada ->
+            val sequencia = if (rodada % 2 == 0) ordem else ordem.reversed()
+            for ((tipo, arquetipo) in sequencia) {
                     val seed = 80_000 + rodada
                     val tempo = measureNanoTime {
                         val npc = when (tipo) {
@@ -55,9 +60,12 @@ class EncounterGenerationPerformanceAuditTest {
                         }
                         check(npc.id.isNotBlank())
                     }
-                    if (rodada > 0) amostras += tempo
-                }
-                amostras.sort()
+                    if (rodada > 0) amostrasPorConfiguracao.getValue(tipo to arquetipo).add(tempo)
+            }
+        }
+        for ((tipo, arquetipo) in ordem) {
+            val amostras = amostrasPorConfiguracao.getValue(tipo to arquetipo)
+            amostras.sort()
                 fun percentile(p: Int): Long =
                     amostras[((p * amostras.size + 99) / 100 - 1).coerceIn(0, amostras.lastIndex)]
                 println(
@@ -66,7 +74,6 @@ class EncounterGenerationPerformanceAuditTest {
                         "p95_ms=${percentile(95) / 1_000_000.0} " +
                         "max_ms=${amostras.last() / 1_000_000.0}"
                 )
-            }
         }
     }
 }
