@@ -262,6 +262,9 @@ internal object EncounterExperienceLunar {
         val alcancePorEncanto = mutableMapOf<String, Int>()
         val alcanceAtualPorEncanto = mutableMapOf<String, Int>()
         var essenciaPontuacaoCache: Int? = null
+        // A ordenação por alcance é necessária apenas no Físico. Nos demais
+        // arquétipos, não criar os índices auxiliares de profundidade.
+        val classificarPorProfundidade = ataqueEscolhido != null
         // Só o arquétipo Físico utiliza a classificação por profundidade.
         // Evitar índices e varreduras de catálogo para Social e Mental.
         fun definicoesPermitidas(): Map<String, EncantoLunarDefinition> =
@@ -286,7 +289,7 @@ internal object EncounterExperienceLunar {
             // Os demais arquétipos usam a ordem canônica: não precisam
             // recalcular Essência nem invalidar a ordenação a cada compra.
             val essenciaPontuacao = if (ataqueEscolhido != null) essenciaAtual else 0
-            if (ataqueEscolhido != null && essenciaPontuacaoCache != essenciaPontuacao) {
+            if (classificarPorProfundidade && essenciaPontuacaoCache != essenciaPontuacao) {
                 // A Essência pode aumentar durante o próprio lote de XP.
                 // Não reutilizar uma classificação baseada na Essência anterior.
                 candidatosPorRamo.clear()
@@ -297,7 +300,7 @@ internal object EncounterExperienceLunar {
                 val encantos = encantosPorRamoNormalizado[atributoRamo.lowercase()].orEmpty()
                 // A nova estratégia de profundidade é exclusiva do arquétipo
                 // Físico. Social e Mental mantêm a ordem canônica anterior.
-                if (ataqueEscolhido == null) return@getOrPut encantos
+                if (!classificarPorProfundidade) return@getOrPut encantos
                 // Calcular alcance uma vez por Encanto, não a cada comparação
                 // do sort (que pode comparar o mesmo Encanto repetidamente).
                 encantos.forEach { def ->
