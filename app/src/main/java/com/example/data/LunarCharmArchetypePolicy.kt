@@ -65,6 +65,34 @@ internal object LunarCharmArchetypePolicy {
             return highest
         }
 
+        /** Potencial nominal limitado à Essência atual e ao Atributo da rota. */
+        fun reachableDependentCountWithinLimits(
+            charmName: String,
+            definitionsByName: Map<String, EncantoLunarDefinition>,
+            attributes: Map<String, Int>,
+            essenceLimit: Int
+        ): Int {
+            val visited = mutableSetOf(charmName)
+            val pending = ArrayDeque<String>()
+            pending.addLast(charmName)
+            var count = 0
+            while (pending.isNotEmpty()) {
+                val current = pending.removeFirst()
+                for (dependent in dependentsByCharm[current].orEmpty()) {
+                    if (dependent in visited) continue
+                    val definition = definitionsByName[dependent] ?: continue
+                    if (definition.minEssencia > essenceLimit) continue
+                    if (routesByCharm[dependent].orEmpty().none { route ->
+                            (attributes[route.atributo] ?: 0) >= route.minAtributo
+                        }) continue
+                    visited.add(dependent)
+                    pending.addLast(dependent)
+                    count++
+                }
+            }
+            return count
+        }
+
         /**
          * Delta exato para aquisição monotônica: somente Encantos cujo requisito
          * menciona o Encanto comprado, a categoria incrementada ou a contagem
