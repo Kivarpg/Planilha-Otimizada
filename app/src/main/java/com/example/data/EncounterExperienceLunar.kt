@@ -271,8 +271,12 @@ internal object EncounterExperienceLunar {
             catalogo.maxOfOrNull { it.minEssencia } ?: 0
         } else 0
         fun candidatosOrdenados(atributoRamo: String): List<EncantoLunarDefinition> {
-            val essenciaPontuacao = EncounterExperienceService.essenciaPara(npc, xpGastoTotal)
-            if (essenciaPontuacaoCache != essenciaPontuacao) {
+            // Os demais arquétipos usam a ordem canônica: não precisam
+            // recalcular Essência nem invalidar a ordenação a cada compra.
+            val essenciaPontuacao = if (ataqueEscolhido != null) {
+                EncounterExperienceService.essenciaPara(npc, xpGastoTotal)
+            } else 0
+            if (ataqueEscolhido != null && essenciaPontuacaoCache != essenciaPontuacao) {
                 // A Essência pode aumentar durante o próprio lote de XP.
                 // Não reutilizar uma classificação baseada na Essência anterior.
                 candidatosPorRamo.clear()
