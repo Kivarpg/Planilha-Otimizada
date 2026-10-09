@@ -170,6 +170,18 @@ class EncounterNpcSpellManagementTest {
         assertEquals("Teste", resultado.feiticoInicialNome)
     }
 
+    @Test fun `fallback nao confunde feitico celestial de mesmo nome com terrestre`() {
+        val celestial = com.example.model.FeiticoEncontro("Teste", "Celestial", "10mf")
+        val base = feiticeiro().copy(feiticos = listOf(celestial))
+        val resultado = EncounterNpcSpellManagement.garantirInicialNaCriacao(
+            base, listOf(terrestre), kotlin.random.Random(7)
+        )
+        assertEquals(2, resultado.feiticos.size)
+        assertEquals("Celestial", resultado.feiticos.first().circulo)
+        assertEquals("Terrestre", resultado.feiticos.last().circulo)
+        assertEquals("Teste", resultado.feiticoInicialNome)
+    }
+
     @Test fun `geracao de feitico inicial e idempotente`() {
         val inicial = EncounterNpcSpellManagement.garantirInicialNaCriacao(
             feiticeiro(), listOf(terrestre), kotlin.random.Random(7)
