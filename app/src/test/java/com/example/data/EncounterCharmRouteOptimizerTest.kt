@@ -677,4 +677,26 @@ class EncounterCharmRouteOptimizerTest {
         assertTrue("definicao substituida nao pode herdar catalogo antigo", rejeitado)
     }
 
+    @Test
+    fun `catalogo preparado aceita copia equivalente da mesma definicao`() {
+        val (original, _) = encanto("Mesmo Encanto", 8)
+        val (copia, _) = encanto("Mesmo Encanto", 8)
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            listOf(original), { it.nome }, { it.habilidade }
+        )
+        val escolhido = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(copia),
+            catalogoCompleto = listOf(copia),
+            nomesSelecionados = emptySet(),
+            contagensCategorias = emptyMap(),
+            elegivel = { _, _, _ -> true },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { 8 },
+            preparedCatalog = prepared,
+            profundidade = 1
+        )
+        assertEquals("Mesmo Encanto", escolhido?.nome)
+    }
+
 }
