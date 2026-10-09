@@ -9,20 +9,20 @@
 # Kotlin compilava (via dependência transitiva do plugin do Compose),
 # mas as classes nunca eram corretamente conectadas ao empacotamento
 # final do Android, resultando num .apk sem a MainActivity dentro.
-agp = "9.3.3"
-kotlin = "2.2.10"
-coreKtx = "1.15.0"
-coreSplashscreen = "1.0.1"
-androidxTestCore = "1.6.1"
-androidxJunit = "1.2.1"
+agp = "9.4.1"
+kotlin = "2.4.21"
+coreKtx = "1.19.1"
+coreSplashscreen = "1.2.0"
+androidxTestCore = "1.7.0"
+androidxJunit = "1.3.0"
 junit = "4.13.2"
-lifecycleViewmodelKtx = "2.8.7"
-activityCompose = "1.9.3"
+lifecycleViewmodelKtx = "2.11.0"
+activityCompose = "1.13.0"
 composeBom = "2026.09.00"
-kotlinxCoroutinesAndroid = "1.9.0"
-kotlinxCoroutinesTest = "1.9.0"
-robolectric = "4.14.1"
-zxingCore = "3.5.3"
+kotlinxCoroutinesAndroid = "1.11.0"
+kotlinxCoroutinesTest = "1.11.0"
+robolectric = "4.17"
+zxingCore = "3.5.4"
 ktlintGradle = "14.2.0"
 
 [libraries]
