@@ -249,6 +249,9 @@ internal object EncounterExperienceLunar {
         // Cache por contexto e ramo: ordenar a árvore apenas uma vez por
         // configuração de Forma Espiritual, não a cada compra de Encanto.
         val candidatosPorRamo = mutableMapOf<String, List<EncantoLunarDefinition>>()
+        // Atributos permanecem constantes neste lote. Reutilizar a viabilidade
+        // estrutural da rota até que Quimera altere o contexto de aquisição.
+        val rotaViavelPorRamo = mutableMapOf<Pair<String, String>, Boolean>()
         // O mesmo Encanto pode aparecer em várias gavetas por rotas de
         // Arquétipo. Compartilhar a pontuação evita percorrer sua árvore
         // de descendentes novamente em cada gaveta.
@@ -358,9 +361,12 @@ internal object EncounterExperienceLunar {
                     // Um Encanto pode estar indexado por rotas alternativas.
                     // Descartar antecipadamente as rotas do ramo cujo mínimo
                     // de Atributo não pode ser satisfeito por este NPC.
-                    if (routeContextAtual.routesFor(def).none { route ->
-                            route.atributo.equals(atributoRamo, ignoreCase = true) &&
-                                (attributesAtuais[route.atributo] ?: 0) >= route.minAtributo
+                    val chaveRota = atributoRamo.lowercase() to def.nome
+                    if (!rotaViavelPorRamo.getOrPut(chaveRota) {
+                            routeContextAtual.routesFor(def).any { route ->
+                                route.atributo.equals(atributoRamo, ignoreCase = true) &&
+                                    (attributesAtuais[route.atributo] ?: 0) >= route.minAtributo
+                            }
                         }) continue
                     val rotasElegiveis = LunarCharmArchetypePolicy.eligibleRoutes(
                         def, routeContextAtual, attributesAtuais, essenciaAtual, nomesSelecionados, catalogo,
@@ -408,6 +414,7 @@ internal object EncounterExperienceLunar {
                             LunarSpiritShapeArchetypeTraits.forAnimal(secundaria)
                         routeContextAtual = LunarCharmArchetypePolicy.prepare(catalogo, spiritTraitsEfetivos)
                         candidatosPorRamo.clear() // novas rotas após Quimera
+                        rotaViavelPorRamo.clear() // Quimera pode abrir rotas antes inviáveis
                         alcancePorEncanto.clear() // dependências podem mudar
                         alcanceAtualPorEncanto.clear()
                         definicoesPorNome = definicoesPermitidas()
