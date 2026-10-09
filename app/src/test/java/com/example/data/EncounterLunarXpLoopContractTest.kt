@@ -162,6 +162,7 @@ class EncounterLunarXpLoopContractTest {
         assertTrue(source.contains("alcancePorEncanto.clear()"))
         assertTrue(source.contains("val candidatosPorRamo = mutableMapOf"))
         assertTrue(source.contains("if (ataqueEscolhido == null) return@getOrPut encantos"))
+        assertTrue(source.contains("if (ataqueEscolhido != null) catalogo.associateBy { it.nome } else emptyMap()"))
         assertTrue(source.contains("candidatosPorRamo.clear()"))
         assertTrue(source.contains("LunarCharmArchetypePolicy.eligibleRoutes("))
     }
