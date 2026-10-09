@@ -177,4 +177,18 @@ class LunarCharmArchetypePolicyTest {
         assertFalse("Independente" in afetados)
     }
 
+    @Test
+    fun `delta mental nao e ativado por aquisicao fisica`() {
+        val fisico = charm(nome = "Base Fisica", atributo = "Destreza", min = 2)
+        val alvo = charm(
+            nome = "Alvo Mental Exclusivo",
+            atributo = "Percepção",
+            min = 2,
+            pre = "Quaisquer dois Encantos de Atributo Mental"
+        )
+        val contexto = LunarCharmArchetypePolicy.prepare(listOf(fisico, alvo), emptySet())
+        val afetados = contexto.affectedAfterAcquisition("Base Fisica", "Destreza")
+        assertFalse("Alvo Mental Exclusivo" in afetados)
+    }
+
 }
