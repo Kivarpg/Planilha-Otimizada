@@ -1097,9 +1097,6 @@ class EncounterCharmRouteOptimizerTest {
         val catalogo = listOf(corpo, seguinte)
         for (monotona in listOf(false, true)) {
             val memo = HashMap<EncounterCharmRouteOptimizer.CompactEligibilityKey, Set<String>>()
-            val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
-                catalogo, { it.nome }, { it.habilidade }
-            )
             val escolhido = EncounterCharmRouteOptimizer.escolher(
                 candidatos = listOf(corpo),
                 catalogoCompleto = catalogo,
@@ -1112,18 +1109,14 @@ class EncounterCharmRouteOptimizerTest {
                 permiteAquisicaoRepetida = { it.nome == corpo.nome },
                 repeatableAcquisitionLimit = { 1 },
                 initialAcquisitionCounts = emptyMap(),
-                preparedCatalog = prepared,
                 compactEligibilityMemo = memo,
                 monotonicEligibility = monotona,
                 profundidade = 2
             )
             assertEquals("modo monotono=$monotona", corpo.nome, escolhido?.nome)
             // Limites dinâmicos isolam o memo recebido; a verificação
-            // fundamental é que o estado com a primeira compra não
-            // volte a oferecer o mesmo Encanto.
-            val selectedAfterFirst = setOf(corpo.nome)
-            val firstKey = prepared.compactKey(selectedAfterFirst, mapOf("resistência" to 1))
-            assertTrue(firstKey.selectedBits.cardinality() == 1)
+            // de bloqueio após a primeira compra é coberta pelo teste
+            // específico que conta chamadas indevidas ao callback.
             assertTrue("memo externo deve permanecer isolado", memo.isEmpty())
         }
     }
