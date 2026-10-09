@@ -211,11 +211,9 @@ internal object EncounterExperienceLunar {
         // e aprofunda as três primeiras Árvores prioritárias antes de espalhar
         // a progressão.
         var tentativas = 0
-        // Preservar a especialização física da seleção inicial ao evoluir XP.
-        // A rota já adquirida é autoritativa; sem ela, usar a prioridade do NPC.
+        // Preservar a arvore ofensiva registrada na geracao inicial ao evoluir XP.
+        // Para saves antigos, recorrer ao foco explicito e depois a contagem atual.
         val ofensivos = listOf("Força", "Destreza")
-        // O foco declarado prevalece; sem foco, a arvore ja iniciada prevalece.
-        // Em empate, a prioridade original do NPC e estavel entre lotes.
         val ataqueEscolhido = if (npc.arquetipo == com.example.model.ArquetipoEncontro.FISICO) {
             npc.lunarAtaqueEscolhido?.takeIf { it in ofensivos }
                 ?: npc.focoProgressaoExplicito?.takeIf { it in ofensivos }
@@ -231,7 +229,14 @@ internal object EncounterExperienceLunar {
         fun vigorPermitido(contagens: Map<String, Int>): Boolean =
             ataqueEscolhido == null ||
                 (contagens["vigor"] ?: 0) < (contagens[ataqueEscolhido.lowercase()] ?: 0) + 3
-        val ramos = indice.ordemAtributos.filter { ataqueEscolhido == null || it != ataqueDescartado }
+        // No Fisico, manter o ataque escolhido e Vigor no conjunto inicial de
+        // arvores, mesmo quando a ordem geral prioriza outros atributos.
+        // O restante segue a prioridade original e nao reintroduz o ataque descartado.
+        val ramos = (if (ataqueEscolhido != null) {
+            listOf(ataqueEscolhido, "Vigor") + indice.ordemAtributos
+        } else indice.ordemAtributos).distinct().filter {
+            ataqueEscolhido == null || it != ataqueDescartado
+        }
         val arvoresAtivas = ramos.take(3).toMutableList()
         if (ramos.isEmpty()) return ResultadoCompraCharmsLunar(
             xpDisponivel, xpGastoTotal, corpoDeTouro, contagemAtributoMentalSelecionada,
