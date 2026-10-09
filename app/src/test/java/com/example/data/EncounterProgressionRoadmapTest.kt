@@ -573,7 +573,7 @@ class EncounterProgressionRoadmapTest {
         val planejado = EncounterProgressionRoadmapService.construir(
             npcBase(), catalogoSolarDeTeste(), emptyList(), emptyList()
         )
-        val antigo = planejado.copy(algorithmVersion = 0)
+        val antigo = planejado.copy(algorithmVersion = 6)
 
         assertEquals(null, EncounterProgressionRoadmapService.proximo(npcBase(), antigo))
     }
