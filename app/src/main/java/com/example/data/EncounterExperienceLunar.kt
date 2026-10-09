@@ -255,6 +255,9 @@ internal object EncounterExperienceLunar {
                     ?: routeContextAtual.charmsByAttribute.entries.firstOrNull {
                         it.key.equals(atributoRamo, ignoreCase = true)
                     }?.value.orEmpty()
+                // A nova estratégia de profundidade é exclusiva do arquétipo
+                // Físico. Social e Mental mantêm a ordem canônica anterior.
+                if (ataqueEscolhido == null) return@getOrPut encantos
                 // Calcular alcance uma vez por Encanto, não a cada comparação
                 // do sort (que pode comparar o mesmo Encanto repetidamente).
                 val alcance = encantos.associate { def ->
