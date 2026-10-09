@@ -893,7 +893,7 @@ fun EncounterGeneratorTab(
             // por 2 frames evita renderizar o ScrollableTabRow nesse
             // instante, em vez de arriscar um índice que ainda não existe.
             AppText(
-                "Nenhum NPC gerado ainda.",
+                if (npcsGerados.isEmpty()) "Nenhum NPC gerado ainda." else "Preparando aba do NPC…",
                 style = MaterialTheme.typography.bodySmall,
                 color = ExaltedMuted,
                 modifier = Modifier.fillMaxWidth(),
