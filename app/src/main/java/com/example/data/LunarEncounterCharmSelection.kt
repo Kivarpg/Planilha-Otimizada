@@ -142,20 +142,20 @@ internal object LunarEncounterCharmSelection {
                             (attributes[def.atributo] ?: 0) >= def.minAtributo
                     }
                     .groupBy { it.atributo }
+                val profundidadePorAtributo = candidatosOfensivos.associateWith { atributo ->
+                    val niveis = disponiveisPorAtributo[atributo].orEmpty()
+                        .mapTo(hashSetOf()) { it.minEssencia }
+                    var nivelContinuo = 0
+                    for (nivel in 1..essencia) {
+                        if (nivel !in niveis) break
+                        nivelContinuo = nivel
+                    }
+                    nivelContinuo
+                }
                 candidatosOfensivos.maxWithOrNull(
-                    compareBy<String> { atributo ->
-                        disponiveisPorAtributo[atributo].orEmpty().let { disponiveis ->
-                            val niveis = disponiveis.mapTo(hashSetOf()) { it.minEssencia }
-                            var nivelContinuo = 0
-                            for (nivel in 1..essencia) {
-                                if (nivel !in niveis) break
-                                nivelContinuo = nivel
-                            }
-                            nivelContinuo
-                        }
-                    }.thenBy { atributo ->
-                        disponiveisPorAtributo[atributo].orEmpty().size
-                    }.thenBy { atributo -> attributes[atributo] ?: 0 }
+                    compareBy<String> { profundidadePorAtributo[it] ?: 0 }
+                        .thenBy { disponiveisPorAtributo[it].orEmpty().size }
+                        .thenBy { attributes[it] ?: 0 }
                 )
             }
         } else null
