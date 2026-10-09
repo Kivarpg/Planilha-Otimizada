@@ -81,7 +81,8 @@ internal object LunarEncounterCharmSelection {
         val charms: List<EncantoLunarDefinition>,
         val acquisitionAttributes: Map<String, String>,
         /** Métricas do hot path; diagnósticas, não alteram seleção nem persistência. */
-        val routeMetrics: EncounterCharmRouteMetrics.Snapshot? = null
+        val routeMetrics: EncounterCharmRouteMetrics.Snapshot? = null,
+        val ataqueEscolhido: String? = null
     )
 
     fun selecionarEncantosIniciais(
@@ -643,7 +644,8 @@ internal object LunarEncounterCharmSelection {
         return SelectionResult(
             charms = selecionados,
             acquisitionAttributes = atributosAquisicaoSelecionados.toMap(),
-            routeMetrics = routeMetrics.snapshot()
+            routeMetrics = routeMetrics.snapshot(),
+            ataqueEscolhido = ataqueEscolhido
         )
 }
 }
