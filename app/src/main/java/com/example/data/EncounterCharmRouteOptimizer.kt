@@ -79,7 +79,8 @@ object EncounterCharmRouteOptimizer {
     ) {
         internal fun compactKey(
             selecionados: Set<String>,
-            contagens: Map<String, Int>
+            contagens: Map<String, Int>,
+            repeatedAcquisitions: Map<String, Int> = emptyMap()
         ): CompactEligibilityKey {
             val bits = java.util.BitSet(nameOrdinal.size)
             val externalNames = HashSet<String>()
@@ -100,7 +101,7 @@ object EncounterCharmRouteOptimizer {
                 }
             }
             val overflowCounts = overflow?.apply { sortBy { it.first } } ?: emptyList()
-            return CompactEligibilityKey(bits, counts.toList(), overflowCounts, externalNames)
+            return CompactEligibilityKey(bits, counts.toList(), overflowCounts, externalNames, repeatedAcquisitions.toMap())
         }
 
         internal fun compactKeyAfter(
