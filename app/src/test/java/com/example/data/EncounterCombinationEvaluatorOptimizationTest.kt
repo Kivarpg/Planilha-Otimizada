@@ -34,10 +34,9 @@ class EncounterCombinationEvaluatorOptimizationTest {
     }
     @Test
     fun `ids duplicados e vazios continuam rejeitados em todos os niveis`() {
-        val evaluator = EncounterCombinationEvaluator
-        val branch = evaluator.EffectBranch("b", effects = emptyList())
-        val variant = evaluator.PowerVariant("v", branches = listOf(branch))
-        val power = evaluator.Power("p", variants = listOf(variant))
+        val branch = EncounterCombinationEvaluator.EffectBranch("b", effects = emptyList())
+        val variant = EncounterCombinationEvaluator.PowerVariant("v", branches = listOf(branch))
+        val power = EncounterCombinationEvaluator.Power("p", variants = listOf(variant))
         val cases = listOf(
             listOf(power, power) to "Poderes com ID vazio ou duplicado.",
             listOf(power.copy(id = "")) to "Poderes com ID vazio ou duplicado.",
@@ -51,7 +50,7 @@ class EncounterCombinationEvaluatorOptimizationTest {
                 "Ramos com ID vazio ou duplicado em p/v."
         )
         for ((powers, expectedReason) in cases) {
-            val result = evaluator.realize(powers, evaluator.Configuration())
+            val result = EncounterCombinationEvaluator.realize(powers, EncounterCombinationEvaluator.Configuration())
             assertEquals(expectedReason, result.reason)
             assertEquals(false, result.realizable)
         }
