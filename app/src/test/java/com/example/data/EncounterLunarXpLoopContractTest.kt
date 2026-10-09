@@ -15,6 +15,7 @@ class EncounterLunarXpLoopContractTest {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         assertTrue(source.contains("routeContextAtual.charmsByAttribute[atributoRamo]"))
         assertTrue(source.contains("it.key.equals(atributoRamo, ignoreCase = true)"))
+        assertTrue(source.contains(".distinctBy { it.lowercase() }"))
         assertTrue(source.contains("for (def in encantosDoRamo)"))
     }
 
