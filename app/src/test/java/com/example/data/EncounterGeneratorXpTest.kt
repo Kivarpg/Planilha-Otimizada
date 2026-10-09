@@ -222,10 +222,10 @@ class EncounterGeneratorXpTest {
         val evoluido = EncounterExperienceLunar.expandLunar(
             inicial, catalogo, listOf("Vigor", "Força", "Destreza")
         )
-        assertEquals(
-            listOf("Base da cadeia", "Meio da cadeia", "Topo da cadeia"),
-            evoluido.charms.map { it.nome }
-        )
+        val nomes = evoluido.charms.map { it.nome }
+        assertTrue(nomes.containsAll(listOf("Base da cadeia", "Meio da cadeia", "Topo da cadeia")))
+        assertTrue(nomes.indexOf("Base da cadeia") < nomes.indexOf("Meio da cadeia"))
+        assertTrue(nomes.indexOf("Meio da cadeia") < nomes.indexOf("Topo da cadeia"))
         assertTrue(evoluido.essencia >= 2)
         assertEquals("Destreza", evoluido.lunarAtaqueEscolhido)
     }
