@@ -69,3 +69,13 @@ AUDITORIA DE TERMINOLOGIA — PRIORIDADE MÁXIMA — 2026-10-08
 - Inspeção por árvore identificou 643 arquivos textuais, dos quais 511 Kotlin. A leitura exaustiva foi limitada pelo orçamento de chamadas e não foi concluída.
 - A frase relatada apareceu durante o processamento do assistente, não foi comprovada como texto exibido pelo APK. Evitar atribuir a origem ao código sem evidência.
 - Pendente: varredura local integral de arquivos-fonte/recursos quando houver checkout, e inspeção manual dos estados de carregamento no aplicativo. Não alterar classes nem traduções por hipótese.
+
+CONSOLIDAÇÃO DE ALTERAÇÕES — 2026-10-08 — EXALTED.799
+- Base de comparação: Exalted.798, commit 9c8af5daecd4. Branch de trabalho: final-audit-797; HEAD anterior a esta consolidação: 8360a971ec43a332a235cacf39d1b371de5d6802.
+- Comparação remota confirmou 70 commits à frente da base e exatamente 9 arquivos modificados/adicionados: CharmPrerequisiteReferenceParser.kt, CharmPrerequisiteTreeDialog.kt, AbilityCharmTreeDialog.kt, EncounterGeneratorTab.kt, EncounterNpcCard.kt, EncounterNpcCardSections.kt, CharmPrerequisiteReferenceParserTest.kt, settings.gradle.kts e este relatório.
+- Aba 8: construção assíncrona de árvores; normalização e indexação únicas dos nomes/IDs; filtragem de IDs vazios; busca de referências com limites de palavra; seleção de nomes mais longos sem sobreposição; deduplicação ordenada das arestas; eliminação de listas e cálculos redundantes. Testes adicionados para sobreposição, pontuação, acentos, ambiguidades, IDs vazios e repetição.
+- Aba 11: memoização e reutilização de dados de NPC, equipamentos, Feitiços e XP; proteções na seleção de abas; gerenciamento de Feitiço inicial antes do primeiro XP; ajustes de interface e estado de carregamento.
+- Versão de projeto declarada: Exalted.799 em settings.gradle.kts. Preservar igualdade de nomes entre ZIP e APK na liberação.
+- A consolidação é de código-fonte já versionado: NÃO houve squash, merge, compilação, execução de testes ou geração de APK/ZIP nesta etapa. Os 70 commits permanecem no histórico da branch.
+- Validação ainda necessária: testes unitários, gates do workflow de release, assinatura, instalação e verificação manual das interfaces e fluxos críticos. Não declarar 100% ou build aprovado antes dessas evidências.
+- Terminologia: Charm = Encanto; expressão incorreta sobre 'amuletos' foi vista no processamento do ChatGPT, não comprovada no APK.
