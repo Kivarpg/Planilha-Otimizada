@@ -236,7 +236,7 @@ internal object EncounterExperienceLunar {
         // arvores, mesmo quando a ordem geral prioriza outros atributos.
         // O restante segue a prioridade original e nao reintroduz o ataque descartado.
         val ramos = (if (ataqueEscolhido != null) {
-            listOf(ataqueEscolhido, "Vigor") + indice.ordemAtributos
+            listOf("Vigor", ataqueEscolhido) + indice.ordemAtributos
         } else indice.ordemAtributos).distinctBy { it.lowercase() }.filter {
             ataqueEscolhido == null || !it.equals(ataqueDescartado, ignoreCase = true)
         }
@@ -267,7 +267,14 @@ internal object EncounterExperienceLunar {
                 ?: routeContextAtual.charmsByAttribute.entries.firstOrNull {
                     it.key.equals(atributoRamo, ignoreCase = true)
                 }?.value.orEmpty()
-                for (def in encantosDoRamo) {
+                // Preferir raízes que abrem árvores maiores, especialmente em
+                // Vigor. A elegibilidade canônica continua obrigatória.
+                val candidatosOrdenados = encantosDoRamo.sortedWith(
+                    compareByDescending<EncantoLunarDefinition> {
+                        routeContextAtual.transitiveCharmDependentCount(it.nome)
+                    }.thenBy { it.minEssencia }.thenBy { it.nome }
+                )
+                for (def in candidatosOrdenados) {
                     if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
                     val rotasElegiveis = LunarCharmArchetypePolicy.eligibleRoutes(
                         def, routeContextAtual, attributesAtuais, essenciaAtual, nomesSelecionados, catalogo,
