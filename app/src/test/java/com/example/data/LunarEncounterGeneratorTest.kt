@@ -244,11 +244,12 @@ class LunarEncounterGeneratorTest {
         assertEquals(npc.charms.map { it.nome }, revertidoDois.charms.map { it.nome })
         assertEquals(npc.historicoXpBatches.size, revertidoDois.historicoXpBatches.size)
 
-        segundo.charms.forEach { encanto ->
-            val indice = encanto.nome.removePrefix("Forca XP ").toIntOrNull() ?: return@forEach
+        val nomesNaOrdem = segundo.charms.map { it.nome }
+        nomesNaOrdem.forEachIndexed { posicao, nome ->
+            val indice = nome.removePrefix("Forca XP ").toIntOrNull() ?: return@forEachIndexed
             if (indice > 1) assertTrue(
-                "Faltou requisito após o segundo lote: ${encanto.nome}",
-                "Forca XP ${indice - 1}" in segundo.charms.map { it.nome }.toSet()
+                "Pré-requisito deve ser adquirido antes de $nome",
+                nomesNaOrdem.indexOf("Forca XP ${indice - 1}") in 0 until posicao
             )
         }
         depois.charms.forEach { encanto ->
