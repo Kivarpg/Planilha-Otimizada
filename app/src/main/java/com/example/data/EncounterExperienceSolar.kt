@@ -173,12 +173,11 @@ internal object EncounterExperienceSolar {
                         nome = { it.nome },
                         categoria = { it.habilidade },
                         custoXp = { custoPorHabilidade[it.habilidade] ?: 10 },
-                        // O beam não representa multiplicidade individual de Encantos.
-                        // Permitir Corpo de Touro repetido em lookahead projetaria
-                        // compras acima do limite real de Resistência. A aquisição
-                        // real continua elegível na raiz via callback, mas não é
-                        // repetida hipoteticamente dentro da mesma rota.
-                        permiteAquisicaoRepetida = { false },
+                        // A compra repetida pode ser legal no estado real,
+                        // mas não deve ser projetada repetidamente sem contador
+                        // individual de Corpo de Touro no estado do beam.
+                        permiteAquisicaoRepetida = { it.nome == NOME_CORPO_DE_TOURO },
+                        repeatableOnlyAtRoot = true,
                         compactEligibilityMemo = elegibilidadeMemo,
                         preparedCatalog = catalogoPreparado
                     ) ?: break
