@@ -35,7 +35,9 @@ object EncounterCharmRouteOptimizer {
         /** Categorias dinâmicas não previstas no catálogo estático continuam na chave. */
         val overflowCounts: List<Pair<String, Int>>,
         /** Encantos previamente adquiridos ausentes do catálogo atual também distinguem estados. */
-        val externalSelectedNames: Set<String> = emptySet()
+        val externalSelectedNames: Set<String> = emptySet(),
+        /** Aquisições repetidas distinguem rotas com os mesmos totais por categoria. */
+        val repeatedAcquisitions: Map<String, Int> = emptyMap()
     )
 
     /**
@@ -108,6 +110,11 @@ object EncounterCharmRouteOptimizer {
         ): CompactEligibilityKey {
             val bits = parent.selectedBits.clone() as java.util.BitSet
             val selectedOrdinal = nameOrdinal[selectedName]
+            val alreadySelected = if (selectedOrdinal != null) parent.selectedBits.get(selectedOrdinal)
+                else selectedName in parent.externalSelectedNames
+            val repeated = if (alreadySelected) parent.repeatedAcquisitions +
+                (selectedName to ((parent.repeatedAcquisitions[selectedName] ?: 0) + 1))
+                else parent.repeatedAcquisitions
             if (selectedOrdinal != null) bits.set(selectedOrdinal)
             val externalNames = if (selectedOrdinal == null) parent.externalSelectedNames + selectedName
                 else parent.externalSelectedNames
@@ -116,7 +123,7 @@ object EncounterCharmRouteOptimizer {
             if (ordinal != null) {
                 val counts = parent.categoryCounts.toMutableList()
                 counts[ordinal] = counts[ordinal] + 1
-                return CompactEligibilityKey(bits, counts, parent.overflowCounts, externalNames)
+                return CompactEligibilityKey(bits, counts, parent.overflowCounts, externalNames, repeated)
             }
             val overflow = ArrayList<Pair<String, Int>>(parent.overflowCounts.size + 1)
             var inserted = false
@@ -135,7 +142,7 @@ object EncounterCharmRouteOptimizer {
                 }
             }
             if (!inserted) overflow += normalized to 1
-            return CompactEligibilityKey(bits, parent.categoryCounts, overflow, externalNames)
+            return CompactEligibilityKey(bits, parent.categoryCounts, overflow, externalNames, repeated)
         }
     }
 
