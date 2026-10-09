@@ -73,6 +73,27 @@ class LunarCharmArchetypePolicyTest {
     }
 
     @Test
+    fun `potencial nao atravessa intermediario inacessivel nem arvore excluida`() {
+        val raiz = charm(nome = "Raiz")
+        val bloqueado = charm(nome = "Intermediario Bloqueado", min = 5, pre = "Raiz")
+        val final = charm(nome = "Final", pre = "Intermediario Bloqueado")
+        val acessivel = charm(nome = "Acessivel", pre = "Raiz")
+        val catalogo = listOf(raiz, bloqueado, final, acessivel)
+        val context = LunarCharmArchetypePolicy.prepare(catalogo, emptySet())
+        val definitions = catalogo.associateBy { it.nome }
+        val atributos = mapOf("Destreza" to 3)
+        assertEquals(1, context.reachableDependentCountWithinLimits(
+            "Raiz", definitions, atributos, 5
+        ))
+        assertEquals(1, context.reachableDependentCountWithinLimits(
+            "Raiz", definitions.filterKeys { it != "Final" }, atributos, 5
+        ))
+        assertEquals(0, context.reachableDependentCountWithinLimits(
+            "Raiz", definitions.filterKeys { it == "Raiz" }, atributos, 5
+        ))
+    }
+
+    @Test
     fun `fechamento nominal exige todos os encantos intermediarios`() {
         val catalogo = listOf(
             charm(nome = "Raiz"),
