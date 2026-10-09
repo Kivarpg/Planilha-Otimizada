@@ -250,6 +250,20 @@ class NpcEncontroJsonCodecTest {
     }
 
     @Test
+    fun `decode ignora especializacao ofensiva invalida sem alterar foco`() {
+        val payload = NpcEncontroJsonCodec.encodeObject(
+            NpcEncontro(
+                nome = "Lunar foco preservado",
+                tipoExaltado = TipoExaltadoEncontro.LUNAR,
+                focoProgressaoExplicito = "Vigor"
+            )
+        ).apply { put("lunarAtaqueEscolhido", "Manipulação") }
+        val restaurado = NpcEncontroJsonCodec.decode(payload.toString())
+        assertEquals(null, restaurado.lunarAtaqueEscolhido)
+        assertEquals("Vigor", restaurado.focoProgressaoExplicito)
+    }
+
+    @Test
     fun `schema 5 migra sem inventar arvore ofensiva Lunar`() {
         val v5 = NpcEncontroJsonCodec.encodeObject(
             NpcEncontro(nome = "Legado Lunar", lunarAtaqueEscolhido = "Força")
