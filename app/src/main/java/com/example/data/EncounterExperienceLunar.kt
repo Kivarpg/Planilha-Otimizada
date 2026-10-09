@@ -255,7 +255,8 @@ internal object EncounterExperienceLunar {
         // Normalizar as chaves uma vez: o catálogo é indexado por atributo
         // e a procura não deve percorrer todas as gavetas a cada mudança de Essência.
         var encantosPorRamoNormalizado = routeContextAtual.charmsByAttribute
-            .entries.associate { (atributo, encantos) -> atributo.lowercase() to encantos }
+            .entries.groupBy({ (atributo, _) -> atributo.lowercase() }, { (_, encantos) -> encantos })
+                            .mapValues { (_, grupos) -> grupos.flatten().distinctBy { it.nome } }
         // O mesmo Encanto pode aparecer em várias gavetas por rotas de
         // Arquétipo. Compartilhar a pontuação evita percorrer sua árvore
         // de descendentes novamente em cada gaveta.
@@ -421,7 +422,8 @@ internal object EncounterExperienceLunar {
                             LunarSpiritShapeArchetypeTraits.forAnimal(secundaria)
                         routeContextAtual = LunarCharmArchetypePolicy.prepare(catalogo, spiritTraitsEfetivos)
                         encantosPorRamoNormalizado = routeContextAtual.charmsByAttribute
-                            .entries.associate { (atributo, encantos) -> atributo.lowercase() to encantos }
+                            .entries.groupBy({ (atributo, _) -> atributo.lowercase() }, { (_, encantos) -> encantos })
+                            .mapValues { (_, grupos) -> grupos.flatten().distinctBy { it.nome } }
                         candidatosPorRamo.clear() // novas rotas após Quimera
                         rotaViavelPorRamo.clear() // Quimera pode abrir rotas antes inviáveis
                         alcancePorEncanto.clear() // dependências podem mudar
