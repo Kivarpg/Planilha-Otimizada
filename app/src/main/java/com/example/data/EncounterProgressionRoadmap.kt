@@ -15,7 +15,9 @@ import java.security.MessageDigest
  */
 object EncounterProgressionRoadmapService {
     const val SCHEMA_VERSION = 1
-    const val ALGORITHM_VERSION = 6
+    // A escolha ofensiva Lunar agora integra os passos e o fingerprint do NPC.
+    // Planos persistidos antes desse contrato nao podem ser reutilizados.
+    const val ALGORITHM_VERSION = 7
     const val CATALOG_VERSION = 1
     private const val MAX_PASSOS_DE_SEGURANCA = 128
     /** Quantidade pequena de passos antecipados para evitar planejar um marco inteiro de uma vez. */
