@@ -157,6 +157,19 @@ class EncounterNpcSpellManagementTest {
         assertEquals(npc.feiticos, resultado.feiticos)
     }
 
+    @Test fun `nome inicial existente em outro circulo nao valida vaga terrestre`() {
+        val celestial = com.example.model.FeiticoEncontro("Teste", "Celestial", "10mf")
+        val base = feiticeiro().copy(
+            feiticos = listOf(celestial),
+            feiticoInicialNome = "Teste"
+        )
+        val resultado = EncounterNpcSpellManagement.garantirInicialNaCriacao(
+            base, listOf(terrestre), kotlin.random.Random(7)
+        )
+        assertEquals(listOf(celestial, com.example.model.FeiticoEncontro("Teste", "Terrestre", "5mf")), resultado.feiticos)
+        assertEquals("Teste", resultado.feiticoInicialNome)
+    }
+
     @Test fun `geracao de feitico inicial e idempotente`() {
         val inicial = EncounterNpcSpellManagement.garantirInicialNaCriacao(
             feiticeiro(), listOf(terrestre), kotlin.random.Random(7)
