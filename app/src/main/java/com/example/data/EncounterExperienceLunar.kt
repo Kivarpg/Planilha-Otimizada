@@ -312,8 +312,9 @@ internal object EncounterExperienceLunar {
                 alcanceAtualPorEncanto.clear()
                 essenciaPontuacaoCache = essenciaPontuacao
             }
-            return candidatosPorRamo.getOrPut(atributoRamo.lowercase()) {
-                val encantos = encantosPorRamoNormalizado[atributoRamo.lowercase()].orEmpty()
+            val chaveRamo = atributoRamo.lowercase()
+            return candidatosPorRamo.getOrPut(chaveRamo) {
+                val encantos = encantosPorRamoNormalizado[chaveRamo].orEmpty()
                 // A nova estratégia de profundidade é exclusiva do arquétipo
                 // Físico. Social e Mental mantêm a ordem canônica anterior.
                 if (!classificarPorProfundidade) return@getOrPut encantos
