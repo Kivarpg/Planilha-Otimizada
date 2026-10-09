@@ -105,11 +105,11 @@ fun CharmPrerequisiteTreeDialog(
     preparedResult: CharmTreeResult? = null,
     onTreePrepared: ((List<CharmTreeEntry>, CharmTreeResult) -> Unit)? = null
 ) {
-    var entries by remember(rootCharmId, charms, includeFullCatalog, canonicalPrerequisites, preparedEntries) {
+    var entries by remember(charms, canonicalPrerequisites, preparedEntries) {
         mutableStateOf(preparedEntries)
     }
 
-    LaunchedEffect(rootCharmId, charms, canonicalPrerequisites, preparedEntries) {
+    LaunchedEffect(charms, canonicalPrerequisites, preparedEntries) {
         if (preparedEntries == null) {
             entries = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
                 charms.paraArvoreDePreRequisitos(canonicalPrerequisites)
