@@ -252,6 +252,10 @@ internal object EncounterExperienceLunar {
         // Atributos permanecem constantes neste lote. Reutilizar a viabilidade
         // estrutural da rota até que Quimera altere o contexto de aquisição.
         val rotaViavelPorRamo = mutableMapOf<Pair<String, String>, Boolean>()
+        // Normalizar as chaves uma vez: o catálogo é indexado por atributo
+        // e a procura não deve percorrer todas as gavetas a cada mudança de Essência.
+        var encantosPorRamoNormalizado = routeContextAtual.charmsByAttribute
+            .entries.associate { (atributo, encantos) -> atributo.lowercase() to encantos }
         // O mesmo Encanto pode aparecer em várias gavetas por rotas de
         // Arquétipo. Compartilhar a pontuação evita percorrer sua árvore
         // de descendentes novamente em cada gaveta.
@@ -290,10 +294,7 @@ internal object EncounterExperienceLunar {
                 essenciaPontuacaoCache = essenciaPontuacao
             }
             return candidatosPorRamo.getOrPut(atributoRamo.lowercase()) {
-                val encantos = routeContextAtual.charmsByAttribute[atributoRamo]
-                    ?: routeContextAtual.charmsByAttribute.entries.firstOrNull {
-                        it.key.equals(atributoRamo, ignoreCase = true)
-                    }?.value.orEmpty()
+                val encantos = encantosPorRamoNormalizado[atributoRamo.lowercase()].orEmpty()
                 // A nova estratégia de profundidade é exclusiva do arquétipo
                 // Físico. Social e Mental mantêm a ordem canônica anterior.
                 if (ataqueEscolhido == null) return@getOrPut encantos
@@ -410,6 +411,8 @@ internal object EncounterExperienceLunar {
                         spiritTraitsEfetivos = spiritTraitsEfetivos +
                             LunarSpiritShapeArchetypeTraits.forAnimal(secundaria)
                         routeContextAtual = LunarCharmArchetypePolicy.prepare(catalogo, spiritTraitsEfetivos)
+                        encantosPorRamoNormalizado = routeContextAtual.charmsByAttribute
+                            .entries.associate { (atributo, encantos) -> atributo.lowercase() to encantos }
                         candidatosPorRamo.clear() // novas rotas após Quimera
                         rotaViavelPorRamo.clear() // Quimera pode abrir rotas antes inviáveis
                         alcancePorEncanto.clear() // dependências podem mudar
