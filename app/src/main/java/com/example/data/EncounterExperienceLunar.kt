@@ -336,6 +336,8 @@ internal object EncounterExperienceLunar {
             val custoRamo = custoXpEncantoLunar(castaOuFavorecidos, atributoRamo)
             // Esta restrição depende somente do ramo, não do Encanto.
             val ramoEhVigor = atributoRamo.equals("Vigor", ignoreCase = true)
+            val ramoDescartado = ataqueEscolhido != null &&
+                atributoRamo.equals(ataqueDescartado, ignoreCase = true)
             var tentativasBloco = 0
             while (
                 xpDisponivel >= custoRamo &&
@@ -356,6 +358,7 @@ internal object EncounterExperienceLunar {
                 // a lista de candidatos e o índice de rotas por Encanto.
                 val candidatosDoRamo = candidatosOrdenados(atributoRamo, essenciaAtual)
                 val vigorDisponivel = !ramoEhVigor || vigorPermitido(categoriasSelecionadas)
+                if (!vigorDisponivel || ramoDescartado) break
                 for (def in candidatosDoRamo) {
                     if (def.minEssencia > essenciaAtual) continue
                     if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
@@ -380,9 +383,7 @@ internal object EncounterExperienceLunar {
                         }
                     )
                     val rota = rotasElegiveis.firstOrNull { route ->
-                        route.atributo.equals(atributoRamo, ignoreCase = true) &&
-                            (ataqueEscolhido == null || !route.atributo.equals(ataqueDescartado, ignoreCase = true)) &&
-                            vigorDisponivel
+                        route.atributo.equals(atributoRamo, ignoreCase = true)
                     } ?: continue
                     candidato = def
                     rotaEscolhida = rota
