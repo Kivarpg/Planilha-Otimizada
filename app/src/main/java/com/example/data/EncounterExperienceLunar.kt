@@ -267,6 +267,11 @@ internal object EncounterExperienceLunar {
                 }.associateBy { it.nome }
             } else emptyMap()
         var definicoesPorNome = definicoesPermitidas()
+        // Uma rota alternativa do atributo ofensivo descartado não deve
+        // inflar a pontuação de um Encanto que só pode ser comprado pelo outro.
+        val atributosParaPontuacao = if (ataqueDescartado != null) {
+            attributesAtuais.filterKeys { !it.equals(ataqueDescartado, ignoreCase = true) }
+        } else attributesAtuais
         val limiteEssenciaCatalogo = if (ataqueEscolhido != null) {
             catalogo.maxOfOrNull { it.minEssencia } ?: 0
         } else 0
@@ -297,14 +302,14 @@ internal object EncounterExperienceLunar {
                         // Essência e Atributo podem ser atingidos com a ficha
                         // atual. Não confundir alcance nominal com rota válida.
                         routeContextAtual.reachableDependentCountWithinLimits(
-                            def.nome, definicoesPorNome, attributesAtuais, limiteEssenciaCatalogo
+                            def.nome, definicoesPorNome, atributosParaPontuacao, limiteEssenciaCatalogo
                         )
                     }
                 }
                 encantos.forEach { def ->
                     alcanceAtualPorEncanto.getOrPut(def.nome) {
                         routeContextAtual.reachableDependentCountWithinLimits(
-                            def.nome, definicoesPorNome, attributesAtuais, essenciaPontuacao
+                            def.nome, definicoesPorNome, atributosParaPontuacao, essenciaPontuacao
                         )
                     }
                 }
