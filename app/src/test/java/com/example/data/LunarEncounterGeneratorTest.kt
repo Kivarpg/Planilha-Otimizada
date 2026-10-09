@@ -432,6 +432,19 @@ class LunarEncounterGeneratorTest {
         assertEquals(sequencial.xpGastoTotal, evoluido.xpGastoTotal)
         assertEquals(sequencial.historicoXpBatches, evoluido.historicoXpBatches)
         assertEquals(sequencial.lunarAtaqueEscolhido, evoluido.lunarAtaqueEscolhido)
+
+        var revertido = evoluido
+        repeat(12) {
+            val historicoAnterior = revertido.historicoXpBatches.size
+            revertido = EncounterExperienceLunar.reduceLunar(revertido)
+            assertEquals(historicoAnterior - 1, revertido.historicoXpBatches.size)
+        }
+        assertEquals(npc.charms, revertido.charms)
+        assertEquals(npc.attributes, revertido.attributes)
+        assertEquals(npc.xpAtual, revertido.xpAtual)
+        assertEquals(npc.xpGastoTotal, revertido.xpGastoTotal)
+        assertEquals(npc.historicoXpBatches, revertido.historicoXpBatches)
+        assertEquals(npc.lunarAtaqueEscolhido, revertido.lunarAtaqueEscolhido)
     }
 
     @Test
