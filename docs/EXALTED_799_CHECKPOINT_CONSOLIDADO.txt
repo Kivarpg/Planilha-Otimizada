@@ -62,3 +62,10 @@ AUDITORIA DE ESCOPO DO DIFF — 2026-10-08
 - A auditoria estática não substitui a verificação de todas as 15 abas no dispositivo/emulador. A cobertura de interfaces não foi demonstrada nesta etapa.
 - Risco residual: confirmar comportamento de árvores com referências ambíguas, seleção inicial de Feitiços, bloqueio após XP, troca rápida/exclusão de abas e legibilidade em tela estreita.
 - Critério de aceite para a compilação única: código consolidado, teste unitário e gates do workflow aprovados, APK Exalted.799.apk com assinatura persistente verificada, instalação/abertura e testes manuais de regressão.
+
+AUDITORIA DE TERMINOLOGIA — PRIORIDADE MÁXIMA — 2026-10-08
+- Terminologia obrigatória: Charm = Encanto; plural Charms = Encantos. Pré-requisitos de Encantos, nunca de amuletos.
+- Pesquisas ampliadas no GitHub: amuleto, amuletos, amulet, talismã, talisma, calculando pré-requisitos; buscas de código não retornaram correspondências verificáveis. A API de busca também informou resultados incompletos; ausência de resultados não prova ausência no branch.
+- Inspeção por árvore identificou 643 arquivos textuais, dos quais 511 Kotlin. A leitura exaustiva foi limitada pelo orçamento de chamadas e não foi concluída.
+- A frase relatada apareceu durante o processamento do assistente, não foi comprovada como texto exibido pelo APK. Evitar atribuir a origem ao código sem evidência.
+- Pendente: varredura local integral de arquivos-fonte/recursos quando houver checkout, e inspeção manual dos estados de carregamento no aplicativo. Não alterar classes nem traduções por hipótese.
