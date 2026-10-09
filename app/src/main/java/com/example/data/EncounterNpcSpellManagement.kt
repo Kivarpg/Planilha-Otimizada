@@ -58,7 +58,7 @@ object EncounterNpcSpellManagement {
         if (npc.primeiroXpRecebido || "Terrestre" !in circulosDesbloqueados(npc)) return npc
 
         val inicialExistente = npc.feiticoInicialNome?.let { nome ->
-            npc.feiticos.firstOrNull { EncantosSolaresCatalog.sameName(it.nome, nome) }
+            npc.feiticos.firstOrNull { it.circulo == "Terrestre" && EncantosSolaresCatalog.sameName(it.nome, nome) }
         }
         if (inicialExistente != null) return npc
 
