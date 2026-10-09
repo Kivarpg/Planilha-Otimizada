@@ -9,6 +9,45 @@ import kotlin.random.Random
 
 class LunarEncounterGeneratorTest {
     @Test
+    fun `indice compartilhado preserva selecao ofensiva e nao mistura contagens`() {
+        fun encanto(nome: String, atributo: String, requisito: String) =
+            EncantoLunarDefinition(
+                id = nome, atributo = atributo, subdivisao = null,
+                nome = nome, nomeIngles = "", custo = "1",
+                minsTexto = "$atributo 3, Essência 1",
+                minAtributo = 3, minEssencia = 1, tipo = "Reflexivo",
+                palavrasChave = "", duracao = "",
+                preRequisitos = requisito, descricao = ""
+            )
+        val catalogo = listOf(
+            encanto("Forca raiz", "Força", "Nenhum"),
+            encanto("Forca ramo", "Força", "Forca raiz"),
+            encanto("Destreza raiz", "Destreza", "Nenhum"),
+            encanto("Destreza ramo", "Destreza", "Destreza raiz"),
+            encanto("Destreza topo", "Destreza", "Destreza ramo")
+        )
+        val atributos = mapOf("Força" to 4, "Destreza" to 4, "Vigor" to 3)
+        repeat(30) { seed ->
+            fun selecionar() = LunarEncounterCharmSelection.selecionarEncantosIniciaisComRotas(
+                catalogo = catalogo,
+                attributes = atributos,
+                essencia = 1,
+                ordemAtributos = listOf("Força", "Destreza", "Vigor"),
+                quantidade = 3,
+                random = Random(seed),
+                arquetipo = ArquetipoEncontro.FISICO
+            )
+            val primeiro = selecionar()
+            val segundo = selecionar()
+            assertEquals("Destreza", primeiro.ataqueEscolhido)
+            assertEquals(primeiro.ataqueEscolhido, segundo.ataqueEscolhido)
+            assertEquals(primeiro.charms.map { it.nome }, segundo.charms.map { it.nome })
+            assertEquals(primeiro.charms.size, primeiro.charms.map { it.nome }.distinct().size)
+            assertTrue(primeiro.charms.none { it.atributo == "Força" })
+        }
+    }
+
+    @Test
     fun `lunar fisico prioriza cadeia ofensiva de Essencia alta sobre volume raso`() {
         fun encanto(nome: String, atributo: String, essencia: Int, requisito: String) =
             EncantoLunarDefinition(
