@@ -104,19 +104,23 @@ internal object CharmPrerequisiteReferenceParser {
             }
         }
 
-        return entries.flatMap { entry ->
-            buildList {
-                if (entry.name.isNotBlank() && idsByNormalizedName[entry.normalizedName]?.size == 1) {
-                    add(Candidate(entry.normalizedName, entry.id, entry.name))
-                }
-                if (entry.id.isNotBlank() && entry.normalizedId != entry.normalizedName) {
-                    add(Candidate(entry.normalizedId, entry.id, entry.id))
-                }
+        // Construir diretamente a lista final, sem listas temporárias por Encanto.
+        val seenCandidates = HashSet<Pair<String, String>>()
+        val candidates = ArrayList<Candidate>(entries.size * 2)
+        fun addCandidate(normalized: String, id: String, sourceName: String) {
+            if (normalized.isNotBlank() && seenCandidates.add(normalized to id)) {
+                candidates.add(Candidate(normalized, id, sourceName))
             }
         }
-            .filter { it.normalized.isNotBlank() }
-            .distinctBy { it.normalized to it.targetId }
-            .sortedByDescending { it.normalized.length }
+        for (entry in entries) {
+            if (entry.name.isNotBlank() && idsByNormalizedName[entry.normalizedName]?.size == 1) {
+                addCandidate(entry.normalizedName, entry.id, entry.name)
+            }
+            if (entry.id.isNotBlank() && entry.normalizedId != entry.normalizedName) {
+                addCandidate(entry.normalizedId, entry.id, entry.id)
+            }
+        }
+        return candidates.sortedByDescending { it.normalized.length }
     }
 
     private fun allOccurrences(text: String, needle: String): Sequence<Int> = sequence {
