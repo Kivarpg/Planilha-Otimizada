@@ -9,6 +9,34 @@ import kotlin.random.Random
 
 class LunarEncounterGeneratorTest {
     @Test
+    fun `lunar fisico prioriza cadeia ofensiva de Essencia alta sobre volume raso`() {
+        fun encanto(nome: String, atributo: String, essencia: Int, requisito: String) =
+            EncantoLunarDefinition(
+                id = nome, atributo = atributo, subdivisao = null,
+                nome = nome, nomeIngles = "", custo = "1",
+                minsTexto = "$atributo 3, Essência $essencia",
+                minAtributo = 3, minEssencia = essencia,
+                tipo = "Reflexivo", palavrasChave = "", duracao = "",
+                preRequisitos = requisito, descricao = ""
+            )
+        val catalogo = listOf(
+            encanto("Forca inicial", "Força", 1, "Nenhum"),
+            encanto("Forca intermediaria", "Força", 2, "Forca inicial"),
+            encanto("Forca superior", "Força", 3, "Forca intermediaria")
+        ) + (1..5).map { encanto("Destreza rasa $it", "Destreza", 1, "Nenhum") }
+        val resultado = LunarEncounterCharmSelection.selecionarEncantosIniciaisComRotas(
+            catalogo = catalogo,
+            attributes = mapOf("Força" to 4, "Destreza" to 4, "Vigor" to 3),
+            essencia = 1,
+            ordemAtributos = listOf("Destreza", "Força", "Vigor"),
+            quantidade = 0,
+            random = Random(42),
+            arquetipo = ArquetipoEncontro.FISICO
+        )
+        assertEquals("Força", resultado.ataqueEscolhido)
+    }
+
+    @Test
     fun `geracao Lunar fisica registra arvore ofensiva mesmo sem encantos disponiveis`() {
         repeat(EncounterTestSamples.count(30)) { seed ->
             val npc = EncounterGenerator.gerarLunar(
