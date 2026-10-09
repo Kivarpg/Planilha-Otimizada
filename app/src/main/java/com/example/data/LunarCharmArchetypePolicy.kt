@@ -35,10 +35,16 @@ internal object LunarCharmArchetypePolicy {
         fun affectedAfterAcquisition(charmName: String, category: String): Set<String> {
             val direct = dependentsByCharm[charmName].orEmpty()
             val byCategory = dependentsByCategory[category.trim().lowercase()].orEmpty()
-            if (direct.isEmpty() && byCategory.isEmpty()) return dependentsByTotalCount
-            return buildSet(direct.size + byCategory.size + dependentsByTotalCount.size) {
+            // Uma compra em Atributo Mental também aumenta a contagem agregada
+            // "Atributo Mental", usada por pré-requisitos de Encantos Lunares.
+            val byMentalGroup = if (ExaltedConstants.MENTAL_ATTRIBUTES.any {
+                    it.equals(category, ignoreCase = true)
+                }) dependentsByCategory["atributo mental"].orEmpty() else emptySet()
+            if (direct.isEmpty() && byCategory.isEmpty() && byMentalGroup.isEmpty()) return dependentsByTotalCount
+            return buildSet(direct.size + byCategory.size + byMentalGroup.size + dependentsByTotalCount.size) {
                 addAll(direct)
                 addAll(byCategory)
+                addAll(byMentalGroup)
                 addAll(dependentsByTotalCount)
             }
         }
