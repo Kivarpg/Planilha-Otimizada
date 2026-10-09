@@ -300,6 +300,9 @@ internal object EncounterExperienceLunar {
                 var rotaEscolhida: LunarCharmArchetypePolicy.AcquisitionRoute? = null
                 for (def in candidatosOrdenados(atributoRamo)) {
                     if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
+                    // Rejeitar candidatos com Essência impossível antes da
+                    // avaliação completa das rotas e dos pré-requisitos.
+                    if (def.minEssencia > essenciaAtual) continue
                     val rotasElegiveis = LunarCharmArchetypePolicy.eligibleRoutes(
                         def, routeContextAtual, attributesAtuais, essenciaAtual, nomesSelecionados, catalogo,
                         contagemCategoriaSelecionada = { categoria ->
