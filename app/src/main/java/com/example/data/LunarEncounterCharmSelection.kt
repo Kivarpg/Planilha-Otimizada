@@ -193,7 +193,9 @@ internal object LunarEncounterCharmSelection {
                 }
             )?.takeIf { rota ->
                 (arquetipo != ArquetipoEncontro.FISICO || !rota.atributo.equals(ataqueDescartado, ignoreCase = true)) &&
-                    (!rota.atributo.equals("Vigor", ignoreCase = true) || vigorPermitido(contagens))
+                    (!rota.atributo.equals("Vigor", ignoreCase = true) || vigorPermitido(contagens)) &&
+                    (arquetipo != ArquetipoEncontro.FISICO || def.nome != NOME_CORPO_DE_TOURO ||
+                        contagemCorpoDeTouroSelecionada == 0)
             }
 
         fun registrar(
