@@ -498,7 +498,7 @@ object EncounterCharmRouteOptimizer {
                     // Limita compras repetidas na projeção sem bloquear uma
                     // compra legítima no estado real (primeiro nível).
                     if (repeatableOnlyAtRoot && level > 0 &&
-                        candidateName in state.selecionados && permiteAquisicaoRepetida(candidate)) continue
+                        permiteAquisicaoRepetida(candidate)) continue
                     if (!consumeWork()) continue
                     // O estado pós-aquisição era montado uma vez para calcular
                     // marginalUnlocks e novamente ao expandir o beam. Ele é
