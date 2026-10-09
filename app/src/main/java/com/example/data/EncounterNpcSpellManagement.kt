@@ -66,6 +66,7 @@ object EncounterNpcSpellManagement {
         // elegiveis na mesma passagem pelo catalogo. A ordem de ambas as
         // listas permanece identica, preservando o sorteio por seed.
         val nomesPossuidos = npc.feiticos.asSequence()
+            .filter { it.circulo == "Terrestre" }
             .map { EncantosSolaresCatalog.normalize(it.nome) }
             .toHashSet()
         val terrestres = ArrayList<FeiticoDefinition>()
