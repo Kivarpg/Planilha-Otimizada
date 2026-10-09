@@ -1194,4 +1194,28 @@ class EncounterCharmRouteOptimizerTest {
         }
     }
 
+    @Test
+    fun `encanto inicial sem contagem explicita respeita limite minimo`() {
+        val (corpo, _) = encanto("Corpo de Touro", 8, habilidade = "Resistência")
+        for (monotona in listOf(false, true)) {
+            var chamadas = 0
+            val escolhido = EncounterCharmRouteOptimizer.escolher(
+                candidatos = listOf(corpo),
+                catalogoCompleto = listOf(corpo),
+                nomesSelecionados = setOf(corpo.nome),
+                contagensCategorias = mapOf("resistência" to 1),
+                elegivel = { _, _, _ -> chamadas++; true },
+                nome = { it.nome },
+                categoria = { it.habilidade },
+                custoXp = { 8 },
+                permiteAquisicaoRepetida = { true },
+                repeatableAcquisitionLimit = { 1 },
+                initialAcquisitionCounts = emptyMap(),
+                monotonicEligibility = monotona
+            )
+            assertEquals("modo monotono=$monotona", null, escolhido)
+            assertEquals("nao avaliar encanto ja no teto", 0, chamadas)
+        }
+    }
+
 }
