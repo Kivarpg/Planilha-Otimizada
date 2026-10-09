@@ -144,6 +144,15 @@ internal object LunarEncounterCharmSelection {
                         .sortedWith(compareBy<EncantoLunarDefinition> { it.minEssencia }.thenBy { it.nome })
                     val adquiridos = mutableSetOf<String>()
                     val categoriaNomes = routeContext.charmNamesByCategory
+                    // Atualiza as contagens uma vez por aquisição, em vez de
+                    // percorrer todos os nomes adquiridos a cada pré-requisito.
+                    val contagensCategoria = HashMap<String, Int>()
+                    val categoriasPorNome = HashMap<String, MutableList<String>>()
+                    for ((categoria, nomes) in categoriaNomes) {
+                        for (nome in nomes) {
+                            categoriasPorNome.getOrPut(nome) { mutableListOf() }.add(categoria)
+                        }
+                    }
                     var maiorEssencia = 0
                     // Cada passagem adquire ao menos um Encanto ou encerra.
                     // Limitar pelo tamanho do catalogo impede ciclos.
@@ -154,13 +163,15 @@ internal object LunarEncounterCharmSelection {
                                     def, routeContext, attributes, 5, adquiridos, catalogo,
                                     contagemCategoriaSelecionada = { categoria ->
                                         if (categoria.isBlank()) adquiridos.size
-                                        else categoriaNomes[categoria.trim().lowercase()]
-                                            ?.count { it in adquiridos } ?: 0
+                                        else contagensCategoria[categoria.trim().lowercase()] ?: 0
                                     }
                                 ).any { it.atributo == atributo }
                         }
                         if (proximo == null) break
                         adquiridos += proximo.nome
+                        categoriasPorNome[proximo.nome].orEmpty().forEach { categoria ->
+                            contagensCategoria[categoria] = (contagensCategoria[categoria] ?: 0) + 1
+                        }
                         maiorEssencia = maxOf(maiorEssencia, proximo.minEssencia)
                     }
                     maiorEssencia to adquiridos.size
