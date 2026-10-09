@@ -93,6 +93,40 @@ internal object LunarCharmArchetypePolicy {
             return count
         }
 
+        /** Estimativa conservadora: expande apenas requisitos nominais verificáveis. */
+        fun nominallyUnlockableDependentsWithinLimits(
+            charmName: String,
+            definitionsByName: Map<String, EncantoLunarDefinition>,
+            attributes: Map<String, Int>,
+            essenceLimit: Int,
+            alreadyOwned: Set<String> = emptySet()
+        ): Int {
+            val owned = alreadyOwned.toMutableSet()
+            owned.add(charmName)
+            var additions = 0
+            fun satisfied(requirement: EncounterRequirement): Boolean = when (requirement) {
+                is EncounterRequirement.Charm -> requirement.name in owned
+                is EncounterRequirement.AnyOf -> requirement.alternatives.any(::satisfied)
+                is EncounterRequirement.CharmCount -> false // exige contagem real por categoria
+                else -> false // outros requisitos precisam do avaliador canônico
+            }
+            var changed: Boolean
+            do {
+                changed = false
+                for ((name, definition) in definitionsByName) {
+                    if (name in owned || definition.minEssencia > essenceLimit) continue
+                    if (routesByCharm[name].orEmpty().none { route ->
+                            (attributes[route.atributo] ?: 0) >= route.minAtributo &&
+                                route.requisitosCompilados.all(::satisfied)
+                        }) continue
+                    owned.add(name)
+                    additions++
+                    changed = true
+                }
+            } while (changed)
+            return additions
+        }
+
         /**
          * Delta exato para aquisição monotônica: somente Encantos cujo requisito
          * menciona o Encanto comprado, a categoria incrementada ou a contagem
