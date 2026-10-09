@@ -69,7 +69,7 @@ class EncounterLunarXpLoopContractTest {
         assertTrue(source.contains("routeContextAtual.charmsByAttribute[atributoRamo]"))
         assertTrue(source.contains("it.key.equals(atributoRamo, ignoreCase = true)"))
         assertTrue(source.contains(".distinctBy { it.lowercase() }"))
-        assertTrue(source.contains("for (def in encantosDoRamo)"))
+        assertTrue(source.contains("for (def in candidatosOrdenados(atributoRamo))"))
     }
 
     @Test
@@ -85,7 +85,7 @@ class EncounterLunarXpLoopContractTest {
     @Test
     fun `lunar xp filtra ramo ofensivo descartado antes de expandir arvores`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
-        assertTrue(source.contains("listOf(ataqueEscolhido, \"Vigor\") + indice.ordemAtributos"))
+        assertTrue(source.contains("listOf(\"Vigor\", ataqueEscolhido) + indice.ordemAtributos"))
         assertTrue(source.contains("ataqueEscolhido == null || !it.equals(ataqueDescartado, ignoreCase = true)"))
         assertTrue(source.contains("if (ataqueDescartado != null && atributoRamo.equals(ataqueDescartado, ignoreCase = true)) return false"))
         assertTrue(source.contains("vigorPermitido(categoriasSelecionadas)"))
@@ -127,6 +127,16 @@ class EncounterLunarXpLoopContractTest {
         assertTrue(essence >= 0 && eligible > essence && spend > eligible && acquired > spend)
         assertTrue(purchase.contains("essenciaAtual, nomesSelecionados, catalogo"))
         assertTrue(purchase.contains("tentativasBloco++ < 100"))
+    }
+
+    @Test
+    fun `lunar physical progression ranks deeper trees and invalidates chimera cache`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        assertTrue(source.contains("listOf(\"Vigor\", ataqueEscolhido) + indice.ordemAtributos"))
+        assertTrue(source.contains("routeContextAtual.transitiveCharmDependentCount(it.nome)"))
+        assertTrue(source.contains("val candidatosPorRamo = mutableMapOf"))
+        assertTrue(source.contains("candidatosPorRamo.clear()"))
+        assertTrue(source.contains("LunarCharmArchetypePolicy.eligibleRoutes("))
     }
 
     @Test
