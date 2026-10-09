@@ -292,8 +292,14 @@ object EncounterCharmRouteOptimizer {
             economia - minEssenciaAproximada(def) * 2
         }
 
-        val legacyEligibilityCache = eligibilityMemo
-        val compactCache = compactEligibilityMemo ?: if (eligibilityMemo == null) HashMap() else null
+        // Os limites de repetição dependem das aquisições reais recebidas nesta
+        // chamada. Um memo externo pode ter sido preenchido com outro limite ou
+        // outra quantidade inicial; nesse caso, use apenas um memo local novo.
+        val hasDynamicRepeatLimits = repeatableAcquisitionLimit != null
+        val legacyEligibilityCache = if (hasDynamicRepeatLimits) null else eligibilityMemo
+        val compactCache: MutableMap<CompactEligibilityKey, Set<String>>? =
+            if (hasDynamicRepeatLimits) HashMap()
+            else compactEligibilityMemo ?: if (eligibilityMemo == null) HashMap() else null
 
         fun reachedRepeatLimit(def:D, stateKey:CompactEligibilityKey?):Boolean {
             if (!permiteAquisicaoRepetida(def)) return false
