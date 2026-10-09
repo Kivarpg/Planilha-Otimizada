@@ -215,8 +215,8 @@ internal object EncounterExperienceLunar {
         // Para saves antigos, recorrer ao foco explicito e depois a contagem atual.
         val ofensivos = listOf("Força", "Destreza")
         val ataqueEscolhido = if (npc.arquetipo == com.example.model.ArquetipoEncontro.FISICO) {
-            npc.lunarAtaqueEscolhido?.let { salvo -> ofensivos.firstOrNull { it.equals(salvo, ignoreCase = true) } }
-                ?: npc.focoProgressaoExplicito?.let { foco -> ofensivos.firstOrNull { it.equals(foco, ignoreCase = true) } }
+            npc.lunarAtaqueEscolhido?.let { salvo -> ofensivos.firstOrNull { it.equals(salvo.trim(), ignoreCase = true) } }
+                ?: npc.focoProgressaoExplicito?.let { foco -> ofensivos.firstOrNull { it.equals(foco.trim(), ignoreCase = true) } }
                 ?: ofensivos.maxWithOrNull(
                     compareBy<String> { categoriasSelecionadas[it.lowercase()] ?: 0 }
                         .thenBy {
