@@ -164,6 +164,56 @@ class LunarEncounterGeneratorTest {
     }
 
     @Test
+    fun `xp lunar preserva saldo e exclusividade ofensiva na progressao real`() {
+        val catalogo = (1..8).map { indice ->
+            EncantoLunarDefinition(
+                id = "forca-$indice", atributo = "Força", subdivisao = null,
+                nome = "Forca XP $indice", nomeIngles = "", custo = "1",
+                minsTexto = "Força 3, Essência 1", minAtributo = 3, minEssencia = 1,
+                tipo = "Reflexivo", palavrasChave = "", duracao = "",
+                preRequisitos = if (indice == 1) "Nenhum" else "Forca XP ${indice - 1}",
+                descricao = ""
+            )
+        } + (1..8).map { indice ->
+            EncantoLunarDefinition(
+                id = "destreza-$indice", atributo = "Destreza", subdivisao = null,
+                nome = "Destreza XP $indice", nomeIngles = "", custo = "1",
+                minsTexto = "Destreza 3, Essência 1", minAtributo = 3, minEssencia = 1,
+                tipo = "Reflexivo", palavrasChave = "", duracao = "",
+                preRequisitos = if (indice == 1) "Nenhum" else "Destreza XP ${indice - 1}",
+                descricao = ""
+            )
+        }
+        val inicial = EncounterGenerator.gerarLunar(
+            nomeManual = "Lunar progressao XP",
+            arquetipo = ArquetipoEncontro.FISICO,
+            encantosLunares = emptyList(),
+            random = Random(81)
+        )
+        val npc = inicial.copy(
+            charms = emptyList(),
+            lunarAtaqueEscolhido = "Força",
+            focoProgressaoExplicito = "Força"
+        )
+        val expandido = EncounterExperienceLunar.expandLunarWithBatch(
+            npc, catalogo, listOf("Força", "Destreza", "Vigor")
+        )
+        val depois = expandido.npcResultante
+        assertEquals("Força", depois.lunarAtaqueEscolhido)
+        assertTrue(depois.charms.none { it.habilidadeVinculada.equals("Destreza", ignoreCase = true) })
+        assertEquals(
+            npc.xpAtual + EncounterExperienceService.XP_POR_CHAMADA,
+            depois.xpAtual + (depois.xpGastoTotal - npc.xpGastoTotal)
+        )
+        assertEquals(depois.xpGastoTotal - npc.xpGastoTotal, expandido.batchAplicado.xpGasto)
+        val adquiridos = depois.charms.map { it.nome }.toSet()
+        depois.charms.forEach { encanto ->
+            val indice = encanto.nome.removePrefix("Forca XP ").toIntOrNull() ?: return@forEach
+            if (indice > 1) assertTrue("Faltou requisito de ${encanto.nome}", "Forca XP ${indice - 1}" in adquiridos)
+        }
+    }
+
+    @Test
     fun `Lunar possui dois atributos de casta e dois favorecidos adicionais distintos`() {
         ArquetipoEncontro.entries.forEach { arquetipo ->
             repeat(EncounterTestSamples.count(100)) { seed ->
