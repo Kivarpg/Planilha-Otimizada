@@ -18,6 +18,19 @@ class EncounterLunarXpLoopContractTest {
     }
 
     @Test
+    fun `lunar persiste ataque forma e historico em cada lote de xp`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        val expansion = source.substringAfter("private fun expandLunarInternalResult(")
+            .substringBefore("fun reduceLunar(npc: NpcEncontro)")
+        assertTrue(expansion.contains("nomesEncantosAdicionados = nomesCharmsNesteLote"))
+        assertTrue(expansion.contains("historicoXpBatches = npc.historicoXpBatches + batch"))
+        assertTrue(expansion.contains("formaEspiritualSecundaria = secundaria"))
+        assertTrue(expansion.contains("lunarArchetypeTraits = traitsEfetivosFinais.map { it.name }.sorted()"))
+        assertTrue(expansion.contains("resultadoCompra.ataqueEscolhido"))
+        assertTrue(expansion.contains("xpGastoTotal = xpGastoTotal"))
+    }
+
+    @Test
     fun `reversao lunar preserva ataque e restaura saldo e forma espiritual`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         val rollback = source.substringAfter("fun reduceLunar(npc: NpcEncontro): NpcEncontro {")
