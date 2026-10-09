@@ -61,4 +61,30 @@ class EncounterPerformanceMetricsTest {
         assertEquals(607L, snapshot.xpP99Nanos)
     }
 
+    @Test
+    fun `amostras paralelas preservam totais e janela limitada`() {
+        val metrics = EncounterPerformanceMetrics()
+        val workers = 8
+        val porWorker = 200
+        val threads = (0 until workers).map {
+            Thread {
+                repeat(porWorker) {
+                    metrics.recordGeneration(10L)
+                    metrics.recordXp(20L)
+                }
+            }.apply { start() }
+        }
+        threads.forEach { it.join() }
+        val snapshot = metrics.snapshot()
+        val total = (workers * porWorker).toLong()
+        assertEquals(total, snapshot.generationCount)
+        assertEquals(total * 10L, snapshot.generationNanos)
+        assertEquals(10L, snapshot.generationP50Nanos)
+        assertEquals(10L, snapshot.generationP99Nanos)
+        assertEquals(total, snapshot.xpCount)
+        assertEquals(total * 20L, snapshot.xpNanos)
+        assertEquals(20L, snapshot.xpP50Nanos)
+        assertEquals(20L, snapshot.xpP99Nanos)
+    }
+
 }
