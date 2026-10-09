@@ -110,4 +110,29 @@ class CharmPrerequisiteReferenceParserTest {
         assertEquals(listOf("other", "long", "short"), result.prerequisiteIds)
     }
 
+    @Test
+    fun repeatedPrerequisiteDoesNotCreateDuplicateTreeEdges() {
+        val catalog = listOf(CharmTreeEntry("a", "Golpe Perfeito"))
+        val result = CharmPrerequisiteReferenceParser.resolve(
+            "Golpe Perfeito; Golpe Perfeito",
+            catalog
+        )
+
+        assertEquals(listOf("a"), result.prerequisiteIds)
+    }
+
+    @Test
+    fun punctuationDelimitsCompleteCharmNames() {
+        val catalog = listOf(
+            CharmTreeEntry("a", "Defesa"),
+            CharmTreeEntry("b", "Golpe")
+        )
+        val result = CharmPrerequisiteReferenceParser.resolve(
+            "(Defesa), [Golpe]",
+            catalog
+        )
+
+        assertEquals(listOf("a", "b"), result.prerequisiteIds)
+    }
+
 }
