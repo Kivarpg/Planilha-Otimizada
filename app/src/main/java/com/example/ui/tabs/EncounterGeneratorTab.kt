@@ -140,7 +140,11 @@ fun EncounterGeneratorTab(
         if (idPendente != null) {
             androidx.compose.runtime.withFrameNanos { }
             androidx.compose.runtime.withFrameNanos { }
-            onAbaSelecionadaChange(idPendente)
+            // O NPC pode ser removido enquanto a seleção aguarda a medição.
+            // Não selecionar um id que já saiu da lista.
+            if (viewModel.npcsEncontro.value.any { it.id == idPendente }) {
+                onAbaSelecionadaChange(idPendente)
+            }
             pendingSelectId = null
         }
     }
