@@ -147,9 +147,12 @@ internal object LunarEncounterCharmSelection {
                         categoriasPorNome.getOrPut(nome) { mutableListOf() }.add(categoria)
                     }
                 }
+                // A ordenacao depende apenas do catalogo, nao da arvore em simulacao.
+                val comparadorProjecao = compareBy<EncantoLunarDefinition> { it.minEssencia }
+                    .thenBy { it.nome }
                 val pontuacoes = ofensivos.associateWith { atributo ->
                     val candidatos = catalogoPorAtributo[atributo].orEmpty()
-                        .sortedWith(compareBy<EncantoLunarDefinition> { it.minEssencia }.thenBy { it.nome })
+                        .sortedWith(comparadorProjecao)
                     val adquiridos = mutableSetOf<String>()
                     // Contagens independentes para cada arvore simulada.
                     val contagensCategoria = HashMap<String, Int>()
