@@ -94,15 +94,21 @@ class EncounterProgressionRoadmapTest {
 
     @Test
     fun `lunar multi lote preserva resultado de expansoes independentes`() {
-        val base = npcBase().copy(tipoExaltado = TipoExaltadoEncontro.LUNAR)
         val ordem = listOf("Força", "Destreza", "Vigor")
         val catalogo = emptyList<EncantoLunarDefinition>()
-        val repetido = EncounterExperienceLunar.expandLunarRepeated(base, catalogo, ordem, 3)
-        var individual = base
-        repeat(3) {
-            individual = EncounterExperienceLunar.expandLunar(individual, catalogo, ordem)
+        for (ataque in listOf("Força", "Destreza")) {
+            val base = npcBase().copy(
+                tipoExaltado = TipoExaltadoEncontro.LUNAR,
+                lunarAtaqueEscolhido = ataque
+            )
+            val repetido = EncounterExperienceLunar.expandLunarRepeated(base, catalogo, ordem, 3)
+            var individual = base
+            repeat(3) {
+                individual = EncounterExperienceLunar.expandLunar(individual, catalogo, ordem)
+            }
+            assertEquals(individual, repetido)
+            assertEquals(ataque, repetido.lunarAtaqueEscolhido)
         }
-        assertEquals(individual, repetido)
     }
 
     @Test
