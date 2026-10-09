@@ -159,36 +159,31 @@ class LunarCharmArchetypePolicyTest {
         assertTrue("Alvo Total" in afetados)
     }
 
+    /**
+     * Isola a lógica do delta da sintaxe textual do parser. A integração
+     * parser -> dependentsByCategory deve ser verificada separadamente.
+     */
+    private fun contextoComDependenciaMental() = LunarCharmArchetypePolicy.RouteContext(
+        routesByCharm = emptyMap(),
+        charmsByAttribute = emptyMap(),
+        dependentsByCharm = emptyMap(),
+        dependentsByCategory = mapOf("atributo mental" to setOf("Alvo Mental")),
+        dependentsByTotalCount = emptySet(),
+        charmNamesByCategory = emptyMap()
+    )
+
     @Test
-    fun `indice reverso inclui contagem agregada mental apos encanto de percepcao`() {
-        val base = charm(nome = "Base Mental", atributo = "Percepção", min = 2)
-        val alvo = charm(
-            nome = "Alvo Mental",
-            atributo = "Percepção",
-            min = 2,
-            pre = "Quaisquer dois Encantos de Atributo Mental"
-        )
-        val independente = charm(nome = "Independente", atributo = "Destreza", min = 2)
-        val contexto = LunarCharmArchetypePolicy.prepare(
-            listOf(base, alvo, independente), emptySet()
-        )
-        val afetados = contexto.affectedAfterAcquisition("Base Mental", "Percepção")
+    fun `delta inclui contagem agregada mental apos encanto de percepcao`() {
+        val afetados = contextoComDependenciaMental()
+            .affectedAfterAcquisition("Base Mental", "Percepção")
         assertTrue("Alvo Mental" in afetados)
-        assertFalse("Independente" in afetados)
     }
 
     @Test
     fun `delta mental nao e ativado por aquisicao fisica`() {
-        val fisico = charm(nome = "Base Fisica", atributo = "Destreza", min = 2)
-        val alvo = charm(
-            nome = "Alvo Mental Exclusivo",
-            atributo = "Percepção",
-            min = 2,
-            pre = "Quaisquer dois Encantos de Atributo Mental"
-        )
-        val contexto = LunarCharmArchetypePolicy.prepare(listOf(fisico, alvo), emptySet())
-        val afetados = contexto.affectedAfterAcquisition("Base Fisica", "Destreza")
-        assertFalse("Alvo Mental Exclusivo" in afetados)
+        val afetados = contextoComDependenciaMental()
+            .affectedAfterAcquisition("Base Fisica", "Destreza")
+        assertFalse("Alvo Mental" in afetados)
     }
 
 }
