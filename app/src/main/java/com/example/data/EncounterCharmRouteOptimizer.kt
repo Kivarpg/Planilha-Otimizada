@@ -524,6 +524,7 @@ object EncounterCharmRouteOptimizer {
             if (budgetExhausted) break
             val expansions=mutableListOf<Estado<D>>()
             for(state in frontier) {
+                if (budgetExhausted) break
                 // Primeiro passo respeita a shortlist do chamador; passos futuros
                 // examinam o catálogo completo e deixam a legalidade filtrar.
                 val pool=if(state.primeiro==null) candidatos else catalogoCompleto
@@ -564,7 +565,10 @@ object EncounterCharmRouteOptimizer {
                             if (acquired >= limit) continue
                         }
                     }
-                    if (!consumeWork()) continue
+                    // Ao atingir o orçamento, nenhuma outra expansão poderá
+                    // ser avaliada nesta chamada. Evite percorrer o restante
+                    // do catálogo e das fronteiras sem produzir candidatos.
+                    if (!consumeWork()) break
                     // O estado pós-aquisição era montado uma vez para calcular
                     // marginalUnlocks e novamente ao expandir o beam. Ele é
                     // mecânico e idêntico nos dois usos, então calculamos uma vez.
