@@ -44,7 +44,9 @@ data class EncounterProgressionStep(
     val pontosGanhosNaHabilidade: Int = 0,
     val especializacaoAdicionada: String? = null,
     val pontosForcaDeVontadeComprados: Int = 0,
-    val lunarAtaqueEscolhido: String? = null
+    val lunarAtaqueEscolhido: String? = null,
+    val formaEspiritualSecundariaLunar: String? = null,
+    val lunarArchetypeTraits: List<String>? = null
 )
 
 data class EncounterProgressionRoadmap(
