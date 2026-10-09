@@ -275,10 +275,12 @@ internal object LunarCharmArchetypePolicy {
         essencia: Int,
         nomesSelecionados: Set<String>,
         catalogo: List<EncantoLunarDefinition>,
-        contagemCategoriaSelecionada: ((String) -> Int)? = null
+        contagemCategoriaSelecionada: ((String) -> Int)? = null,
+        routeAllowed: (AcquisitionRoute) -> Boolean = { true }
     ): AcquisitionRoute? {
         var primeiraElegivel: AcquisitionRoute? = null
         for (route in context.routesFor(def)) {
+            if (!routeAllowed(route)) continue
             if (!routeEligible(
                     def,
                     route,
