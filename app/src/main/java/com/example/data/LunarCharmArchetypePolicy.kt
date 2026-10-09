@@ -101,6 +101,15 @@ internal object LunarCharmArchetypePolicy {
             essenceLimit: Int,
             alreadyOwned: Set<String> = emptySet()
         ): Int {
+            // Não contar Encantos independentes como desbloqueios desta raiz.
+            val descendants = mutableSetOf<String>()
+            val pending = ArrayDeque<String>()
+            pending.addLast(charmName)
+            while (pending.isNotEmpty()) {
+                for (dependent in dependentsByCharm[pending.removeFirst()].orEmpty()) {
+                    if (dependent != charmName && descendants.add(dependent)) pending.addLast(dependent)
+                }
+            }
             val owned = alreadyOwned.toMutableSet()
             owned.add(charmName)
             var additions = 0
@@ -113,7 +122,8 @@ internal object LunarCharmArchetypePolicy {
             var changed: Boolean
             do {
                 changed = false
-                for ((name, definition) in definitionsByName) {
+                for (name in descendants) {
+                    val definition = definitionsByName[name] ?: continue
                     if (name in owned || definition.minEssencia > essenceLimit) continue
                     if (routesByCharm[name].orEmpty().none { route ->
                             (attributes[route.atributo] ?: 0) >= route.minAtributo &&
