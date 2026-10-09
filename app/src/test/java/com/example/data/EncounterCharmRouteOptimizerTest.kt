@@ -1128,4 +1128,39 @@ class EncounterCharmRouteOptimizerTest {
         }
     }
 
+    @Test
+    fun `limite um impede reavaliar encanto repetivel depois da primeira compra simulada`() {
+        val (corpo, _) = encanto("Corpo de Touro", 8, habilidade = "Resistência")
+        val (dependente, _) = encanto(
+            "Dependente", 8, preRequisitos = corpo.nome, habilidade = "Resistência"
+        )
+        for (monotona in listOf(false, true)) {
+            var verificacoesIndevidas = 0
+            val escolhido = EncounterCharmRouteOptimizer.escolher(
+                candidatos = listOf(corpo),
+                catalogoCompleto = listOf(corpo, dependente),
+                nomesSelecionados = emptySet(),
+                contagensCategorias = emptyMap(),
+                elegivel = { def, nomes, _ ->
+                    if (def.nome == corpo.nome && corpo.nome in nomes) {
+                        verificacoesIndevidas++
+                    }
+                    def.nome == corpo.nome || corpo.nome in nomes
+                },
+                nome = { it.nome },
+                categoria = { it.habilidade },
+                custoXp = { 8 },
+                permiteAquisicaoRepetida = { it.nome == corpo.nome },
+                repeatableAcquisitionLimit = { 1 },
+                monotonicEligibility = monotona,
+                profundidade = 3
+            )
+            assertEquals("modo monotono=$monotona", corpo.nome, escolhido?.nome)
+            assertEquals(
+                "encanto no teto nao pode voltar ao callback no modo monotono=$monotona",
+                0, verificacoesIndevidas
+            )
+        }
+    }
+
 }
