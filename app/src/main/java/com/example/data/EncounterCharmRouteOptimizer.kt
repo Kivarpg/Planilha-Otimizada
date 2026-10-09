@@ -512,6 +512,10 @@ object EncounterCharmRouteOptimizer {
             var combatAffinity = 0
             for (selectedName in selecionados) {
                 val selectedTags = combatTagsPorNome[selectedName].orEmpty()
+                // Sem tags de combate em qualquer lado, a afinidade do par
+                // é necessariamente zero. Evite resolver categoria dinâmica
+                // e consultar o classificador para pares sem contribuição.
+                if (candidateCombatTags.isEmpty() || selectedTags.isEmpty()) continue
                 // Para rotas de categoria dinâmica (ex.: Lunar), o Encanto já
                 // selecionado também deve ser interpretado no estado atual.
                 // A categoria preparada só é válida para catálogos estáticos.
