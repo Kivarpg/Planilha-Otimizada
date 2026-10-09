@@ -124,8 +124,9 @@ internal object EncounterCombinationEvaluator {
         powers: Collection<Power>,
         initial: Configuration
     ): Result {
-        val powerIds=powers.map { it.id }
-        if(powerIds.any { it.isBlank() } || powerIds.toSet().size!=powerIds.size)
+        // Validação em passagem única, sem lista intermediária de IDs.
+        val seenPowerIds = HashSet<String>()
+        if (powers.any { it.id.isBlank() || !seenPowerIds.add(it.id) })
             return Result(false,null,"Poderes com ID vazio ou duplicado.",emptyList())
         for(power in powers) {
             val variantIds=power.variants.map { it.id }
