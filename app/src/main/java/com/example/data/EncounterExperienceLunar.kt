@@ -270,12 +270,10 @@ internal object EncounterExperienceLunar {
         val limiteEssenciaCatalogo = if (ataqueEscolhido != null) {
             catalogo.maxOfOrNull { it.minEssencia } ?: 0
         } else 0
-        fun candidatosOrdenados(atributoRamo: String): List<EncantoLunarDefinition> {
+        fun candidatosOrdenados(atributoRamo: String, essenciaAtual: Int): List<EncantoLunarDefinition> {
             // Os demais arquétipos usam a ordem canônica: não precisam
             // recalcular Essência nem invalidar a ordenação a cada compra.
-            val essenciaPontuacao = if (ataqueEscolhido != null) {
-                EncounterExperienceService.essenciaPara(npc, xpGastoTotal)
-            } else 0
+            val essenciaPontuacao = if (ataqueEscolhido != null) essenciaAtual else 0
             if (ataqueEscolhido != null && essenciaPontuacaoCache != essenciaPontuacao) {
                 // A Essência pode aumentar durante o próprio lote de XP.
                 // Não reutilizar uma classificação baseada na Essência anterior.
@@ -341,7 +339,7 @@ internal object EncounterExperienceLunar {
                 val limiteCorpoDeTouro = (attributesAtuais["Vigor"] ?: 0).coerceAtLeast(0)
                 var candidato: EncantoLunarDefinition? = null
                 var rotaEscolhida: LunarCharmArchetypePolicy.AcquisitionRoute? = null
-                for (def in candidatosOrdenados(atributoRamo)) {
+                for (def in candidatosOrdenados(atributoRamo, essenciaAtual)) {
                     if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
                     // Rejeitar candidatos com Essência impossível antes da
                     // avaliação completa das rotas e dos pré-requisitos.
