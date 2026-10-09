@@ -43,7 +43,8 @@ data class EncounterProgressionStep(
     val habilidadeMelhorada: String? = null,
     val pontosGanhosNaHabilidade: Int = 0,
     val especializacaoAdicionada: String? = null,
-    val pontosForcaDeVontadeComprados: Int = 0
+    val pontosForcaDeVontadeComprados: Int = 0,
+    val lunarAtaqueEscolhido: String? = null
 )
 
 data class EncounterProgressionRoadmap(
