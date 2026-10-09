@@ -778,7 +778,18 @@ object NomesSangueDeDragao {
 
     fun gerar(origem: OrigemNomeSangueDeDragao, genero: GeneroNome? = null, random: Random = Random.Default): String {
         return when (origem) {
-            OrigemNomeSangueDeDragao.SEM_CASTA -> NameGenerator.gerar(null, genero, random)
+            OrigemNomeSangueDeDragao.SEM_CASTA -> {
+                // Sem Casa dinástica: ainda há um nome de família, extraído
+                // do mesmo conjunto cultural de nomes e sobrenomes.
+                val cultura = CulturaNome.entries.random(random)
+                val escolhido = genero ?: GeneroNome.entries.random(random)
+                val familia = NameGenerator.sortearComponentes(cultura, escolhido, 1, random).first()
+                val quantidade = if (random.nextInt(100) < 70) 1 else random.nextInt(2, 4)
+                val adicionais = NameGenerator.sortearComponentes(
+                    cultura, escolhido, quantidade, random, listOf(familia)
+                )
+                (listOf(familia) + adicionais).joinToString(" ")
+            }
             OrigemNomeSangueDeDragao.IMPERIO -> {
                 gerarNomeComCasa(CASAS_IMPERIO.random(random), CULTURAS_IMPERIO, genero, random)
             }
