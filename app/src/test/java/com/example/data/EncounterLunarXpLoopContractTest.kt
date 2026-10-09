@@ -18,6 +18,18 @@ class EncounterLunarXpLoopContractTest {
     }
 
     @Test
+    fun `integracao lunar conserva xp e atualiza contexto da quimera`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        assertTrue(source.contains("traitsCache == traits && ordemCache == ordem"))
+        assertTrue(source.contains("traitsAnteriores == traits"))
+        assertTrue(source.contains("routeContextAtual = LunarCharmArchetypePolicy.prepare("))
+        assertTrue(source.contains("xpDisponivel -= custoXp"))
+        assertTrue(source.contains("xpGastoTotal += custoXp"))
+        assertTrue(source.contains("nomesCharmsNesteLote += candidatoSelecionado.nome"))
+        assertTrue(source.contains("xpGasto = xpGastoTotal - npc.xpGastoTotal"))
+    }
+
+    @Test
     fun `lunar persiste ataque forma e historico em cada lote de xp`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         val expansion = source.substringAfter("private fun expandLunarInternalResult(")
