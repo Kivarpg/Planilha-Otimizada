@@ -316,7 +316,12 @@ object EncounterCharmRouteOptimizer {
             // A primeira compra simulada de um nome ausente na raiz também
             // precisa contar para o teto, inclusive em rotas profundas.
             val firstSimulated = if (name in selectedNames && name !in nomesSelecionados) 1 else 0
-            return (initialAcquisitionCounts[name] ?: 0) + firstSimulated +
+            // O conjunto inicial confirma ao menos uma aquisição, mesmo
+            // quando o chamador não fornece uma entrada em contagens iniciais.
+            // Não permita que uma contagem ausente libere compra acima do teto.
+            val initial = maxOf(initialAcquisitionCounts[name] ?: 0,
+                if (name in nomesSelecionados) 1 else 0)
+            return initial + firstSimulated +
                 (stateKey?.repeatedAcquisitions?.get(name) ?: 0) >= limit
         }
 
