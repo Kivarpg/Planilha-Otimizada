@@ -11,6 +11,16 @@ import java.io.File
  */
 class EncounterLunarXpLoopContractTest {
     @Test
+    fun `xp lunar deve preservar restricao de arvore ofensiva e limite de vigor`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        // Contrato de seguranca: a compra por XP nao pode contornar a
+        // especializacao ofensiva nem a margem defensiva da geracao inicial.
+        assertTrue(source.contains("ataqueEscolhido"))
+        assertTrue(source.contains("ataqueDescartado"))
+        assertTrue(source.contains("vigorPermitido"))
+    }
+
+    @Test
     fun `lunar active trees are iterated without a redundant snapshot`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         assertTrue(source.contains("for (atributo in arvoresAtivas) {"))
