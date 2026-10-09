@@ -441,4 +441,33 @@ class EncounterCharmRouteOptimizerTest {
     }
 
 
+    @Test
+    fun `memo incremental nao conserva encanto nao repetivel ja adquirido`() {
+        val (base, _) = encanto("Base", 8)
+        val (outro, _) = encanto("Outro", 8)
+        val catalogo = listOf(base, outro)
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            catalogo, { it.nome }, { it.habilidade }
+        )
+        val memo = HashMap<EncounterCharmRouteOptimizer.CompactEligibilityKey, Set<String>>()
+        EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(base),
+            catalogoCompleto = catalogo,
+            nomesSelecionados = emptySet(),
+            contagensCategorias = emptyMap(),
+            elegivel = { _, _, _ -> true },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { 8 },
+            preparedCatalog = prepared,
+            compactEligibilityMemo = memo,
+            monotonicEligibility = true,
+            profundidade = 1
+        )
+        val estadoAposCompra = prepared.compactKey(setOf("Base"), mapOf("armas brancas" to 1))
+        val elegiveis = memo[estadoAposCompra]
+        assertTrue("estado pos-compra deve ter sido avaliado", elegiveis != null)
+        assertFalse("encanto nao repetivel nao pode permanecer elegivel", "Base" in elegiveis.orEmpty())
+    }
+
 }
