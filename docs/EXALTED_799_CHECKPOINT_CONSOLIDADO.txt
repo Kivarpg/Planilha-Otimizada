@@ -93,3 +93,10 @@ AUDITORIA DA FICHA DE NPC — 2026-10-08
 - Os detalhes de Feitiços já adquiridos consultam o catálogo completo, independentemente da lista de opções gratuitas disponível antes do XP.
 - Ponto a validar manualmente: NPC com círculo Terrestre recebe automaticamente um Feitiço inicial válido na geração; a inspeção desta UI não comprova a atribuição no gerador.
 - A auditoria é estática e não executou os testes ou o APK. Nenhuma mudança funcional introduzida por esta anotação.
+
+AUDITORIA DA ATRIBUIÇÃO AUTOMÁTICA DO FEITIÇO INICIAL — 2026-10-08
+- Confirmado por leitura do código-fonte: SolarEncounterGenerator.kt, DragonBloodedEncounterGenerator.kt e LunarEncounterGenerator.kt invocam EncounterNpcSpellManagement.garantirInicialNaCriacao no caminho de geração.
+- EncounterNpcSpellManagement.garantirInicialNaCriacao verifica círculo Terrestre desbloqueado, respeita o bloqueio após XP, preserva Feitiço inicial já válido, seleciona candidato Terrestre disponível sem duplicação desnecessária e atualiza feiticoInicialNome e feiticos no NPC retornado.
+- EncounterNpcActions.gerarComTratamento persiste o NPC retornado pelo gerador e publica o estado; não realiza seleção adicional nesta camada.
+- Condição residual: se o catálogo não tiver Feitiços Terrestres, garantirInicialNaCriacao retorna o NPC sem atribuição. Isso requer catálogo real válido e teste de integração; não declarar o fluxo 100% validado apenas por inspeção estática.
+- A auditoria não iniciou compilação, testes nem workflow.
