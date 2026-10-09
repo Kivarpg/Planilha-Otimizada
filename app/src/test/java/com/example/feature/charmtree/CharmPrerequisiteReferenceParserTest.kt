@@ -122,6 +122,45 @@ class CharmPrerequisiteReferenceParserTest {
     }
 
     @Test
+    fun resolvesAccentAndCaseVariantsUsingPrebuiltResolver() {
+        val resolver = CharmPrerequisiteReferenceParser.resolver(
+            listOf(
+                CharmTreeEntry("solar", "Técnica Solar"),
+                CharmTreeEntry("lunar", "Defesa Lunar")
+            )
+        )
+
+        assertEquals(
+            listOf("solar", "lunar"),
+            resolver.resolve("TECNICA SOLAR e defesa lunar").prerequisiteIds
+        )
+        assertEquals(listOf("lunar"), resolver.resolve("Defesa Lunar").prerequisiteIds)
+    }
+
+    @Test
+    fun repeatedCatalogEntriesWithSameIdRemainUnambiguous() {
+        val catalog = listOf(
+            CharmTreeEntry("same-id", "Golpe Perfeito"),
+            CharmTreeEntry("same-id", "Golpe Perfeito")
+        )
+        val result = CharmPrerequisiteReferenceParser.resolve("Golpe Perfeito", catalog)
+
+        assertEquals(listOf("same-id"), result.prerequisiteIds)
+    }
+
+    @Test
+    fun identicalNamesWithDifferentIdsRemainAmbiguousAfterIndexing() {
+        val catalog = listOf(
+            CharmTreeEntry("id-a", "Defesa Perfeita"),
+            CharmTreeEntry("id-b", "Defesa Perfeita")
+        )
+        val result = CharmPrerequisiteReferenceParser.resolve("Defesa Perfeita", catalog)
+
+        assertTrue(result.prerequisiteIds.isEmpty())
+        assertEquals("Defesa Perfeita", result.unresolvedText)
+    }
+
+    @Test
     fun punctuationDelimitsCompleteCharmNames() {
         val catalog = listOf(
             CharmTreeEntry("a", "Defesa"),
