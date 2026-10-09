@@ -72,6 +72,7 @@ internal object EncounterExperienceSolar {
         // enquanto um bloco é aprofundado. Compartilhar o memo durante o lote
         // evita reavaliar todo o catálogo para estados já observados.
         val elegibilidadeMemo = HashMap<EncounterCharmRouteOptimizer.CompactEligibilityKey, Set<String>>()
+        var essenciaMemoAtual: Int? = null
         var tentativas = 0
         var encantoCompradoNesteLote = false
         var encantoElegivelNesteLote = false
@@ -143,6 +144,12 @@ internal object EncounterExperienceSolar {
                     (categoriasSelecionadas[categoriaRamo] ?: 0) < alvo
                 ) {
                     val essenciaAtual = EncounterExperienceService.essenciaPara(npc, xpGastoTotal)
+                    // A Essência participa da elegibilidade, mas não da chave compacta.
+                    // Uma mudança de círculo exige invalidar os resultados anteriores.
+                    if (essenciaAtual != essenciaMemoAtual) {
+                        elegibilidadeMemo.clear()
+                        essenciaMemoAtual = essenciaAtual
+                    }
                     val limiteCorpoDeTouro = (abilitiesAtuais["Resistência"] ?: 0).coerceAtLeast(0)
                     // O índice já agrupa por habilidade: todos os Encantos deste
                     // bucket compartilham habilidadeRamo. Portanto, a restrição
