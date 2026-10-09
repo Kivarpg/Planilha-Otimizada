@@ -529,6 +529,10 @@ object EncounterCharmRouteOptimizer {
                 // examinam o catálogo completo e deixam a legalidade filtrar.
                 val pool=if(state.primeiro==null) candidatos else catalogoCompleto
                 val eligibleNamesForState = eligibleNames(state.selecionados,state.contagens,state.compactKey)
+                // A elegibilidade pode consumir todo o orçamento antes da
+                // expansão. Nesse caso, não examine um pool que não pode ser
+                // pontuado; preserve a melhor fronteira já concluída.
+                if (budgetExhausted) break
                 data class CandidateEvaluation<D>(
                     val candidate:D,
                     val gain:Int,
