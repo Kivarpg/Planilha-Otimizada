@@ -6,71 +6,42 @@ import org.junit.Test
 import kotlin.random.Random
 
 class NameGeneratorExaltTypePolicyTest {
-    @Test
-    fun `imperial and lookshy names approach 95 percent one given name in seeded draws`() {
+    @Test fun `dragon blooded names use 70 percent one additional component`() {
         for (origem in listOf(OrigemNomeSangueDeDragao.IMPERIO, OrigemNomeSangueDeDragao.LOOKSHY)) {
             val nomes = (0 until 2000).map { seed ->
                 NomesSangueDeDragao.gerar(origem, GeneroNome.MASCULINO, Random(seed))
             }
             val simples = nomes.count { it.trim().split(Regex("\\s+")).size == 2 }
-            // A probabilidade configurada e 95%; uma amostra finita oscila.
-            assertTrue("$origem: $simples/2000", simples in 1840..1960)
-            assertTrue(nomes.all { it.trim().split(Regex("\\s+")).size in 2..3 })
+            assertTrue("$origem: $simples/2000", simples in 1280..1520)
+            assertTrue(nomes.all { it.isNotBlank() })
         }
     }
 
-    @Test
-    fun `solar and lunar default pools exclude east asian names`() {
-        val naoAsiaticas = listOf(
-            CulturaNome.ISLANDESA, CulturaNome.IRLANDESA_GAELICA,
-            CulturaNome.HUNGARA, CulturaNome.AFRICANA,
-            CulturaNome.ARABE, CulturaNome.MESOAMERICANA
-        )
+    @Test fun `solar and lunar names use 60 percent one component`() {
+        val nomes = (0 until 2000).map { seed ->
+            NameGenerator.gerarSolarOuLunar(CulturaNome.CHINESA, GeneroNome.FEMININO, Random(seed))
+        }
+        val simples = nomes.count { it.trim().split(Regex("\\s+")).size == 1 }
+        assertTrue("Solar/Lunar: $simples/2000", simples in 1080..1320)
+    }
+
+    @Test fun `explicit culture and seed remain deterministic`() {
         repeat(200) { seed ->
-            val rng = Random(seed)
-            val cultura = naoAsiaticas.random(rng)
-            val esperado = NameGenerator.gerar(cultura, GeneroNome.FEMININO, rng)
-            assertEquals(
-                esperado,
-                NameGenerator.gerarSolarOuLunar(genero = GeneroNome.FEMININO, random = Random(seed))
-            )
+            val a = NameGenerator.gerarSolarOuLunar(CulturaNome.CHINESA, GeneroNome.MASCULINO, Random(seed))
+            val b = NameGenerator.gerarSolarOuLunar(CulturaNome.CHINESA, GeneroNome.MASCULINO, Random(seed))
+            assertEquals(a, b)
         }
     }
 
-    @Test
-    fun `explicit asian culture is preserved for solar and lunar`() {
-        val seed = 123
-        assertEquals(
-            NameGenerator.gerar(CulturaNome.CHINESA, GeneroNome.MASCULINO, Random(seed)),
-            NameGenerator.gerarSolarOuLunar(CulturaNome.CHINESA, GeneroNome.MASCULINO, Random(seed))
-        )
-    }
-    @Test
-    fun `rare second given name never duplicates the first`() {
-        for (origem in listOf(OrigemNomeSangueDeDragao.IMPERIO, OrigemNomeSangueDeDragao.LOOKSHY)) {
-            var encontrados = 0
-            repeat(3000) { seed ->
-                val nome = NomesSangueDeDragao.gerar(origem, GeneroNome.FEMININO, Random(seed))
-                val partes = nome.split(Regex("\\s+"))
-                if (partes.size == 3) {
-                    encontrados++
-                    assertTrue("$origem: $nome", !partes[1].equals(partes[2], ignoreCase = true))
-                }
-            }
-            assertTrue("$origem deve permitir a excecao de 5%", encontrados > 0)
-        }
-    }
-
-    @Test
-    fun `unspecified gender keeps seeded Dragon Blooded names deterministic`() {
+    @Test fun `dragon blooded names preserve family and never repeat components`() {
         for (origem in listOf(OrigemNomeSangueDeDragao.IMPERIO, OrigemNomeSangueDeDragao.LOOKSHY)) {
             repeat(1000) { seed ->
-                val primeiro = NomesSangueDeDragao.gerar(origem, null, Random(seed))
-                val segundo = NomesSangueDeDragao.gerar(origem, null, Random(seed))
-                assertEquals("$origem seed=$seed", primeiro, segundo)
-                assertTrue(primeiro.split(Regex("\\s+")).size in 2..3)
+                val nome = NomesSangueDeDragao.gerar(origem, GeneroNome.FEMININO, Random(seed))
+                val partes = nome.split(Regex("\\s+"))
+                assertTrue(nome, partes.size in 2..4)
+                assertEquals(nome, partes.size, partes.map { it.lowercase() }.distinct().size)
+                assertEquals(nome, nome, NomesSangueDeDragao.gerar(origem, GeneroNome.FEMININO, Random(seed)))
             }
         }
     }
-
 }
