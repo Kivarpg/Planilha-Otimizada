@@ -144,7 +144,7 @@ internal object LunarEncounterCharmSelection {
                     .groupBy { it.atributo }
                 candidatosOfensivos.maxWithOrNull(
                     compareBy<String> { atributo ->
-                        disponiveisPorAtributo[atributo].orEmpty().maxOfOrNull { it.minEssencia } ?: 0
+                        disponiveisPorAtributo[atributo].orEmpty().let { disponiveis -> if (disponiveis.any { it.minEssencia <= 1 }) disponiveis.maxOfOrNull { it.minEssencia } ?: 0 else 0 }
                     }.thenBy { atributo ->
                         disponiveisPorAtributo[atributo].orEmpty().size
                     }.thenBy { atributo -> attributes[atributo] ?: 0 }
