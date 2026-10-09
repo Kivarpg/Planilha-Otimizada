@@ -30,6 +30,15 @@ class EncounterLunarXpLoopContractTest {
     }
 
     @Test
+    fun `foco ofensivo explicito precede contagem automatica no xp lunar`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        val selection = source.substringAfter("val ataqueEscolhido = if (npc.arquetipo")
+            .substringBefore("val ataqueDescartado")
+        assertTrue(selection.contains("npc.focoProgressaoExplicito?.takeIf { it in ofensivos }"))
+        assertTrue(selection.indexOf("npc.focoProgressaoExplicito") < selection.indexOf("ofensivos.maxWithOrNull"))
+    }
+
+    @Test
     fun `lunar active trees are iterated without a redundant snapshot`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         assertTrue(source.contains("for (atributo in arvoresAtivas) {"))
