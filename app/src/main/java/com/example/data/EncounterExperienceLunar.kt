@@ -246,6 +246,22 @@ internal object EncounterExperienceLunar {
             nomesCharmsNesteLote, formaSecundariaAdquirida, spiritTraitsEfetivos, ataqueEscolhido
         )
 
+        // Cache por contexto e ramo: ordenar a árvore apenas uma vez por
+        // configuração de Forma Espiritual, não a cada compra de Encanto.
+        val candidatosPorRamo = mutableMapOf<String, List<EncantoLunarDefinition>>()
+        fun candidatosOrdenados(atributoRamo: String): List<EncantoLunarDefinition> =
+            candidatosPorRamo.getOrPut(atributoRamo.lowercase()) {
+                val encantos = routeContextAtual.charmsByAttribute[atributoRamo]
+                    ?: routeContextAtual.charmsByAttribute.entries.firstOrNull {
+                        it.key.equals(atributoRamo, ignoreCase = true)
+                    }?.value.orEmpty()
+                encantos.sortedWith(
+                    compareByDescending<EncantoLunarDefinition> {
+                        routeContextAtual.transitiveCharmDependentCount(it.nome)
+                    }.thenBy { it.minEssencia }.thenBy { it.nome }
+                )
+            }
+
         fun comprarBloco(atributoRamo: String): Boolean {
             if (ataqueDescartado != null && atributoRamo.equals(ataqueDescartado, ignoreCase = true)) return false
             var progresso = false
@@ -262,19 +278,7 @@ internal object EncounterExperienceLunar {
                 val limiteCorpoDeTouro = (attributesAtuais["Vigor"] ?: 0).coerceAtLeast(0)
                 var candidato: EncantoLunarDefinition? = null
                 var rotaEscolhida: LunarCharmArchetypePolicy.AcquisitionRoute? = null
-                // Os nomes do índice podem ter capitalização diferente do foco salvo.
-                val encantosDoRamo = routeContextAtual.charmsByAttribute[atributoRamo]
-                ?: routeContextAtual.charmsByAttribute.entries.firstOrNull {
-                    it.key.equals(atributoRamo, ignoreCase = true)
-                }?.value.orEmpty()
-                // Preferir raízes que abrem árvores maiores, especialmente em
-                // Vigor. A elegibilidade canônica continua obrigatória.
-                val candidatosOrdenados = encantosDoRamo.sortedWith(
-                    compareByDescending<EncantoLunarDefinition> {
-                        routeContextAtual.transitiveCharmDependentCount(it.nome)
-                    }.thenBy { it.minEssencia }.thenBy { it.nome }
-                )
-                for (def in candidatosOrdenados) {
+                for (def in candidatosOrdenados(atributoRamo)) {
                     if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
                     val rotasElegiveis = LunarCharmArchetypePolicy.eligibleRoutes(
                         def, routeContextAtual, attributesAtuais, essenciaAtual, nomesSelecionados, catalogo,
@@ -322,6 +326,7 @@ internal object EncounterExperienceLunar {
                         spiritTraitsEfetivos = spiritTraitsEfetivos +
                             LunarSpiritShapeArchetypeTraits.forAnimal(secundaria)
                         routeContextAtual = LunarCharmArchetypePolicy.prepare(catalogo, spiritTraitsEfetivos)
+                        candidatosPorRamo.clear() // novas rotas após Quimera
                     }
                 }
 
