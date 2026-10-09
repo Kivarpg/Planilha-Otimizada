@@ -791,7 +791,7 @@ fun NpcEncontroCard(
                 onAtualizarArmadura = { novaArmadura -> viewModel.atualizarArmaduraNpcEncontro(npc.id, novaArmadura) },
                 onDismiss = { mostrarEditorEquipamento = false }
             )
-            val historicoXp = remember(npc.historicoXpBatches) { npc.historicoXpBatches }
+            val historicoXp = npc.historicoXpBatches
             // APPROVED PERFORMANCE REFACTOR
             // Um único percurso do histórico produz todos os dados exibidos
             // nesta seção. Antes eram quatro percursos independentes
