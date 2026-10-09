@@ -1318,4 +1318,28 @@ class EncounterCharmRouteOptimizerTest {
         )
     }
 
+    @Test
+    fun `contagem real abaixo do limite permite exatamente a proxima compra`() {
+        val (corpo, _) = encanto("Corpo de Touro", 8, habilidade = "Resistência")
+        for (monotona in listOf(false, true)) {
+            fun escolher(limite: Int): String? = EncounterCharmRouteOptimizer.escolher(
+                candidatos = listOf(corpo),
+                catalogoCompleto = listOf(corpo),
+                nomesSelecionados = setOf(corpo.nome),
+                contagensCategorias = mapOf("resistência" to 2),
+                elegivel = { _, _, _ -> true },
+                nome = { it.nome },
+                categoria = { it.habilidade },
+                custoXp = { 8 },
+                permiteAquisicaoRepetida = { true },
+                repeatableAcquisitionLimit = { limite },
+                initialAcquisitionCounts = mapOf(corpo.nome to 2),
+                monotonicEligibility = monotona,
+                profundidade = 2
+            )?.nome
+            assertEquals("compra ainda disponivel no modo $monotona", corpo.nome, escolher(3))
+            assertEquals("limite ja atingido no modo $monotona", null, escolher(2))
+        }
+    }
+
 }
