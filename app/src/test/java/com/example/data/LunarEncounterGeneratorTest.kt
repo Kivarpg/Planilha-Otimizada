@@ -80,6 +80,40 @@ class LunarEncounterGeneratorTest {
     }
 
     @Test
+    fun `projecao Lunar considera rota arquetipo somente com traco espiritual habilitado`() {
+        fun encanto(nome: String, atributo: String, essencia: Int, pre: String = "Nenhum") =
+            EncantoLunarDefinition(
+                id = nome, atributo = atributo, subdivisao = null,
+                nome = nome, nomeIngles = "", custo = "1",
+                minsTexto = "$atributo 3, Essência $essencia",
+                minAtributo = 3, minEssencia = essencia,
+                tipo = "Reflexivo", palavrasChave = "", duracao = "",
+                preRequisitos = pre, descricao = ""
+            )
+        val base = encanto("Base destreza", "Destreza", 1)
+        val avancado = encanto("Avancado destreza", "Destreza", 3, "Base destreza")
+        val alternativo = encanto("Encanto de Percepcao", "Percepção", 5).copy(
+            rotasArquetipo = listOf(
+                LunarCharmArchetypeRoute("Destreza", "VISAO_NOTURNA", 3, "Avancado destreza")
+            )
+        )
+        val catalogo = listOf(encanto("Base forca", "Força", 2), base, avancado, alternativo)
+        fun escolher(tracos: Set<LunarSpiritTrait>) =
+            LunarEncounterCharmSelection.selecionarEncantosIniciaisComRotas(
+                catalogo = catalogo,
+                attributes = mapOf("Força" to 4, "Destreza" to 4, "Percepção" to 4, "Vigor" to 3),
+                essencia = 1,
+                ordemAtributos = listOf("Força", "Destreza", "Vigor"),
+                quantidade = 0,
+                random = Random(7),
+                arquetipo = ArquetipoEncontro.FISICO,
+                spiritTraits = tracos
+            ).ataqueEscolhido
+        assertEquals("Destreza", escolher(setOf(LunarSpiritTrait.VISAO_NOTURNA)))
+        assertEquals("Destreza", escolher(emptySet()))
+    }
+
+    @Test
     fun `geracao Lunar fisica registra arvore ofensiva mesmo sem encantos disponiveis`() {
         repeat(EncounterTestSamples.count(30)) { seed ->
             val npc = EncounterGenerator.gerarLunar(
