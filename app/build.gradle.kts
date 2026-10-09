@@ -210,7 +210,7 @@ tasks.withType<Test>().configureEach {
 
     // AGP registra testDebugUnitTest durante a configuração de variantes.
     // A filtragem é aplicada quando a task Test realmente existe.
-    if (name == "testDebugUnitTest") {
+    if (name == "testDebugUnitTest" && providers.gradleProperty("exalted.runAuditTests").orNull != "true") {
         auditTestPatterns.forEach(::exclude)
     }
 }
