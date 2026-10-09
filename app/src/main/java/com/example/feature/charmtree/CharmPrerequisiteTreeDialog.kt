@@ -179,10 +179,11 @@ private fun CharmPrerequisiteTreeDialogEntries(
 
     LaunchedEffect(rootCharmId, charms, includeFullCatalog, preparedResult) {
         if (preparedResult == null) {
-            result = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+            val built = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
                 CharmPrerequisiteTreeBuilder.build(rootCharmId, charms, includeFullCatalog)
             }
-            result?.let { onTreePrepared?.invoke(it) }
+            result = built
+            built?.let { onTreePrepared?.invoke(it) }
             buildFinished = true
         }
     }
