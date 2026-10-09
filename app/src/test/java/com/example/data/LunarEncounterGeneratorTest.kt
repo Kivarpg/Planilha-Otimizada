@@ -97,7 +97,7 @@ class LunarEncounterGeneratorTest {
                 LunarCharmArchetypeRoute("Destreza", "VISAO_NOTURNA", 3, "Avancado destreza")
             )
         )
-        val catalogo = listOf(encanto("Base forca", "Força", 2), base, avancado, alternativo)
+        val catalogo = listOf(encanto("Base forca", "Força", 4), base, avancado, alternativo)
         fun escolher(tracos: Set<LunarSpiritTrait>) =
             LunarEncounterCharmSelection.selecionarEncantosIniciaisComRotas(
                 catalogo = catalogo,
@@ -110,7 +110,7 @@ class LunarEncounterGeneratorTest {
                 spiritTraits = tracos
             ).ataqueEscolhido
         assertEquals("Destreza", escolher(setOf(LunarSpiritTrait.VISAO_NOTURNA)))
-        assertEquals("Destreza", escolher(emptySet()))
+        assertEquals("Força", escolher(emptySet()))
     }
 
     @Test
