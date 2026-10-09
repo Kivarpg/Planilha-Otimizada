@@ -8,6 +8,8 @@ on:
     paths:
       - .github/workflows/lunar_unit_tests.yml
       - app/src/test/java/com/example/data/LunarEncounterGeneratorTest.kt
+      - app/src/test/java/com/example/data/EncounterGeneratorXpTest.kt
+      - app/src/main/java/com/example/data/EncounterExperienceLunar.kt
 
 permissions:
   contents: read
