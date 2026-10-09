@@ -99,9 +99,7 @@ internal object CharmPrerequisiteReferenceParser {
         // Apenas a unicidade importa: dispensar listas intermediárias por nome.
         val idsByNormalizedName = HashMap<String, MutableSet<String>>()
         for (entry in entries) {
-            if (entry.id.isNotBlank()) {
-                idsByNormalizedName.getOrPut(entry.normalizedName) { HashSet() }.add(entry.id)
-            }
+            idsByNormalizedName.getOrPut(entry.normalizedName) { HashSet() }.add(entry.id)
         }
 
         // Construir diretamente a lista final, sem listas temporárias por Encanto.
