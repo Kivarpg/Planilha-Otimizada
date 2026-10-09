@@ -128,15 +128,28 @@ internal object LunarEncounterCharmSelection {
         var contagemCorpoDeTouroSelecionada = 0
         var contagemUniversalSelecionada = 0
         // Vigor pode liderar por até três aquisições em relação à única árvore ofensiva.
+        // Escolher uma única árvore ofensiva: maximizar a profundidade de
+        // Essência acessível e, em seguida, o volume de Encantos elegíveis.
+        // Pré-agregar o catálogo evita varreduras repetidas durante a escolha.
         val ataqueEscolhido = if (arquetipo == ArquetipoEncontro.FISICO) {
             val foco = atributoFocoUsuario?.takeIf { it == "Força" || it == "Destreza" }
-            foco ?: listOf("Força", "Destreza").maxWithOrNull(
-                compareBy<String> { atributo ->
-                    catalogo.count { def -> def.atributo == atributo && def.minEssencia <= essencia && (attributes[atributo] ?: 0) >= def.minAtributo }
-                }.thenBy { atributo ->
-                    catalogo.filter { it.atributo == atributo && it.minEssencia <= essencia && (attributes[atributo] ?: 0) >= it.minAtributo }.maxOfOrNull { it.minEssencia } ?: 0
-                }.thenBy { attributes[it] ?: 0 }
-            )
+            foco ?: run {
+                val candidatosOfensivos = listOf("Força", "Destreza")
+                val disponiveisPorAtributo = catalogo.asSequence()
+                    .filter { def ->
+                        def.atributo in candidatosOfensivos &&
+                            def.minEssencia <= essencia &&
+                            (attributes[def.atributo] ?: 0) >= def.minAtributo
+                    }
+                    .groupBy { it.atributo }
+                candidatosOfensivos.maxWithOrNull(
+                    compareBy<String> { atributo ->
+                        disponiveisPorAtributo[atributo].orEmpty().maxOfOrNull { it.minEssencia } ?: 0
+                    }.thenBy { atributo ->
+                        disponiveisPorAtributo[atributo].orEmpty().size
+                    }.thenBy { atributo -> attributes[atributo] ?: 0 }
+                )
+            }
         } else null
         val ataqueDescartado = if (ataqueEscolhido == "Força") "Destreza" else "Força"
         fun vigorPermitido(contagens: Map<String, Int>): Boolean =
