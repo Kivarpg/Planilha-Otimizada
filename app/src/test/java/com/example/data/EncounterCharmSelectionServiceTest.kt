@@ -274,7 +274,9 @@ class EncounterCharmSelectionServiceTest {
             arquetipo = ArquetipoEncontro.FISICO
         )
 
-        assertEquals(15, resultado.size)
+        // Duas entradas de Destreza sao excluidas pela regra de arvore ofensiva unica.
+        assertEquals(13, resultado.size)
+        assertTrue(resultado.none { it.atributo == "Destreza" })
         assertTrue(resultado.count { it.atributo == "Força" } >= 3)
         assertTrue(resultado.any { it.atributo == "Universal" })
     }
