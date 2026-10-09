@@ -1,0 +1,29 @@
+EXALTED.799 — CHECKPOINT DE CONSOLIDAÇÃO (SEM COMPILAÇÃO)
+Data: 2026-10-08
+Repositório: Kivarpg/Planilha-Otimizada
+Branch: final-audit-797
+Base compilada anteriormente: commit 9c8af5daecd4 (Exalted.798)
+Último commit de código incluído: b74d52f99f81b295b25363e4cd6a036372d00fae
+
+Comparação GitHub com a base Exalted.798:
+- 37 commits de código acumulados, todos preservados no histórico da branch.
+- 6 arquivos Kotlin modificados:
+  app/src/main/java/com/example/feature/charmtree/CharmPrerequisiteReferenceParser.kt
+  app/src/main/java/com/example/feature/charmtree/CharmPrerequisiteTreeDialog.kt
+  app/src/main/java/com/example/ui/tabs/AbilityCharmTreeDialog.kt
+  app/src/main/java/com/example/ui/tabs/EncounterGeneratorTab.kt
+  app/src/main/java/com/example/ui/tabs/EncounterNpcCard.kt
+  app/src/main/java/com/example/ui/tabs/EncounterNpcCardSections.kt
+
+Alterações consolidadas:
+1. Aba 8: ajustes de parsing, preparação, seleção da raiz, reutilização e construção assíncrona de árvores de Encantos.
+2. Aba 11: memoização de consultas e cálculos da ficha, catálogos de Feitiços e equipamentos, agrupamentos de Encantos e marcadores de Atributos/Habilidades.
+3. Aba 11: correções de invalidação do cache visual dos botões de NPCs e preservação das opções no diálogo de Feitiço inicial.
+
+Estado de validação:
+- Consolidação registrada na branch sem squash/rebase, preservando rastreabilidade e possibilidade de reversão.
+- NÃO foram executados compilação, testes automatizados ou testes no dispositivo neste checkpoint.
+- Exalted.799 ainda não está liberada para compilação única.
+- settings.gradle.kts, workflow de Actions e .github/build-authorization.txt não devem ser alterados sem autorização.
+
+Pendências para liberação: auditoria integrada dos seis arquivos, avaliação de carregamento inicial da Aba 11, revisão de regressões, checagem de compilabilidade estática e preparação do contrato de versão Exalted.799.
