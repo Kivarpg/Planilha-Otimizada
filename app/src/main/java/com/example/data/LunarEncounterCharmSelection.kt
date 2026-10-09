@@ -127,6 +127,11 @@ internal object LunarEncounterCharmSelection {
         var contagemAtributoMentalSelecionada = 0
         var contagemCorpoDeTouroSelecionada = 0
         var contagemUniversalSelecionada = 0
+        // Vigor é defensivo no Lunar Físico; Força/Destreza devem acompanhar.
+        fun vigorPermitido(contagens: Map<String, Int>): Boolean =
+            arquetipo != ArquetipoEncontro.FISICO ||
+                (contagens["vigor"] ?: 0) <= maxOf(contagens["força"] ?: 0, contagens["destreza"] ?: 0)
+
 
         fun rotaElegivel(
             def: EncantoLunarDefinition,
@@ -143,7 +148,7 @@ internal object LunarEncounterCharmSelection {
                         contagens[categoria.lowercase()] ?: 0
                     }
                 }
-            )
+            )?.takeIf { it.atributo != "Vigor" || vigorPermitido(contagens) }
 
         fun registrar(
             def: EncantoLunarDefinition,
@@ -166,7 +171,7 @@ internal object LunarEncounterCharmSelection {
         }
 
         fun elegivelSelecionado(def: EncantoLunarDefinition): Boolean =
-            LunarCharmArchetypePolicy.hasEligibleRoute(
+            rotaElegivel(def) != null && LunarCharmArchetypePolicy.hasEligibleRoute(
                 def, routeContext, attributes, essencia, nomesSelecionados, catalogo,
                 contagemCategoriaSelecionada = { categoria ->
                     if (categoria.equals("Atributo Mental", ignoreCase = true)) {
@@ -197,7 +202,7 @@ internal object LunarEncounterCharmSelection {
         // orçamento total de Encantos.
         if (elegivelCorpoDeTouro && reservaFeiticaria == 0) {
             val corpoDeTouro = candidatoCorpoDeTouro ?: error("Corpo de Touro elegível sem definição")
-            repeat(limiteCorpoDeTouro.coerceAtMost(limiteDeVagasAntesDaFeiticaria)) {
+            repeat(limiteCorpoDeTouro.coerceAtMost(limiteDeVagasAntesDaFeiticaria).coerceAtMost(if (arquetipo == ArquetipoEncontro.FISICO) 1 else Int.MAX_VALUE)) {
                 selecionados += corpoDeTouro
                 registrar(corpoDeTouro)
             }
@@ -211,10 +216,7 @@ internal object LunarEncounterCharmSelection {
         val categoriaArquetipo = EncounterGenerationRules.ATTRIBUTE_GROUPS.getValue(arquetipo)
         val maiorValor = categoriaArquetipo.maxOfOrNull { attributes[it] ?: 0 } ?: 0
         val atributosPrincipaisEmpatados = categoriaArquetipo.filter { (attributes[it] ?: 0) == maiorValor }
-        val atributoPrincipalAutomatico = atributosPrincipaisEmpatados
-            .ifEmpty { categoriaArquetipo }
-            .shuffled(random)
-            .firstOrNull()
+        val atributoPrincipalAutomatico = (if (arquetipo == ArquetipoEncontro.FISICO) listOf("Força", "Destreza").sortedByDescending { attributes[it] ?: 0 } else atributosPrincipaisEmpatados.ifEmpty { categoriaArquetipo }.shuffled(random)).firstOrNull()
         val atributoPrincipal = atributoFocoUsuario
             ?.takeIf { it in EncounterGenerationRules.ALL_ATTRIBUTES }
             ?: atributoPrincipalAutomatico
@@ -247,6 +249,7 @@ internal object LunarEncounterCharmSelection {
                 nomesSelecionados = nomesSelecionados,
                 contagensCategorias = categoriasSelecionadas,
                 elegivel = { def, nomes, contagens ->
+                    rotaElegivel(def, atributoPreferido, nomes, contagens) != null &&
                     LunarCharmArchetypePolicy.hasEligibleRoute(
                         def,
                         routeContext,
