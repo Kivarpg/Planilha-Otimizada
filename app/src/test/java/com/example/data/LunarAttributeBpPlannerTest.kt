@@ -277,6 +277,23 @@ class LunarAttributeBpPlannerTest {
     }
 
     @Test
+    fun `foco ofensivo lunar escolhe somente um atributo prioritario`() {
+        val catalogo = (1..5).map { charm("Força ofensiva $it", "Força", 4) } +
+            (1..5).map { charm("Destreza ofensiva $it", "Destreza", 4) } +
+            (1..5).map { charm("Vigor defensivo $it", "Vigor", 3) }
+        val elegiveis = listOf("Força", "Destreza", "Vigor", "Carisma")
+        for ((foco, outro) in listOf("Força" to "Destreza", "Destreza" to "Força")) {
+            val projecao = LunarAttributeBpPlanner.project(
+                ArquetipoEncontro.FISICO, atributos, elegiveis, catalogo, foco
+            )
+            assertEquals(foco, projecao.priority.first())
+            assertEquals(1, projecao.priority.count { it == foco })
+            assertTrue(outro in projecao.priority)
+            assertEquals(elegiveis.toSet(), projecao.priority.toSet())
+        }
+    }
+
+    @Test
     fun `activation priority falha fechada quando horizonte reprova`() {
         val local = LunarAttributeBpPlanner.Comparison(
             currentPriority = especiais,
