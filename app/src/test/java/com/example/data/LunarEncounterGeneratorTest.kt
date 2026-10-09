@@ -114,6 +114,28 @@ class LunarEncounterGeneratorTest {
     }
 
     @Test
+    fun `lunar fisico limita Corpo de Touro inicial a uma aquisicao`() {
+        val corpo = EncantoLunarDefinition(
+            id = "corpo-touro", atributo = "Vigor", subdivisao = null,
+            nome = com.example.model.NOME_CORPO_DE_TOURO, nomeIngles = "",
+            custo = "1", minsTexto = "Vigor 1, Essência 1",
+            minAtributo = 1, minEssencia = 1, tipo = "Permanente",
+            palavrasChave = "", duracao = "Permanente",
+            preRequisitos = "Nenhum", descricao = ""
+        )
+        val selecionados = LunarEncounterCharmSelection.selecionarEncantosIniciaisComRotas(
+            catalogo = listOf(corpo),
+            attributes = mapOf("Força" to 4, "Destreza" to 3, "Vigor" to 5, "Inteligência" to 2),
+            essencia = 1,
+            ordemAtributos = listOf("Vigor", "Força", "Destreza"),
+            quantidade = 15,
+            random = Random(17),
+            arquetipo = ArquetipoEncontro.FISICO
+        ).charms
+        assertTrue(selecionados.count { it.nome == com.example.model.NOME_CORPO_DE_TOURO } <= 1)
+    }
+
+    @Test
     fun `geracao Lunar fisica registra arvore ofensiva mesmo sem encantos disponiveis`() {
         repeat(EncounterTestSamples.count(30)) { seed ->
             val npc = EncounterGenerator.gerarLunar(
