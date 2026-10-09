@@ -125,6 +125,7 @@ jobs:
             EncounterRouteEligibilityRegressionTest
             LunarSpiritFormPreparedContextCacheTest
             EncounterOptimizerCompactStatePropagationTest
+            EncounterCharmRouteOptimizerTest
             EncounterNpcAuditorContractTest
             EncounterMechanicalGoldenSnapshotTest
             EncounterArchetypeMatrixTest
