@@ -1,2 +1,2 @@
-Exalted.800
-Authorization: user requested continuation after Exalted.799 failure
+Exalted.801
+Authorization: explicit user compile request for version 801
