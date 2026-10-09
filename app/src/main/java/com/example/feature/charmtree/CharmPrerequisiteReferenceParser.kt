@@ -40,6 +40,9 @@ internal object CharmPrerequisiteReferenceParser {
 
             val matches = candidates
                 .asSequence()
+                // Nomes maiores que o texto não podem corresponder. Como os
+                // candidatos estão ordenados por tamanho, interromper cedo.
+                .dropWhile { candidate -> candidate.normalized.length > normalizedText.length }
                 .flatMap { candidate ->
                     allOccurrences(normalizedText, candidate.normalized).mapNotNull { start ->
                         val end = start + candidate.normalized.length
