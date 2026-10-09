@@ -27,3 +27,11 @@ Estado de validação:
 - settings.gradle.kts, workflow de Actions e .github/build-authorization.txt não devem ser alterados sem autorização.
 
 Pendências para liberação: auditoria integrada dos seis arquivos, avaliação de carregamento inicial da Aba 11, revisão de regressões, checagem de compilabilidade estática e preparação do contrato de versão Exalted.799.
+
+ADENDO DE AUDITORIA — 2026-10-08
+- 39c35ac059241b2635c14dfc74d13ae5efa6916e: evita seleção tardia de NPC já removido.
+- 2a8d36aacc337af093bc44529329e8240e2534a4: reutiliza a lista de NPCs como chave de cache visual sem alocação temporária por recomposição.
+- 59fa29442970f6caf54177121029054af31bd3a9: remove wrapper redundante no histórico de XP.
+- 923133c234ef148d30d1bf23cfc393c14d968c02: usa callback mais recente após cálculo assíncrono da árvore.
+- Contrato de versão verificado por leitura: settings.gradle.kts ainda declara Exalted.798. Não foi alterado porque a Exalted.799 ainda não foi liberada para compilação.
+- Sem testes, execução local, APK ou workflow iniciados nesta rodada.
