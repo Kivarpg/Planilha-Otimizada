@@ -1121,7 +1121,9 @@ fun NpcEncontroCard(
                                 // Detalhes usam o catálogo completo: depois do primeiro XP,
                                 // feiticosDisponiveis fica vazio de propósito para bloquear a
                                 // troca gratuita, mas o long press deve continuar funcionando.
-                                val definicaoFeitico = viewModel.feiticoDefinitionPorNome(feitico.nome)
+                                val definicaoFeitico = remember(viewModel, feitico.nome) {
+                                    viewModel.feiticoDefinitionPorNome(feitico.nome)
+                                }
                                 if (definicaoFeitico != null) {
                                     FeiticoDetailsDialog(
                                         def = definicaoFeitico,
