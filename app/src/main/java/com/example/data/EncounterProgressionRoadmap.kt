@@ -75,6 +75,7 @@ object EncounterProgressionRoadmapService {
             append("corpo=").append(npc.corpoDeTouroCount).append('|')
             append("charms=").append(charmsStable()).append('|')
             append("focoExplicito=").append(esc(npc.focoProgressaoExplicito.orEmpty())).append('|')
+            append("ataqueLunar=").append(esc(npc.lunarAtaqueEscolhido.orEmpty())).append('|')
 
             when (npc.tipoExaltado) {
                 com.example.model.TipoExaltadoEncontro.SOLAR,
