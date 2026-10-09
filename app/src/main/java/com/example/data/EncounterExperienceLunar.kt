@@ -336,17 +336,14 @@ internal object EncounterExperienceLunar {
             val custoRamo = custoXpEncantoLunar(castaOuFavorecidos, atributoRamo)
             // Esta restrição depende somente do ramo, não do Encanto.
             val ramoEhVigor = atributoRamo.equals("Vigor", ignoreCase = true)
-            val ramoDescartado = ataqueEscolhido != null &&
-                atributoRamo.equals(ataqueDescartado, ignoreCase = true)
             var tentativasBloco = 0
             while (
                 xpDisponivel >= custoRamo &&
                 (categoriasSelecionadas[chaveCategoriaRamo] ?: 0) < alvo &&
                 tentativasBloco++ < 100
             ) {
-                // Se Vigor atingiu a margem de três Encantos acima do
-                // ataque, nenhum candidato desta gaveta pode ser comprado.
-                // Evitar varrer o catálogo e avaliar pré-requisitos à toa.
+                // O limite de Vigor pode mudar após cada compra; verificar
+                // uma única vez antes de ordenar ou avaliar candidatos.
                 if (ataqueEscolhido != null && ramoEhVigor &&
                     !vigorPermitido(categoriasSelecionadas)
                 ) break
@@ -357,8 +354,6 @@ internal object EncounterExperienceLunar {
                 // O catálogo não muda durante esta tentativa: consultar uma vez
                 // a lista de candidatos e o índice de rotas por Encanto.
                 val candidatosDoRamo = candidatosOrdenados(atributoRamo, essenciaAtual)
-                val vigorDisponivel = !ramoEhVigor || vigorPermitido(categoriasSelecionadas)
-                if (!vigorDisponivel || ramoDescartado) break
                 for (def in candidatosDoRamo) {
                     if (def.minEssencia > essenciaAtual) continue
                     if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
