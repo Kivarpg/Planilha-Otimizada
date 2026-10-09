@@ -45,7 +45,7 @@ internal fun ExaltedPanoramaBackground(
         context.resources.getIdentifier(resourceName, "drawable", context.packageName)
     }
     if (resourceId == 0) {
-        OnyxTexturedBackground(Modifier.fillMaxSize(), content)
+        OnyxTexturedBackground(modifier = Modifier.fillMaxSize(), content = content)
         return
     }
     val progress by animateFloatAsState(
