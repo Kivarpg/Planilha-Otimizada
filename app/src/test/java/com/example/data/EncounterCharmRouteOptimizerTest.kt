@@ -699,4 +699,18 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals("Mesmo Encanto", escolhido?.nome)
     }
 
+    @Test
+    fun `aquisicao repetida altera contagem mesmo quando nome ja esta selecionado`() {
+        val (corpo, _) = encanto("Corpo de Touro", 10, habilidade = "Resistência")
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            listOf(corpo), { it.nome }, { it.habilidade }
+        )
+        val nomes = setOf(corpo.nome)
+        val antes = prepared.compactKey(nomes, mapOf("resistência" to 1))
+        val depois = prepared.compactKeyAfter(antes, corpo.nome, "resistência")
+        val reconstruido = prepared.compactKey(nomes, mapOf("resistência" to 2))
+        assertNotEquals("a contagem distingue aquisicoes repetidas", antes, depois)
+        assertEquals("o delta deve corresponder ao estado completo", reconstruido, depois)
+    }
+
 }
