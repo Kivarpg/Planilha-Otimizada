@@ -56,4 +56,36 @@ class EncounterCombinationEvaluatorOptimizationTest {
         }
     }
 
+    @Test
+    fun `ids validos em niveis diferentes nao sao confundidos`() {
+        val first = EncounterCombinationEvaluator.Power(
+            id = "shared",
+            variants = listOf(
+                EncounterCombinationEvaluator.PowerVariant(
+                    id = "shared",
+                    branches = listOf(
+                        EncounterCombinationEvaluator.EffectBranch("shared", effects = emptyList())
+                    )
+                )
+            )
+        )
+        val second = EncounterCombinationEvaluator.Power(
+            id = "second",
+            variants = listOf(
+                EncounterCombinationEvaluator.PowerVariant(
+                    id = "shared",
+                    branches = listOf(
+                        EncounterCombinationEvaluator.EffectBranch("shared", effects = emptyList())
+                    )
+                )
+            )
+        )
+        val result = EncounterCombinationEvaluator.realize(
+            listOf(first, second),
+            EncounterCombinationEvaluator.Configuration()
+        )
+        assertTrue(result.reason, result.realizable)
+        assertEquals(1, result.realizations.size)
+    }
+
 }
