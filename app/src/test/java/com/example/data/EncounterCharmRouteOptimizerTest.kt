@@ -882,4 +882,57 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals(corpo.nome, escolhido?.nome)
     }
 
+    @Test
+    fun `limite repetivel nao vaza entre chamadas com memo compartilhado`() {
+        val (corpo, _) = encanto("Corpo de Touro", 10, habilidade = "Resistência")
+        val memo = HashMap<EncounterCharmRouteOptimizer.CompactEligibilityKey, Set<String>>()
+        fun escolher(quantidade: Int) = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(corpo),
+            catalogoCompleto = listOf(corpo),
+            nomesSelecionados = setOf(corpo.nome),
+            contagensCategorias = mapOf("resistência" to quantidade),
+            elegivel = { _, _, _ -> true },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { 10 },
+            permiteAquisicaoRepetida = { true },
+            repeatableOnlyAtRoot = true,
+            repeatableAcquisitionLimit = { 2 },
+            initialAcquisitionCounts = mapOf(corpo.nome to quantidade),
+            compactEligibilityMemo = memo,
+            profundidade = 2
+        )?.nome
+        assertEquals("Corpo de Touro", escolher(1))
+        assertEquals(null, escolher(2))
+        assertEquals("Corpo de Touro", escolher(1))
+        assertTrue("memo externo deve permanecer intocado com limites dinamicos", memo.isEmpty())
+    }
+
+    @Test
+    fun `limite repetivel preserva escolha com avaliacao monotona e completa`() {
+        val (corpo, _) = encanto("Corpo de Touro", 10, habilidade = "Resistência")
+        val (dependente, _) = encanto("Dependente", 8, habilidade = "Resistência")
+        val catalogo = listOf(corpo, dependente)
+        fun escolher(monotona: Boolean) = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(corpo, dependente),
+            catalogoCompleto = catalogo,
+            nomesSelecionados = setOf(corpo.nome),
+            contagensCategorias = mapOf("resistência" to 1),
+            elegivel = { def, _, contagens ->
+                def.nome == corpo.nome || (contagens["resistência"] ?: 0) >= 2
+            },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { if (it.nome == corpo.nome) 10 else 8 },
+            permiteAquisicaoRepetida = { it.nome == corpo.nome },
+            repeatableOnlyAtRoot = true,
+            repeatableAcquisitionLimit = { 2 },
+            initialAcquisitionCounts = mapOf(corpo.nome to 1),
+            monotonicEligibility = monotona,
+            profundidade = 2
+        )?.nome
+        assertEquals("Corpo de Touro", escolher(false))
+        assertEquals(escolher(false), escolher(true))
+    }
+
 }
