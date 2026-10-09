@@ -1290,4 +1290,32 @@ class EncounterCharmRouteOptimizerTest {
         )
     }
 
+    @Test
+    fun `par sem tags de combate nao consulta categoria dinamica do anterior`() {
+        val (anterior, _) = encanto("Encanto neutro", 8, habilidade = "Armas Brancas")
+        val (candidato, _) = encanto("Ganha iniciativa", 8, habilidade = "Briga")
+        val categoriasConsultadas = mutableListOf<String>()
+        val escolhido = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(candidato),
+            catalogoCompleto = listOf(anterior, candidato),
+            nomesSelecionados = setOf(anterior.nome),
+            contagensCategorias = mapOf("briga" to 1),
+            elegivel = { def, nomes, _ -> def.nome !in nomes },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            categoriaNoEstado = { def, _, _ ->
+                categoriasConsultadas += def.nome
+                "Briga"
+            },
+            custoXp = { 8 },
+            profundidade = 1
+        )
+        assertEquals(candidato.nome, escolhido?.nome)
+        assertTrue("categoria do candidato ainda e resolvida", candidato.nome in categoriasConsultadas)
+        assertFalse(
+            "sem tags de combate, categoria do anterior nao contribui ao score",
+            anterior.nome in categoriasConsultadas
+        )
+    }
+
 }
