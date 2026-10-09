@@ -226,7 +226,7 @@ internal object EncounterExperienceLunar {
                         }
                 )
         } else null
-        val ataqueDescartado = ofensivos.firstOrNull { it != ataqueEscolhido }
+        val ataqueDescartado = ataqueEscolhido?.let { escolhido -> ofensivos.firstOrNull { it != escolhido } }
         fun vigorPermitido(contagens: Map<String, Int>): Boolean =
             ataqueEscolhido == null ||
                 (contagens["vigor"] ?: 0) < (contagens[ataqueEscolhido.lowercase()] ?: 0) + 3
