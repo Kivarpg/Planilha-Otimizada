@@ -18,6 +18,21 @@ class LunarCharmArchetypePolicyTest {
     )
 
     @Test
+    fun `indice de dependencias conta encantos distintos sem alterar elegibilidade`() {
+        val catalogo = listOf(
+            charm(nome = "Raiz"),
+            charm(nome = "Ramo A", pre = "Raiz"),
+            charm(nome = "Ramo B", pre = "Raiz"),
+            charm(nome = "Folha", pre = "Ramo A")
+        )
+        val context = LunarCharmArchetypePolicy.prepare(catalogo, emptySet())
+        assertEquals(2, context.directCharmDependentCount("Raiz"))
+        assertEquals(1, context.directCharmDependentCount("Ramo A"))
+        assertEquals(0, context.directCharmDependentCount("Folha"))
+        assertEquals(0, context.directCharmDependentCount("Inexistente"))
+    }
+
+    @Test
     fun `rota arquetipo so existe quando forma satisfaz condicao`() {
         val def = charm(routes = listOf(
             LunarCharmArchetypeRoute("Percepção", "VISAO_NOTURNA", 3, "Nenhum")
