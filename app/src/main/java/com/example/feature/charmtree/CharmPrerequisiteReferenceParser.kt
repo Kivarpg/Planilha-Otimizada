@@ -51,19 +51,17 @@ internal object CharmPrerequisiteReferenceParser {
                 .sortedWith(compareBy<Match> { it.start }.thenByDescending { it.end - it.start })
                 .toList()
 
-            val selected = mutableListOf<Match>()
+            // A seleção de intervalos e a deduplicação dos IDs compartilham
+            // uma única passagem. A ordem de ocorrência permanece intacta.
+            val seenIds = HashSet<String>()
+            val ids = ArrayList<String>()
+            var selectedEnd = -1
             for (match in matches) {
-                // Matches are ordered by start; accepted matches never overlap.
-                // Only the most recent accepted interval can conflict.
-                if (selected.lastOrNull()?.end?.let { match.start < it } != true) {
-                    selected += match
+                if (match.start < selectedEnd) continue
+                selectedEnd = match.end
+                if (seenIds.add(match.candidate.targetId)) {
+                    ids.add(match.candidate.targetId)
                 }
-            }
-
-            // Preservar a ordem e eliminar arestas repetidas numa única passagem.
-            val seenIds = HashSet<String>(selected.size)
-            val ids = selected.mapNotNull { match ->
-                match.candidate.targetId.takeIf { seenIds.add(it) }
             }
 
             if (ids.isNotEmpty()) return Resolution(ids)
