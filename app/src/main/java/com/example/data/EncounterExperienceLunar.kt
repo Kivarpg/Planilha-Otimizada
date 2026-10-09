@@ -235,7 +235,7 @@ internal object EncounterExperienceLunar {
         val ramos = (if (ataqueEscolhido != null) {
             listOf(ataqueEscolhido, "Vigor") + indice.ordemAtributos
         } else indice.ordemAtributos).distinct().filter {
-            ataqueEscolhido == null || it != ataqueDescartado
+            ataqueEscolhido == null || !it.equals(ataqueDescartado, ignoreCase = true)
         }
         val arvoresAtivas = ramos.take(3).toMutableList()
         if (ramos.isEmpty()) return ResultadoCompraCharmsLunar(
@@ -244,7 +244,7 @@ internal object EncounterExperienceLunar {
         )
 
         fun comprarBloco(atributoRamo: String): Boolean {
-            if (atributoRamo == ataqueDescartado) return false
+            if (ataqueDescartado != null && atributoRamo.equals(ataqueDescartado, ignoreCase = true)) return false
             var progresso = false
             // A chave da categoria nao muda durante as tentativas deste bloco.
             val chaveCategoriaRamo = atributoRamo.lowercase()
