@@ -28,7 +28,7 @@ class NpcSaveCorruptedException(message: String, cause: Throwable? = null) : Exc
  */
 object NpcEncontroSchema {
     const val LEGACY_VERSION = 1
-    const val CURRENT_VERSION = 5
+    const val CURRENT_VERSION = 6
 }
 
 /** Migra somente a representação JSON. Nunca altera regras de construção. */
@@ -75,6 +75,13 @@ private object NpcEncontroMigrationRegistry {
                     version = 5
                     migrated.put("schemaVersion", version)
                     if (!migrated.has("focoProgressaoExplicito")) migrated.put("focoProgressaoExplicito", JSONObject.NULL)
+                }
+                5 -> {
+                    // v5 -> v6: a arvore ofensiva Lunar so pode ser conhecida
+                    // com certeza para NPCs gerados na versao nova.
+                    version = 6
+                    migrated.put("schemaVersion", version)
+                    if (!migrated.has("lunarAtaqueEscolhido")) migrated.put("lunarAtaqueEscolhido", JSONObject.NULL)
                 }
                 else -> throw NpcSaveCorruptedException("Não existe migrador para schemaVersion $version")
             }
@@ -145,6 +152,7 @@ object NpcEncontroJsonCodec {
         obj.put("essencia", npc.essencia)
         obj.put("limite", npc.limite)
         obj.put("focoProgressaoExplicito", npc.focoProgressaoExplicito ?: JSONObject.NULL)
+        obj.put("lunarAtaqueEscolhido", npc.lunarAtaqueEscolhido ?: JSONObject.NULL)
         obj.put("idioma", npc.idioma)
         obj.put("formaEspiritual", npc.formaEspiritual)
         obj.put("formaEspiritualSecundaria", npc.formaEspiritualSecundaria)
@@ -360,6 +368,7 @@ object NpcEncontroJsonCodec {
                 essencia = obj.optInt("essencia", 1),
                 limite = obj.optString("limite", ""),
                 focoProgressaoExplicito = if (obj.isNull("focoProgressaoExplicito")) null else obj.optString("focoProgressaoExplicito").ifBlank { null },
+                lunarAtaqueEscolhido = obj.optString("lunarAtaqueEscolhido", "").takeIf { it == "Força" || it == "Destreza" },
                 idioma = obj.optString("idioma", ""),
                 formaEspiritual = obj.optString("formaEspiritual", ""),
                 formaEspiritualSecundaria = obj.optString("formaEspiritualSecundaria", ""),
