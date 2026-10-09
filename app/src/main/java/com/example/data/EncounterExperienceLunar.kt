@@ -154,7 +154,7 @@ internal object EncounterExperienceLunar {
         val routeContext = LunarCharmArchetypePolicy.prepare(catalogo, traits)
         val ordemAtributosUnica = (ordemAtributos + EncounterGenerationRules.ALL_ATTRIBUTES + "Universal")
             .filter { it.isNotBlank() }
-            .distinct()
+            .distinctBy { it.lowercase() }
         return IndiceXpLunar(
             ordemAtributos = ordemAtributosUnica,
             routeContext = routeContext,
