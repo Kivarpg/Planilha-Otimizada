@@ -1067,7 +1067,7 @@ fun NpcEncontroCard(
             ) {
                 lazy { viewModel.feiticosDisponiveisNpcEncontro(npc.id) }
             }
-            val feiticosDisponiveis = if (podeGerenciarFeiticoInicial && feiticosExpandidos) {
+            val feiticosDisponiveis = if (podeGerenciarFeiticoInicial && (feiticosExpandidos || gerenciarFeiticos)) {
                 consultarFeiticosDisponiveis.value
             } else emptyList()
             if (npc.feiticos.isNotEmpty() || podeGerenciarFeiticoInicial) {
