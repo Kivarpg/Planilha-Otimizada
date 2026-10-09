@@ -1,19 +1,11 @@
-# Compilação somente por autorização explícita: dispatch manual ou alteração do arquivo de autorização.
+# Compilação somente por acionamento manual explícito.
 # Alterações comuns de código NÃO iniciam compilação.
 name: Build APK
-# Nome canônico da compilação autorizada.
-run-name: ${{ github.event_name == 'push' && github.event.head_commit.message || format('Exalted.{0}', inputs.version) }}
+# Nome da execução; a versão canônica vem de settings.gradle.kts.
+run-name: Build APK (versão do projeto)
 
 on:
-  push:
-    paths:
-      - ".github/build-authorization.txt"
   workflow_dispatch:
-    inputs:
-      version:
-        description: "Número da versão (ex.: 797)"
-        required: true
-        type: string
 
 concurrency:
   group: build-${{ github.ref }}
@@ -51,13 +43,7 @@ jobs:
           set -euo pipefail
           project_name="$(sed -n 's/^rootProject\.name = "\(Exalted\.[0-9][0-9]*\)"$/\1/p' settings.gradle.kts)"
           test -n "$project_name"
-          if [ "${{ github.event_name }}" = "push" ]; then
-            requested_name="$(head -n 1 .github/build-authorization.txt | tr -d '\r')"
-            test "${{ github.event.head_commit.message }}" = "$requested_name" || { echo "::error::Commit de autorização não corresponde ao nome da versão"; exit 1; }
-          else
-            requested_name="Exalted.${{ inputs.version }}"
-          fi
-          test "$project_name" = "$requested_name" || { echo "::error::Versão informada não corresponde ao projeto: $project_name"; exit 1; }
+          echo "Versão solicitada automaticamente: $project_name"
           grep -Fq 'val exaltedProjectName = rootProject.name' app/build.gradle.kts
           grep -Fq 'targetApk.set(layout.buildDirectory.file("outputs/apk/release/$exaltedProjectName.apk"))' app/build.gradle.kts
           grep -Fq 'versionCode = exaltedVersionNumber' app/build.gradle.kts
