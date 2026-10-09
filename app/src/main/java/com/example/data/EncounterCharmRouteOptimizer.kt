@@ -201,7 +201,11 @@ object EncounterCharmRouteOptimizer {
         monotonicEligibility: Boolean = false,
         monotonicAffectedNames: ((D, Set<String>, Map<String, Int>, Map<String, Int>) -> Set<String>)? = null,
         maxWorkUnits: Int = DEFAULT_MAX_WORK_UNITS,
-        repeatableOnlyAtRoot: Boolean = false
+        repeatableOnlyAtRoot: Boolean = false,
+        /** Limite total de aquisições para cada Encanto repetível; null mantém o modo conservador. */
+        repeatableAcquisitionLimit: ((D) -> Int)? = null,
+        /** Aquisições reais já efetuadas antes de iniciar a simulação. */
+        initialAcquisitionCounts: Map<String, Int> = emptyMap()
     ):D? {
         if(candidatos.isEmpty()) return null
         metrics?.recordOptimizerCall()
@@ -505,8 +509,16 @@ object EncounterCharmRouteOptimizer {
                     if (candidateName !in eligibleNamesForState) continue
                     // Limita compras repetidas na projeção sem bloquear uma
                     // compra legítima no estado real (primeiro nível).
-                    if (repeatableOnlyAtRoot && level > 0 &&
-                        permiteAquisicaoRepetida(candidate)) continue
+                    if (permiteAquisicaoRepetida(candidate)) {
+                        val limit = repeatableAcquisitionLimit?.invoke(candidate)
+                        if (limit != null) {
+                            val acquired = (initialAcquisitionCounts[candidateName] ?: 0) +
+                                (state.compactKey.repeatedAcquisitions[candidateName] ?: 0)
+                            if (acquired >= limit) continue
+                        } else if (repeatableOnlyAtRoot && level > 0) {
+                            continue
+                        }
+                    }
                     if (!consumeWork()) continue
                     // O estado pós-aquisição era montado uma vez para calcular
                     // marginalUnlocks e novamente ao expandir o beam. Ele é
