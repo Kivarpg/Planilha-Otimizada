@@ -37,6 +37,34 @@ class LunarEncounterGeneratorTest {
     }
 
     @Test
+    fun `lunar fisico nao valoriza encanto alto com prerequisito inacessivel`() {
+        fun encanto(nome: String, atributo: String, essencia: Int, requisito: String) =
+            EncantoLunarDefinition(
+                id = nome, atributo = atributo, subdivisao = null,
+                nome = nome, nomeIngles = "", custo = "1",
+                minsTexto = "$atributo 3, Essência $essencia",
+                minAtributo = 3, minEssencia = essencia,
+                tipo = "Reflexivo", palavrasChave = "", duracao = "",
+                preRequisitos = requisito, descricao = ""
+            )
+        val catalogo = listOf(
+            encanto("Forca bloqueada", "Força", 5, "Encanto inexistente"),
+            encanto("Destreza inicial", "Destreza", 1, "Nenhum"),
+            encanto("Destreza avancada", "Destreza", 2, "Destreza inicial")
+        )
+        val resultado = LunarEncounterCharmSelection.selecionarEncantosIniciaisComRotas(
+            catalogo = catalogo,
+            attributes = mapOf("Força" to 4, "Destreza" to 4, "Vigor" to 3),
+            essencia = 1,
+            ordemAtributos = listOf("Força", "Destreza", "Vigor"),
+            quantidade = 0,
+            random = Random(42),
+            arquetipo = ArquetipoEncontro.FISICO
+        )
+        assertEquals("Destreza", resultado.ataqueEscolhido)
+    }
+
+    @Test
     fun `geracao Lunar fisica registra arvore ofensiva mesmo sem encantos disponiveis`() {
         repeat(EncounterTestSamples.count(30)) { seed ->
             val npc = EncounterGenerator.gerarLunar(
