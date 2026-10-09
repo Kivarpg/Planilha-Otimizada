@@ -203,4 +203,35 @@ class EncounterNpcPersistenceCoordinatorTest {
         assertEquals(null, coordinator.latestPending())
     }
 
+    @Test
+    fun retornoAoSnapshotAnteriorNaoPodeSerDescartadoDuranteOutraGravacao() = runBlocking {
+        val escritos = Collections.synchronizedList(mutableListOf<List<NpcEncontro>>())
+        val iniciouSegundo = kotlinx.coroutines.CompletableDeferred<Unit>()
+        val liberarSegundo = kotlinx.coroutines.CompletableDeferred<Unit>()
+        val coordinator = EncounterNpcPersistenceCoordinator(
+            write = { npcs ->
+                if (npcs.single().id == "segundo") {
+                    iniciouSegundo.complete(Unit)
+                    liberarSegundo.await()
+                }
+                escritos += npcs
+            },
+            onFailure = { throw it },
+        )
+        val primeiro = listOf(NpcEncontro(id = "primeiro"))
+        coordinator.submit(primeiro)
+        // Garante que o primeiro snapshot já foi persistido antes do segundo.
+        repeat(100) {
+            if (escritos.isNotEmpty()) return@repeat
+            delay(5)
+        }
+        assertEquals("primeiro", escritos.last().single().id)
+        coordinator.submit(listOf(NpcEncontro(id = "segundo")))
+        iniciouSegundo.await()
+        coordinator.submit(primeiro)
+        liberarSegundo.complete(Unit)
+        coordinator.close()
+        assertEquals("primeiro", escritos.last().single().id)
+    }
+
 }
