@@ -238,7 +238,9 @@ data class NpcEncontro(
     /** Exclusivo para Solares e Lunares: Falha de Virtude/Limite sorteada da tabela da Aba 2. */
     val limite: String = "",
     /** Foco explicitamente escolhido pelo usuário na criação. Automático/Nenhum permanecem null. */
-    val focoProgressaoExplicito: String? = null
+    val focoProgressaoExplicito: String? = null,
+    /** Arvore ofensiva escolhida na geracao Lunar fisica, independente do foco do usuario. */
+    val lunarAtaqueEscolhido: String? = null
 ) {
     // Pior penalidade de ferimento marcada na trilha — mesma lógica de
     // CharacterSheet.penalidadeFerimentoAtual(), reduz Aparar/Evasão/
