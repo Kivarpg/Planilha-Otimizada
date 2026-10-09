@@ -73,6 +73,21 @@ class LunarCharmArchetypePolicyTest {
     }
 
     @Test
+    fun `fechamento nominal exige todos os encantos intermediarios`() {
+        val catalogo = listOf(
+            charm(nome = "Raiz"),
+            charm(nome = "Outro"),
+            charm(nome = "Intermediario", pre = "Raiz"),
+            charm(nome = "Final", pre = "Intermediario, Outro")
+        )
+        val context = LunarCharmArchetypePolicy.prepare(catalogo, emptySet())
+        val definitions = catalogo.associateBy { it.nome }
+        assertEquals(1, context.nominallyUnlockableDependentsWithinLimits(
+            "Raiz", definitions.filterKeys { it != "Outro" }, mapOf("Destreza" to 3), 1
+        ))
+    }
+
+    @Test
     fun `rota arquetipo so existe quando forma satisfaz condicao`() {
         val def = charm(routes = listOf(
             LunarCharmArchetypeRoute("Percepção", "VISAO_NOTURNA", 3, "Nenhum")
