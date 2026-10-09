@@ -364,14 +364,13 @@ internal object LunarEncounterCharmSelection {
             foco = atributoFocoUsuario
         ).forEach { estrutural ->
             if (estrutural.nome !in nomesSelecionados &&
-                selecionados.size < limiteDeVagasAntesDaFeiticaria &&
-                elegivelSelecionado(estrutural)
+                selecionados.size < limiteDeVagasAntesDaFeiticaria
             ) {
-                val rota = requireNotNull(rotaElegivel(estrutural, atributoFocoUsuario)) {
-                    "Encanto estrutural Lunar sem rota de Arquétipo elegível: ${estrutural.nome}"
+                val rota = rotaElegivel(estrutural, atributoFocoUsuario)
+                if (rota != null) {
+                    selecionados += estrutural
+                    registrar(estrutural, atributoFocoUsuario, rota)
                 }
-                selecionados += estrutural
-                registrar(estrutural, atributoFocoUsuario, rota)
             }
         }
 
