@@ -295,8 +295,14 @@ object EncounterCharmRouteOptimizer {
         val legacyEligibilityCache = eligibilityMemo
         val compactCache = compactEligibilityMemo ?: if (eligibilityMemo == null) HashMap() else null
 
-        fun eligibleNames(selecionados:Set<String>,contagens:Map<String,Int>):Set<String> {
-            val compactKey = compactCache?.let { prepared.compactKey(selecionados, contagens) }
+        fun eligibleNames(
+            selecionados:Set<String>,
+            contagens:Map<String,Int>,
+            stateKey:CompactEligibilityKey? = null
+        ):Set<String> {
+            // A chave incremental carrega a multiplicidade de Encantos repetidos.
+            // Reconstruí-la apenas com nomes e categorias apagaria esse histórico.
+            val compactKey = compactCache?.let { stateKey ?: prepared.compactKey(selecionados, contagens) }
             val legacyKey = if (legacyEligibilityCache != null) EligibilityKey(selecionados, contagens) else null
             (compactKey?.let { compactCache[it] } ?: legacyKey?.let { key -> legacyEligibilityCache?.get(key) })?.let {
                 metrics?.recordEligibilityCacheHit()
@@ -484,7 +490,7 @@ object EncounterCharmRouteOptimizer {
                 // Primeiro passo respeita a shortlist do chamador; passos futuros
                 // examinam o catálogo completo e deixam a legalidade filtrar.
                 val pool=if(state.primeiro==null) candidatos else catalogoCompleto
-                val eligibleNamesForState = eligibleNames(state.selecionados,state.contagens)
+                val eligibleNamesForState = eligibleNames(state.selecionados,state.contagens,state.compactKey)
                 data class CandidateEvaluation<D>(
                     val candidate:D,
                     val gain:Int,
