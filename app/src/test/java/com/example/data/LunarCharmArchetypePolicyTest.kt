@@ -30,6 +30,10 @@ class LunarCharmArchetypePolicyTest {
         assertEquals(1, context.directCharmDependentCount("Ramo A"))
         assertEquals(0, context.directCharmDependentCount("Folha"))
         assertEquals(0, context.directCharmDependentCount("Inexistente"))
+        assertEquals(3, context.transitiveCharmDependentCount("Raiz"))
+        assertEquals(1, context.transitiveCharmDependentCount("Ramo A"))
+        assertEquals(0, context.transitiveCharmDependentCount("Folha"))
+        assertEquals(0, context.transitiveCharmDependentCount("Inexistente"))
     }
 
     @Test
