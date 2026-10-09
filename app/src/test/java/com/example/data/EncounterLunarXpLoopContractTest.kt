@@ -144,7 +144,9 @@ class EncounterLunarXpLoopContractTest {
     fun `lunar physical progression ranks deeper trees and invalidates chimera cache`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         assertTrue(source.contains("listOf(\"Vigor\", ataqueEscolhido) + indice.ordemAtributos"))
-        assertTrue(source.contains("def.nome to routeContextAtual.transitiveCharmDependentCount(def.nome)"))
+        assertTrue(source.contains("alcancePorEncanto.getOrPut(def.nome)"))
+        assertTrue(source.contains("routeContextAtual.transitiveCharmDependentCount(def.nome)"))
+        assertTrue(source.contains("alcancePorEncanto.clear()"))
         assertTrue(source.contains("val candidatosPorRamo = mutableMapOf"))
         assertTrue(source.contains("if (ataqueEscolhido == null) return@getOrPut encantos"))
         assertTrue(source.contains("candidatosPorRamo.clear()"))
