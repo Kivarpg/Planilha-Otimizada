@@ -215,10 +215,13 @@ internal object EncounterExperienceLunar {
         // A rota já adquirida é autoritativa; sem ela, usar a prioridade do NPC.
         val ofensivos = listOf("Força", "Destreza")
         val ataqueEscolhido = if (npc.arquetipo == com.example.model.ArquetipoEncontro.FISICO) {
-            ofensivos.maxWithOrNull(
-                compareBy<String> { categoriasSelecionadas[it.lowercase()] ?: 0 }
-                    .thenBy { if (it in indice.ordemAtributos) -indice.ordemAtributos.indexOf(it) else Int.MIN_VALUE }
-            )
+            // O foco explícito ofensivo é autoritativo mesmo quando a árvore
+            // ainda não possui Encantos; a contagem só desempata o automático.
+            npc.focoProgressaoExplicito?.takeIf { it in ofensivos }
+                ?: ofensivos.maxWithOrNull(
+                    compareBy<String> { categoriasSelecionadas[it.lowercase()] ?: 0 }
+                        .thenBy { if (it in indice.ordemAtributos) -indice.ordemAtributos.indexOf(it) else Int.MIN_VALUE }
+                )
         } else null
         val ataqueDescartado = ofensivos.firstOrNull { it != ataqueEscolhido }
         fun vigorPermitido(contagens: Map<String, Int>): Boolean =
