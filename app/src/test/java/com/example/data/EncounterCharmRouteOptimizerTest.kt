@@ -1394,4 +1394,34 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals(escolher(false), escolher(true))
     }
 
+    @Test
+    fun `repetivel no limite nao cria desbloqueio ficticio na rota incremental`() {
+        val (corpo, _) = encanto("Corpo de Touro", 8, habilidade = "Resistência")
+        val (alternativa, _) = encanto("Alternativa", 10, habilidade = "Briga")
+        val (dependente, _) = encanto("Dependente", 8, habilidade = "Resistência")
+        val catalogo = listOf(corpo, alternativa, dependente)
+        fun escolher(monotona: Boolean) = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(corpo, alternativa),
+            catalogoCompleto = catalogo,
+            nomesSelecionados = setOf(corpo.nome),
+            contagensCategorias = mapOf("resistência" to 1),
+            elegivel = { def, nomes, contagens ->
+                when (def.nome) {
+                    dependente.nome -> (contagens["resistência"] ?: 0) >= 2
+                    else -> def.nome !in nomes || def.nome == corpo.nome
+                }
+            },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { if (it.nome == alternativa.nome) 10 else 8 },
+            permiteAquisicaoRepetida = { it.nome == corpo.nome },
+            repeatableAcquisitionLimit = { 1 },
+            initialAcquisitionCounts = mapOf(corpo.nome to 1),
+            monotonicEligibility = monotona,
+            profundidade = 2
+        )?.nome
+        assertEquals(alternativa.nome, escolher(false))
+        assertEquals(escolher(false), escolher(true))
+    }
+
 }
