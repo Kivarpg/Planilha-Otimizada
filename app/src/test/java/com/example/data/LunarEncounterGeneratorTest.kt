@@ -288,6 +288,28 @@ class LunarEncounterGeneratorTest {
             EncounterExperienceLunar.reduceLunar(revertidoDois)
         )
 
+        val historicoAdicionado = segundo.historicoXpBatches.drop(npc.historicoXpBatches.size)
+        assertEquals(
+            "O primeiro lote deve estar persistido no histórico",
+            expandido.batchAplicado,
+            historicoAdicionado[0]
+        )
+        assertEquals(
+            "O segundo lote deve estar persistido no histórico",
+            segundaExpansao.batchAplicado,
+            historicoAdicionado[1]
+        )
+        assertEquals(
+            "Reverter um lote deve preservar exatamente o histórico anterior",
+            depois.historicoXpBatches,
+            revertidoUm.historicoXpBatches
+        )
+        assertEquals(
+            "Reverter ambos os lotes deve recuperar o histórico original",
+            npc.historicoXpBatches,
+            revertidoDois.historicoXpBatches
+        )
+
         val nomesNaOrdem = segundo.charms.map { it.nome }
         nomesNaOrdem.forEachIndexed { posicao, nome ->
             val indice = nome.removePrefix("Forca XP ").toIntOrNull() ?: return@forEachIndexed
