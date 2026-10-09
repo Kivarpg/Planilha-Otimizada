@@ -590,6 +590,10 @@ class EncounterProgressionRoadmapTest {
         val aplicado = EncounterExperienceService.aplicarPassoRoadmap(base, passo)
             ?: error("Passo Lunar deveria ser aplicavel")
         assertEquals(passo.lunarAtaqueEscolhido, aplicado.lunarAtaqueEscolhido)
+        assertEquals(direto.lunarAtaqueEscolhido, aplicado.lunarAtaqueEscolhido)
+        assertEquals(direto.xpAtual, aplicado.xpAtual)
+        assertEquals(direto.xpGastoTotal, aplicado.xpGastoTotal)
+        assertEquals(direto.charms, aplicado.charms)
         assertEquals(null, EncounterProgressionRoadmapService.proximo(
             base.copy(lunarAtaqueEscolhido = if (passo.lunarAtaqueEscolhido == "Força") "Destreza" else "Força"), planejado
         ))
