@@ -956,7 +956,11 @@ fun EncounterGeneratorTab(
                         }
                         androidx.compose.material3.Tab(
                             selected = selecionada,
-                            onClick = { onAbaSelecionadaChange(npc.id) },
+                            onClick = {
+                                // A seleção manual prevalece sobre a seleção adiada após gerar NPC.
+                                pendingSelectId = null
+                                onAbaSelecionadaChange(npc.id)
+                            },
                             selectedContentColor = npcTabTemplate.accentBright,
                             unselectedContentColor = npcTabTemplate.accent,
                             text = {
