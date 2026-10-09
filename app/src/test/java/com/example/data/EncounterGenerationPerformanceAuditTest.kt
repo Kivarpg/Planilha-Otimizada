@@ -27,6 +27,8 @@ class EncounterGenerationPerformanceAuditTest {
         val feiticos = FeiticariaCatalog(app).definitions
         val meritos = MeritosCatalog(app).definitions
         val estilos = ArtesMarciaisCatalog(app).definitions
+        val propriedadeFasesAnterior = System.getProperty("exalted.perf.lunar.phases")
+        System.setProperty("exalted.perf.lunar.phases", "true")
         val repeticoes = System.getProperty("exalted.perfSamples")?.toIntOrNull()
             ?.coerceIn(3, 100) ?: 5
         val tipos = listOf("Solar", "Sangue de Dragao", "Lunar")
@@ -75,6 +77,11 @@ class EncounterGenerationPerformanceAuditTest {
                         "max_ms=${amostras.last().second / 1_000_000.0} " +
                         "slowest_seed=${amostras.last().first}"
                 )
+        }
+        if (propriedadeFasesAnterior == null) {
+            System.clearProperty("exalted.perf.lunar.phases")
+        } else {
+            System.setProperty("exalted.perf.lunar.phases", propriedadeFasesAnterior)
         }
     }
 }
