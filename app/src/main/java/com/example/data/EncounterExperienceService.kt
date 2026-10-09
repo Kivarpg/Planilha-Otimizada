@@ -150,6 +150,8 @@ object EncounterExperienceService {
             motesPersonais = motesPersonaisPara(npc, essencia),
             motesPerifericos = motesPerifericosPara(npc, essencia),
             historicoXpBatches = historico,
+            formaEspiritualSecundaria = if (npc.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR) passo.formaEspiritualSecundariaLunar ?: npc.formaEspiritualSecundaria else npc.formaEspiritualSecundaria,
+            lunarArchetypeTraits = if (npc.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR) passo.lunarArchetypeTraits ?: npc.lunarArchetypeTraits else npc.lunarArchetypeTraits,
             lunarAtaqueEscolhido = if (npc.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR &&
                 npc.arquetipo == com.example.model.ArquetipoEncontro.FISICO)
                 passo.lunarAtaqueEscolhido ?: npc.lunarAtaqueEscolhido else npc.lunarAtaqueEscolhido
