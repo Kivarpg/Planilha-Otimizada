@@ -114,7 +114,7 @@ internal object CharmPrerequisiteReferenceParser {
             if (entry.name.isNotBlank() && idsByNormalizedName[entry.normalizedName]?.size == 1) {
                 addCandidate(entry.normalizedName, entry.id, entry.name)
             }
-            if (entry.id.isNotBlank() && entry.normalizedId != entry.normalizedName) {
+            if (entry.normalizedId != entry.normalizedName) {
                 addCandidate(entry.normalizedId, entry.id, entry.id)
             }
         }
