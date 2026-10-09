@@ -128,34 +128,41 @@ internal object LunarEncounterCharmSelection {
         var contagemAtributoMentalSelecionada = 0
         var contagemCorpoDeTouroSelecionada = 0
         var contagemUniversalSelecionada = 0
-        // Vigor pode liderar por até três aquisições em relação à única árvore ofensiva.
-        // Escolher uma única árvore ofensiva: maximizar a profundidade de
-        // Essência acessível e, em seguida, o volume de Encantos elegíveis.
-        // Pré-agregar o catálogo evita varreduras repetidas durante a escolha.
+        // Escolher somente uma arvore ofensiva. Projetar a cadeia de
+        // prerequisitos de cada candidata usando as mesmas rotas da compra,
+        // inclusive as alternativas habilitadas pela Forma Espiritual.
+        // A projecao considera Essencia futura (ate 5), mas nunca inventa
+        // aumentos de Atributo ou ignora prerequisitos.
         val ataqueEscolhido = if (arquetipo == ArquetipoEncontro.FISICO) {
             val foco = atributoFocoUsuario?.takeIf { it == "Força" || it == "Destreza" }
             foco ?: run {
-                val candidatosOfensivos = listOf("Força", "Destreza")
-                val disponiveisPorAtributo = catalogo.asSequence()
-                    .filter { def ->
-                        def.atributo in candidatosOfensivos &&
-                            def.minEssencia <= essencia &&
-                            (attributes[def.atributo] ?: 0) >= def.minAtributo
+                val ofensivos = listOf("Força", "Destreza")
+                val pontuacoes = ofensivos.associateWith { atributo ->
+                    val candidatos = catalogoPorAtributo[atributo].orEmpty()
+                    val adquiridos = mutableSetOf<String>()
+                    var maiorEssencia = 0
+                    // Cada passagem adquire ao menos um Encanto ou encerra.
+                    // Limitar pelo tamanho do catalogo impede ciclos.
+                    repeat(candidatos.size) {
+                        val proximo = candidatos.firstOrNull { def ->
+                            def.nome !in adquiridos &&
+                                LunarCharmArchetypePolicy.eligibleRoutes(
+                                    def, routeContext, attributes, 5, adquiridos, catalogo,
+                                    contagemCategoriaSelecionada = { categoria ->
+                                        if (categoria.equals(atributo, ignoreCase = true)) adquiridos.size else 0
+                                    }
+                                ).any { it.atributo == atributo }
+                        }
+                        if (proximo != null) {
+                            adquiridos += proximo.nome
+                            maiorEssencia = maxOf(maiorEssencia, proximo.minEssencia)
+                        }
                     }
-                    .groupBy { it.atributo }
-                val profundidadePorAtributo = candidatosOfensivos.associateWith { atributo ->
-                    val niveis = disponiveisPorAtributo[atributo].orEmpty()
-                        .mapTo(hashSetOf()) { it.minEssencia }
-                    var nivelContinuo = 0
-                    for (nivel in 1..essencia) {
-                        if (nivel !in niveis) break
-                        nivelContinuo = nivel
-                    }
-                    nivelContinuo
+                    maiorEssencia to adquiridos.size
                 }
-                candidatosOfensivos.maxWithOrNull(
-                    compareBy<String> { profundidadePorAtributo[it] ?: 0 }
-                        .thenBy { disponiveisPorAtributo[it].orEmpty().size }
+                ofensivos.maxWithOrNull(
+                    compareBy<String> { pontuacoes[it]?.first ?: 0 }
+                        .thenBy { pontuacoes[it]?.second ?: 0 }
                         .thenBy { attributes[it] ?: 0 }
                 )
             }
