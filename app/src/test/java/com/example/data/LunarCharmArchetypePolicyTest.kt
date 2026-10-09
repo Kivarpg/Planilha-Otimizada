@@ -173,6 +173,40 @@ class LunarCharmArchetypePolicyTest {
     }
 
     @Test
+    fun `cadeia de essencia elevada exige intermediarios antes do encanto final`() {
+        val raiz = charm(nome = "Raiz", atributo = "Vigor", min = 3)
+        val intermediario = charm(
+            nome = "Intermediario", atributo = "Vigor", min = 3, pre = "Raiz"
+        ).copy(minEssencia = 2)
+        val final = charm(
+            nome = "Final", atributo = "Vigor", min = 3, pre = "Intermediario"
+        ).copy(minEssencia = 4)
+        val catalogo = listOf(raiz, intermediario, final)
+        val context = LunarCharmArchetypePolicy.prepare(catalogo, emptySet())
+        val atributos = mapOf("Vigor" to 3)
+        val definitions = catalogo.associateBy { it.nome }
+
+        assertEquals(0, context.reachableDependentCountWithinLimits(
+            "Raiz", definitions, atributos, 1
+        ))
+        assertEquals(1, context.reachableDependentCountWithinLimits(
+            "Raiz", definitions, atributos, 2
+        ))
+        assertEquals(2, context.reachableDependentCountWithinLimits(
+            "Raiz", definitions, atributos, 4
+        ))
+        assertTrue(LunarCharmArchetypePolicy.eligibleRoutes(
+            intermediario, context, atributos, 2, setOf("Raiz"), catalogo
+        ).isNotEmpty())
+        assertTrue(LunarCharmArchetypePolicy.eligibleRoutes(
+            final, context, atributos, 4, setOf("Raiz"), catalogo
+        ).isEmpty())
+        assertTrue(LunarCharmArchetypePolicy.eligibleRoutes(
+            final, context, atributos, 4, setOf("Raiz", "Intermediario"), catalogo
+        ).isNotEmpty())
+    }
+
+    @Test
     fun `rota arquetipo so existe quando forma satisfaz condicao`() {
         val def = charm(routes = listOf(
             LunarCharmArchetypeRoute("Percepção", "VISAO_NOTURNA", 3, "Nenhum")
