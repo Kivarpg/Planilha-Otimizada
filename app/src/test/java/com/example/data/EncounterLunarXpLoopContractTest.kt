@@ -116,6 +116,17 @@ class EncounterLunarXpLoopContractTest {
     }
 
     @Test
+    fun `vigor blocked by three charm margin skips candidate evaluation`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        val block = source.substringAfter("fun comprarBloco(atributoRamo: String): Boolean {")
+            .substringBefore("val candidatoSelecionado = candidato ?: break")
+        val guard = block.indexOf("!vigorPermitido(categoriasSelecionadas)")
+        val scan = block.indexOf("for (def in candidatosOrdenados(atributoRamo))")
+        assertTrue(guard >= 0 && guard < scan)
+        assertTrue(block.contains("atributoRamo.equals(\"Vigor\", ignoreCase = true)"))
+    }
+
+    @Test
     fun `lunar advanced charms recheck essence and prerequisites after every purchase`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         val purchase = source.substringAfter("fun comprarBloco(atributoRamo: String): Boolean {")
