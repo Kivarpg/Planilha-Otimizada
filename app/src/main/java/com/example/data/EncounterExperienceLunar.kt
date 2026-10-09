@@ -256,15 +256,16 @@ internal object EncounterExperienceLunar {
         val alcanceAtualPorEncanto = mutableMapOf<String, Int>()
         // Só o arquétipo Físico utiliza a classificação por profundidade.
         // Evitar índices e varreduras de catálogo para Social e Mental.
-        val definicoesPorNome = if (ataqueEscolhido != null) {
-            // Descendentes exclusivos da árvore ofensiva descartada não
-            // representam progressão possível para este NPC.
-            catalogo.filter { def ->
-                routeContextAtual.routesFor(def).any { route ->
-                    !route.atributo.equals(ataqueDescartado, ignoreCase = true)
-                }
-            }.associateBy { it.nome }
-        } else emptyMap()
+        fun definicoesPermitidas(): Map<String, EncantoLunarDefinition> =
+            if (ataqueEscolhido != null) {
+                // Recalcular após Quimera: a Forma pode liberar novas rotas.
+                catalogo.filter { def ->
+                    routeContextAtual.routesFor(def).any { route ->
+                        !route.atributo.equals(ataqueDescartado, ignoreCase = true)
+                    }
+                }.associateBy { it.nome }
+            } else emptyMap()
+        var definicoesPorNome = definicoesPermitidas()
         val limiteEssenciaCatalogo = if (ataqueEscolhido != null) {
             catalogo.maxOfOrNull { it.minEssencia } ?: 0
         } else 0
@@ -387,6 +388,7 @@ internal object EncounterExperienceLunar {
                         candidatosPorRamo.clear() // novas rotas após Quimera
                         alcancePorEncanto.clear() // dependências podem mudar
                         alcanceAtualPorEncanto.clear()
+                        definicoesPorNome = definicoesPermitidas()
                     }
                 }
 
