@@ -904,15 +904,11 @@ fun EncounterGeneratorTab(
             // selecionada é rastreada pelo id do NPC (não pelo índice), pra
             // continuar apontando pro NPC certo mesmo depois de fechar
             // outra aba no meio da lista.
-            // PERFORMANCE: resolve NPC ativo e índice da aba em uma única
-            // passagem. O índice era recalculado separadamente a cada
-            // recomposição do ScrollableTabRow.
-            val selecaoAba = remember(npcsGerados, abaSelecionadaId) {
-                val indiceAtivo = npcsGerados.indexOfFirst { it.id == abaSelecionadaId }
-                    .takeIf { it >= 0 } ?: npcsGerados.lastIndex
-                npcsGerados[indiceAtivo] to indiceAtivo
+            // A interface usa apenas o NPC ativo, não o índice da aba.
+            // Evitar criar Pair e calcular índice desnecessariamente.
+            val npcAtivo = remember(npcsGerados, abaSelecionadaId) {
+                npcsGerados.firstOrNull { it.id == abaSelecionadaId } ?: npcsGerados.last()
             }
-            val npcAtivo = selecaoAba.first
 
             val rotulosAba = remember(npcsGerados) {
                 val nomeOcorrenciaAteAqui = mutableMapOf<String, Int>()
