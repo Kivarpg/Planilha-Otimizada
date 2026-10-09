@@ -445,6 +445,14 @@ class LunarEncounterGeneratorTest {
         assertEquals(npc.xpGastoTotal, revertido.xpGastoTotal)
         assertEquals(npc.historicoXpBatches, revertido.historicoXpBatches)
         assertEquals(npc.lunarAtaqueEscolhido, revertido.lunarAtaqueEscolhido)
+        assertEquals(npc.corpoDeTouroCount, revertido.corpoDeTouroCount)
+        assertEquals(npc.essencia, revertido.essencia)
+        assertEquals(npc.formaEspiritualSecundaria, revertido.formaEspiritualSecundaria)
+        assertEquals(npc.lunarArchetypeTraits, revertido.lunarArchetypeTraits)
+        assertEquals(
+            "A reversão integral deve ser idempotente quando não há lotes restantes",
+            revertido, EncounterExperienceLunar.reduceLunar(revertido)
+        )
     }
 
     @Test
