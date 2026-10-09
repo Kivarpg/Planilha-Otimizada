@@ -23,6 +23,38 @@ class EncounterGeneratorXpTest {
     )
 
     @Test
+    fun `lunar fisico compra somente arvore ofensiva escolhida e respeita prerequisitos`() {
+        fun encanto(nome: String, atributo: String, pre: String = "Nenhum") =
+            EncantoLunarDefinition(
+                id = nome, atributo = atributo, subdivisao = null, nome = nome, nomeIngles = "",
+                custo = "1", minsTexto = "$atributo 2, Essência 1",
+                minAtributo = 2, minEssencia = 1, tipo = "Reflexivo",
+                palavrasChave = "", duracao = "", preRequisitos = pre, descricao = ""
+            )
+        val catalogo = listOf(
+            encanto("Ataque Destreza Base", "Destreza"),
+            encanto("Ataque Destreza Avancado", "Destreza", "Ataque Destreza Base"),
+            encanto("Ataque Forca Proibido", "Força"),
+            encanto("Defesa Vigor", "Vigor")
+        )
+        val npc = npcBase().copy(
+            tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
+            lunarAtaqueEscolhido = "Destreza",
+            attributes = mapOf("Força" to 3, "Destreza" to 4, "Vigor" to 4),
+            xpAtual = 40
+        )
+        val evoluido = EncounterExperienceLunar.expandLunar(
+            npc, catalogo, listOf("Força", "Vigor", "Destreza")
+        )
+        assertTrue(evoluido.charms.any { it.nome == "Ataque Destreza Base" })
+        assertTrue(evoluido.charms.any { it.nome == "Ataque Destreza Avancado" })
+        assertTrue(evoluido.charms.none { it.nome == "Ataque Forca Proibido" })
+        val ataque = evoluido.charms.count { it.habilidadeVinculada == "Destreza" }
+        val vigor = evoluido.charms.count { it.habilidadeVinculada == "Vigor" }
+        assertTrue(vigor <= ataque + 3)
+    }
+
+    @Test
     fun `lunar preserva especializacao ofensiva entre lotes e reversao de XP`() {
         val original = npcBase().copy(
             tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
