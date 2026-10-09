@@ -18,6 +18,19 @@ class EncounterLunarXpLoopContractTest {
     }
 
     @Test
+    fun `reversao lunar preserva ataque e restaura saldo e forma espiritual`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        val rollback = source.substringAfter("fun reduceLunar(npc: NpcEncontro): NpcEncontro {")
+        assertTrue(rollback.contains("lunarAtaqueEscolhido = npc.lunarAtaqueEscolhido"))
+        assertTrue(rollback.contains("XP_POR_CHAMADA - ultimoLote.xpGasto"))
+        assertTrue(rollback.contains("xpGastoTotal = xpGastoTotalNovo"))
+        assertTrue(rollback.contains("historicoXpBatches = npc.historicoXpBatches.dropLast(1)"))
+        assertTrue(rollback.contains("val mantemQuimera = charmsRestantes.any"))
+        assertTrue(rollback.contains("formaEspiritualSecundaria = secundariaRevertida"))
+        assertTrue(rollback.contains("lunarArchetypeTraits = traitsRevertidos"))
+    }
+
+    @Test
     fun `xp lunar reconhece atributos favorecidos sem distinguir maiusculas`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         assertTrue(source.contains("atributoAquisicao.lowercase() in castaOuFavorecidos"))
