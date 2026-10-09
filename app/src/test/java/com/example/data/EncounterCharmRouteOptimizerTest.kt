@@ -840,4 +840,46 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals(mapOf(outro.nome to 1), repetiuOutro.repeatedAcquisitions)
     }
 
+    @Test
+    fun `limite de encanto repetivel impede compra quando quantidade real atingiu teto`() {
+        val (corpo, _) = encanto("Corpo de Touro", 10, habilidade = "Resistência")
+        val escolhido = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(corpo),
+            catalogoCompleto = listOf(corpo),
+            nomesSelecionados = setOf(corpo.nome),
+            contagensCategorias = mapOf("resistência" to 2),
+            elegivel = { _, _, _ -> true },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { 10 },
+            permiteAquisicaoRepetida = { true },
+            repeatableOnlyAtRoot = true,
+            repeatableAcquisitionLimit = { 2 },
+            initialAcquisitionCounts = mapOf(corpo.nome to 2),
+            profundidade = 2
+        )
+        assertEquals(null, escolhido)
+    }
+
+    @Test
+    fun `limite de encanto repetivel permite compra real abaixo do teto`() {
+        val (corpo, _) = encanto("Corpo de Touro", 10, habilidade = "Resistência")
+        val escolhido = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(corpo),
+            catalogoCompleto = listOf(corpo),
+            nomesSelecionados = setOf(corpo.nome),
+            contagensCategorias = mapOf("resistência" to 1),
+            elegivel = { _, _, _ -> true },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { 10 },
+            permiteAquisicaoRepetida = { true },
+            repeatableOnlyAtRoot = true,
+            repeatableAcquisitionLimit = { 2 },
+            initialAcquisitionCounts = mapOf(corpo.nome to 1),
+            profundidade = 2
+        )
+        assertEquals(corpo.nome, escolhido?.nome)
+    }
+
 }
