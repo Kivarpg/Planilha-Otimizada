@@ -982,4 +982,49 @@ class EncounterCharmRouteOptimizerTest {
         }
     }
 
+    @Test
+    fun `chave incremental preserva categorias externas e repeticoes sucessivas`() {
+        val (corpo, _) = encanto("Corpo de Touro", 10, habilidade = "Resistência")
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            listOf(corpo), { it.nome }, { it.habilidade }
+        )
+        val initial = prepared.compactKey(
+            setOf(corpo.nome, "Encanto Externo"),
+            mapOf("resistência" to 1, "categoria externa" to 2)
+        )
+        val first = prepared.compactKeyAfter(initial, corpo.nome, "Resistência")
+        val second = prepared.compactKeyAfter(first, corpo.nome, "Resistência")
+        assertEquals(mapOf(corpo.nome to 2), second.repeatedAcquisitions)
+        assertEquals(
+            prepared.compactKey(
+                setOf(corpo.nome, "Encanto Externo"),
+                mapOf("resistência" to 3, "categoria externa" to 2),
+                mapOf(corpo.nome to 2)
+            ),
+            second
+        )
+        assertEquals("a chave original nao pode sofrer mutacao", emptyMap<String, Int>(), initial.repeatedAcquisitions)
+        assertEquals(mapOf(corpo.nome to 1), first.repeatedAcquisitions)
+    }
+
+    @Test
+    fun `chave incremental registra repeticao de encanto externo ao catalogo`() {
+        val (interno, _) = encanto("Interno", 8)
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            listOf(interno), { it.nome }, { it.habilidade }
+        )
+        val initial = prepared.compactKey(
+            setOf("Externo"), mapOf("categoria externa" to 1)
+        )
+        val after = prepared.compactKeyAfter(initial, "Externo", "categoria externa")
+        assertEquals(
+            prepared.compactKey(
+                setOf("Externo"),
+                mapOf("categoria externa" to 2),
+                mapOf("Externo" to 1)
+            ),
+            after
+        )
+    }
+
 }
