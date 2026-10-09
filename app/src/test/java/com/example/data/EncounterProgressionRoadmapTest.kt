@@ -564,7 +564,7 @@ class EncounterProgressionRoadmapTest {
             ?: error("Passo Lunar deveria ser aplicavel")
         assertEquals(passo.lunarAtaqueEscolhido, aplicado.lunarAtaqueEscolhido)
         assertEquals(null, EncounterProgressionRoadmapService.proximo(
-            base.copy(lunarAtaqueEscolhido = "Destreza"), planejado
+            base.copy(lunarAtaqueEscolhido = if (passo.lunarAtaqueEscolhido == "Força") "Destreza" else "Força"), planejado
         ))
     }
 
