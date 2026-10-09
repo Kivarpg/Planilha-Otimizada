@@ -45,6 +45,26 @@ internal object LunarCharmArchetypePolicy {
             return visited.size - 1
         }
 
+        /** Maior Essência nominal entre descendentes; não implica rota adquirível. */
+        fun highestDependentEssence(charmName: String, essenceByCharm: Map<String, Int>): Int? {
+            val visited = mutableSetOf(charmName)
+            val pending = ArrayDeque<String>()
+            pending.addLast(charmName)
+            var highest: Int? = null
+            while (pending.isNotEmpty()) {
+                val current = pending.removeFirst()
+                for (dependent in dependentsByCharm[current].orEmpty()) {
+                    if (visited.add(dependent)) {
+                        essenceByCharm[dependent]?.let { essence ->
+                            highest = maxOf(highest ?: essence, essence)
+                        }
+                        pending.addLast(dependent)
+                    }
+                }
+            }
+            return highest
+        }
+
         /**
          * Delta exato para aquisição monotônica: somente Encantos cujo requisito
          * menciona o Encanto comprado, a categoria incrementada ou a contagem
