@@ -139,14 +139,14 @@ internal object LunarEncounterCharmSelection {
                 val ofensivos = listOf("Força", "Destreza")
                 val pontuacoes = ofensivos.associateWith { atributo ->
                     val candidatos = catalogoPorAtributo[atributo].orEmpty()
+                        .sortedWith(compareBy<EncantoLunarDefinition> { it.minEssencia }.thenBy { it.nome })
                     val adquiridos = mutableSetOf<String>()
                     var maiorEssencia = 0
                     // Cada passagem adquire ao menos um Encanto ou encerra.
                     // Limitar pelo tamanho do catalogo impede ciclos.
                     while (adquiridos.size < candidatos.size) {
-                        val proximo = candidatos.asSequence()
-                            .filter { it.nome !in adquiridos }
-                            .filter { def ->
+                        val proximo = candidatos.firstOrNull { def ->
+                            def.nome !in adquiridos &&
                                 LunarCharmArchetypePolicy.eligibleRoutes(
                                     def, routeContext, attributes, 5, adquiridos, catalogo,
                                     contagemCategoriaSelecionada = { categoria ->
@@ -155,8 +155,7 @@ internal object LunarEncounterCharmSelection {
                                             ?.count { it in adquiridos } ?: 0
                                     }
                                 ).any { it.atributo == atributo }
-                            }
-                            .minWithOrNull(compareBy<EncantoLunarDefinition> { it.minEssencia }.thenBy { it.nome })
+                        }
                         if (proximo == null) break
                         adquiridos += proximo.nome
                         maiorEssencia = maxOf(maiorEssencia, proximo.minEssencia)
