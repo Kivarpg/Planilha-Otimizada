@@ -1156,4 +1156,42 @@ class EncounterCharmRouteOptimizerTest {
         }
     }
 
+    @Test
+    fun `limite dois permite segunda compra simulada mas impede terceira`() {
+        val (corpo, _) = encanto("Corpo de Touro", 8, habilidade = "Resistência")
+        val (dependente, _) = encanto(
+            "Dependente", 8, preRequisitos = corpo.nome, habilidade = "Resistência"
+        )
+        for (monotona in listOf(false, true)) {
+            var chamadasNoTeto = 0
+            var chamadasAntesDoTeto = 0
+            val escolhido = EncounterCharmRouteOptimizer.escolher(
+                candidatos = listOf(corpo),
+                catalogoCompleto = listOf(corpo, dependente),
+                nomesSelecionados = emptySet(),
+                contagensCategorias = emptyMap(),
+                elegivel = { def, nomes, contagens ->
+                    if (def.nome == corpo.nome && corpo.nome in nomes) {
+                        if ((contagens["resistência"] ?: 0) >= 2) chamadasNoTeto++
+                        else chamadasAntesDoTeto++
+                    }
+                    def.nome == corpo.nome || corpo.nome in nomes
+                },
+                nome = { it.nome },
+                categoria = { it.habilidade },
+                custoXp = { 8 },
+                permiteAquisicaoRepetida = { it.nome == corpo.nome },
+                repeatableAcquisitionLimit = { 2 },
+                monotonicEligibility = monotona,
+                profundidade = 4,
+                beamWidth = 6
+            )
+            assertEquals("modo monotono=$monotona", corpo.nome, escolhido?.nome)
+            assertEquals("terceira compra deve ser bloqueada", 0, chamadasNoTeto)
+            if (!monotona) {
+                assertTrue("segunda compra deve continuar elegivel", chamadasAntesDoTeto > 0)
+            }
+        }
+    }
+
 }
