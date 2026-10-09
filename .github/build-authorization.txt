@@ -1,2 +1,2 @@
-Exalted.799
-Authorization: retry after test assertion fix
+Exalted.800
+Authorization: user requested continuation after Exalted.799 failure
