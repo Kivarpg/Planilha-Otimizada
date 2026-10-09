@@ -127,6 +127,18 @@ class EncounterLunarXpLoopContractTest {
     }
 
     @Test
+    fun `lunar filters impossible essence and attribute routes before eligibility`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        val purchase = source.substringAfter("fun comprarBloco(atributoRamo: String): Boolean {")
+            .substringBefore("val candidatoSelecionado = candidato ?: break")
+        val essenceGuard = purchase.indexOf("if (def.minEssencia > essenciaAtual) continue")
+        val routeGuard = purchase.indexOf("routeContextAtual.routesFor(def).none")
+        val eligibility = purchase.indexOf("LunarCharmArchetypePolicy.eligibleRoutes(")
+        assertTrue(essenceGuard >= 0 && routeGuard > essenceGuard && eligibility > routeGuard)
+        assertTrue(purchase.contains("route.minAtributo"))
+    }
+
+    @Test
     fun `lunar advanced charms recheck essence and prerequisites after every purchase`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         val purchase = source.substringAfter("fun comprarBloco(atributoRamo: String): Boolean {")
