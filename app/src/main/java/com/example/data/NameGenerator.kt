@@ -615,7 +615,29 @@ object NameGenerator {
         cultura: CulturaNome? = null,
         genero: GeneroNome? = null,
         random: Random = Random.Default
-    ): String = gerar(cultura ?: CULTURAS_PADRAO_SOLAR_LUNAR.random(random), genero, random)
+    ): String {
+        val escolhida = cultura ?: CULTURAS_PADRAO_SOLAR_LUNAR.random(random)
+        val escolhido = genero ?: GeneroNome.entries.random(random)
+        val quantidade = if (random.nextInt(100) < 60) 1 else random.nextInt(2, 4)
+        return sortearComponentes(escolhida, escolhido, quantidade, random).joinToString(" ")
+    }
+
+    // Nomes e sobrenomes pertencem ao mesmo conjunto para compor NPCs.
+    // Uma entrada composta (ex.: "Mac Aodha") permanece indivisível.
+    internal fun sortearComponentes(
+        cultura: CulturaNome,
+        genero: GeneroNome,
+        quantidade: Int,
+        random: Random,
+        excluidos: Collection<String> = emptyList()
+    ): List<String> {
+        val pool = (bancoPara(cultura, genero) + sobrenomes[cultura].orEmpty() +
+            if (cultura == CulturaNome.ISLANDESA) SOBRENOMES_ISLANDESA_BASE else emptyList())
+            .map { if (cultura == CulturaNome.CHINESA) normalizarReduplicacaoChinesa(it) else it }
+            .distinctBy { it.trim().lowercase() }
+            .filterNot { candidato -> excluidos.any { it.equals(candidato, ignoreCase = true) } }
+        return pool.shuffled(random).take(quantidade)
+    }
 
     // Para familias ja fornecidas (Casas do Imperio e Lookshy),
     // o prenome e sorteado diretamente, sem adicionar outro sobrenome.
@@ -747,18 +769,11 @@ object NomesSangueDeDragao {
         // Sorteia o genero apenas uma vez: ambos os prenomes devem usar
         // o mesmo banco quando o usuario nao especificou genero.
         val generoEscolhido = genero ?: GeneroNome.entries.random(random)
-        val prenome = NameGenerator.gerarPrenome(cultura, generoEscolhido, random)
-        if (random.nextInt(100) >= 5) return "$casa $prenome"
-
-        // A excecao de 5% permite um segundo prenome, nunca uma
-        // repeticao do primeiro nem outro sobrenome. A busca e limitada.
-        repeat(8) {
-            val segundo = NameGenerator.gerarPrenome(cultura, generoEscolhido, random)
-            if (!segundo.equals(prenome, ignoreCase = true)) {
-                return "$casa $prenome $segundo"
-            }
-        }
-        return "$casa $prenome"
+        val quantidade = if (random.nextInt(100) < 70) 1 else random.nextInt(2, 4)
+        val componentes = NameGenerator.sortearComponentes(
+            cultura, generoEscolhido, quantidade, random, listOf(casa)
+        )
+        return (listOf(casa) + componentes).joinToString(" ")
     }
 
     fun gerar(origem: OrigemNomeSangueDeDragao, genero: GeneroNome? = null, random: Random = Random.Default): String {
