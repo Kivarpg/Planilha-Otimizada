@@ -143,8 +143,8 @@ internal fun CharmListTreeDialog(
     // menor requisito disponível no grupo. A ordenação é lexicográfica:
     // primeiro Essência mínima e, em caso de empate, Habilidade/Atributo mínimo.
     // O nome/ID apenas torna o desempate final determinístico.
-    val rootCharm = remember(charms, canonicalPrerequisites) {
-        lowestRequirementCharm(charms, canonicalPrerequisites)
+    val rootCharm = remember(charms) {
+        lowestRequirementCharm(charms)
     }
 
     if (rootCharm == null) {
