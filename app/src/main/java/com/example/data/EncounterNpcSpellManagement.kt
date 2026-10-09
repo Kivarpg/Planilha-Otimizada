@@ -93,7 +93,9 @@ object EncounterNpcSpellManagement {
                     definicoesPorNome.putIfAbsent(EncantosSolaresCatalog.normalize(def.nome), def)
                 }
                 npc.feiticos.firstNotNullOfOrNull { existente ->
-                    definicoesPorNome[EncantosSolaresCatalog.normalize(existente.nome)]
+                    if (existente.circulo == "Terrestre") {
+                        definicoesPorNome[EncantosSolaresCatalog.normalize(existente.nome)]
+                    } else null
                 }
             }
             ?: terrestres.random(random)
