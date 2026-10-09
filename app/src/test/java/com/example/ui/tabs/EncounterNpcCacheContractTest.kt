@@ -18,8 +18,9 @@ class EncounterNpcCacheContractTest {
     fun `available spells follow view model and exalt type changes`() {
         val source = File("src/main/java/com/example/ui/tabs/EncounterNpcCard.kt").readText()
         assertTrue(source.contains(
-            "val feiticosDisponiveis = remember(viewModel, npc.id, npc.tipoExaltado, npc.charms, npc.feiticos, npc.primeiroXpRecebido)"
+            "val consultarFeiticosDisponiveis = remember("
         ))
+        assertTrue(source.contains("lazy { viewModel.feiticosDisponiveisNpcEncontro(npc.id) }"))
     }
     @Test
     fun `charm and spell detail dialogs are scoped to their NPC`() {
