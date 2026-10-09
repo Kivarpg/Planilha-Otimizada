@@ -346,6 +346,8 @@ internal object EncounterExperienceLunar {
             val custoRamo = custoXpEncantoLunar(castaOuFavorecidos, atributoRamo)
             // Esta restrição depende somente do ramo, não do Encanto.
             val ramoEhVigor = atributoRamo.equals("Vigor", ignoreCase = true)
+            // Os atributos não são alterados por compras de Encantos neste lote.
+            val limiteCorpoDeTouro = (attributesAtuais["Vigor"] ?: 0).coerceAtLeast(0)
             var tentativasBloco = 0
             while (
                 xpDisponivel >= custoRamo &&
@@ -358,7 +360,6 @@ internal object EncounterExperienceLunar {
                     !vigorPermitido(categoriasSelecionadas)
                 ) break
                 val essenciaAtual = EncounterExperienceService.essenciaPara(npc, xpGastoTotal)
-                val limiteCorpoDeTouro = (attributesAtuais["Vigor"] ?: 0).coerceAtLeast(0)
                 var candidato: EncantoLunarDefinition? = null
                 var rotaEscolhida: LunarCharmArchetypePolicy.AcquisitionRoute? = null
                 // O catálogo não muda durante esta tentativa: consultar uma vez
