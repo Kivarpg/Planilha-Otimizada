@@ -741,4 +741,23 @@ class EncounterCharmRouteOptimizerTest {
         assertTrue("mutacao in-place nao pode reutilizar catalogo preparado", rejeitado)
     }
 
+    @Test
+    fun `corpo de touro ja adquirido permanece elegivel na raiz`() {
+        val (corpo, _) = encanto("Corpo de Touro", 10, habilidade = "Resistência")
+        val escolhido = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(corpo),
+            catalogoCompleto = listOf(corpo),
+            nomesSelecionados = setOf(corpo.nome),
+            contagensCategorias = mapOf("resistência" to 1),
+            elegivel = { _, _, _ -> true },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { 10 },
+            permiteAquisicaoRepetida = { true },
+            repeatableOnlyAtRoot = true,
+            profundidade = 2
+        )
+        assertEquals("Corpo de Touro", escolhido?.nome)
+    }
+
 }
