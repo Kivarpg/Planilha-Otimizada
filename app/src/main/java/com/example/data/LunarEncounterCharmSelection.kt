@@ -143,7 +143,7 @@ internal object LunarEncounterCharmSelection {
                     var maiorEssencia = 0
                     // Cada passagem adquire ao menos um Encanto ou encerra.
                     // Limitar pelo tamanho do catalogo impede ciclos.
-                    repeat(candidatos.size) {
+                    while (adquiridos.size < candidatos.size) {
                         val proximo = candidatos.firstOrNull { def ->
                             def.nome !in adquiridos &&
                                 LunarCharmArchetypePolicy.eligibleRoutes(
@@ -153,10 +153,9 @@ internal object LunarEncounterCharmSelection {
                                     }
                                 ).any { it.atributo == atributo }
                         }
-                        if (proximo != null) {
-                            adquiridos += proximo.nome
-                            maiorEssencia = maxOf(maiorEssencia, proximo.minEssencia)
-                        }
+                        if (proximo == null) break
+                        adquiridos += proximo.nome
+                        maiorEssencia = maxOf(maiorEssencia, proximo.minEssencia)
                     }
                     maiorEssencia to adquiridos.size
                 }
