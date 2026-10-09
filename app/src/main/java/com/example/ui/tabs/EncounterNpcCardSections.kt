@@ -345,7 +345,6 @@ internal fun EditarEquipamentoNpcDialog(
 @Composable
 private fun NpcSpecialIndicator(
     marked: Boolean,
-    npc: NpcEncontro,
     visualTemplate: ExaltVisualTemplate,
     compact: Boolean = false
 ) {
@@ -408,7 +407,6 @@ Row(
                     if (npc.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR) {
                         NpcSpecialIndicator(
                             marked = nomeAtributo in atributosLunaresEspeciais,
-                            npc = npc,
                             visualTemplate = visualTemplate,
                             compact = compactPhone
                         )
@@ -485,7 +483,6 @@ run {
                         if (npc.tipoExaltado != com.example.model.TipoExaltadoEncontro.LUNAR) {
                             NpcSpecialIndicator(
                                 marked = k in habilidadesEspeciaisMarcadas,
-                                npc = npc,
                                 visualTemplate = visualTemplate
                             )
                         }
