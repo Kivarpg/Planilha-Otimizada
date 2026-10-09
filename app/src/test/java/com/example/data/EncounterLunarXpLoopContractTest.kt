@@ -69,7 +69,7 @@ class EncounterLunarXpLoopContractTest {
     @Test
     fun `xp lunar encontra gaveta de encantos com capitalizacao diferente`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
-        assertTrue(source.contains("encantosPorRamoNormalizado[atributoRamo.lowercase()]"))
+        assertTrue(source.contains("encantosPorRamoNormalizado[chaveRamo]"))
         assertTrue(source.contains("contexto.charmsByAttribute.forEach { (atributo, encantos) ->"))
         assertTrue(source.contains("porRamo.getOrPut(atributo.lowercase()) { mutableListOf() }.addAll(encantos)"))
         assertTrue(source.contains("encantos.filter { nomes.add(it.nome) }"))
