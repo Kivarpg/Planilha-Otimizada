@@ -69,7 +69,7 @@ class EncounterLunarXpLoopContractTest {
         assertTrue(source.contains("routeContextAtual.charmsByAttribute[atributoRamo]"))
         assertTrue(source.contains("it.key.equals(atributoRamo, ignoreCase = true)"))
         assertTrue(source.contains(".distinctBy { it.lowercase() }"))
-        assertTrue(source.contains("for (def in candidatosOrdenados(atributoRamo))"))
+        assertTrue(source.contains("for (def in candidatosOrdenados(atributoRamo, essenciaAtual))"))
     }
 
     @Test
@@ -131,12 +131,13 @@ class EncounterLunarXpLoopContractTest {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         val ranking = source.substringAfter("fun candidatosOrdenados(atributoRamo: String)")
             .substringBefore("fun comprarBloco(atributoRamo: String)")
-        assertTrue(ranking.contains("EncounterExperienceService.essenciaPara(npc, xpGastoTotal)"))
+        assertTrue(ranking.contains("val essenciaPontuacao = if (ataqueEscolhido != null) essenciaAtual else 0"))
         assertTrue(ranking.contains("essenciaPontuacaoCache != essenciaPontuacao"))
         assertTrue(ranking.contains("if (ataqueEscolhido != null && essenciaPontuacaoCache != essenciaPontuacao)"))
         assertTrue(ranking.contains("candidatosPorRamo.clear()"))
         assertTrue(ranking.contains("alcanceAtualPorEncanto.clear()"))
         assertTrue(ranking.contains("attributesAtuais, essenciaPontuacao"))
+        assertTrue(source.contains("fun candidatosOrdenados(atributoRamo: String, essenciaAtual: Int)"))
     }
 
     @Test
