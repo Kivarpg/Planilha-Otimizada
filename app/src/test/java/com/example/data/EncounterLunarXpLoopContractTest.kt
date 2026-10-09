@@ -66,10 +66,10 @@ class EncounterLunarXpLoopContractTest {
     @Test
     fun `xp lunar encontra gaveta de encantos com capitalizacao diferente`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
-        assertTrue(source.contains("routeContextAtual.charmsByAttribute[atributoRamo]"))
-        assertTrue(source.contains("it.key.equals(atributoRamo, ignoreCase = true)"))
+        assertTrue(source.contains("encantosPorRamoNormalizado[atributoRamo.lowercase()]"))
+        assertTrue(source.contains(".entries.associate { (atributo, encantos) -> atributo.lowercase() to encantos }"))
         assertTrue(source.contains(".distinctBy { it.lowercase() }"))
-        assertTrue(source.contains("for (def in candidatosOrdenados(atributoRamo, essenciaAtual))"))
+        assertTrue(source.contains("val candidatosDoRamo = candidatosOrdenados(atributoRamo, essenciaAtual)"))
     }
 
     @Test
@@ -121,9 +121,9 @@ class EncounterLunarXpLoopContractTest {
         val block = source.substringAfter("fun comprarBloco(atributoRamo: String): Boolean {")
             .substringBefore("val candidatoSelecionado = candidato ?: break")
         val guard = block.indexOf("!vigorPermitido(categoriasSelecionadas)")
-        val scan = block.indexOf("for (def in candidatosOrdenados(atributoRamo, essenciaAtual))")
+        val scan = block.indexOf("for (def in candidatosDoRamo)")
         assertTrue(guard >= 0 && guard < scan)
-        assertTrue(block.contains("atributoRamo.equals(\"Vigor\", ignoreCase = true)"))
+        assertTrue(block.contains("val ramoEhVigor = atributoRamo.equals(\"Vigor\", ignoreCase = true)"))
     }
 
     @Test
@@ -131,9 +131,9 @@ class EncounterLunarXpLoopContractTest {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         val ranking = source.substringAfter("fun candidatosOrdenados(atributoRamo: String, essenciaAtual: Int)")
             .substringBefore("fun comprarBloco(atributoRamo: String)")
-        assertTrue(ranking.contains("val essenciaPontuacao = if (ataqueEscolhido != null) essenciaAtual else 0"))
+        assertTrue(ranking.contains("essenciaAtual.coerceAtMost(limiteEssenciaCatalogo)"))
         assertTrue(ranking.contains("essenciaPontuacaoCache != essenciaPontuacao"))
-        assertTrue(ranking.contains("if (ataqueEscolhido != null && essenciaPontuacaoCache != essenciaPontuacao)"))
+        assertTrue(ranking.contains("if (classificarPorProfundidade && essenciaPontuacaoCache != essenciaPontuacao)"))
         assertTrue(ranking.contains("candidatosPorRamo.clear()"))
         assertTrue(ranking.contains("alcanceAtualPorEncanto.clear()"))
         assertTrue(ranking.contains("atributosParaPontuacao, essenciaPontuacao"))
@@ -146,7 +146,7 @@ class EncounterLunarXpLoopContractTest {
         val purchase = source.substringAfter("fun comprarBloco(atributoRamo: String): Boolean {")
             .substringBefore("val candidatoSelecionado = candidato ?: break")
         val essenceGuard = purchase.indexOf("if (def.minEssencia > essenciaAtual) continue")
-        val routeGuard = purchase.indexOf("routeContextAtual.routesFor(def).none")
+        val routeGuard = purchase.indexOf("rotaViavelPorRamo.getOrPut(chaveRota)")
         val eligibility = purchase.indexOf("LunarCharmArchetypePolicy.eligibleRoutes(")
         assertTrue(essenceGuard >= 0 && routeGuard > essenceGuard && eligibility > routeGuard)
         assertTrue(purchase.contains("route.minAtributo"))
@@ -159,7 +159,7 @@ class EncounterLunarXpLoopContractTest {
             .substringBefore("while (tentativas++ < 500")
         val essence = purchase.indexOf("val essenciaAtual = EncounterExperienceService.essenciaPara(npc, xpGastoTotal)")
         val eligible = purchase.indexOf("LunarCharmArchetypePolicy.eligibleRoutes(")
-        val spend = purchase.indexOf("xpGastoTotal += custoXp")
+        val spend = purchase.indexOf("xpGastoTotal += custoRamo")
         val acquired = purchase.indexOf("nomesSelecionados += candidatoSelecionado.nome")
         assertTrue(essence >= 0 && eligible > essence && spend > eligible && acquired > spend)
         assertTrue(purchase.contains("essenciaAtual, nomesSelecionados, catalogo"))
@@ -178,7 +178,7 @@ class EncounterLunarXpLoopContractTest {
         assertTrue(source.contains("compareByDescending<EncantoLunarDefinition> { alcanceAtualPorEncanto[it.nome] ?: 0 }"))
         assertTrue(source.contains("thenByDescending { alcancePorEncanto[it.nome] ?: 0 }"))
         assertTrue(source.contains("val candidatosPorRamo = mutableMapOf"))
-        assertTrue(source.contains("if (ataqueEscolhido == null) return@getOrPut encantos"))
+        assertTrue(source.contains("if (!classificarPorProfundidade) return@getOrPut encantos"))
         assertTrue(source.contains("if (ataqueEscolhido != null) {"))
         assertTrue(source.contains("catalogo.filter { def ->"))
         assertTrue(source.contains("var definicoesPorNome = definicoesPermitidas()"))
