@@ -217,7 +217,8 @@ internal object EncounterExperienceLunar {
         // O foco declarado prevalece; sem foco, a arvore ja iniciada prevalece.
         // Em empate, a prioridade original do NPC e estavel entre lotes.
         val ataqueEscolhido = if (npc.arquetipo == com.example.model.ArquetipoEncontro.FISICO) {
-            npc.focoProgressaoExplicito?.takeIf { it in ofensivos }
+            npc.lunarAtaqueEscolhido?.takeIf { it in ofensivos }
+                ?: npc.focoProgressaoExplicito?.takeIf { it in ofensivos }
                 ?: ofensivos.maxWithOrNull(
                     compareBy<String> { categoriasSelecionadas[it.lowercase()] ?: 0 }
                         .thenBy {
