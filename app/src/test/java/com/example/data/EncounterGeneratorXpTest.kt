@@ -23,6 +23,26 @@ class EncounterGeneratorXpTest {
     )
 
     @Test
+    fun `lunar preserva arvore ofensiva apos desfazer ultimo lote de XP`() {
+        val inicial = npcBase().copy(
+            tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
+            lunarAtaqueEscolhido = "Força",
+            attributes = mapOf("Força" to 4, "Destreza" to 3, "Vigor" to 3),
+            xpAtual = 20
+        )
+        val primeiro = EncounterExperienceLunar.expandLunar(
+            inicial, emptyList(), listOf("Destreza", "Força", "Vigor")
+        )
+        val segundo = EncounterExperienceLunar.expandLunar(
+            primeiro, emptyList(), listOf("Destreza", "Força", "Vigor")
+        )
+        val revertido = EncounterExperienceLunar.reduceLunar(segundo)
+        assertEquals("Força", revertido.lunarAtaqueEscolhido)
+        assertEquals(primeiro.historicoXpBatches, revertido.historicoXpBatches)
+        assertEquals(primeiro.xpAtual, revertido.xpAtual)
+    }
+
+    @Test
     fun `lunar social limpa especializacao fisica obsoleta ao receber XP`() {
         val convertido = npcBase().copy(
             tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
