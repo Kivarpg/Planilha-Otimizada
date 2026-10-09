@@ -307,19 +307,21 @@ internal object EncounterExperienceLunar {
                 if (!classificarPorProfundidade) return@getOrPut encantos
                 // Calcular alcance uma vez por Encanto, não a cada comparação
                 // do sort (que pode comparar o mesmo Encanto repetidamente).
+                // Quando a Essência atual já alcançou o teto do catálogo,
+                // os dois critérios de alcance são idênticos. Compartilhar
+                // o resultado evita uma segunda travessia dos descendentes.
+                val alcanceNoTeto = essenciaPontuacao >= limiteEssenciaCatalogo
                 encantos.forEach { def ->
-                    alcancePorEncanto.getOrPut(def.nome) {
+                    val alcanceMaximo = alcancePorEncanto.getOrPut(def.nome) {
                         // Contar somente descendentes cujos mínimos de
-                        // Essência e Atributo podem ser atingidos com a ficha
-                        // atual. Não confundir alcance nominal com rota válida.
+                        // Essência e Atributo podem ser atingidos com a ficha.
                         routeContextAtual.reachableDependentCountWithinLimits(
                             def.nome, definicoesPorNome, atributosParaPontuacao, limiteEssenciaCatalogo
                         )
                     }
-                }
-                encantos.forEach { def ->
                     alcanceAtualPorEncanto.getOrPut(def.nome) {
-                        routeContextAtual.reachableDependentCountWithinLimits(
+                        if (alcanceNoTeto) alcanceMaximo
+                        else routeContextAtual.reachableDependentCountWithinLimits(
                             def.nome, definicoesPorNome, atributosParaPontuacao, essenciaPontuacao
                         )
                     }
