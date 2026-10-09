@@ -29,7 +29,7 @@ class EncounterNpcPersistenceCoordinator(
     @Synchronized
     fun submit(npcs: List<NpcEncontro>) {
         if (closed) return
-        if (pending == npcs || lastPersisted == npcs) return
+        if (pending == npcs || (pending == null && inFlight == null && lastPersisted == npcs)) return
         pending = npcs.toList()
         if (running) return
         running = true
