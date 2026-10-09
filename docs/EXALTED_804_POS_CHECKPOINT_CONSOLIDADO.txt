@@ -1,0 +1,31 @@
+EXALTED — CHECKPOINT CONSOLIDADO APÓS 804
+Data: 2026-10-09
+Repositório: Kivarpg/Planilha-Otimizada
+Branch: final-audit-797
+Base de compilação confirmada: Exalted.804 (workflow 37924806512, sucesso)
+Último commit de código consolidado: 5d1411dbf375b83a9b0f5a7bc5bc62df4db03580
+
+ESCOPO CONSOLIDADO
+- Aba 11 — Encontros: preservar uma única árvore ofensiva Lunar (Força OU Destreza) e impedir aquisição da árvore oposta.
+- Limitar Encantos de Vigor à quantidade da árvore ofensiva escolhida + 3.
+- Limitar a aquisição inicial de Corpo de Touro para o arquétipo físico Lunar.
+- Preservar a árvore ofensiva ao longo de XP, reversão, serialização e planejamento.
+- Invalidar roadmaps incompatíveis após alteração do algoritmo (versão 7).
+- Corrigir propagação da Forma Espiritual secundária e dos traços Lunares nos passos planejados de XP, inclusive após Expressão da Alma da Quimera.
+- Ampliar testes de regressão para Força/Destreza, lotes repetidos, rollback e equivalência entre progressão direta e roadmap (XP, Encantos, histórico, Essência, Corpo de Touro, atributos e forma espiritual).
+
+ARQUIVOS PRINCIPAIS
+app/src/main/java/com/example/model/NpcEncontro.kt
+app/src/main/java/com/example/data/LunarEncounterCharmSelection.kt
+app/src/main/java/com/example/data/LunarEncounterGenerator.kt
+app/src/main/java/com/example/data/EncounterExperienceLunar.kt
+app/src/main/java/com/example/data/EncounterExperienceService.kt
+app/src/main/java/com/example/data/EncounterProgressionRoadmap.kt
+app/src/main/java/com/example/data/NpcEncontroJsonCodec.kt
+app/src/test/java/com/example/data/EncounterGeneratorXpTest.kt
+app/src/test/java/com/example/data/EncounterProgressionRoadmapTest.kt
+
+VALIDAÇÃO PENDENTE
+As mudanças após Exalted.804 ainda NÃO foram compiladas ou testadas no GitHub. É necessário validar a compilação, executar testes e confirmar especialmente o cenário Quimera no roadmap antes de declarar estabilidade.
+Não modificar .github/build-authorization.txt nem iniciar workflow sem autorização explícita do usuário.
+Este checkpoint é documental; preserva os commits e o código existente, sem squash nem alteração de versão.
