@@ -178,6 +178,10 @@ internal object EncounterExperienceSolar {
                         // individual de Corpo de Touro no estado do beam.
                         permiteAquisicaoRepetida = { it.nome == NOME_CORPO_DE_TOURO },
                         repeatableOnlyAtRoot = true,
+                        repeatableAcquisitionLimit = { def ->
+                            if (def.nome == NOME_CORPO_DE_TOURO) limiteCorpoDeTouro else 1
+                        },
+                        initialAcquisitionCounts = mapOf(NOME_CORPO_DE_TOURO to corpoDeTouro),
                         compactEligibilityMemo = elegibilidadeMemo,
                         preparedCatalog = catalogoPreparado
                     ) ?: break
