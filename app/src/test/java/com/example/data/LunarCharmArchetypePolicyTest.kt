@@ -173,6 +173,30 @@ class LunarCharmArchetypePolicyTest {
     }
 
     @Test
+    fun `encanto final com dois requisitos nao pode ser adquirido com apenas um`() {
+        val raiz = charm(nome = "Raiz")
+        val suporte = charm(nome = "Suporte")
+        val final = charm(nome = "Final Conjunto", pre = "Raiz, Suporte")
+            .copy(minEssencia = 3)
+        val catalogo = listOf(raiz, suporte, final)
+        val contexto = LunarCharmArchetypePolicy.prepare(catalogo, emptySet())
+        val atributos = mapOf("Destreza" to 3)
+
+        assertTrue(LunarCharmArchetypePolicy.eligibleRoutes(
+            final, contexto, atributos, 2, setOf("Raiz", "Suporte"), catalogo
+        ).isEmpty())
+        assertTrue(LunarCharmArchetypePolicy.eligibleRoutes(
+            final, contexto, atributos, 3, setOf("Raiz"), catalogo
+        ).isEmpty())
+        assertTrue(LunarCharmArchetypePolicy.eligibleRoutes(
+            final, contexto, atributos, 3, setOf("Suporte"), catalogo
+        ).isEmpty())
+        assertTrue(LunarCharmArchetypePolicy.eligibleRoutes(
+            final, contexto, atributos, 3, setOf("Raiz", "Suporte"), catalogo
+        ).isNotEmpty())
+    }
+
+    @Test
     fun `cadeia de essencia elevada exige intermediarios antes do encanto final`() {
         val raiz = charm(nome = "Raiz", atributo = "Vigor", min = 3)
         val intermediario = charm(
