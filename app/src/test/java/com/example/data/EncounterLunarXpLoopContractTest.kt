@@ -127,6 +127,18 @@ class EncounterLunarXpLoopContractTest {
     }
 
     @Test
+    fun `lunar refreshes ranking when essence rises within xp batch`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        val ranking = source.substringAfter("fun candidatosOrdenados(atributoRamo: String)")
+            .substringBefore("fun comprarBloco(atributoRamo: String)")
+        assertTrue(ranking.contains("EncounterExperienceService.essenciaPara(npc, xpGastoTotal)"))
+        assertTrue(ranking.contains("essenciaPontuacaoCache != essenciaPontuacao"))
+        assertTrue(ranking.contains("candidatosPorRamo.clear()"))
+        assertTrue(ranking.contains("alcanceAtualPorEncanto.clear()"))
+        assertTrue(ranking.contains("attributesAtuais, essenciaPontuacao"))
+    }
+
+    @Test
     fun `lunar filters impossible essence and attribute routes before eligibility`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         val purchase = source.substringAfter("fun comprarBloco(atributoRamo: String): Boolean {")
