@@ -149,7 +149,10 @@ object EncounterExperienceService {
             xpGastoTotal = xpGastoTotal, healthBoxes = health,
             motesPersonais = motesPersonaisPara(npc, essencia),
             motesPerifericos = motesPerifericosPara(npc, essencia),
-            historicoXpBatches = historico
+            historicoXpBatches = historico,
+            lunarAtaqueEscolhido = if (npc.tipoExaltado == com.example.model.TipoExaltadoEncontro.LUNAR &&
+                npc.arquetipo == com.example.model.ArquetipoEncontro.FISICO)
+                passo.lunarAtaqueEscolhido ?: npc.lunarAtaqueEscolhido else npc.lunarAtaqueEscolhido
         )
         return recalcularDerivados(atualizarAlertasValidacao(atualizado))
     }
