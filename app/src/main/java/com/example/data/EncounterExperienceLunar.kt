@@ -334,6 +334,8 @@ internal object EncounterExperienceLunar {
             // O custo do atributo é constante enquanto o lote é processado.
             // Evitar novas consultas a cada compra ou rota candidata.
             val custoRamo = custoXpEncantoLunar(castaOuFavorecidos, atributoRamo)
+            // Esta restrição depende somente do ramo, não do Encanto.
+            val ramoEhVigor = atributoRamo.equals("Vigor", ignoreCase = true)
             var tentativasBloco = 0
             while (
                 xpDisponivel >= custoRamo &&
@@ -343,8 +345,7 @@ internal object EncounterExperienceLunar {
                 // Se Vigor atingiu a margem de três Encantos acima do
                 // ataque, nenhum candidato desta gaveta pode ser comprado.
                 // Evitar varrer o catálogo e avaliar pré-requisitos à toa.
-                if (ataqueEscolhido != null &&
-                    atributoRamo.equals("Vigor", ignoreCase = true) &&
+                if (ataqueEscolhido != null && ramoEhVigor &&
                     !vigorPermitido(categoriasSelecionadas)
                 ) break
                 val essenciaAtual = EncounterExperienceService.essenciaPara(npc, xpGastoTotal)
@@ -354,6 +355,7 @@ internal object EncounterExperienceLunar {
                 // O catálogo não muda durante esta tentativa: consultar uma vez
                 // a lista de candidatos e o índice de rotas por Encanto.
                 val candidatosDoRamo = candidatosOrdenados(atributoRamo, essenciaAtual)
+                val vigorDisponivel = !ramoEhVigor || vigorPermitido(categoriasSelecionadas)
                 for (def in candidatosDoRamo) {
                     if (def.minEssencia > essenciaAtual) continue
                     if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
@@ -380,7 +382,7 @@ internal object EncounterExperienceLunar {
                     val rota = rotasElegiveis.firstOrNull { route ->
                         route.atributo.equals(atributoRamo, ignoreCase = true) &&
                             (ataqueEscolhido == null || !route.atributo.equals(ataqueDescartado, ignoreCase = true)) &&
-                            (!route.atributo.equals("Vigor", ignoreCase = true) || vigorPermitido(categoriasSelecionadas))
+                            vigorDisponivel
                     } ?: continue
                     candidato = def
                     rotaEscolhida = rota
