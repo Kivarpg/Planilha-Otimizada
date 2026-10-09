@@ -23,7 +23,8 @@ class EncounterLunarXpLoopContractTest {
     @Test
     fun `lunar xp filtra ramo ofensivo descartado antes de expandir arvores`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
-        assertTrue(source.contains("indice.ordemAtributos.filter { ataqueEscolhido == null || it != ataqueDescartado }"))
+        assertTrue(source.contains("listOf(ataqueEscolhido, \"Vigor\") + indice.ordemAtributos"))
+        assertTrue(source.contains("ataqueEscolhido == null || it != ataqueDescartado"))
         assertTrue(source.contains("if (atributoRamo == ataqueDescartado) return false"))
         assertTrue(source.contains("vigorPermitido(categoriasSelecionadas)"))
         assertTrue(source.contains("route.atributo.equals(ataqueDescartado, ignoreCase = true)"))
