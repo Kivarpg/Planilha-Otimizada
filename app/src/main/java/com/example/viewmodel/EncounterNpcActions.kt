@@ -870,7 +870,9 @@ internal class EncounterNpcActions(
                     // pesado para toda criação de NPC, especialmente em geração
                     // em massa.
                     val coreInicio = System.nanoTime()
-                    val npc = block()
+                    val npc = com.example.data.EncounterNpcSpellManagement.garantirInicialNaCriacao(
+                        block(), feiticariaCatalog.definitions, kotlin.random.Random.Default
+                    )
                     generationCoreNanos = System.nanoTime() - coreInicio
 
                     // Portão único pós-construção: mede separadamente a auditoria
