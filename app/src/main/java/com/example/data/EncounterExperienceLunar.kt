@@ -234,7 +234,7 @@ internal object EncounterExperienceLunar {
         // O restante segue a prioridade original e nao reintroduz o ataque descartado.
         val ramos = (if (ataqueEscolhido != null) {
             listOf(ataqueEscolhido, "Vigor") + indice.ordemAtributos
-        } else indice.ordemAtributos).distinct().filter {
+        } else indice.ordemAtributos).distinctBy { it.lowercase() }.filter {
             ataqueEscolhido == null || !it.equals(ataqueDescartado, ignoreCase = true)
         }
         val arvoresAtivas = ramos.take(3).toMutableList()
@@ -328,7 +328,7 @@ internal object EncounterExperienceLunar {
                 if (comprarBloco(atributo)) progressoRodada = true
             }
             if (progressoRodada) continue
-            val proximaArvore = ramos.firstOrNull { it !in arvoresAtivas } ?: break
+            val proximaArvore = ramos.firstOrNull { ramo -> arvoresAtivas.none { it.equals(ramo, ignoreCase = true) } } ?: break
             arvoresAtivas += proximaArvore
             comprarBloco(proximaArvore)
         }
