@@ -3,13 +3,13 @@ package com.example.ui
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -70,15 +70,8 @@ internal fun ExaltedPanoramaBackground(
                 .offset { IntOffset((-travelPx * progress).roundToInt(), 0) }
                 .align(Alignment.TopStart)
         )
-        // Contraste leve e uniforme, preservando a visibilidade do panorama.
-        Box(Modifier.fillMaxSize().graphicsLayer { alpha = 0.22f }
-            .then(Modifier)) {
-            androidx.compose.foundation.layout.Box(
-                Modifier.fillMaxSize().then(
-                    Modifier
-                )
-            )
-        }
+        // Camada de contraste para preservar a leitura dos controles.
+        Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.24f)))
         content()
     }
 }
