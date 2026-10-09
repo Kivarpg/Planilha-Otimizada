@@ -410,6 +410,14 @@ class LunarEncounterGeneratorTest {
         assertTrue(evoluido.charms.none {
             it.habilidadeVinculada.equals("Destreza", ignoreCase = true)
         })
+        assertEquals("Força", evoluido.lunarAtaqueEscolhido)
+        assertEquals(12, evoluido.historicoXpBatches.size - npc.historicoXpBatches.size)
+        assertEquals(
+            npc.xpAtual + 12 * EncounterExperienceService.XP_POR_CHAMADA,
+            evoluido.xpAtual + (evoluido.xpGastoTotal - npc.xpGastoTotal)
+        )
+        assertEquals(npc.attributes, evoluido.attributes)
+        assertTrue("O XP disponível deve permanecer não negativo", evoluido.xpAtual >= 0)
     }
 
     @Test
