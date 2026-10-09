@@ -254,9 +254,14 @@ internal object EncounterExperienceLunar {
         val rotaViavelPorRamo = mutableMapOf<Pair<String, String>, Boolean>()
         // Normalizar as chaves uma vez: o catálogo é indexado por atributo
         // e a procura não deve percorrer todas as gavetas a cada mudança de Essência.
-        var encantosPorRamoNormalizado = routeContextAtual.charmsByAttribute
-            .entries.groupBy({ (atributo, _) -> atributo.lowercase() }, { (_, encantos) -> encantos })
-                            .mapValues { (_, grupos) -> grupos.flatten().distinctBy { it.nome } }
+        fun normalizarEncantosPorRamo(contexto: LunarCharmArchetypePolicy.RouteContext): Map<String, List<EncantoLunarDefinition>> {
+            val porRamo = linkedMapOf<String, MutableList<EncantoLunarDefinition>>()
+            contexto.charmsByAttribute.forEach { (atributo, encantos) ->
+                porRamo.getOrPut(atributo.lowercase()) { mutableListOf() }.addAll(encantos)
+            }
+            return porRamo.mapValues { (_, encantos) -> encantos.distinctBy { it.nome } }
+        }
+        var encantosPorRamoNormalizado = normalizarEncantosPorRamo(routeContextAtual)
         // O mesmo Encanto pode aparecer em várias gavetas por rotas de
         // Arquétipo. Compartilhar a pontuação evita percorrer sua árvore
         // de descendentes novamente em cada gaveta.
@@ -421,9 +426,7 @@ internal object EncounterExperienceLunar {
                         spiritTraitsEfetivos = spiritTraitsEfetivos +
                             LunarSpiritShapeArchetypeTraits.forAnimal(secundaria)
                         routeContextAtual = LunarCharmArchetypePolicy.prepare(catalogo, spiritTraitsEfetivos)
-                        encantosPorRamoNormalizado = routeContextAtual.charmsByAttribute
-                            .entries.groupBy({ (atributo, _) -> atributo.lowercase() }, { (_, encantos) -> encantos })
-                            .mapValues { (_, grupos) -> grupos.flatten().distinctBy { it.nome } }
+                        encantosPorRamoNormalizado = normalizarEncantosPorRamo(routeContextAtual)
                         candidatosPorRamo.clear() // novas rotas após Quimera
                         rotaViavelPorRamo.clear() // Quimera pode abrir rotas antes inviáveis
                         alcancePorEncanto.clear() // dependências podem mudar
