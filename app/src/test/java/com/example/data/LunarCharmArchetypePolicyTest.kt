@@ -94,6 +94,35 @@ class LunarCharmArchetypePolicyTest {
     }
 
     @Test
+    fun `pontuacao lunar nao aproveita rota ofensiva descartada`() {
+        val raiz = charm(nome = "Raiz", atributo = "Vigor")
+        val dependente = charm(
+            nome = "Dependente", atributo = "Destreza", min = 4, pre = "Raiz",
+            routes = listOf(LunarCharmArchetypeRoute("Força", "VISAO_NOTURNA", 3, "Raiz"))
+        )
+        val catalogo = listOf(raiz, dependente)
+        val context = LunarCharmArchetypePolicy.prepare(
+            catalogo, setOf(LunarSpiritTrait.VISAO_NOTURNA)
+        )
+        val definitions = catalogo.associateBy { it.nome }
+        val atributos = mapOf("Vigor" to 3, "Destreza" to 2, "Força" to 4)
+        assertEquals(1, context.reachableDependentCountWithinLimits(
+            "Raiz", definitions, atributos, 1
+        ))
+        // Força foi descartada: Destreza 2 não satisfaz a outra rota (mínimo 4).
+        val atributosPermitidos = atributos.filterKeys {
+            !it.equals("Força", ignoreCase = true)
+        }
+        assertEquals(0, context.reachableDependentCountWithinLimits(
+            "Raiz", definitions, atributosPermitidos, 1
+        ))
+        // Se Destreza alcançar o mínimo, a rota permitida volta a contar.
+        assertEquals(1, context.reachableDependentCountWithinLimits(
+            "Raiz", definitions, atributosPermitidos + ("Destreza" to 4), 1
+        ))
+    }
+
+    @Test
     fun `fechamento nominal exige todos os encantos intermediarios`() {
         val catalogo = listOf(
             charm(nome = "Raiz"),
