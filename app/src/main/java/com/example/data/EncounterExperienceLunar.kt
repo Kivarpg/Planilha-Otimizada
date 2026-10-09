@@ -285,10 +285,14 @@ internal object EncounterExperienceLunar {
         val limiteEssenciaCatalogo = if (classificarPorProfundidade) {
             catalogo.maxOfOrNull { it.minEssencia } ?: 0
         } else 0
+        // O catálogo é estável durante o lote; sua Essência máxima é o teto
+        // da classificação e evita reordenar por valores superiores a ele.
         fun candidatosOrdenados(atributoRamo: String, essenciaAtual: Int): List<EncantoLunarDefinition> {
             // Os demais arquétipos usam a ordem canônica: não precisam
             // recalcular Essência nem invalidar a ordenação a cada compra.
-            val essenciaPontuacao = if (classificarPorProfundidade) essenciaAtual else 0
+            val essenciaPontuacao = if (classificarPorProfundidade) {
+                essenciaAtual.coerceAtMost(limiteEssenciaCatalogo)
+            } else 0
             if (classificarPorProfundidade && essenciaPontuacaoCache != essenciaPontuacao) {
                 // A Essência pode aumentar durante o próprio lote de XP.
                 // Não reutilizar uma classificação baseada na Essência anterior.
