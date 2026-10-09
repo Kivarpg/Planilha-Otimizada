@@ -1137,7 +1137,8 @@ fun NpcEncontroCard(
                             }
                         }
                     }
-                    if (feiticosDisponiveis.isNotEmpty() && podeGerenciarFeiticoInicial) {
+                    // A ação deve continuar visível mesmo se o catálogo estiver vazio.
+                    if (podeGerenciarFeiticoInicial) {
                         InkButton(
                     visualTemplate = visualTemplate,
                             label = "Gerenciar Feitiço Inicial",
@@ -1166,6 +1167,13 @@ fun NpcEncontroCard(
                                 Spacer(modifier = Modifier.height(8.dp))
                                 val feiticosPorCirculo = remember(feiticosDisponiveis) {
                                     feiticosDisponiveis.groupBy { it.circulo }
+                                }
+                                if (feiticosPorCirculo.isEmpty()) {
+                                    AppText(
+                                        "Nenhum Feitiço disponível para o círculo desbloqueado.",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        forceStroke = true
+                                    )
                                 }
                                 feiticosPorCirculo.forEach { (circulo, defs) ->
                                     AppText("Círculo $circulo", fontWeight = FontWeight.Bold, color = ExaltedGold, forceStroke = true)
