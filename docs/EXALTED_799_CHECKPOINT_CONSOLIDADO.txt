@@ -54,3 +54,11 @@ AUDITORIA DE PRONTIDÃO DO WORKFLOW — 2026-10-08
 - O workflow publica artefatos Exalted.799.apk e Exalted.799.zip (snapshot do código-fonte); o ZIP é produzido por git archive HEAD e não contém o APK.
 - Não há evidência de execução dos testes ou de validação do APK na branch de auditoria até este checkpoint. Não interpretar inspeção estática como aprovação de release.
 - Correção de navegação de NPCs: commits 415deb713749fefb96b308f6f15594483ab0e3e8 e 834ee20e6ae200dc45f8085b5ef8a7fc31f6596d.
+
+AUDITORIA DE ESCOPO DO DIFF — 2026-10-08
+- Comparação GitHub 798 (9c8af5daecd4) versus final-audit-797: 54 commits à frente no momento da consulta; alterações em 9 arquivos: 6 Kotlin de produção, 1 Kotlin de testes, settings.gradle.kts e este relatório.
+- Revisados estaticamente: parser de pré-requisitos, seus testes novos, agrupamento de gavetas de Encantos/Feitiços, navegação das abas NPC e workflow de release.
+- Os testes do parser são especificações novas, ainda não executadas; os resultados não podem ser considerados aprovados.
+- A auditoria estática não substitui a verificação de todas as 15 abas no dispositivo/emulador. A cobertura de interfaces não foi demonstrada nesta etapa.
+- Risco residual: confirmar comportamento de árvores com referências ambíguas, seleção inicial de Feitiços, bloqueio após XP, troca rápida/exclusão de abas e legibilidade em tela estreita.
+- Critério de aceite para a compilação única: código consolidado, teste unitário e gates do workflow aprovados, APK Exalted.799.apk com assinatura persistente verificada, instalação/abertura e testes manuais de regressão.
