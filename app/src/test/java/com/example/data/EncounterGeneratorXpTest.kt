@@ -23,6 +23,33 @@ class EncounterGeneratorXpTest {
     )
 
     @Test
+    fun `lunar nao deixa Vigor ultrapassar tres encantos da ofensiva em lotes sucessivos`() {
+        fun encanto(nome: String, atributo: String) = EncantoLunarDefinition(
+            id = nome, atributo = atributo, subdivisao = null,
+            nome = nome, nomeIngles = "", custo = "1",
+            minsTexto = "$atributo 2, Essência 1", minAtributo = 2,
+            minEssencia = 1, tipo = "Reflexivo", palavrasChave = "",
+            duracao = "", preRequisitos = "Nenhum", descricao = ""
+        )
+        val catalogo = (1..7).map { encanto("Defesa $it", "Vigor") } +
+            listOf(encanto("Ataque unico", "Destreza"))
+        val inicial = npcBase().copy(
+            tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
+            lunarAtaqueEscolhido = "Destreza",
+            attributes = mapOf("Força" to 3, "Destreza" to 4, "Vigor" to 4),
+            xpAtual = 100
+        )
+        val evoluido = EncounterExperienceLunar.expandLunarRepeated(
+            inicial, catalogo, listOf("Vigor", "Força", "Destreza"), 3
+        )
+        val ofensivos = evoluido.charms.count { it.habilidadeVinculada == "Destreza" }
+        val defensivos = evoluido.charms.count { it.habilidadeVinculada == "Vigor" }
+        assertEquals(1, ofensivos)
+        assertTrue(defensivos <= ofensivos + 3)
+        assertTrue(evoluido.charms.none { it.habilidadeVinculada == "Força" })
+    }
+
+    @Test
     fun `lunar expansao repetida preserva resultado dos lotes individuais`() {
         val inicial = npcBase().copy(
             tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
