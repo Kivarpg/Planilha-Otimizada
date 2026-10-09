@@ -23,6 +23,25 @@ class EncounterGeneratorXpTest {
     )
 
     @Test
+    fun `lunar expansao repetida preserva resultado dos lotes individuais`() {
+        val inicial = npcBase().copy(
+            tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
+            lunarAtaqueEscolhido = "Força",
+            attributes = mapOf("Força" to 4, "Destreza" to 3, "Vigor" to 3)
+        )
+        val ordem = listOf("Destreza", "Vigor", "Força")
+        val individual = (1..3).fold(inicial) { atual, _ ->
+            EncounterExperienceLunar.expandLunar(atual, emptyList(), ordem)
+        }
+        val repetido = EncounterExperienceLunar.expandLunarRepeated(
+            inicial, emptyList(), ordem, 3
+        )
+        assertEquals(individual, repetido)
+        assertEquals("Força", repetido.lunarAtaqueEscolhido)
+        assertEquals(3, repetido.historicoXpBatches.size)
+    }
+
+    @Test
     fun `lunar legado fixa especializacao ofensiva no primeiro lote de XP`() {
         val legado = npcBase().copy(
             tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
