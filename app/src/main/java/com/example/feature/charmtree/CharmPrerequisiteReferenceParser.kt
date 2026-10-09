@@ -14,8 +14,7 @@ import java.text.Normalizer
 internal object CharmPrerequisiteReferenceParser {
     private data class Candidate(
         val normalized: String,
-        val targetId: String,
-        val sourceName: String
+        val targetId: String
     )
 
     data class Resolution(
@@ -65,7 +64,7 @@ internal object CharmPrerequisiteReferenceParser {
             }
 
             if (ids.isNotEmpty()) return Resolution(ids)
-            return if (isGenericRequirement(text)) Resolution(emptyList())
+            return if (isGenericRequirementNormalized(normalizedText)) Resolution(emptyList())
             else Resolution(emptyList(), text)
         }
     }
@@ -106,17 +105,17 @@ internal object CharmPrerequisiteReferenceParser {
         // Construir diretamente a lista final, sem listas temporárias por Encanto.
         val seenCandidates = HashSet<Pair<String, String>>()
         val candidates = ArrayList<Candidate>(entries.size * 2)
-        fun addCandidate(normalized: String, id: String, sourceName: String) {
+        fun addCandidate(normalized: String, id: String) {
             if (normalized.isNotBlank() && seenCandidates.add(normalized to id)) {
-                candidates.add(Candidate(normalized, id, sourceName))
+                candidates.add(Candidate(normalized, id))
             }
         }
         for (entry in entries) {
             if (entry.name.isNotBlank() && idsByNormalizedName[entry.normalizedName]?.size == 1) {
-                addCandidate(entry.normalizedName, entry.id, entry.name)
+                addCandidate(entry.normalizedName, entry.id)
             }
             if (entry.normalizedId != entry.normalizedName) {
-                addCandidate(entry.normalizedId, entry.id, entry.id)
+                addCandidate(entry.normalizedId, entry.id)
             }
         }
         return candidates.sortedByDescending { it.normalized.length }
@@ -141,9 +140,11 @@ internal object CharmPrerequisiteReferenceParser {
     }
 
     private fun isGenericRequirement(text: String): Boolean {
-        val normalized = normalize(text)
-        return GENERIC_MARKERS.any { marker -> normalized.contains(marker) }
+        return isGenericRequirementNormalized(normalize(text))
     }
+
+    private fun isGenericRequirementNormalized(normalized: String): Boolean =
+        GENERIC_MARKERS.any { marker -> normalized.contains(marker) }
 
     private val GENERIC_MARKERS = listOf(
         "qualquer ",
