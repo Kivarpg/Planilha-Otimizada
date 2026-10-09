@@ -976,6 +976,8 @@ fun EncounterGeneratorTab(
                                         modifier = Modifier
                                             .size(18.dp)
                                             .feedbackClickable {
+                                                // Cancelar a intenção antes de remover a aba correspondente.
+                                                if (pendingSelectId == npc.id) pendingSelectId = null
                                                 viewModel.removeNpcEncontro(npc.id)
                                                 if (abaSelecionadaId == npc.id) onAbaSelecionadaChange(null)
                                                 onMensagemLimiteChange(null)
