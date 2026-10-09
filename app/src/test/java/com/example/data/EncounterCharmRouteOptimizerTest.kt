@@ -540,4 +540,27 @@ class EncounterCharmRouteOptimizerTest {
         assertTrue("estado pós-compra parcial não pode entrar no memo", estadoAposCompra !in memo)
     }
 
+    @Test
+    fun `chave incremental equivale a reconstrucao para categoria conhecida e extra`() {
+        val (base, _) = encanto("Base", 8)
+        val (outro, _) = encanto("Outro", 8, habilidade = "Resistência")
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            listOf(base, outro), { it.nome }, { it.habilidade }
+        )
+        val parent = prepared.compactKey(
+            setOf("Outro"), mapOf("resistência" to 1, "categoria extra" to 2)
+        )
+        val expectedKnown = prepared.compactKey(
+            setOf("Outro", "Base"),
+            mapOf("resistência" to 1, "categoria extra" to 2, "armas brancas" to 1)
+        )
+        assertEquals(expectedKnown, prepared.compactKeyAfter(parent, "Base", "Armas Brancas"))
+
+        val expectedExtra = prepared.compactKey(
+            setOf("Outro", "Base"),
+            mapOf("resistência" to 1, "categoria extra" to 3)
+        )
+        assertEquals(expectedExtra, prepared.compactKeyAfter(parent, "Base", "Categoria Extra"))
+    }
+
 }
