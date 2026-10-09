@@ -215,6 +215,26 @@ class EncounterLunarXpLoopContractTest {
     }
 
     @Test
+    fun `lunar scoring caches only current essence and resets after chimera`() {
+        val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
+        val ranking = source.substringAfter("fun candidatosOrdenados(atributoRamo: String, essenciaAtual: Int)")
+            .substringBefore("fun comprarBloco(atributoRamo: String)")
+        val chimera = source.substringAfter("formaSecundariaAdquirida?.let { secundaria ->")
+            .substringBefore("val categoriaCandidato = atributoAquisicao.lowercase()")
+
+        assertTrue(ranking.contains("essenciaAtual.coerceAtMost(limiteEssenciaCatalogo)"))
+        assertTrue(ranking.contains("essenciaPontuacaoCache != essenciaPontuacao"))
+        assertTrue(ranking.contains("alcanceAtualPorEncanto.clear()"))
+        assertTrue(ranking.contains("if (alcanceNoTeto) alcanceMaximo"))
+        assertFalse(source.contains("alcancePorEssencia"))
+        assertTrue(chimera.contains("candidatosPorRamo.clear()"))
+        assertTrue(chimera.contains("rotaViavelPorRamo.clear()"))
+        assertTrue(chimera.contains("alcancePorEncanto.clear()"))
+        assertTrue(chimera.contains("alcanceAtualPorEncanto.clear()"))
+        assertTrue(chimera.contains("definicoesPorNome = definicoesPermitidas()"))
+    }
+
+    @Test
     fun `lunar block normalizes its category key once`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         val block = source.substringAfter("fun comprarBloco(atributoRamo: String): Boolean {")
