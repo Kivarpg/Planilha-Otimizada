@@ -254,6 +254,7 @@ internal object EncounterExperienceLunar {
         // de descendentes novamente em cada gaveta.
         val alcancePorEncanto = mutableMapOf<String, Int>()
         val alcanceAtualPorEncanto = mutableMapOf<String, Int>()
+        var essenciaPontuacaoCache: Int? = null
         // Só o arquétipo Físico utiliza a classificação por profundidade.
         // Evitar índices e varreduras de catálogo para Social e Mental.
         fun definicoesPermitidas(): Map<String, EncantoLunarDefinition> =
@@ -269,8 +270,16 @@ internal object EncounterExperienceLunar {
         val limiteEssenciaCatalogo = if (ataqueEscolhido != null) {
             catalogo.maxOfOrNull { it.minEssencia } ?: 0
         } else 0
-        fun candidatosOrdenados(atributoRamo: String): List<EncantoLunarDefinition> =
-            candidatosPorRamo.getOrPut(atributoRamo.lowercase()) {
+        fun candidatosOrdenados(atributoRamo: String): List<EncantoLunarDefinition> {
+            val essenciaPontuacao = EncounterExperienceService.essenciaPara(npc, xpGastoTotal)
+            if (essenciaPontuacaoCache != essenciaPontuacao) {
+                // A Essência pode aumentar durante o próprio lote de XP.
+                // Não reutilizar uma classificação baseada na Essência anterior.
+                candidatosPorRamo.clear()
+                alcanceAtualPorEncanto.clear()
+                essenciaPontuacaoCache = essenciaPontuacao
+            }
+            return candidatosPorRamo.getOrPut(atributoRamo.lowercase()) {
                 val encantos = routeContextAtual.charmsByAttribute[atributoRamo]
                     ?: routeContextAtual.charmsByAttribute.entries.firstOrNull {
                         it.key.equals(atributoRamo, ignoreCase = true)
@@ -293,7 +302,7 @@ internal object EncounterExperienceLunar {
                 encantos.forEach { def ->
                     alcanceAtualPorEncanto.getOrPut(def.nome) {
                         routeContextAtual.reachableDependentCountWithinLimits(
-                            def.nome, definicoesPorNome, attributesAtuais, essenciaAtual
+                            def.nome, definicoesPorNome, attributesAtuais, essenciaPontuacao
                         )
                     }
                 }
@@ -303,6 +312,7 @@ internal object EncounterExperienceLunar {
                         .thenBy { it.minEssencia }.thenBy { it.nome }
                 )
             }
+        }
 
         fun comprarBloco(atributoRamo: String): Boolean {
             if (ataqueDescartado != null && atributoRamo.equals(ataqueDescartado, ignoreCase = true)) return false
