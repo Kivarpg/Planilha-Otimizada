@@ -333,8 +333,14 @@ object EncounterCharmRouteOptimizer {
                     var avaliacaoCompleta = true
                     for (def in definitionsToCheck) {
                         val defName = nome(def)
+                        if (defName in afterSelected && !permiteAquisicaoRepetida(def)) {
+                            // O conjunto anterior pode conter o Encanto adquirido
+                            // antes de ele entrar em afterSelected. Não o mantenha
+                            // como elegível nem o recoloque no cache pós-compra.
+                            next.remove(defName)
+                            continue
+                        }
                         if (defName in next) continue
-                        if (defName in afterSelected && !permiteAquisicaoRepetida(def)) continue
                         if (!consumeWork()) {
                             avaliacaoCompleta = false
                             break
