@@ -127,10 +127,21 @@ internal object LunarEncounterCharmSelection {
         var contagemAtributoMentalSelecionada = 0
         var contagemCorpoDeTouroSelecionada = 0
         var contagemUniversalSelecionada = 0
-        // Vigor é defensivo no Lunar Físico; Força/Destreza devem acompanhar.
+        // Vigor pode liderar por até três aquisições em relação à única árvore ofensiva.
+        val ataqueEscolhido = if (arquetipo == ArquetipoEncontro.FISICO) {
+            val foco = atributoFocoUsuario?.takeIf { it == "Força" || it == "Destreza" }
+            foco ?: listOf("Força", "Destreza").maxWithOrNull(
+                compareBy<String> { atributo ->
+                    catalogo.count { def -> def.atributo == atributo && def.minEssencia <= essencia && (attributes[atributo] ?: 0) >= def.minAtributo }
+                }.thenBy { atributo ->
+                    catalogo.filter { it.atributo == atributo && it.minEssencia <= essencia && (attributes[atributo] ?: 0) >= it.minAtributo }.maxOfOrNull { it.minEssencia } ?: 0
+                }.thenBy { attributes[it] ?: 0 }
+            )
+        } else null
+        val ataqueDescartado = if (ataqueEscolhido == "Força") "Destreza" else "Força"
         fun vigorPermitido(contagens: Map<String, Int>): Boolean =
             arquetipo != ArquetipoEncontro.FISICO ||
-                (contagens["vigor"] ?: 0) <= maxOf(contagens["força"] ?: 0, contagens["destreza"] ?: 0)
+                (contagens["vigor"] ?: 0) < (contagens[ataqueEscolhido?.lowercase()] ?: 0) + 3
 
 
         fun rotaElegivel(
@@ -148,7 +159,10 @@ internal object LunarEncounterCharmSelection {
                         contagens[categoria.lowercase()] ?: 0
                     }
                 }
-            )?.takeIf { it.atributo != "Vigor" || vigorPermitido(contagens) }
+            )?.takeIf { rota ->
+                (arquetipo != ArquetipoEncontro.FISICO || rota.atributo != ataqueDescartado) &&
+                    (rota.atributo != "Vigor" || vigorPermitido(contagens))
+            }
 
         fun registrar(
             def: EncantoLunarDefinition,
@@ -216,7 +230,7 @@ internal object LunarEncounterCharmSelection {
         val categoriaArquetipo = EncounterGenerationRules.ATTRIBUTE_GROUPS.getValue(arquetipo)
         val maiorValor = categoriaArquetipo.maxOfOrNull { attributes[it] ?: 0 } ?: 0
         val atributosPrincipaisEmpatados = categoriaArquetipo.filter { (attributes[it] ?: 0) == maiorValor }
-        val atributoPrincipalAutomatico = (if (arquetipo == ArquetipoEncontro.FISICO) listOf("Força", "Destreza").sortedByDescending { attributes[it] ?: 0 } else atributosPrincipaisEmpatados.ifEmpty { categoriaArquetipo }.shuffled(random)).firstOrNull()
+        val atributoPrincipalAutomatico = (if (arquetipo == ArquetipoEncontro.FISICO) listOfNotNull(ataqueEscolhido) else atributosPrincipaisEmpatados.ifEmpty { categoriaArquetipo }.shuffled(random)).firstOrNull()
         val atributoPrincipal = atributoFocoUsuario
             ?.takeIf { it in EncounterGenerationRules.ALL_ATTRIBUTES }
             ?: atributoPrincipalAutomatico
@@ -449,13 +463,14 @@ internal object LunarEncounterCharmSelection {
         // Aparência; Mental = Percepção/Inteligência/Raciocínio.
         // Isso evita declarar prematuramente que faltam Encantos para chegar
         // aos 15 quando ainda existem opções válidas no mesmo arquétipo.
-        val grupoAtributosArquetipo = EncounterGenerationRules.ATTRIBUTE_GROUPS.getValue(arquetipo)
+        val grupoAtributosArquetipo = if (arquetipo == ArquetipoEncontro.FISICO) listOfNotNull(ataqueEscolhido, "Vigor") else EncounterGenerationRules.ATTRIBUTE_GROUPS.getValue(arquetipo)
         val atributosDoArquetipo = grupoAtributosArquetipo
             .filter { !it.equals(atributoPrincipal, ignoreCase = true) }
 
         val atributosForaDoArquetipo = EncounterGenerationRules.ALL_ATTRIBUTES
             .filter { atributo ->
                 atributo !in grupoAtributosArquetipo &&
+                    (arquetipo != ArquetipoEncontro.FISICO || atributo != ataqueDescartado) &&
                     !atributo.equals("Universal", ignoreCase = true)
             }
 
