@@ -31,13 +31,12 @@ internal object CharmPrerequisiteReferenceParser {
             if (text.isBlank() || text.equals("Nenhum", ignoreCase = true)) {
                 return Resolution(emptyList())
             }
-            if (candidates.isEmpty()) {
-                return if (isGenericRequirement(text)) Resolution(emptyList())
-                else Resolution(emptyList(), text)
-            }
-
             val normalizedText = normalize(text)
             if (normalizedText.isBlank()) return Resolution(emptyList())
+            if (candidates.isEmpty()) {
+                return if (isGenericRequirementNormalized(normalizedText)) Resolution(emptyList())
+                else Resolution(emptyList(), text)
+            }
 
             val matches = candidates
                 .asSequence()
@@ -137,10 +136,6 @@ internal object CharmPrerequisiteReferenceParser {
         val before = text.getOrNull(start - 1)
         val after = text.getOrNull(end)
         return (before == null || !isWord(before)) && (after == null || !isWord(after))
-    }
-
-    private fun isGenericRequirement(text: String): Boolean {
-        return isGenericRequirementNormalized(normalize(text))
     }
 
     private fun isGenericRequirementNormalized(normalized: String): Boolean =
