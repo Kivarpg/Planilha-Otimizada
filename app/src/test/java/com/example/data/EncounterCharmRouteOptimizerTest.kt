@@ -578,4 +578,29 @@ class EncounterCharmRouteOptimizerTest {
         )
     }
 
+    @Test
+    fun `chave externa e canonica e nao colide entre selecoes diferentes`() {
+        val (base, _) = encanto("Base", 8)
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            listOf(base), { it.nome }, { it.habilidade }
+        )
+        val first = prepared.compactKey(
+            linkedSetOf("Externo A", "Base", "Externo B"),
+            mapOf("armas brancas" to 1)
+        )
+        val reordered = prepared.compactKey(
+            linkedSetOf("Externo B", "Externo A", "Base"),
+            mapOf("armas brancas" to 1)
+        )
+        val different = prepared.compactKey(
+            linkedSetOf("Externo A", "Base", "Externo C"),
+            mapOf("armas brancas" to 1)
+        )
+        assertEquals(first, reordered)
+        assertNotEquals(first, different)
+        val memo = hashMapOf(first to setOf("Base"))
+        assertEquals(setOf("Base"), memo[reordered])
+        assertFalse("estado com outro Encanto externo nao deve herdar memo", different in memo)
+    }
+
 }
