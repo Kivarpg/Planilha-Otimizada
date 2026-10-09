@@ -249,6 +249,10 @@ internal object EncounterExperienceLunar {
         // Cache por contexto e ramo: ordenar a árvore apenas uma vez por
         // configuração de Forma Espiritual, não a cada compra de Encanto.
         val candidatosPorRamo = mutableMapOf<String, List<EncantoLunarDefinition>>()
+        // O mesmo Encanto pode aparecer em várias gavetas por rotas de
+        // Arquétipo. Compartilhar a pontuação evita percorrer sua árvore
+        // de descendentes novamente em cada gaveta.
+        val alcancePorEncanto = mutableMapOf<String, Int>()
         fun candidatosOrdenados(atributoRamo: String): List<EncantoLunarDefinition> =
             candidatosPorRamo.getOrPut(atributoRamo.lowercase()) {
                 val encantos = routeContextAtual.charmsByAttribute[atributoRamo]
@@ -260,11 +264,13 @@ internal object EncounterExperienceLunar {
                 if (ataqueEscolhido == null) return@getOrPut encantos
                 // Calcular alcance uma vez por Encanto, não a cada comparação
                 // do sort (que pode comparar o mesmo Encanto repetidamente).
-                val alcance = encantos.associate { def ->
-                    def.nome to routeContextAtual.transitiveCharmDependentCount(def.nome)
+                encantos.forEach { def ->
+                    alcancePorEncanto.getOrPut(def.nome) {
+                        routeContextAtual.transitiveCharmDependentCount(def.nome)
+                    }
                 }
                 encantos.sortedWith(
-                    compareByDescending<EncantoLunarDefinition> { alcance[it.nome] ?: 0 }
+                    compareByDescending<EncantoLunarDefinition> { alcancePorEncanto[it.nome] ?: 0 }
                         .thenBy { it.minEssencia }.thenBy { it.nome }
                 )
             }
@@ -341,6 +347,7 @@ internal object EncounterExperienceLunar {
                             LunarSpiritShapeArchetypeTraits.forAnimal(secundaria)
                         routeContextAtual = LunarCharmArchetypePolicy.prepare(catalogo, spiritTraitsEfetivos)
                         candidatosPorRamo.clear() // novas rotas após Quimera
+                        alcancePorEncanto.clear() // dependências podem mudar
                     }
                 }
 
