@@ -23,6 +23,20 @@ class EncounterGeneratorXpTest {
     )
 
     @Test
+    fun `lunar social limpa especializacao fisica obsoleta ao receber XP`() {
+        val convertido = npcBase().copy(
+            tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
+            arquetipo = ArquetipoEncontro.SOCIAL,
+            lunarAtaqueEscolhido = "Destreza",
+            attributes = mapOf("Força" to 3, "Destreza" to 4, "Vigor" to 3)
+        )
+        val evoluido = EncounterExperienceLunar.expandLunar(
+            convertido, emptyList(), listOf("Força", "Destreza", "Vigor")
+        )
+        assertEquals(null, evoluido.lunarAtaqueEscolhido)
+    }
+
+    @Test
     fun `lunar mental pode adquirir encanto de Destreza sem especializacao fisica`() {
         val encanto = EncantoLunarDefinition(
             id = "destreza-mental", atributo = "Destreza", subdivisao = null,
