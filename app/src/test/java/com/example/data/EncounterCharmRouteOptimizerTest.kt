@@ -603,4 +603,52 @@ class EncounterCharmRouteOptimizerTest {
         assertFalse("estado com outro Encanto externo nao deve herdar memo", different in memo)
     }
 
+    @Test
+    fun `catalogo preparado rejeita universo de definicoes diferente`() {
+        val (a, _) = encanto("A", 8)
+        val (b, _) = encanto("B", 8)
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            listOf(a), { it.nome }, { it.habilidade }
+        )
+        var rejeitado = false
+        try {
+            EncounterCharmRouteOptimizer.escolher(
+                candidatos = listOf(a),
+                catalogoCompleto = listOf(a, b),
+                nomesSelecionados = emptySet(),
+                contagensCategorias = emptyMap(),
+                elegivel = { _, _, _ -> true },
+                nome = { it.nome },
+                categoria = { it.habilidade },
+                custoXp = { 8 },
+                preparedCatalog = prepared
+            )
+        } catch (e: IllegalArgumentException) {
+            rejeitado = true
+        }
+        assertTrue("catalogo preparado incompatível deve ser rejeitado", rejeitado)
+    }
+
+    @Test
+    fun `catalogo preparado aceita as mesmas definicoes em ordem diferente`() {
+        val (a, _) = encanto("A", 8)
+        val (b, _) = encanto("B", 8)
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            listOf(a, b), { it.nome }, { it.habilidade }
+        )
+        val escolhido = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(a),
+            catalogoCompleto = listOf(b, a),
+            nomesSelecionados = emptySet(),
+            contagensCategorias = emptyMap(),
+            elegivel = { _, _, _ -> true },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { 8 },
+            preparedCatalog = prepared,
+            profundidade = 1
+        )
+        assertEquals("A", escolhido?.nome)
+    }
+
 }
