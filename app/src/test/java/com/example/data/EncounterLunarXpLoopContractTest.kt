@@ -219,7 +219,9 @@ class EncounterLunarXpLoopContractTest {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
         val ranking = source.substringAfter("fun candidatosOrdenados(atributoRamo: String, essenciaAtual: Int)")
             .substringBefore("fun comprarBloco(atributoRamo: String)")
-        val chimera = source.substringAfter("formaSecundariaAdquirida?.let { secundaria ->")
+        val purchase = source.substringAfter("fun comprarBloco(atributoRamo: String): Boolean {")
+            .substringBefore("while (tentativas++ < 500")
+        val chimera = purchase.substringAfter("formaSecundariaAdquirida?.let { secundaria ->")
             .substringBefore("val categoriaCandidato = atributoAquisicao.lowercase()")
 
         assertTrue(ranking.contains("essenciaAtual.coerceAtMost(limiteEssenciaCatalogo)"))
