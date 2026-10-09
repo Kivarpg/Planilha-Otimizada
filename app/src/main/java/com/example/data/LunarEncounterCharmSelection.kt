@@ -157,7 +157,7 @@ internal object LunarEncounterCharmSelection {
                                 ).any { it.atributo == atributo }
                             }
                             .minWithOrNull(compareBy<EncantoLunarDefinition> { it.minEssencia }.thenBy { it.nome })
-                                              if (proximo == null) break
+                        if (proximo == null) break
                         adquiridos += proximo.nome
                         maiorEssencia = maxOf(maiorEssencia, proximo.minEssencia)
                     }
