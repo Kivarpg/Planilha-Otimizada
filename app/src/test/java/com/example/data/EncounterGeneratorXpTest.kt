@@ -23,6 +23,24 @@ class EncounterGeneratorXpTest {
     )
 
     @Test
+    fun `lunar legado fixa especializacao ofensiva no primeiro lote de XP`() {
+        val legado = npcBase().copy(
+            tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
+            lunarAtaqueEscolhido = null,
+            focoProgressaoExplicito = "Força",
+            attributes = mapOf("Força" to 4, "Destreza" to 3, "Vigor" to 3)
+        )
+        val primeiro = EncounterExperienceLunar.expandLunar(
+            legado, emptyList(), listOf("Destreza", "Força", "Vigor")
+        )
+        assertEquals("Força", primeiro.lunarAtaqueEscolhido)
+        val segundo = EncounterExperienceLunar.expandLunar(
+            primeiro, emptyList(), listOf("Destreza", "Força", "Vigor")
+        )
+        assertEquals("Força", segundo.lunarAtaqueEscolhido)
+    }
+
+    @Test
     fun `lunar aprofunda cadeia ofensiva quando Essencia aumenta`() {
         fun encanto(nome: String, essencia: Int, pre: String) = EncantoLunarDefinition(
             id = nome, atributo = "Destreza", subdivisao = null,
