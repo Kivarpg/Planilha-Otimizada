@@ -303,6 +303,13 @@ internal object EncounterExperienceLunar {
                     // Rejeitar candidatos com Essência impossível antes da
                     // avaliação completa das rotas e dos pré-requisitos.
                     if (def.minEssencia > essenciaAtual) continue
+                    // Um Encanto pode estar indexado por rotas alternativas.
+                    // Descartar antecipadamente as rotas do ramo cujo mínimo
+                    // de Atributo não pode ser satisfeito por este NPC.
+                    if (routeContextAtual.routesFor(def).none { route ->
+                            route.atributo.equals(atributoRamo, ignoreCase = true) &&
+                                (attributesAtuais[route.atributo] ?: 0) >= route.minAtributo
+                        }) continue
                     val rotasElegiveis = LunarCharmArchetypePolicy.eligibleRoutes(
                         def, routeContextAtual, attributesAtuais, essenciaAtual, nomesSelecionados, catalogo,
                         contagemCategoriaSelecionada = { categoria ->
