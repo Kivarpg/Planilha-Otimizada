@@ -203,6 +203,11 @@ val auditTestPatterns = listOf(
 )
 
 tasks.withType<Test>().configureEach {
+    // Propriedades -D do processo Gradle nao chegam automaticamente ao
+    // processo isolado que executa testes JVM/Robolectric.
+    providers.gradleProperty("exalted.perfSamples").orNull?.let { samples ->
+        systemProperty("exalted.perfSamples", samples)
+    }
     testLogging {
         events("started", "passed", "skipped", "failed")
         showStandardStreams = true
