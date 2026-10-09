@@ -502,4 +502,41 @@ class EncounterCharmRouteOptimizerTest {
         assertTrue("encanto repetivel deve permanecer elegivel", "Repetivel" in elegiveis.orEmpty())
     }
 
+    @Test
+    fun `orcamento esgotado no delta nao publica estado pos compra no memo`() {
+        val (base, _) = encanto("Base", 8)
+        val (dependente, _) = encanto("Dependente", 8, "Base")
+        val catalogo = listOf(base, dependente)
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            catalogo, { it.nome }, { it.habilidade }
+        )
+        val memo = HashMap<EncounterCharmRouteOptimizer.CompactEligibilityKey, Set<String>>()
+        val estadoAposCompra = prepared.compactKey(
+            setOf("Base"), mapOf("armas brancas" to 1)
+        )
+        val metrics = EncounterCharmRouteMetrics()
+
+        EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(base),
+            catalogoCompleto = catalogo,
+            nomesSelecionados = emptySet(),
+            contagensCategorias = emptyMap(),
+            elegivel = { def, nomes, _ ->
+                def.preRequisitos.isBlank() || def.preRequisitos in nomes
+            },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { 8 },
+            preparedCatalog = prepared,
+            compactEligibilityMemo = memo,
+            monotonicEligibility = true,
+            maxWorkUnits = 3,
+            metrics = metrics,
+            profundidade = 1
+        )
+
+        assertTrue("orçamento deve se esgotar durante o delta", metrics.snapshot().budgetExhaustions > 0)
+        assertTrue("estado pós-compra parcial não pode entrar no memo", estadoAposCompra !in memo)
+    }
+
 }
