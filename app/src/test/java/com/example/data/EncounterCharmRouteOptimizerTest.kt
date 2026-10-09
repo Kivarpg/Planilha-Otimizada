@@ -713,4 +713,32 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals("o delta deve corresponder ao estado completo", reconstruido, depois)
     }
 
+    @Test
+    fun `catalogo preparado detecta mutacao da mesma lista apos preparacao`() {
+        val (original, _) = encanto("Original", 8)
+        val (novo, _) = encanto("Novo", 8)
+        val catalogo = mutableListOf(original)
+        val prepared = EncounterCharmRouteOptimizer.prepareCatalog(
+            catalogo, { it.nome }, { it.habilidade }
+        )
+        catalogo[0] = novo
+        var rejeitado = false
+        try {
+            EncounterCharmRouteOptimizer.escolher(
+                candidatos = listOf(novo),
+                catalogoCompleto = catalogo,
+                nomesSelecionados = emptySet(),
+                contagensCategorias = emptyMap(),
+                elegivel = { _, _, _ -> true },
+                nome = { it.nome },
+                categoria = { it.habilidade },
+                custoXp = { 8 },
+                preparedCatalog = prepared
+            )
+        } catch (e: IllegalArgumentException) {
+            rejeitado = true
+        }
+        assertTrue("mutacao in-place nao pode reutilizar catalogo preparado", rejeitado)
+    }
+
 }
