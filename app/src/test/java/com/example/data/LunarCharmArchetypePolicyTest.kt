@@ -56,6 +56,23 @@ class LunarCharmArchetypePolicyTest {
     }
 
     @Test
+    fun `potencial lunar respeita limite de essencia e atributo sem prometer elegibilidade`() {
+        val raiz = charm(nome = "Raiz")
+        val acessivel = charm(nome = "Acessivel", pre = "Raiz")
+        val atributoAlto = charm(nome = "Atributo Alto", min = 5, pre = "Raiz")
+        val essenciaAlta = charm(nome = "Essencia Alta", pre = "Acessivel").copy(minEssencia = 4)
+        val catalogo = listOf(raiz, acessivel, atributoAlto, essenciaAlta)
+        val context = LunarCharmArchetypePolicy.prepare(catalogo, emptySet())
+        val definitions = catalogo.associateBy { it.nome }
+        assertEquals(1, context.reachableDependentCountWithinLimits(
+            "Raiz", definitions, mapOf("Destreza" to 3), 2
+        ))
+        assertEquals(3, context.reachableDependentCountWithinLimits(
+            "Raiz", definitions, mapOf("Destreza" to 5), 4
+        ))
+    }
+
+    @Test
     fun `rota arquetipo so existe quando forma satisfaz condicao`() {
         val def = charm(routes = listOf(
             LunarCharmArchetypeRoute("Percepção", "VISAO_NOTURNA", 3, "Nenhum")
