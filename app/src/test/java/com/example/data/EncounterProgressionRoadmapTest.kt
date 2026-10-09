@@ -597,6 +597,9 @@ class EncounterProgressionRoadmapTest {
         assertEquals(direto.historicoXpBatches, aplicado.historicoXpBatches)
         assertEquals(direto.corpoDeTouroCount, aplicado.corpoDeTouroCount)
         assertEquals(direto.essencia, aplicado.essencia)
+        assertEquals(direto.attributes, aplicado.attributes)
+        assertEquals(direto.formaEspiritualSecundaria, aplicado.formaEspiritualSecundaria)
+        assertEquals(direto.lunarArchetypeTraits, aplicado.lunarArchetypeTraits)
         assertEquals(null, EncounterProgressionRoadmapService.proximo(
             base.copy(lunarAtaqueEscolhido = if (passo.lunarAtaqueEscolhido == "Força") "Destreza" else "Força"), planejado
         ))
