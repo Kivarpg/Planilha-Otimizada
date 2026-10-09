@@ -327,7 +327,7 @@ object EncounterCharmRouteOptimizer {
             // Nunca publique no memo um conjunto parcial produzido pelo teto de
             // trabalho. Uma chamada posterior possui orçamento novo e precisa
             // poder concluir a avaliação em vez de herdar um falso resultado.
-            if (avaliacaoCompleta) {
+            if (avaliacaoCompleta && !budgetExhausted) {
                 if (compactKey != null) compactCache!![compactKey] = computed
                 if (legacyKey != null) legacyEligibilityCache!![legacyKey] = computed
             }
