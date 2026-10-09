@@ -55,13 +55,15 @@ internal fun ExaltedPanoramaBackground(
     )
     BoxWithConstraints(Modifier.fillMaxSize().clipToBounds()) {
         val width = maxWidth
-        // Cinco larguras de tela: revela a paisagem progressivamente
-        // sem mover o cenário durante a rolagem vertical.
-        val panoramaWidth = width * 5
+        val painter = painterResource(resourceId)
+        val aspectRatio = (painter.intrinsicSize.width / painter.intrinsicSize.height)
+            .takeIf { it.isFinite() && it > 0f } ?: 5f
+        // Mantém a proporção original do panorama, sem deformar montanhas ou templos.
+        val panoramaWidth = maxOf(width, maxHeight * aspectRatio)
         val density = androidx.compose.ui.platform.LocalDensity.current
         val travelPx = with(density) { (panoramaWidth - width).toPx() }
         Image(
-            painter = painterResource(resourceId),
+            painter = painter,
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
