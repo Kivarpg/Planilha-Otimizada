@@ -2,7 +2,6 @@ package com.example.data
 
 import com.example.model.ArquetipoEncontro
 import kotlin.random.Random
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
