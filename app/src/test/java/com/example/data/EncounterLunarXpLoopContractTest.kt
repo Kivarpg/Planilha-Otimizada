@@ -121,7 +121,7 @@ class EncounterLunarXpLoopContractTest {
         val block = source.substringAfter("fun comprarBloco(atributoRamo: String): Boolean {")
             .substringBefore("val candidatoSelecionado = candidato ?: break")
         val guard = block.indexOf("!vigorPermitido(categoriasSelecionadas)")
-        val scan = block.indexOf("for (def in candidatosOrdenados(atributoRamo))")
+        val scan = block.indexOf("for (def in candidatosOrdenados(atributoRamo, essenciaAtual))")
         assertTrue(guard >= 0 && guard < scan)
         assertTrue(block.contains("atributoRamo.equals(\"Vigor\", ignoreCase = true)"))
     }
@@ -129,7 +129,7 @@ class EncounterLunarXpLoopContractTest {
     @Test
     fun `lunar refreshes ranking when essence rises within xp batch`() {
         val source = File("src/main/java/com/example/data/EncounterExperienceLunar.kt").readText()
-        val ranking = source.substringAfter("fun candidatosOrdenados(atributoRamo: String)")
+        val ranking = source.substringAfter("fun candidatosOrdenados(atributoRamo: String, essenciaAtual: Int)")
             .substringBefore("fun comprarBloco(atributoRamo: String)")
         assertTrue(ranking.contains("val essenciaPontuacao = if (ataqueEscolhido != null) essenciaAtual else 0"))
         assertTrue(ranking.contains("essenciaPontuacaoCache != essenciaPontuacao"))
