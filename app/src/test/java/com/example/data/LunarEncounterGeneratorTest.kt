@@ -210,6 +210,26 @@ class LunarEncounterGeneratorTest {
         )
         assertEquals(depois.xpGastoTotal - npc.xpGastoTotal, expandido.batchAplicado.xpGasto)
         val adquiridos = depois.charms.map { it.nome }.toSet()
+        val segundaExpansao = EncounterExperienceLunar.expandLunarWithBatch(
+            depois, catalogo, listOf("Força", "Destreza", "Vigor")
+        )
+        val segundo = segundaExpansao.npcResultante
+        assertEquals("Força", segundo.lunarAtaqueEscolhido)
+        assertTrue(segundo.charms.none { it.habilidadeVinculada.equals("Destreza", ignoreCase = true) })
+        assertEquals(
+            depois.xpAtual + EncounterExperienceService.XP_POR_CHAMADA,
+            segundo.xpAtual + (segundo.xpGastoTotal - depois.xpGastoTotal)
+        )
+        assertEquals(segundo.xpGastoTotal - depois.xpGastoTotal, segundaExpansao.batchAplicado.xpGasto)
+        assertTrue("A progressão não deve remover Encantos anteriores",
+            segundo.charms.map { it.nome }.containsAll(adquiridos))
+        segundo.charms.forEach { encanto ->
+            val indice = encanto.nome.removePrefix("Forca XP ").toIntOrNull() ?: return@forEach
+            if (indice > 1) assertTrue(
+                "Faltou requisito após o segundo lote: ${encanto.nome}",
+                "Forca XP ${indice - 1}" in segundo.charms.map { it.nome }.toSet()
+            )
+        }
         depois.charms.forEach { encanto ->
             val indice = encanto.nome.removePrefix("Forca XP ").toIntOrNull() ?: return@forEach
             if (indice > 1) assertTrue("Faltou requisito de ${encanto.nome}", "Forca XP ${indice - 1}" in adquiridos)
