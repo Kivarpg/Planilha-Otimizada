@@ -1027,4 +1027,47 @@ class EncounterCharmRouteOptimizerTest {
         )
     }
 
+    @Test
+    fun `orçamento reduzido conserva primeira escolha ja avaliada`() {
+        val (primeiro, _) = encanto("Primeiro", 8)
+        val (segundo, _) = encanto("Segundo", 10)
+        val catalogo = listOf(primeiro, segundo)
+        fun escolher(limite: Int) = EncounterCharmRouteOptimizer.escolher(
+            candidatos = catalogo,
+            catalogoCompleto = catalogo,
+            nomesSelecionados = emptySet(),
+            contagensCategorias = emptyMap(),
+            elegivel = { _, _, _ -> true },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { if (it.nome == primeiro.nome) 8 else 10 },
+            profundidade = 3,
+            maxWorkUnits = limite
+        )?.nome
+        assertEquals(primeiro.nome, escolher(3))
+        assertEquals(primeiro.nome, escolher(1000))
+    }
+
+    @Test
+    fun `orçamento esgotado durante elegibilidade nao publica cache parcial`() {
+        val (a, _) = encanto("A", 8)
+        val (b, _) = encanto("B", 8)
+        val catalogo = listOf(a, b)
+        val memo = HashMap<EncounterCharmRouteOptimizer.CompactEligibilityKey, Set<String>>()
+        val escolhido = EncounterCharmRouteOptimizer.escolher(
+            candidatos = catalogo,
+            catalogoCompleto = catalogo,
+            nomesSelecionados = emptySet(),
+            contagensCategorias = emptyMap(),
+            elegivel = { _, _, _ -> true },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { 8 },
+            compactEligibilityMemo = memo,
+            maxWorkUnits = 1
+        )
+        assertEquals(null, escolhido)
+        assertTrue("resultado parcial nao deve contaminar o cache", memo.isEmpty())
+    }
+
 }
