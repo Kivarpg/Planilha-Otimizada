@@ -344,7 +344,10 @@ internal object EncounterExperienceLunar {
                 val limiteCorpoDeTouro = (attributesAtuais["Vigor"] ?: 0).coerceAtLeast(0)
                 var candidato: EncantoLunarDefinition? = null
                 var rotaEscolhida: LunarCharmArchetypePolicy.AcquisitionRoute? = null
-                for (def in candidatosOrdenados(atributoRamo, essenciaAtual)) {
+                // O catálogo não muda durante esta tentativa: consultar uma vez
+                // a lista de candidatos e o índice de rotas por Encanto.
+                val candidatosDoRamo = candidatosOrdenados(atributoRamo, essenciaAtual)
+                for (def in candidatosDoRamo) {
                     if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
                     // Rejeitar candidatos com Essência impossível antes da
                     // avaliação completa das rotas e dos pré-requisitos.
