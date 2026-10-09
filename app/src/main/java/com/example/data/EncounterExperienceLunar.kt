@@ -168,7 +168,7 @@ internal object EncounterExperienceLunar {
     // Lunar não tem fase de fallback (100% do XP vai pra Encantos), então
     // aqui a função cobre o lote inteiro, não só uma fase.
     private fun custoXpEncantoLunar(castaOuFavorecidos: Set<String>, atributoAquisicao: String): Int =
-        if (atributoAquisicao in castaOuFavorecidos || atributoAquisicao.equals("Universal", ignoreCase = true)) 8 else 10
+        if (castaOuFavorecidos.any { it.equals(atributoAquisicao, ignoreCase = true) } || atributoAquisicao.equals("Universal", ignoreCase = true)) 8 else 10
 
     private data class ResultadoCompraCharmsLunar(
         val xpDisponivel: Int,
@@ -260,11 +260,11 @@ internal object EncounterExperienceLunar {
                 var candidato: EncantoLunarDefinition? = null
                 var rotaEscolhida: LunarCharmArchetypePolicy.AcquisitionRoute? = null
                 // Os nomes do índice podem ter capitalização diferente do foco salvo.
-            val encantosDoRamo = routeContextAtual.charmsByAttribute[atributoRamo]
+                val encantosDoRamo = routeContextAtual.charmsByAttribute[atributoRamo]
                 ?: routeContextAtual.charmsByAttribute.entries.firstOrNull {
                     it.key.equals(atributoRamo, ignoreCase = true)
                 }?.value.orEmpty()
-            for (def in encantosDoRamo) {
+                for (def in encantosDoRamo) {
                     if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
                     val rotasElegiveis = LunarCharmArchetypePolicy.eligibleRoutes(
                         def, routeContextAtual, attributesAtuais, essenciaAtual, nomesSelecionados, catalogo,
