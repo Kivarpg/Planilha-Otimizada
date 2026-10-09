@@ -106,6 +106,21 @@ class EncounterProgressionRoadmapTest {
     }
 
     @Test
+    fun `lunar rollback de XP preserva arvore ofensiva persistida`() {
+        val base = npcBase().copy(
+            tipoExaltado = TipoExaltadoEncontro.LUNAR,
+            lunarAtaqueEscolhido = "Destreza"
+        )
+        val evoluido = EncounterExperienceLunar.expandLunar(
+            base, emptyList(), listOf("Destreza", "Vigor", "Força")
+        )
+        assertEquals("Destreza", evoluido.lunarAtaqueEscolhido)
+        val revertido = EncounterExperienceLunar.reduceLunar(evoluido)
+        assertEquals("Destreza", revertido.lunarAtaqueEscolhido)
+        assertEquals(base.xpGastoTotal, revertido.xpGastoTotal)
+    }
+
+    @Test
     fun `lunar multi lote com zero chamadas nao altera npc`() {
         val base = npcBase().copy(tipoExaltado = TipoExaltadoEncontro.LUNAR)
         assertEquals(
