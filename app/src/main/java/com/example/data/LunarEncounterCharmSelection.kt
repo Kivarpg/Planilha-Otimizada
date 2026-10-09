@@ -139,20 +139,20 @@ internal object LunarEncounterCharmSelection {
             }
             foco ?: run {
                 val ofensivos = listOf("Força", "Destreza")
+                // Indice comum às duas simulacoes ofensivas: os nomes e as
+                // categorias nao mudam entre Forca e Destreza nesta selecao.
+                val categoriasPorNome = HashMap<String, MutableList<String>>()
+                for ((categoria, nomes) in routeContext.charmNamesByCategory) {
+                    for (nome in nomes) {
+                        categoriasPorNome.getOrPut(nome) { mutableListOf() }.add(categoria)
+                    }
+                }
                 val pontuacoes = ofensivos.associateWith { atributo ->
                     val candidatos = catalogoPorAtributo[atributo].orEmpty()
                         .sortedWith(compareBy<EncantoLunarDefinition> { it.minEssencia }.thenBy { it.nome })
                     val adquiridos = mutableSetOf<String>()
-                    val categoriaNomes = routeContext.charmNamesByCategory
-                    // Atualiza as contagens uma vez por aquisição, em vez de
-                    // percorrer todos os nomes adquiridos a cada pré-requisito.
+                    // Contagens independentes para cada arvore simulada.
                     val contagensCategoria = HashMap<String, Int>()
-                    val categoriasPorNome = HashMap<String, MutableList<String>>()
-                    for ((categoria, nomes) in categoriaNomes) {
-                        for (nome in nomes) {
-                            categoriasPorNome.getOrPut(nome) { mutableListOf() }.add(categoria)
-                        }
-                    }
                     var maiorEssencia = 0
                     // Cada passagem adquire ao menos um Encanto ou encerra.
                     // Limitar pelo tamanho do catalogo impede ciclos.
