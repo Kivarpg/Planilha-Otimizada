@@ -488,7 +488,10 @@ object EncounterCharmRouteOptimizer {
             val candidateSocialTags=socialTagsPorNome[candidateName] ?: fallbackPrepared!!.social
             // A categoria do candidato é invariável durante esta pontuação.
             // Resolva uma única vez em vez de repetir o callback para cada Encanto já selecionado.
-            val candidateCategory = categoryPorNome[candidateName] ?: categoria(candidato)
+            // Para Lunares, categoriaNoEstado pode resolver uma rota diferente
+            // conforme os Atributos já adquiridos. A afinidade deve usar a
+            // categoria do estado corrente, não a categoria estática do catálogo.
+            val candidateCategory = stateCategory
             var combatAffinity = 0
             for (selectedName in selecionados) {
                 val selectedTags = combatTagsPorNome[selectedName].orEmpty()
