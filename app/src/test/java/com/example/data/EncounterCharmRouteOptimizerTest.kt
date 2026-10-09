@@ -760,4 +760,28 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals("Corpo de Touro", escolhido?.nome)
     }
 
+    @Test
+    fun `limite de repeticao projetada nao altera escolha de encanto unico`() {
+        val (corpo, _) = encanto("Corpo de Touro", 10, habilidade = "Resistência")
+        val (unico, _) = encanto("Encanto Unico", 8)
+        val catalogo = listOf(corpo, unico)
+        fun escolher(limitar: Boolean) = EncounterCharmRouteOptimizer.escolher(
+            candidatos = listOf(unico),
+            catalogoCompleto = catalogo,
+            nomesSelecionados = setOf(corpo.nome),
+            contagensCategorias = mapOf("resistência" to 1),
+            elegivel = { def, nomes, _ ->
+                def.nome == corpo.nome || def.nome !in nomes
+            },
+            nome = { it.nome },
+            categoria = { it.habilidade },
+            custoXp = { if (it.nome == unico.nome) 8 else 10 },
+            permiteAquisicaoRepetida = { it.nome == corpo.nome },
+            repeatableOnlyAtRoot = limitar,
+            profundidade = 2
+        )
+        assertEquals("Encanto Unico", escolher(true)?.nome)
+        assertEquals(escolher(false)?.nome, escolher(true)?.nome)
+    }
+
 }
