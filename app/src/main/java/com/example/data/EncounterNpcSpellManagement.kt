@@ -123,7 +123,7 @@ object EncounterNpcSpellManagement {
             // A vaga inicial/gratuita deixa de conceder este Feitiço. Os demais
             // Feitiços permanecem intocados.
             val restantes = npc.feiticos.filterNot {
-                EncantosSolaresCatalog.sameName(it.nome, npc.feiticoInicialNome.orEmpty())
+                it.circulo == def.circulo && EncantosSolaresCatalog.sameName(it.nome, npc.feiticoInicialNome.orEmpty())
             }
             return npc.copy(feiticos = restantes, feiticoInicialNome = null)
         }
