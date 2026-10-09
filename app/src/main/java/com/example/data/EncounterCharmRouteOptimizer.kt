@@ -33,7 +33,9 @@ object EncounterCharmRouteOptimizer {
         val selectedBits: java.util.BitSet,
         val categoryCounts: List<Int>,
         /** Categorias dinâmicas não previstas no catálogo estático continuam na chave. */
-        val overflowCounts: List<Pair<String, Int>>
+        val overflowCounts: List<Pair<String, Int>>,
+        /** Encantos previamente adquiridos ausentes do catálogo atual também distinguem estados. */
+        val externalSelectedNames: Set<String> = emptySet()
     )
 
     /**
@@ -78,7 +80,11 @@ object EncounterCharmRouteOptimizer {
             contagens: Map<String, Int>
         ): CompactEligibilityKey {
             val bits = java.util.BitSet(nameOrdinal.size)
-            for (selected in selecionados) nameOrdinal[selected]?.let(bits::set)
+            val externalNames = HashSet<String>()
+            for (selected in selecionados) {
+                val ordinal = nameOrdinal[selected]
+                if (ordinal != null) bits.set(ordinal) else externalNames.add(selected)
+            }
             val counts = IntArray(categoryOrdinal.size)
             var overflow: ArrayList<Pair<String, Int>>? = null
             for ((category, count) in contagens) {
@@ -92,7 +98,7 @@ object EncounterCharmRouteOptimizer {
                 }
             }
             val overflowCounts = overflow?.apply { sortBy { it.first } } ?: emptyList()
-            return CompactEligibilityKey(bits, counts.toList(), overflowCounts)
+            return CompactEligibilityKey(bits, counts.toList(), overflowCounts, externalNames)
         }
 
         internal fun compactKeyAfter(
@@ -101,13 +107,16 @@ object EncounterCharmRouteOptimizer {
             category: String
         ): CompactEligibilityKey {
             val bits = parent.selectedBits.clone() as java.util.BitSet
-            nameOrdinal[selectedName]?.let(bits::set)
+            val selectedOrdinal = nameOrdinal[selectedName]
+            if (selectedOrdinal != null) bits.set(selectedOrdinal)
+            val externalNames = if (selectedOrdinal == null) parent.externalSelectedNames + selectedName
+                else parent.externalSelectedNames
             val normalized = category.trim().lowercase()
             val ordinal = categoryOrdinal[normalized]
             if (ordinal != null) {
                 val counts = parent.categoryCounts.toMutableList()
                 counts[ordinal] = counts[ordinal] + 1
-                return CompactEligibilityKey(bits, counts, parent.overflowCounts)
+                return CompactEligibilityKey(bits, counts, parent.overflowCounts, externalNames)
             }
             val overflow = ArrayList<Pair<String, Int>>(parent.overflowCounts.size + 1)
             var inserted = false
@@ -126,7 +135,7 @@ object EncounterCharmRouteOptimizer {
                 }
             }
             if (!inserted) overflow += normalized to 1
-            return CompactEligibilityKey(bits, parent.categoryCounts, overflow)
+            return CompactEligibilityKey(bits, parent.categoryCounts, overflow, externalNames)
         }
     }
 
