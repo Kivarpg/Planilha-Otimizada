@@ -446,6 +446,10 @@ object EncounterCharmRouteOptimizer {
                 if (unlockedName in before) continue
                 val unlocked = catalogoPorNome.getValue(unlockedName)
                 if (unlockedName in selecionados && !permiteAquisicaoRepetida(unlocked)) continue
+                // O sinal de desbloqueio precisa refletir Encantos realmente
+                // adquiríveis. Não premie um repetível já no limite no estado
+                // projetado, mesmo que a elegibilidade tenha sido memoizada.
+                if (reachedRepeatLimit(unlocked, derivedCompactKey, afterSelected)) continue
                 // Quando repetições só são permitidas na raiz, não premie
                 // desbloqueios que a própria expansão profunda descartará.
                 if (repeatableOnlyAtRoot && permiteAquisicaoRepetida(unlocked)) continue
