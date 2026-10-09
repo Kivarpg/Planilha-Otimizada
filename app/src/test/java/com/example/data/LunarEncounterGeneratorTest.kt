@@ -65,6 +65,21 @@ class LunarEncounterGeneratorTest {
     }
 
     @Test
+    fun `foco ofensivo explicito prevalece sobre pontuacao automatica`() {
+        val resultado = LunarEncounterCharmSelection.selecionarEncantosIniciaisComRotas(
+            catalogo = emptyList(),
+            attributes = mapOf("Força" to 5, "Destreza" to 3, "Vigor" to 3),
+            essencia = 1,
+            ordemAtributos = listOf("Força", "Destreza", "Vigor"),
+            quantidade = 0,
+            random = Random(7),
+            arquetipo = ArquetipoEncontro.FISICO,
+            atributoFocoUsuario = "Destreza"
+        )
+        assertEquals("Destreza", resultado.ataqueEscolhido)
+    }
+
+    @Test
     fun `geracao Lunar fisica registra arvore ofensiva mesmo sem encantos disponiveis`() {
         repeat(EncounterTestSamples.count(30)) { seed ->
             val npc = EncounterGenerator.gerarLunar(
