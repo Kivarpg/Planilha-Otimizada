@@ -246,11 +246,19 @@ class LunarEncounterGeneratorTest {
         assertEquals(depois.xpGastoTotal, revertidoUm.xpGastoTotal)
         assertEquals(depois.charms.map { it.nome }, revertidoUm.charms.map { it.nome })
         assertEquals(depois.historicoXpBatches.size, revertidoUm.historicoXpBatches.size)
+        assertEquals(depois.attributes, revertidoUm.attributes)
+        assertEquals(depois.corpoDeTouroCount, revertidoUm.corpoDeTouroCount)
+        assertEquals(depois.essencia, revertidoUm.essencia)
+        assertEquals(depois.formaEspiritualSecundaria, revertidoUm.formaEspiritualSecundaria)
         val revertidoDois = EncounterExperienceLunar.reduceLunar(revertidoUm)
         assertEquals(npc.xpAtual, revertidoDois.xpAtual)
         assertEquals(npc.xpGastoTotal, revertidoDois.xpGastoTotal)
         assertEquals(npc.charms.map { it.nome }, revertidoDois.charms.map { it.nome })
         assertEquals(npc.historicoXpBatches.size, revertidoDois.historicoXpBatches.size)
+        assertEquals(npc.attributes, revertidoDois.attributes)
+        assertEquals(npc.corpoDeTouroCount, revertidoDois.corpoDeTouroCount)
+        assertEquals(npc.essencia, revertidoDois.essencia)
+        assertEquals(npc.formaEspiritualSecundaria, revertidoDois.formaEspiritualSecundaria)
 
         val nomesNaOrdem = segundo.charms.map { it.nome }
         nomesNaOrdem.forEachIndexed { posicao, nome ->
