@@ -295,6 +295,14 @@ object EncounterCharmRouteOptimizer {
         val legacyEligibilityCache = eligibilityMemo
         val compactCache = compactEligibilityMemo ?: if (eligibilityMemo == null) HashMap() else null
 
+        fun reachedRepeatLimit(def:D, stateKey:CompactEligibilityKey?):Boolean {
+            if (!permiteAquisicaoRepetida(def)) return false
+            val limit = repeatableAcquisitionLimit?.invoke(def) ?: return false
+            val name = nome(def)
+            return (initialAcquisitionCounts[name] ?: 0) +
+                (stateKey?.repeatedAcquisitions?.get(name) ?: 0) >= limit
+        }
+
         fun eligibleNames(
             selecionados:Set<String>,
             contagens:Map<String,Int>,
@@ -317,6 +325,7 @@ object EncounterCharmRouteOptimizer {
             for (def in catalogoCompleto) {
                 val defName = nome(def)
                 if (defName in selecionados && !permiteAquisicaoRepetida(def)) continue
+                if (reachedRepeatLimit(def, stateKey)) continue
                 if (!consumeWork()) {
                     avaliacaoCompleta = false
                     break
@@ -367,12 +376,7 @@ object EncounterCharmRouteOptimizer {
                     // a elegibilidade legada observa nomes/categorias, não a
                     // multiplicidade individual da chave compacta.
                     for (def in catalogoCompleto) {
-                        if (!permiteAquisicaoRepetida(def)) continue
-                        val limit = repeatableAcquisitionLimit?.invoke(def) ?: continue
-                        val defName = nome(def)
-                        val acquired = (initialAcquisitionCounts[defName] ?: 0) +
-                            (derivedCompactKey?.repeatedAcquisitions?.get(defName) ?: 0)
-                        if (acquired >= limit) next.remove(defName)
+                        if (reachedRepeatLimit(def, derivedCompactKey)) next.remove(nome(def))
                     }
                     var checks = 0
                     val affectedNames = monotonicAffectedNames
@@ -389,6 +393,10 @@ object EncounterCharmRouteOptimizer {
                             // O conjunto anterior pode conter o Encanto adquirido
                             // antes de ele entrar em afterSelected. Não o mantenha
                             // como elegível nem o recoloque no cache pós-compra.
+                            next.remove(defName)
+                            continue
+                        }
+                        if (reachedRepeatLimit(def, derivedCompactKey)) {
                             next.remove(defName)
                             continue
                         }
