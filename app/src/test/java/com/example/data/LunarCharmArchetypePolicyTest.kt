@@ -231,6 +231,31 @@ class LunarCharmArchetypePolicyTest {
     }
 
     @Test
+    fun `cadeia lunar desbloqueia etapas sucessivas no mesmo lote de aquisicoes`() {
+        val raiz = charm(nome = "Raiz")
+        val intermediario = charm(nome = "Intermediario", pre = "Raiz")
+        val final = charm(nome = "Final", pre = "Intermediario")
+        val catalogo = listOf(final, intermediario, raiz)
+        val contexto = LunarCharmArchetypePolicy.prepare(catalogo, emptySet())
+        val atributos = mapOf("Destreza" to 3)
+        val adquiridos = mutableSetOf<String>()
+
+        // O catálogo está deliberadamente em ordem inversa: cada passagem
+        // deve reconsiderar a elegibilidade depois da aquisição anterior.
+        repeat(3) {
+            val proximo = catalogo.firstOrNull { def ->
+                def.nome !in adquiridos &&
+                    LunarCharmArchetypePolicy.eligibleRoutes(
+                        def, contexto, atributos, 1, adquiridos, catalogo
+                    ).isNotEmpty()
+            }
+            assertNotNull("Etapa de aquisição bloqueada indevidamente", proximo)
+            adquiridos.add(proximo!!.nome)
+        }
+        assertEquals(setOf("Raiz", "Intermediario", "Final"), adquiridos)
+    }
+
+    @Test
     fun `rota arquetipo so existe quando forma satisfaz condicao`() {
         val def = charm(routes = listOf(
             LunarCharmArchetypeRoute("Percepção", "VISAO_NOTURNA", 3, "Nenhum")
