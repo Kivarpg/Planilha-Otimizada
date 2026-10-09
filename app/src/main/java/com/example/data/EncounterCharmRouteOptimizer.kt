@@ -363,6 +363,17 @@ object EncounterCharmRouteOptimizer {
                     val startedDelta = if (metrics != null) System.nanoTime() else 0L
                     val next = LinkedHashSet(before)
                     if (!permiteAquisicaoRepetida(candidato)) next.remove(nome(candidato))
+                    // Não herde um repetível que atingiu seu teto após a compra:
+                    // a elegibilidade legada observa nomes/categorias, não a
+                    // multiplicidade individual da chave compacta.
+                    for (def in catalogoCompleto) {
+                        if (!permiteAquisicaoRepetida(def)) continue
+                        val limit = repeatableAcquisitionLimit?.invoke(def) ?: continue
+                        val defName = nome(def)
+                        val acquired = (initialAcquisitionCounts[defName] ?: 0) +
+                            (derivedCompactKey?.repeatedAcquisitions?.get(defName) ?: 0)
+                        if (acquired >= limit) next.remove(defName)
+                    }
                     var checks = 0
                     val affectedNames = monotonicAffectedNames
                         ?.invoke(candidato, selecionados, contagens, afterCounts)
