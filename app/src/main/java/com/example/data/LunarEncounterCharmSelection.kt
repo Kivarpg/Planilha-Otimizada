@@ -149,7 +149,12 @@ internal object LunarEncounterCharmSelection {
                                 LunarCharmArchetypePolicy.eligibleRoutes(
                                     def, routeContext, attributes, 5, adquiridos, catalogo,
                                     contagemCategoriaSelecionada = { categoria ->
-                                        if (categoria.equals(atributo, ignoreCase = true)) adquiridos.size else 0
+                                        if (categoria.isBlank()) {
+                                            adquiridos.size
+                                        } else {
+                                            routeContext.charmNamesByCategory[categoria.trim().lowercase()]
+                                                ?.count { it in adquiridos } ?: 0
+                                        }
                                     }
                                 ).any { it.atributo == atributo }
                         }
