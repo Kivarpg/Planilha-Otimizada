@@ -253,8 +253,12 @@ internal object EncounterExperienceLunar {
         // Arquétipo. Compartilhar a pontuação evita percorrer sua árvore
         // de descendentes novamente em cada gaveta.
         val alcancePorEncanto = mutableMapOf<String, Int>()
-        val definicoesPorNome = catalogo.associateBy { it.nome }
-        val limiteEssenciaCatalogo = catalogo.maxOfOrNull { it.minEssencia } ?: 0
+        // Só o arquétipo Físico utiliza a classificação por profundidade.
+        // Evitar índices e varreduras de catálogo para Social e Mental.
+        val definicoesPorNome = if (ataqueEscolhido != null) catalogo.associateBy { it.nome } else emptyMap()
+        val limiteEssenciaCatalogo = if (ataqueEscolhido != null) {
+            catalogo.maxOfOrNull { it.minEssencia } ?: 0
+        } else 0
         fun candidatosOrdenados(atributoRamo: String): List<EncantoLunarDefinition> =
             candidatosPorRamo.getOrPut(atributoRamo.lowercase()) {
                 val encantos = routeContextAtual.charmsByAttribute[atributoRamo]
