@@ -23,6 +23,25 @@ class EncounterGeneratorXpTest {
     )
 
     @Test
+    fun `lunar preserva especializacao ofensiva entre lotes e reversao de XP`() {
+        val original = npcBase().copy(
+            tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
+            lunarAtaqueEscolhido = "Destreza",
+            focoProgressaoExplicito = null,
+            attributes = mapOf("Força" to 3, "Destreza" to 4, "Vigor" to 3)
+        )
+        val ordem = listOf("Força", "Vigor", "Destreza")
+        val lote1 = EncounterExperienceLunar.expandLunar(original, emptyList(), ordem)
+        val lote2 = EncounterExperienceLunar.expandLunar(lote1, emptyList(), ordem)
+        assertEquals("Destreza", lote1.lunarAtaqueEscolhido)
+        assertEquals("Destreza", lote2.lunarAtaqueEscolhido)
+        assertEquals(2, lote2.historicoXpBatches.size)
+        val revertido = EncounterExperienceLunar.reduceLunar(lote2)
+        assertEquals("Destreza", revertido.lunarAtaqueEscolhido)
+        assertEquals(lote1.historicoXpBatches, revertido.historicoXpBatches)
+    }
+
+    @Test
     fun `encanto favorecido e comprado assim que o saldo chega a 8 XP`() {
         val encanto = EncantoSolarDefinition(
             id = "xp-favored", habilidade = "Armas Brancas", nome = "Encanto Favorecido",
