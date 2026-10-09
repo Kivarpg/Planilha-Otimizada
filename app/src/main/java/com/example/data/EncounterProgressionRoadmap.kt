@@ -232,7 +232,8 @@ object EncounterProgressionRoadmapService {
                 habilidadeMelhorada = lote.habilidadeMelhorada,
                 pontosGanhosNaHabilidade = lote.pontosGanhosNaHabilidade,
                 especializacaoAdicionada = lote.especializacaoAdicionada,
-                pontosForcaDeVontadeComprados = lote.pontosForcaDeVontadeComprados
+                pontosForcaDeVontadeComprados = lote.pontosForcaDeVontadeComprados,
+                lunarAtaqueEscolhido = atual.lunarAtaqueEscolhido
             )
         }
         // Evita devolver um planejamento cancelado durante a montagem do último passo.
