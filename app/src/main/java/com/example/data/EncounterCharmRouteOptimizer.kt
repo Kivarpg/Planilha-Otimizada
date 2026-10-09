@@ -348,7 +348,10 @@ object EncounterCharmRouteOptimizer {
                         checks++
                         if (elegivel(def, afterSelected, afterCounts)) next += defName
                     }
-                    if (avaliacaoCompleta) {
+                    // Se 'before' foi interrompido pelo orçamento, 'next' herda
+                    // uma lista incompleta. Mesmo sem novas verificações, esse
+                    // resultado não pode ser publicado como estado completo.
+                    if (avaliacaoCompleta && !budgetExhausted) {
                         if (afterCompactKey != null) compactCache!![afterCompactKey] = next
                         if (afterLegacyKey != null) legacyEligibilityCache!![afterLegacyKey] = next
                     }
