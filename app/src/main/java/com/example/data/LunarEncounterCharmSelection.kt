@@ -249,12 +249,14 @@ internal object LunarEncounterCharmSelection {
         val candidatoCorpoDeTouro = catalogMetadata(catalogo).corpoDeTouro
         val elegivelCorpoDeTouro = candidatoCorpoDeTouro != null && elegivelSelecionado(candidatoCorpoDeTouro)
 
-        // Cada Corpo de Touro ocupa 1 dos 15 slots normais. Vigor determina
-        // quantas aquisições são possíveis, mas nunca permite ultrapassar o
-        // orçamento total de Encantos.
+        // Cada Corpo de Touro ocupa um slot normal. Para Lunares Fisicos,
+        // a geracao inicial compra no maximo um, preservando vagas para
+        // aprofundar a unica arvore ofensiva; outros arquetipos mantem
+        // o limite anterior determinado por Vigor.
         if (elegivelCorpoDeTouro && reservaFeiticaria == 0) {
             val corpoDeTouro = candidatoCorpoDeTouro ?: error("Corpo de Touro elegível sem definição")
-            repeat(limiteCorpoDeTouro.coerceAtMost(limiteDeVagasAntesDaFeiticaria)) {
+            val limiteInicial = if (arquetipo == ArquetipoEncontro.FISICO) 1 else limiteCorpoDeTouro
+            repeat(limiteInicial.coerceAtMost(limiteDeVagasAntesDaFeiticaria)) {
                 if (rotaElegivel(corpoDeTouro) == null) return@repeat
                 selecionados += corpoDeTouro
                 registrar(corpoDeTouro)
