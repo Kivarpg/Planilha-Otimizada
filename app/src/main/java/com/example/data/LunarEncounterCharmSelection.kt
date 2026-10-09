@@ -211,7 +211,8 @@ internal object LunarEncounterCharmSelection {
                 arquetipo != ArquetipoEncontro.FISICO ||
                     (!atributoAquisicao.equals(ataqueDescartado, ignoreCase = true) &&
                         (!atributoAquisicao.equals("Vigor", ignoreCase = true) ||
-                            vigorPermitido(categoriasSelecionadas)))
+                            vigorPermitido(categoriasSelecionadas)) &&
+                        (def.nome != NOME_CORPO_DE_TOURO || contagemCorpoDeTouroSelecionada == 0))
             ) { "Aquisição Lunar física viola árvore ofensiva única ou limite de Vigor: ${def.nome}" }
             nomesSelecionados += def.nome
             atributosAquisicaoSelecionados.putIfAbsent(def.nome, atributoAquisicao)
