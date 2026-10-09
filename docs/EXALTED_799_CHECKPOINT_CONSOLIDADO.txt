@@ -79,3 +79,10 @@ CONSOLIDAÇÃO DE ALTERAÇÕES — 2026-10-08 — EXALTED.799
 - A consolidação é de código-fonte já versionado: NÃO houve squash, merge, compilação, execução de testes ou geração de APK/ZIP nesta etapa. Os 70 commits permanecem no histórico da branch.
 - Validação ainda necessária: testes unitários, gates do workflow de release, assinatura, instalação e verificação manual das interfaces e fluxos críticos. Não declarar 100% ou build aprovado antes dessas evidências.
 - Terminologia: Charm = Encanto; expressão incorreta sobre 'amuletos' foi vista no processamento do ChatGPT, não comprovada no APK.
+
+AUDITORIA INCREMENTAL — 2026-10-08 — APÓS CONSOLIDAÇÃO
+- Comparação remota atualizada contra 9c8af5daecd4: 73 commits à frente, 9 arquivos alterados (incluindo este relatório).
+- Revisado o ciclo de vida assíncrono do popup CharmPrerequisiteTreeDialog: a conversão de catálogo usa Dispatchers.Default e é condicionada ao estado ainda não preparado; a construção de resultado também usa Dispatchers.Default; rememberUpdatedState mantém a callback atualizada sem reiniciar a operação.
+- Revisado o parser: o filtro dropWhile de candidatos mais longos é compatível com a ordenação decrescente de comprimento existente; os três testes adicionados verificam correspondência curta, texto não resolvido e requisito genérico.
+- Atenção: esta revisão é estática. Não demonstra ausência de travamentos, sobreposição visual ou erros de execução. Os testes recém-adicionados não foram executados.
+- Decisão: não fazer outra microalteração sem falha concreta; priorizar testes, instalação e verificação das 15 abas na validação final autorizada.
