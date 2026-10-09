@@ -259,7 +259,12 @@ internal object EncounterExperienceLunar {
                 val limiteCorpoDeTouro = (attributesAtuais["Vigor"] ?: 0).coerceAtLeast(0)
                 var candidato: EncantoLunarDefinition? = null
                 var rotaEscolhida: LunarCharmArchetypePolicy.AcquisitionRoute? = null
-                for (def in routeContextAtual.charmsByAttribute[atributoRamo].orEmpty()) {
+                // Os nomes do índice podem ter capitalização diferente do foco salvo.
+            val encantosDoRamo = routeContextAtual.charmsByAttribute[atributoRamo]
+                ?: routeContextAtual.charmsByAttribute.entries.firstOrNull {
+                    it.key.equals(atributoRamo, ignoreCase = true)
+                }?.value.orEmpty()
+            for (def in encantosDoRamo) {
                     if (def.nome in nomesSelecionados && !(def.nome == NOME_CORPO_DE_TOURO && corpoDeTouro < limiteCorpoDeTouro)) continue
                     val rotasElegiveis = LunarCharmArchetypePolicy.eligibleRoutes(
                         def, routeContextAtual, attributesAtuais, essenciaAtual, nomesSelecionados, catalogo,
