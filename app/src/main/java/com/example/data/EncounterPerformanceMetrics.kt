@@ -14,6 +14,8 @@ class EncounterPerformanceMetrics {
     private val generationCoreNanos = AtomicLong()
     private val generationQualityNanos = AtomicLong()
     private val generationSamples = java.util.concurrent.ConcurrentLinkedQueue<Long>()
+    private val generationSampleCount = AtomicLong()
+    private val xpSampleCount = AtomicLong()
     private val xpCount = AtomicLong()
     private val xpNanos = AtomicLong()
     private val xpMaxNanos = AtomicLong()
@@ -65,8 +67,14 @@ class EncounterPerformanceMetrics {
         nanos: Long
     ) {
         samples.add(nanos)
-        while (samples.size > MAX_PERCENTILE_SAMPLES) {
-            samples.poll()
+        // ConcurrentLinkedQueue.size() percorre a fila inteira. Evitar
+        // essa travessia em cada amostra no caminho interativo da Aba 11.
+        // O contador atomico acompanha o tamanho mesmo com registros paralelos.
+        val counter = if (samples === generationSamples) generationSampleCount else xpSampleCount
+        counter.incrementAndGet()
+        while (counter.get() > MAX_PERCENTILE_SAMPLES) {
+            if (samples.poll() != null) counter.decrementAndGet()
+            else break
         }
     }
 
