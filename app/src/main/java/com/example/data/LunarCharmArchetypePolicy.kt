@@ -31,6 +31,20 @@ internal object LunarCharmArchetypePolicy {
         fun directCharmDependentCount(charmName: String): Int =
             dependentsByCharm[charmName]?.size ?: 0
 
+        /** Alcance transitivo de dependentes nominais, com proteção contra ciclos. */
+        fun transitiveCharmDependentCount(charmName: String): Int {
+            val visited = mutableSetOf(charmName)
+            val pending = ArrayDeque<String>()
+            pending.addLast(charmName)
+            while (pending.isNotEmpty()) {
+                val current = pending.removeFirst()
+                for (dependent in dependentsByCharm[current].orEmpty()) {
+                    if (visited.add(dependent)) pending.addLast(dependent)
+                }
+            }
+            return visited.size - 1
+        }
+
         /**
          * Delta exato para aquisição monotônica: somente Encantos cujo requisito
          * menciona o Encanto comprado, a categoria incrementada ou a contagem
