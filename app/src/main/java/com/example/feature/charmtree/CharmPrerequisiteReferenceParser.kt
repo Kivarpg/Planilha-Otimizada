@@ -89,13 +89,14 @@ internal object CharmPrerequisiteReferenceParser {
             val normalizedId: String,
             val normalizedName: String
         )
-        val entries = catalog.map { entry ->
+        val entries = catalog.mapNotNull { entry ->
             val id = entry.id.trim()
-            val name = entry.name.trim()
             // Entradas sem ID não representam um nó endereçável na árvore.
-            // Mantê-las no índice poderia produzir uma aresta com ID vazio.
+            // Filtrar antes da normalização evita trabalho em registros inválidos.
+            if (id.isBlank()) return@mapNotNull null
+            val name = entry.name.trim()
             NormalizedEntry(id, name, normalize(id), normalize(name))
-        }.filter { it.id.isNotBlank() }
+        }
         // Apenas a unicidade importa: dispensar listas intermediárias por nome.
         val idsByNormalizedName = HashMap<String, MutableSet<String>>()
         for (entry in entries) {
