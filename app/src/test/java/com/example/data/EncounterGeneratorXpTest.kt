@@ -23,6 +23,33 @@ class EncounterGeneratorXpTest {
     )
 
     @Test
+    fun `lunar fisico bloqueia rota alternativa da ofensiva descartada`() {
+        val alternativo = EncantoLunarDefinition(
+            id = "alternativo", atributo = "Destreza", subdivisao = null,
+            nome = "Encanto de rota alternativa", nomeIngles = "", custo = "1",
+            minsTexto = "Destreza 2, Essência 1", minAtributo = 2,
+            minEssencia = 1, tipo = "Reflexivo", palavrasChave = "",
+            duracao = "", preRequisitos = "Nenhum", descricao = "",
+            rotasArquetipo = listOf(
+                LunarCharmArchetypeRoute("Força", "VISAO_NOTURNA", 2, "Nenhum")
+            )
+        )
+        val npc = npcBase().copy(
+            tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
+            lunarAtaqueEscolhido = "Destreza",
+            attributes = mapOf("Força" to 4, "Destreza" to 4, "Vigor" to 3),
+            lunarArchetypeTraits = listOf("VISAO_NOTURNA"),
+            xpAtual = 20
+        )
+        val evoluido = EncounterExperienceLunar.expandLunar(
+            npc, listOf(alternativo), listOf("Força", "Destreza", "Vigor")
+        )
+        assertEquals(1, evoluido.charms.count { it.nome == alternativo.nome })
+        assertEquals("Destreza", evoluido.charms.single().habilidadeVinculada)
+        assertEquals("Destreza", evoluido.lunarAtaqueEscolhido)
+    }
+
+    @Test
     fun `lunar fisico compra somente arvore ofensiva escolhida e respeita prerequisitos`() {
         fun encanto(nome: String, atributo: String, pre: String = "Nenhum") =
             EncantoLunarDefinition(
