@@ -34,6 +34,10 @@ class LunarCharmArchetypePolicyTest {
         assertEquals(1, context.transitiveCharmDependentCount("Ramo A"))
         assertEquals(0, context.transitiveCharmDependentCount("Folha"))
         assertEquals(0, context.transitiveCharmDependentCount("Inexistente"))
+        val essencias = mapOf("Raiz" to 1, "Ramo A" to 2, "Ramo B" to 3, "Folha" to 5)
+        assertEquals(5, context.highestDependentEssence("Raiz", essencias))
+        assertEquals(5, context.highestDependentEssence("Ramo A", essencias))
+        assertEquals(null, context.highestDependentEssence("Folha", essencias))
     }
 
     @Test
