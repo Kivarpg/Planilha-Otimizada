@@ -935,4 +935,51 @@ class EncounterCharmRouteOptimizerTest {
         assertEquals(escolher(false), escolher(true))
     }
 
+    @Test
+    fun `repetivel no teto nao e candidato em nenhum modo de elegibilidade`() {
+        val (corpo, _) = encanto("Corpo de Touro", 10, habilidade = "Resistência")
+        for (monotona in listOf(false, true)) {
+            val escolhido = EncounterCharmRouteOptimizer.escolher(
+                candidatos = listOf(corpo),
+                catalogoCompleto = listOf(corpo),
+                nomesSelecionados = setOf(corpo.nome),
+                contagensCategorias = mapOf("resistência" to 2),
+                elegivel = { _, _, _ -> true },
+                nome = { it.nome },
+                categoria = { it.habilidade },
+                custoXp = { 10 },
+                permiteAquisicaoRepetida = { true },
+                repeatableAcquisitionLimit = { 2 },
+                initialAcquisitionCounts = mapOf(corpo.nome to 2),
+                monotonicEligibility = monotona,
+                profundidade = 3
+            )
+            assertEquals("modo monotono=$monotona", null, escolhido)
+        }
+    }
+
+    @Test
+    fun `repetivel abaixo do teto permanece elegivel nos dois modos`() {
+        val (corpo, _) = encanto("Corpo de Touro", 10, habilidade = "Resistência")
+        for (monotona in listOf(false, true)) {
+            val escolhido = EncounterCharmRouteOptimizer.escolher(
+                candidatos = listOf(corpo),
+                catalogoCompleto = listOf(corpo),
+                nomesSelecionados = setOf(corpo.nome),
+                contagensCategorias = mapOf("resistência" to 1),
+                elegivel = { _, _, _ -> true },
+                nome = { it.nome },
+                categoria = { it.habilidade },
+                custoXp = { 10 },
+                permiteAquisicaoRepetida = { true },
+                repeatableOnlyAtRoot = true,
+                repeatableAcquisitionLimit = { 2 },
+                initialAcquisitionCounts = mapOf(corpo.nome to 1),
+                monotonicEligibility = monotona,
+                profundidade = 3
+            )
+            assertEquals("modo monotono=$monotona", corpo.nome, escolhido?.nome)
+        }
+    }
+
 }
