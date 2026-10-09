@@ -23,6 +23,28 @@ class EncounterGeneratorXpTest {
     )
 
     @Test
+    fun `lunar mental pode adquirir encanto de Destreza sem especializacao fisica`() {
+        val encanto = EncantoLunarDefinition(
+            id = "destreza-mental", atributo = "Destreza", subdivisao = null,
+            nome = "Encanto Destreza Mental", nomeIngles = "", custo = "1",
+            minsTexto = "Destreza 2, Essência 1", minAtributo = 2,
+            minEssencia = 1, tipo = "Reflexivo", palavrasChave = "",
+            duracao = "", preRequisitos = "Nenhum", descricao = ""
+        )
+        val inicial = npcBase().copy(
+            tipoExaltado = com.example.model.TipoExaltadoEncontro.LUNAR,
+            arquetipo = ArquetipoEncontro.MENTAL,
+            attributes = mapOf("Força" to 3, "Destreza" to 4, "Vigor" to 3),
+            xpAtual = 20
+        )
+        val resultado = EncounterExperienceLunar.expandLunar(
+            inicial, listOf(encanto), listOf("Destreza", "Força", "Vigor")
+        )
+        assertTrue(resultado.charms.any { it.nome == encanto.nome })
+        assertEquals(null, resultado.lunarAtaqueEscolhido)
+    }
+
+    @Test
     fun `lunar social pode adquirir encanto de Forca sem bloqueio fisico`() {
         val encanto = EncantoLunarDefinition(
             id = "forca-social", atributo = "Força", subdivisao = null,
