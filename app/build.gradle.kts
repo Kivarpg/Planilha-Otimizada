@@ -51,6 +51,12 @@ require(Regex("^Exalted\\.\\d+$").matches(exaltedProjectName)) {
 }
 val exaltedVersionNumber = exaltedProjectName.substringAfter("Exalted.").toInt()
 
+// Padroniza o JDK utilizado pelo compilador Kotlin e pelas tarefas JVM.
+// Mantém Java 17 alinhado ao GitHub Actions e às opções de compatibilidade Android.
+kotlin {
+    jvmToolchain(17)
+}
+
 android {
     namespace = "com.example"
     compileSdk = 37
