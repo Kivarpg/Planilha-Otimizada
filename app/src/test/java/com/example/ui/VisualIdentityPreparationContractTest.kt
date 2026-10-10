@@ -12,6 +12,8 @@ import kotlin.test.assertTrue
 class VisualIdentityPreparationContractTest {
     private val tabs = File("src/main/java/com/example/ui/SheetTabs.kt").readText()
     private val host = File("src/main/java/com/example/ui/SheetContentArea.kt").readText()
+    private val identity = File("src/main/java/com/example/ui/components/TabIdentitySurface.kt").readText()
+    private val navigation = File("src/main/java/com/example/ui/SheetTabsBar.kt").readText()
 
     @Test
     fun `all fifteen existing tabs remain declared in order`() {
@@ -43,5 +45,21 @@ class VisualIdentityPreparationContractTest {
         assertTrue(host.contains("else -> Modifier.fillMaxWidth()"))
         assertTrue(host.contains("rememberSaveableStateHolder()"))
         assertTrue(host.contains("holder.SaveableStateProvider(selectedTabIndex)"))
+    }
+    @Test
+    fun `identity surface remains neutral until visual pilot is approved`() {
+        assertTrue(identity.contains("fun Modifier.exaltedTabIdentity(chapter: Int = 0): Modifier = this"))
+        assertTrue(identity.contains("fun Modifier.exaltedContentStage(chapter: Int): Modifier = this"))
+        assertTrue(identity.contains("fun Modifier.exaltedExistingPanel(): Modifier = exaltedSectionPanel()"))
+    }
+
+    @Test
+    fun `navigation preserves compact sizing scrolling and selected tab focus`() {
+        assertTrue(navigation.contains("val compact = maxWidth < 600.dp"))
+        assertTrue(navigation.contains("val enlargedText = fontScale > 1.20f"))
+        assertTrue(navigation.contains("LazyRow("))
+        assertTrue(navigation.contains("listState.scrollToItem(selectedTabIndex)"))
+        assertTrue(navigation.contains("onSelectedTab(index)"))
+        assertTrue(navigation.contains("maxLines = if (compact) 2 else 1"))
     }
 }
