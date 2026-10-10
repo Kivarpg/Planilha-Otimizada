@@ -219,7 +219,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = ExaltedMuted, modifier = Modifier.padding(horizontal = 12.dp))
-                    AppText("Ver Log de Erros", color = MaterialTheme.colorScheme.onSurface)
+                    AppText("Ver Log de Erros", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
                 }
             }
         },
