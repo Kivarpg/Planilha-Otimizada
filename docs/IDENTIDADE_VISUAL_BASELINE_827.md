@@ -113,3 +113,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Teste estatico de regressao cobre as seis alocacoes de largura.
 - Nao houve alteracao de preferencias, regras de negocio, nomes de campos ou botoes.
 - Pendente: compilacao Kotlin e testes JVM; inspecao no emulador de fontes ampliadas e tela dividida.
+
+## Preparacao da Exalted.847 (sem compilacao)
+- Configuracoes: a linha `Ver Log de Erros` agora reserva a largura flexivel do rotulo com `Modifier.weight(1f)` ao lado do icone de aviso.
+- Contrato de regressao ampliado para cobrir o rotulo de log junto das seis linhas ajustadas na Exalted.846.
+- Mudanca estritamente de layout, sem alterar o acesso ao log, o estado das preferencias ou a logica de negocio.
+- Pendente: compilacao e testes JVM; inspecao real em emulador de largura estreita, fonte ampliada e janela dividida.
