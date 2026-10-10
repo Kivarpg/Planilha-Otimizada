@@ -15,7 +15,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.text.style.TextAlign
 import com.example.model.*
-import com.example.ui.components.OnyxTexturedBackground
 import com.example.ui.theme.*
 import com.example.viewmodel.SheetViewModel
 import kotlinx.coroutines.*
