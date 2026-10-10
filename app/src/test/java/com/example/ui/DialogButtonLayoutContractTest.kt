@@ -9,6 +9,22 @@ class DialogButtonLayoutContractTest {
     private val charmDialogs = File("src/main/java/com/example/ui/tabs/CharmDetailsDialogs.kt").readText()
     private val lifecycleDialogs = File("src/main/java/com/example/ui/SheetLifecycleDialogs.kt").readText()
 
+    private val inkButton = File("src/main/java/com/example/ui/components/InkButton.kt").readText()
+    private val dialogComponents = File("src/main/java/com/example/ui/components/DialogComponents.kt").readText()
+
+    @Test fun `ink brush uses the measured button bounds`() {
+        assertTrue(inkButton.contains("Modifier.widthIn(max = width).height(height)"))
+        assertTrue(inkButton.contains("modifier = Modifier.fillMaxSize()"))
+        assertTrue(inkButton.contains("clipRect {"))
+        assertFalse(inkButton.contains("Modifier.size(width, height)"))
+    }
+
+    @Test fun `validation report keeps scrolling and avoids fixed height subtraction`() {
+        assertTrue(dialogComponents.contains("screenHeightDp * 0.45f"))
+        assertTrue(dialogComponents.contains("verticalScroll(rememberScrollState())"))
+        assertFalse(dialogComponents.contains("screenHeightDp - 260"))
+    }
+
     @Test fun `charm tree and close actions stay side by side in that order`() {
         assertTrue(charmDialogs.windowed("text = \"Árvore\"".length).count { it == "text = \"Árvore\"" } >= 2)
         assertTrue(charmDialogs.windowed("text = \"Fechar\"".length).count { it == "text = \"Fechar\"" } >= 2)
