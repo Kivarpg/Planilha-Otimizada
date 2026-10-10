@@ -23,6 +23,7 @@ import com.example.ui.components.AppText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
@@ -84,6 +85,7 @@ fun CodeExportResultDialog(
     val qrBitmap = remember(codigo) {
         if (codigo.length <= LIMITE_CARACTERES_PARA_QR) gerarBitmapQrCode(codigo) else null
     }
+    val exportContentHeight = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 480).dp
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
@@ -101,7 +103,7 @@ fun CodeExportResultDialog(
         },
         text = {
             Column(
-                modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
+                modifier = Modifier.fillMaxWidth().heightIn(max = exportContentHeight).verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -167,13 +169,17 @@ fun CodeImportDialog(
     var codeImportError by remember { mutableStateOf<String?>(null) }
     var codeImportLoading by remember { mutableStateOf(false) }
 
+    val importContentHeight = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 480).dp
     AlertDialog(
         onDismissRequest = { if (!codeImportLoading) onDismiss() },
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = { AppText("Carregar por Código", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(
+                modifier = Modifier.fillMaxWidth().heightIn(max = importContentHeight).verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 OutlinedTextField(
                     value = codeImportText,
                     onValueChange = {
