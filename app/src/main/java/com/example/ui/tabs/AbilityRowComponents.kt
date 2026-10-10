@@ -156,7 +156,8 @@ internal fun AbilityCompactRow(
                         color = ExaltedMuted,
                         textAlign = TextAlign.Start,
                         modifier = Modifier.fillMaxWidth(),
-                        maxLines = 1,
+                        maxLines = 2,
+                        softWrap = true,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
