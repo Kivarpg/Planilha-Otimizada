@@ -368,10 +368,9 @@ fun EscolhaTemplateNovaPlanilhaDialog(show: Boolean, onDismiss: () -> Unit, onEs
         },
         confirmButton = {
             Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                // Regra global de grupos de três: lado a lado quando couber;
-                // em largura compacta, 2 em cima e o terceiro centralizado.
-                // Avoid SubcomposeLayout intrinsic measurement inside AlertDialog.
-                // Two compact columns keep all three exalt types available on phones.
+                // Duas opções por linha e a terceira centralizada, sem
+                // BoxWithConstraints dentro do AlertDialog (medidas intrínsecas).
+                // Os rótulos e as ações permanecem iguais para os três tipos.
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
                     maxItemsInEachRow = 2,
