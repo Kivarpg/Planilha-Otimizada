@@ -71,11 +71,7 @@ fun TemplateSelectionScreen(onTemplateSelected: (String) -> Unit, modifier: Modi
                     radius = 1100f
                 )
             )
-            .drawBehind {
-                val line = ExaltedAccentBright.copy(alpha = 0.12f)
-                drawLine(line, Offset(size.width * 0.05f, 0f), Offset(size.width * 0.05f, size.height), 1f)
-                drawLine(line, Offset(size.width * 0.95f, 0f), Offset(size.width * 0.95f, size.height), 1f)
-            }
+
     ) {
         Column(
             modifier = Modifier
