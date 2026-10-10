@@ -65,3 +65,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Teste estatico cobre a existencia do limite, rolagem e acoes do dialogo.
 - Verificacao no emulador ainda necessaria para relatorios extensos, fonte ampliada e tela dividida.
 - CI atual executa testes JVM e gera APK, mas nao executa testes instrumentados no emulador. Automatizacao visual completa exigira infraestrutura adicional, testes de navegacao e imagens de referencia aprovadas.
+
+## Preparacao da Exalted.837 (sem compilacao)
+- Navegacao: titulos de abas podem ocupar duas linhas quando fontScale > 1.20, mesmo em telas nao compactas.
+- Faixa de Pontos de Bonus/Experiencia: altura 34dp com fontes ampliadas, mantendo 25dp no tamanho normal.
+- Contratos estaticos de regressao atualizados para os dois ajustes.
+- Pendencias: compilacao Kotlin e suite JVM, depois validacao visual no emulador em escala de fonte ampliada, rotacao e tela dividida. Nenhuma dessas validacoes visuais foi executada nesta rodada.
