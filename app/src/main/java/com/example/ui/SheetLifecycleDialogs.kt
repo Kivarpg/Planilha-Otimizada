@@ -76,7 +76,7 @@ fun SheetsListDialog(
     if (!show) return
     val sheet by viewModel.sheetState.collectAsState()
     val savedSheets by viewModel.savedSheets.collectAsState()
-    val savedListHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 480).dp
+    val savedListHeightLimit = (LocalConfiguration.current.screenHeightDp * 0.45f).coerceAtMost(480f).dp
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
@@ -217,7 +217,7 @@ fun BackupListDialog(
 ) {
     if (!show) return
     val backups = remember(show, viewModel) { viewModel.listarBackupsPeriodicos() }
-    val backupListHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 480).dp
+    val backupListHeightLimit = (LocalConfiguration.current.screenHeightDp * 0.45f).coerceAtMost(480f).dp
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
