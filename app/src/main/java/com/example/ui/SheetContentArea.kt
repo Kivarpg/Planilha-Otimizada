@@ -27,10 +27,10 @@ internal fun SheetContentArea(tabs:List<SheetTab>,selectedTabIndex:Int){
             .background(
                 Brush.verticalGradient(
                     listOf(
-                        ExaltedBackdropGlow.copy(alpha = .12f),
-                        ExaltedDarkBackground.copy(alpha = .34f),
-                        ExaltedBackdropCore.copy(alpha = .42f),
-                        ExaltedBlack.copy(alpha = .38f)
+                        ExaltedBackdropGlow,
+                        ExaltedDarkBackground,
+                        ExaltedBackdropCore,
+                        ExaltedBlack
                     )
                 )
             )
