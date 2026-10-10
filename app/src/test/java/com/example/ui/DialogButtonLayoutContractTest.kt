@@ -41,6 +41,21 @@ class DialogButtonLayoutContractTest {
         assertTrue(charmDialogs.contains("modifier = Modifier.weight(1f)"))
     }
 
+    @Test fun `attribute and ability labels wrap in compact layouts`() {
+        val attributes = File("src/main/java/com/example/ui/tabs/AttributesTab.kt").readText()
+        val abilityRows = File("src/main/java/com/example/ui/tabs/AbilityRowComponents.kt").readText()
+        val abilitySections = File("src/main/java/com/example/ui/tabs/AbilitySections.kt").readText()
+        val ratingControls = File("src/main/java/com/example/ui/components/RatingDisplayControls.kt").readText()
+        val numericControls = File("src/main/java/com/example/ui/components/NumericRatingControls.kt").readText()
+
+        assertTrue(attributes.contains("maxLines = 2,\\n                softWrap = true"))
+        assertTrue(abilityRows.contains("maxLines = 2,\\n                    softWrap = true"))
+        assertTrue(abilityRows.contains("maxLines = 2,\\n                                softWrap = true"))
+        assertTrue(abilitySections.contains("softWrap=true, maxLines=2"))
+        assertTrue(ratingControls.contains("Arrangement.spacedBy(if (stepperSize <= 34.dp) 4.dp else 10.dp)"))
+        assertTrue(numericControls.contains("modifier = Modifier.weight(1f),\\n                        maxLines = 2"))
+    }
+
     @Test fun `new sheet exalt selection avoids intrinsic measurement`() {
         val start = lifecycleDialogs.indexOf("fun EscolhaTemplateNovaPlanilhaDialog(")
         val block = lifecycleDialogs.substring(start)
