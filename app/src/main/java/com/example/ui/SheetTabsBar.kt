@@ -56,13 +56,13 @@ internal fun SheetTabsBar(
     }
     val showsProgressStrip = selectedTabIndex in 2..8
     val pbExibido = if (showsProgressStrip && !sheet.planilhaConcluida) {
-        remember(sheet, viewModel) { viewModel.calculateBpBreakdown(sheet).remainingBalance.coerceAtLeast(0) }
+        viewModel.calculateBpBreakdown(sheet).remainingBalance.coerceAtLeast(0)
     } else {
         0
     }
     val pbEmAlerta = pbExibido <= 5
     val pontosHabilidadeRestantes = if (selectedTabIndex == 3) {
-        remember(sheet, viewModel) { viewModel.calculateAbilityPointsRemaining(sheet) }
+        viewModel.calculateAbilityPointsRemaining(sheet)
     } else {
         0
     }
