@@ -43,11 +43,12 @@ import com.example.ui.theme.ExaltedMetalGoldShine
 fun ConfirmDeleteDialog(
     itemTitle: String,
     onConfirm: () -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = Modifier.then(gildedDialogBorder()),
+        modifier = modifier.then(gildedDialogBorder()),
         shape = dialogShape,
         icon = {
             Icon(
@@ -151,11 +152,12 @@ fun gildedDialogBorder(): Modifier = Modifier.border(
 fun SaveValidationModal(
     errors: List<String>,
     onDismiss: () -> Unit,
-    onConfirmIncompleteSave: () -> Unit
+    onConfirmIncompleteSave: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = Modifier.then(gildedDialogBorder()),
+        modifier = modifier.then(gildedDialogBorder()),
         shape = dialogShape,
         icon = {
             Icon(
