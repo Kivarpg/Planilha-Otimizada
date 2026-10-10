@@ -166,6 +166,7 @@ class VisualIdentityPreparationContractTest {
         assertTrue(dialogs.contains("AppText(\"Vibração ao tocar\", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f).padding(start = 8.dp))"))
         assertTrue(dialogs.contains("AppText(\"Som ao tocar\", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f).padding(start = 8.dp))"))
         assertTrue(dialogs.contains("AppText(\"Modo Livre\", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))"))
+        assertTrue(dialogs.contains("AppText(\"Ver Log de Erros\", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))"))
     }
 
     @Test
