@@ -104,6 +104,7 @@ class VisualIdentityPreparationContractTest {
         assertTrue(navigation.contains("LazyRow("))
         assertTrue(navigation.contains("listState.scrollToItem(selectedTabIndex)"))
         assertTrue(navigation.contains("onSelectedTab(index)"))
-        assertTrue(navigation.contains("maxLines = if (compact) 2 else 1"))
+        assertTrue(navigation.contains("softWrap = compact || enlargedText"))
+        assertTrue(navigation.contains("maxLines = if (compact || enlargedText) 2 else 1"))
     }
 }
