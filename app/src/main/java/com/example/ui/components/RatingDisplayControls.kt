@@ -47,7 +47,7 @@ fun RatingControl(
             Row(
                 modifier = modifier,
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.spacedBy(if (stepperSize <= 34.dp) 4.dp else 10.dp)
             ) {
                 RingStepSymbol(
                     symbol = "−",
