@@ -278,7 +278,7 @@ fun EncounterGeneratorTab(
                     textAlign = TextAlign.Center
                 ) },
             text = {
-                Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Column(modifier = Modifier.fillMaxWidth().heightIn(max = dialogListHeight).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     // O estado da escolha é interno. No menu principal exibimos
                     // somente o nome curto do campo para evitar truncamento; null
                     // continua significando AUTOMATICO na geração.
@@ -339,7 +339,7 @@ fun EncounterGeneratorTab(
             onDismissRequest = { mostrarCatalogoArmas = false; mostrarCatalogoArmaduras = true },
             title = { AppText(modifier = Modifier.fillMaxWidth(), text = "Equipamento — Arma", textAlign = TextAlign.Center) },
             text = {
-                LazyColumn(modifier = Modifier.fillMaxWidth().height(dialogListHeight)) {
+                LazyColumn(modifier = Modifier.fillMaxWidth().heightIn(max = dialogListHeight)) {
                     items(armasCatalogo) { arma ->
                         InkButton(
                             label = "${arma.nome} — ${arma.peso}",
@@ -368,7 +368,7 @@ fun EncounterGeneratorTab(
             onDismissRequest = { mostrarCatalogoArmaduras = false },
             title = { AppText(modifier = Modifier.fillMaxWidth(), text = "Equipamento — Armadura", textAlign = TextAlign.Center) },
             text = {
-                LazyColumn(modifier = Modifier.fillMaxWidth().height(dialogListHeight)) {
+                LazyColumn(modifier = Modifier.fillMaxWidth().heightIn(max = dialogListHeight)) {
                     item {
                         InkButton(
                             label = "Sem Armadura",
