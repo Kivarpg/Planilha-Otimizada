@@ -54,4 +54,16 @@ class EncounterHealthGestureContractTest {
             .forEach { assertTrue(source.contains(it), "Missing NPC action: $it") }
     }
 
+    @Test
+    fun `xp actions preserve both controls without compressing narrow rows`() {
+        val xp = source.substringAfter("// Botões de XP ficam na linha imediatamente")
+            .substringBefore("// XP movido pra cá")
+        assertTrue(xp.contains("val xpActionsScrollable = maxWidth < 320.dp"))
+        assertTrue(xp.contains("Modifier.horizontalScroll(rememberScrollState())"))
+        assertTrue(xp.contains("Modifier.width(156.dp) else Modifier.weight(1f)"))
+        assertTrue(xp.contains("label = \"+ Aumentar XP\""))
+        assertTrue(xp.contains("label = \"− Diminuir XP\""))
+        assertTrue(xp.contains("enabled = !gerando && npc.historicoXpBatches.isNotEmpty()"))
+    }
+
 }
