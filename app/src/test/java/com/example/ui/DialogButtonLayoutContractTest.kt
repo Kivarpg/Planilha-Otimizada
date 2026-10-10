@@ -47,8 +47,8 @@ class DialogButtonLayoutContractTest {
         val abilitySections = File("src/main/java/com/example/ui/tabs/AbilitySections.kt").readText()
         val ratingControls = File("src/main/java/com/example/ui/components/RatingDisplayControls.kt").readText()
 
-        assertTrue(Regex("""maxLines\\s*=\\s*2,\\s*softWrap\\s*=\\s*true""").containsMatchIn(attributes))
-        assertTrue(Regex("""maxLines\\s*=\\s*2,\\s*softWrap\\s*=\\s*true""").findAll(abilityRows).count() >= 2)
+        assertTrue(Regex("""maxLines\s*=\s*2,\s*softWrap\s*=\s*true""").containsMatchIn(attributes))
+        assertTrue(Regex("""maxLines\s*=\s*2,\s*softWrap\s*=\s*true""").findAll(abilityRows).count() >= 2)
         assertTrue(abilitySections.contains("softWrap=true, maxLines=2"))
         assertTrue(ratingControls.contains("Arrangement.spacedBy(if (stepperSize <= 34.dp) 4.dp else 10.dp)"))
     }
