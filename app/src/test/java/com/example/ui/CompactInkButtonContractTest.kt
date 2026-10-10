@@ -61,7 +61,10 @@ class CompactInkButtonContractTest {
     @Test
     fun `acquired charm preserves card tap long press and independent pin action`() {
         val acquired = charmList.substringAfter("internal fun AcquiredCharmCard(")
-        assertTrue(acquired.contains("detectTapGestures(onTap = { onClick() }, onLongPress = { onLongPress() })"))
+        assertTrue(acquired.contains(".feedbackCombinedClickable("))
+        assertTrue(acquired.contains("onClick = onClick,"))
+        assertTrue(acquired.contains("onLongClick = onLongPress,"))
+        assertTrue(!acquired.substringBefore("color = ExaltedDarkSurfaceVariant").contains(".feedbackOnPress("))
         assertTrue(acquired.contains("onClick = onTogglePin"))
         assertTrue(acquired.contains("contentDescription = if (isPinned)"))
         // This is a structural contract only; nested gesture dispatch needs device testing.
