@@ -16,6 +16,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -155,6 +159,8 @@ fun SaveValidationModal(
     onConfirmIncompleteSave: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    // Keep long validation reports scrollable while preserving footer actions.
+    val reportHeightLimit = (LocalConfiguration.current.screenHeightDp - 260).coerceIn(120, 420).dp
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.then(gildedDialogBorder()),
@@ -178,7 +184,7 @@ fun SaveValidationModal(
         },
         text = {
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().heightIn(max = reportHeightLimit).verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 AppText(
