@@ -214,8 +214,8 @@ fun ErgonomicNumericSelector(
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = if (centerLabel) TextAlign.Center else TextAlign.Start,
                     modifier = Modifier.fillMaxWidth(),
-                    maxLines = 1,
-                    softWrap = false,
+                    maxLines = 2,
+                    softWrap = true,
                     overflow = TextOverflow.Ellipsis
                 )
             }
