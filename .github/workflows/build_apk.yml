@@ -1,5 +1,5 @@
-# Compilação somente por autorização explícita: dispatch manual ou alteração do arquivo de autorização.
-# Alterações comuns de código NÃO iniciam compilação.
+# Compilação por dispatch manual ou commit de versão explícito.
+# Commits de desenvolvimento usam [skip ci] e não iniciam compilação.
 name: Build APK
 # Nome canônico da compilação autorizada.
 run-name: ${{ github.event_name == 'push' && github.event.head_commit.message || format('Exalted.{0}', inputs.version) }}
@@ -8,6 +8,7 @@ on:
   push:
     paths:
       - ".github/build-authorization.txt"
+      - "settings.gradle.kts"
   workflow_dispatch:
     inputs:
       version:
@@ -52,8 +53,11 @@ jobs:
           project_name="$(sed -n 's/^rootProject\.name = "\(Exalted\.[0-9][0-9]*\)"$/\1/p' settings.gradle.kts)"
           test -n "$project_name"
           if [ "${{ github.event_name }}" = "push" ]; then
-            requested_name="$(head -n 1 .github/build-authorization.txt | tr -d '\r')"
-            test "${{ github.event.head_commit.message }}" = "$requested_name" || { echo "::error::Commit de autorização não corresponde ao nome da versão"; exit 1; }
+            requested_name="${{ github.event.head_commit.message }}"
+            if [ "$requested_name" != "$project_name" ]; then
+              echo "::error::Use commit Exalted.N para autorizar compilação ou [skip ci] para desenvolvimento."
+              exit 1
+            fi
           else
             requested_name="Exalted.${{ inputs.version }}"
           fi
