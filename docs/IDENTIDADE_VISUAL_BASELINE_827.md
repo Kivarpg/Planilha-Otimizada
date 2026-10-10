@@ -146,3 +146,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Teste de contrato garante ausencia do antigo brilho ExaltedBackdropGlow na tela de selecao e presenca do gradiente neutro.
 - Nao houve alteracao das regras de negocio, das tres opcoes, dos callbacks nem dos 15 destinos de navegacao.
 - Pendencias para aceite visual: verificar arte do dragao oriental no PNG, telas reais pequenas com fonte ampliada e remodelacao individual das 15 abas. O sucesso de compilacao da 850 nao valida estas pendencias.
+
+## Proxima etapa: Aba 1 — Dados Pessoais (preparacao Exalted.852)
+- Na secao de identidade, os tres campos existentes (Nome, Jogador, Conceito) passam para coluna com largura total quando o espaco disponivel e inferior a 390dp; em telas maiores, mantem a linha de tres colunas.
+- Os mesmos callbacks updateNome, updateJogador e updateConceito permanecem nos dois modos, sem mudanca de regras ou persistencia.
+- Teste estatico protege os dois modos e seus tres campos. Validacao visual e compilacao ainda pendentes.
+- Esta e uma melhoria especifica da Aba 1, nao declaracao de remodelacao integral da aba ou das 15 abas.
