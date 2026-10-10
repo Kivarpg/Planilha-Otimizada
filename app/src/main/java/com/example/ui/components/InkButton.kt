@@ -201,6 +201,18 @@ private fun InkGradient.toBrush(widthPx: Float): Brush = Brush.horizontalGradien
 
 enum class InkButtonVariant { Primary, Secondary, Danger, ThematicDanger, OnDark, Ghost }
 
+/**
+ * Optional visual overrides. Null values preserve the existing template-aware palette.
+ * Does not change the brush paths, sizing, click handling or interaction feedback.
+ */
+data class InkButtonStyle(
+    val gradientStart: Color? = null,
+    val gradientMiddle: Color? = null,
+    val gradientEnd: Color? = null,
+    val labelColor: Color? = null,
+    val outlineColor: Color? = null,
+)
+
 enum class InkButtonSize(val width: Dp, val height: Dp, val fontSize: TextUnit) {
     // Mantém a proporção 340:100 do viewBox — não distorce a pincelada.
     Small(160.dp, 56.dp, 14.sp),
@@ -249,10 +261,11 @@ fun InkButton(
     customWidth: Dp? = null,
     customHeight: Dp? = null,
     visualTemplate: ExaltVisualTemplate? = null,
+    styleOverride: InkButtonStyle = InkButtonStyle(),
     content: (@Composable () -> Unit)? = null,
 ) {
     if (variant == InkButtonVariant.Ghost) {
-        InkGhostButton(label, onClick, modifier, enabled)
+        InkGhostButton(label, onClick, modifier, enabled, styleOverride)
         return
     }
 
@@ -288,7 +301,12 @@ fun InkButton(
         variant == InkButtonVariant.OnDark -> InkColors.onDark
         else -> ownerPrimary ?: InkColors.primary // Ghost não chega aqui (early return acima)
     }
-    val textColor = when {
+    val resolvedGradient = InkGradient(
+        styleOverride.gradientStart ?: gradient.start,
+        styleOverride.gradientMiddle ?: gradient.mid,
+        styleOverride.gradientEnd ?: gradient.end,
+    )
+    val textColor = styleOverride.labelColor ?: when {
         visualTemplate != null && selected -> corTextoContraste(visualTemplate.metalShine)
         visualTemplate != null && variant != InkButtonVariant.Danger -> visualTemplate.onSurface
         selected -> corTextoContraste(InkColors.selected.mid)
@@ -335,7 +353,7 @@ fun InkButton(
             val uniformScale = this.size.height / VIEWBOX_H
             val translatedX = (this.size.width - VIEWBOX_W * uniformScale) / 2f
             val brush = if (enabled) {
-                gradient.toBrush(this.size.width)
+                resolvedGradient.toBrush(this.size.width)
             } else {
                 Brush.horizontalGradient(
                     colors = listOf(
@@ -387,7 +405,7 @@ fun InkButton(
         } else Box(contentAlignment = Alignment.Center) {
             Text(
                 text = label,
-                color = ExaltedTextStroke.copy(alpha = if (enabled) 1f else 0.55f),
+                color = (styleOverride.outlineColor ?: ExaltedTextStroke).copy(alpha = if (enabled) 1f else 0.55f),
                 style = textStyle.copy(drawStyle = Stroke(width = Dimens.TextStrokeWidth.value)),
                 maxLines = 2,
                 overflow = TextOverflow.Clip,
@@ -443,10 +461,11 @@ private fun InkGhostButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    styleOverride: InkButtonStyle = InkButtonStyle(),
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val underlinePath = remember { svgPath(InkBrushPaths.UNDERLINE) }
-    val textColor = InkColors.textBody
+    val textColor = styleOverride.labelColor ?: InkColors.textBody
 
     Column(
         modifier = modifier
@@ -472,7 +491,7 @@ private fun InkGhostButton(
             scale(scaleX, scaleY, pivot = Offset.Zero) {
                 drawPath(
                     path = underlinePath,
-                    color = InkColors.primary.mid.copy(alpha = if (enabled) 0.85f else 0.4f),
+                    color = (styleOverride.gradientMiddle ?: InkColors.primary.mid).copy(alpha = if (enabled) 0.85f else 0.4f),
                 )
             }
         }
