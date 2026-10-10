@@ -147,8 +147,8 @@ fun CasteEmblemButton(
             ),
             color = ExaltedAccentBright,
             textAlign = TextAlign.Center,
-            maxLines = 1,
-            softWrap = false,
+            maxLines = 2,
+            softWrap = true,
             modifier = Modifier.fillMaxWidth()
         )
     }
