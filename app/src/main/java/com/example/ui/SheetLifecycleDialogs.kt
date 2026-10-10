@@ -165,7 +165,11 @@ fun SheetsListDialog(
                                     color = if (isCurrent) ExaltedAmber else MaterialTheme.colorScheme.onSurface
                                 )
                                 AppText(
-                                    text = "Casta: ${s.casta.displayName} | Jogador: ${s.jogador.ifBlank { "-" }}",
+                                    text = when {
+                                        s.tipoPersonagem.isDragonBlooded() -> "Aspecto: ${s.aspecto.ifBlank { "-" }} | Jogador: ${s.jogador.ifBlank { "-" }}"
+                                        s.tipoPersonagem.isLunar() -> "Casta: ${s.lunarCasta.displayName} | Jogador: ${s.jogador.ifBlank { "-" }}"
+                                        else -> "Casta: ${s.casta.displayName} | Jogador: ${s.jogador.ifBlank { "-" }}"
+                                    },
                                     style = MaterialTheme.typography.bodySmall,
                                     color = ExaltedMuted
                                 )
