@@ -22,6 +22,16 @@ class VisualIdentityPreparationContractTest {
     private val commonDialogs = File("src/main/java/com/example/ui/components/DialogComponents.kt").readText()
 
     @Test
+    fun `neutral panels use bounded dark-metal styling without decorative symbols`() {
+        assertTrue(identity.contains("Brush.verticalGradient("))
+        assertTrue(identity.contains("backgroundColor.copy(alpha = 0.96f)"))
+        assertTrue(identity.contains("ExaltedOutline.copy(alpha = 0.32f)"))
+        assertTrue(identity.contains("RoundedCornerShape(8.dp)"))
+        assertTrue(!identity.contains("drawArc("))
+        assertTrue(!identity.contains("drawPath("))
+    }
+
+    @Test
     fun `all fifteen existing tabs remain declared in order`() {
         val names = listOf(
             "1. Dados Pessoais", "2. Aspecto", "3. Atributos",
