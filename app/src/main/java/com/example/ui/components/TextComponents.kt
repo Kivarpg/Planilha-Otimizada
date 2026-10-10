@@ -330,7 +330,12 @@ fun AutoSizeText(
     style: androidx.compose.ui.text.TextStyle? = null,
     brush: Brush? = null
 ) {
-    var fontSize by remember(text, maxFontSize, minFontSize, modifier, style, letterSpacing) { mutableStateOf(maxFontSize) }
+    // Use the actual text container width rather than Modifier identity as a fit key.
+    // This lets the font grow back when a weighted parent becomes wider.
+    var availableTextWidthPx by remember { mutableStateOf(0) }
+    var fontSize by remember(text, maxFontSize, minFontSize, style, letterSpacing, availableTextWidthPx) {
+        mutableStateOf(maxFontSize)
+    }
     val baseStyle = style ?: MaterialTheme.typography.bodyMedium
     val effectiveStyle = baseStyle.copy(
         fontWeight = fontWeight,
@@ -341,7 +346,7 @@ fun AutoSizeText(
     )
     val density = LocalDensity.current
     val strokeWidth = with(density) { Dimens.TextStrokeWidth.toPx() }
-    Box(modifier = modifier) {
+    Box(modifier = modifier.onSizeChanged { availableTextWidthPx = it.width }) {
         // APPROVED VISUAL CUSTOMIZATION
         // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
         // AutoSizeText é usado em botões e rótulos que antes escapavam do
