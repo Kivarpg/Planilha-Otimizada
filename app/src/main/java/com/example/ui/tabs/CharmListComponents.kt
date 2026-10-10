@@ -240,7 +240,7 @@ internal fun CharmEligibilityRow(
                     InkButton(
                         onClick = onDecrement,
                         enabled = podeDiminuir,
-                        modifier = (Modifier.size(40.dp)).feedbackOnPress(enabled = podeDiminuir)) {
+                        modifier = Modifier.size(40.dp)) {
                         AppText("−", color = if (podeDiminuir) ExaltedStructuralMetalShine else ExaltedMuted, fontWeight = FontWeight.Bold)
                     }
                     AppText(
@@ -253,7 +253,7 @@ internal fun CharmEligibilityRow(
                     InkButton(
                         onClick = onIncrement,
                         enabled = podeAumentar,
-                        modifier = (Modifier.size(40.dp)).feedbackOnPress(enabled = podeAumentar)) {
+                        modifier = Modifier.size(40.dp)) {
                         AppText("+", color = if (podeAumentar) ExaltedStructuralMetalShine else ExaltedMuted, fontWeight = FontWeight.Bold)
                     }
                 }
@@ -284,7 +284,7 @@ internal fun CharmEligibilityRow(
                     )
                 }
             }
-            InkButton(onClick = onShowDetail, modifier = (Modifier.size(40.dp)).feedbackOnPress(enabled = true)) {
+            InkButton(onClick = onShowDetail, modifier = Modifier.size(40.dp)) {
                 Icon(Icons.Outlined.Info, contentDescription = "Ver detalhes", tint = ExaltedStructuralMetalShine, modifier = Modifier.size(18.dp))
             }
         }
@@ -391,7 +391,7 @@ internal fun AcquiredCharmCard(
                     contentDescription = if (isPinned) "Desfixar Encanto" else "Fixar Encanto"
                     role = Role.Checkbox
                     stateDescription = if (isPinned) "Fixado no topo da gaveta" else "Não fixado"
-                }).feedbackOnPress(enabled = true)) {
+                })) {
                 val corCoracao = if (isPinned) ExaltedDangerCore else ExaltedMuted
                 androidx.compose.foundation.Canvas(modifier = Modifier.size(18.dp)) {
                     val w = size.width
