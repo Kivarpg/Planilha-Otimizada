@@ -115,7 +115,17 @@ fun SheetsListDialog(
                         onValueChange = onBuscaChange,
                         label = { AppText("Buscar por nome") },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        trailingIcon = if (buscaPlanilhasSalvas.isNotEmpty()) {
+                            {
+                                androidx.compose.material3.IconButton(onClick = { onBuscaChange("") }) {
+                                    androidx.compose.material3.Icon(
+                                        imageVector = androidx.compose.material.icons.Icons.Default.Close,
+                                        contentDescription = "Limpar busca"
+                                    )
+                                }
+                            }
+                        } else null
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
