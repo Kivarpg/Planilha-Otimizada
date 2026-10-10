@@ -27,7 +27,8 @@ internal fun SheetTabsBar(
     viewModel: SheetViewModel,
     tabs: List<SheetTabNavigationItem>,
     selectedTabIndex: Int,
-    onSelectedTab: (Int) -> Unit
+    onSelectedTab: (Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val listState = rememberLazyListState()
     // Passo 9/12 — a composição reage ao espaço realmente disponível e ao
@@ -55,13 +56,13 @@ internal fun SheetTabsBar(
     }
     val showsProgressStrip = selectedTabIndex in 2..8
     val pbExibido = if (showsProgressStrip && !sheet.planilhaConcluida) {
-        remember(sheet) { viewModel.calculateBpBreakdown(sheet).remainingBalance.coerceAtLeast(0) }
+        remember(sheet, viewModel) { viewModel.calculateBpBreakdown(sheet).remainingBalance.coerceAtLeast(0) }
     } else {
         0
     }
     val pbEmAlerta = pbExibido <= 5
     val pontosHabilidadeRestantes = if (selectedTabIndex == 3) {
-        remember(sheet) { viewModel.calculateAbilityPointsRemaining(sheet) }
+        remember(sheet, viewModel) { viewModel.calculateAbilityPointsRemaining(sheet) }
     } else {
         0
     }
@@ -71,7 +72,7 @@ internal fun SheetTabsBar(
     // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
     // IDENTIDADE VISUAL v4 — índice de capítulos. Sem cartões, sem medalhões,
     // sem caixas individuais: cada aba é uma entrada editorial contínua.
-    Column(Modifier.fillMaxWidth().background(ExaltedDarkBackground.copy(alpha = .98f))) {
+    Column(modifier.fillMaxWidth().background(ExaltedDarkBackground.copy(alpha = .98f))) {
         LazyRow(
             state = listState,
             modifier = Modifier
