@@ -3,6 +3,7 @@ package com.example.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
@@ -21,18 +22,23 @@ fun Modifier.exaltedTabIdentity(chapter: Int = 0): Modifier = this
 
 fun Modifier.exaltedContentStage(chapter: Int): Modifier = this
 
-fun Modifier.exaltedSectionPanel(chapter: Int = 0): Modifier = this
-    .background(ExaltedDarkSurfaceVariant)
+fun Modifier.exaltedSectionPanel(
+    chapter: Int = 0,
+    backgroundColor: Color = ExaltedDarkSurfaceVariant
+): Modifier = this.background(backgroundColor)
 
-fun Modifier.exaltedControlBand(): Modifier = this
-    .background(
-        Brush.horizontalGradient(
-            listOf(
-                ExaltedDarkSurface,
-                ExaltedAccentBright.copy(alpha = 0.035f),
-                ExaltedDarkSurface
-            )
+fun Modifier.exaltedControlBand(
+    surfaceColor: Color = ExaltedDarkSurface,
+    accentColor: Color = ExaltedAccentBright,
+    accentAlpha: Float = 0.035f
+): Modifier = this.background(
+    Brush.horizontalGradient(
+        listOf(
+            surfaceColor,
+            accentColor.copy(alpha = accentAlpha.coerceIn(0f, 1f)),
+            surfaceColor
         )
     )
+)
 
 fun Modifier.exaltedExistingPanel(): Modifier = exaltedSectionPanel()
