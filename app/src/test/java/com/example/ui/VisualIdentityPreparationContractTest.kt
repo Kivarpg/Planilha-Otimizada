@@ -16,6 +16,7 @@ class VisualIdentityPreparationContractTest {
     private val navigation = File("src/main/java/com/example/ui/SheetTabsBar.kt").readText()
     private val dialogs = File("src/main/java/com/example/ui/SheetScreenDialogs.kt").readText()
     private val lifecycleDialogs = File("src/main/java/com/example/ui/SheetLifecycleDialogs.kt").readText()
+    private val mainSheet = File("src/main/java/com/example/ui/SheetScreen.kt").readText()
 
     @Test
     fun `all fifteen existing tabs remain declared in order`() {
@@ -74,6 +75,16 @@ class VisualIdentityPreparationContractTest {
         assertTrue(lifecycleDialogs.contains("overflow = TextOverflow.Ellipsis"))
         assertTrue(lifecycleDialogs.contains("text = \"Restaurar\""))
         assertTrue(lifecycleDialogs.contains("viewModel.restaurarBackupPeriodico(snapshot)"))
+    }
+
+    @Test
+    fun `error log dialog keeps large reports scrollable within viewport`() {
+        assertTrue(mainSheet.contains("if (showErrorLogDialog)"))
+        assertTrue(mainSheet.contains("screenHeightDp * 0.45f"))
+        assertTrue(mainSheet.contains(".heightIn(max ="))
+        assertTrue(mainSheet.contains(".verticalScroll(rememberScrollState())"))
+        assertTrue(mainSheet.contains("text = \"Copiar\""))
+        assertTrue(mainSheet.contains("text = \"Fechar\""))
     }
 
     @Test
