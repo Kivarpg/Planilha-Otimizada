@@ -53,7 +53,7 @@ import com.example.viewmodel.SheetViewModel
 // comitamento, quebra de Mérito pendente), não sobre arquivos.
 
 @Composable
-fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewModel, onAbrirLogErros: () -> Unit) {
+fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewModel, onAbrirLogErros: () -> Unit, modifier: Modifier = Modifier) {
     if (!show) return
     val context = LocalContext.current
     var hapticEnabled by remember { mutableStateOf(InteractionFeedback.isHapticEnabled(context)) }
@@ -62,7 +62,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
     val sheetAtual by viewModel.sheetState.collectAsState()
     androidx.compose.material3.AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
+        modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         icon = {
             Icon(imageVector = Icons.Outlined.Settings, contentDescription = null, tint = ExaltedAccentBright)
@@ -222,12 +222,12 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
 }
 
 @Composable
-fun ReversionConfirmDialog(viewModel: SheetViewModel) {
+fun ReversionConfirmDialog(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
     val show by viewModel.showReversionConfirm.collectAsState()
     if (!show) return
     AlertDialog(
         onDismissRequest = { viewModel.cancelarReversaoPlanilhaConcluida() },
-        modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
+        modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         icon = {
             Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = ExaltedDangerCore)
@@ -263,12 +263,12 @@ fun ReversionConfirmDialog(viewModel: SheetViewModel) {
 }
 
 @Composable
-fun CommitmentErrorDialog(viewModel: SheetViewModel) {
+fun CommitmentErrorDialog(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
     val message by viewModel.commitmentError.collectAsState()
     if (message == null) return
     AlertDialog(
         onDismissRequest = { viewModel.dismissCommitmentError() },
-        modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
+        modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         icon = {
             Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = ExaltedAmber)
@@ -297,12 +297,12 @@ fun CommitmentErrorDialog(viewModel: SheetViewModel) {
 // Nada é alterado até essa escolha (ver AttributesActions/
 // AbilitiesActions.setAttributeRating/setAbilityRating).
 @Composable
-fun PendingMeritBreakDialog(viewModel: SheetViewModel) {
+fun PendingMeritBreakDialog(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
     val pendente by viewModel.pendingMeritBreak.collectAsState()
     val info = pendente ?: return
     AlertDialog(
         onDismissRequest = { viewModel.cancelarPendingMeritBreak() },
-        modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
+        modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         icon = {
             Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = ExaltedAmber)
