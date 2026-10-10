@@ -107,3 +107,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Busca por planilhas: botao acessivel `Limpar busca` aparece quando o campo contem texto e chama `onBuscaChange("")`.
 - Contratos estaticos de regressao cobrem estado vazio, icone de limpeza e preservacao do filtro.
 - Pendente: compilacao Kotlin, testes JVM e validacao visual em emulador com lista vazia, filtros sem resultado e teclado aberto.
+
+## Preparacao da Exalted.846 (sem compilacao)
+- Configuracoes: labels de estilo de avaliacao, idiomas, vibracao, som e Modo Livre receberam `Modifier.weight(1f)` em suas linhas para respeitar o espaco restante em telas estreitas e com fontes ampliadas.
+- Teste estatico de regressao cobre as seis alocacoes de largura.
+- Nao houve alteracao de preferencias, regras de negocio, nomes de campos ou botoes.
+- Pendente: compilacao Kotlin e testes JVM; inspecao no emulador de fontes ampliadas e tela dividida.
