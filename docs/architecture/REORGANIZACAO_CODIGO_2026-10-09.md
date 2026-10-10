@@ -80,3 +80,10 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - A proposta de executar aplicarPaletaPorTemplate em SideEffect a cada recomposição foi rejeitada por potencial repetição de escritas de estado e recomposições desnecessárias.
 - Pendente: teste de primeira renderização de cada template após a mudança anterior para LaunchedEffect; se houver flash de cor, resolver na fonte de estado de tema, não reescrevendo paleta a cada frame.
 - Sem compilação nesta rodada.
+
+## Auditoria Modifier por aba — 2026-10-10
+- Inspecionadas assinaturas de AbilitiesTab, MeritsTab, EquipmentTab, CharmsTab, SummaryTab, NPCsTab, MapTab, BattleGroupsTab, CasteTabSolar.
+- BattleGroupsTab (aba 13) não aceitava Modifier e usava Modifier.fillMaxSize() no Column raiz. Corrigido com parâmetro opcional e encaminhamento ao Column.
+- As demais assinaturas inspecionadas já declaravam Modifier opcional. Isso não prova que todos os nós internos o propagam corretamente.
+- Os campos editáveis da aba 13 usam remember/mutableStateOf e battleGroups é observado via collectAsState; valores iniciais e rótulos constantes não exigem UIState próprio.
+- Ainda não foi feita validação por build ou instrumentação.
