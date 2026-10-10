@@ -71,3 +71,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Faixa de Pontos de Bonus/Experiencia: altura 34dp com fontes ampliadas, mantendo 25dp no tamanho normal.
 - Contratos estaticos de regressao atualizados para os dois ajustes.
 - Pendencias: compilacao Kotlin e suite JVM, depois validacao visual no emulador em escala de fonte ampliada, rotacao e tela dividida. Nenhuma dessas validacoes visuais foi executada nesta rodada.
+
+## Preparacao da Exalted.838 (sem compilacao)
+- Compartilhamento: QR Code exportado usa largura disponivel ate 240dp, mantendo proporcao quadrada.
+- Importacao: contador de caracteres usa peso flexivel, truncamento e reserva largura para botao Colar.
+- Teste estatico de regressao verifica limites, acoes e rolagem da importacao.
+- Ainda e necessario executar compilacao e testes JVM, e validar visualmente QR, texto longo, fonte ampliada e teclado no emulador.
