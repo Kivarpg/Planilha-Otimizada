@@ -197,10 +197,11 @@ fun ErgonomicNumericSelector(
                                 fontSize = badgeFontSize ?: MaterialTheme.typography.labelSmall.fontSize
                             ),
                             color = badgeColor,
-                            maxLines = 1,
-                            softWrap = false,
+                            maxLines = 2,
+                            softWrap = true,
+                            textAlign = TextAlign.Center,
                             overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp)
                         )
                     }
                 }
