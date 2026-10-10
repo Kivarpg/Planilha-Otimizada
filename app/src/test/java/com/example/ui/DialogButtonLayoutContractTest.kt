@@ -41,15 +41,16 @@ class DialogButtonLayoutContractTest {
         assertTrue(charmDialogs.contains("modifier = Modifier.weight(1f)"))
     }
 
-    @Test fun `new sheet exalt type follows three button responsive policy`() {
-        val start = lifecycleDialogs.indexOf("Regra global de grupos de três")
-        val end = lifecycleDialogs.indexOf("Spacer(modifier = Modifier.height(8.dp))", start)
-        val block = lifecycleDialogs.substring(start, end)
+    @Test fun `new sheet exalt selection avoids intrinsic measurement`() {
+        val start = lifecycleDialogs.indexOf("fun EscolhaTemplateNovaPlanilhaDialog(")
+        val block = lifecycleDialogs.substring(start)
         assertTrue(block.contains("FlowRow("))
-        assertTrue(block.contains("maxItemsInEachRow = columns"))
-        assertTrue(block.contains("val buttonWidth = (maxWidth - 8.dp * (columns - 1)) / columns"))
-        assertTrue(block.contains("modifier = Modifier.width(buttonWidth)"))
-        assertTrue(block.contains("horizontalArrangement = Arrangement.Center"))
-        assertFalse(block.contains("Cada opção ocupa uma linha própria"))
+        assertTrue(block.contains("maxItemsInEachRow = 2"))
+        assertTrue(block.contains("modifier = Modifier.width(120.dp)"))
+        assertTrue(block.contains("Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)"))
+        assertFalse(block.contains("BoxWithConstraints("))
+        assertTrue(block.contains("\"Solar\" to \"Solar\""))
+        assertTrue(block.contains("\"Sangue de Dragão\" to \"SangueDeDragao\""))
+        assertTrue(block.contains("\"Lunar\" to \"Lunar\""))
     }
 }
