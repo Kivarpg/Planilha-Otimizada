@@ -26,11 +26,11 @@ fun MainSheetScreen(
     tipoPersonagem: String = CharacterType.SOLAR,
     modifier: Modifier = Modifier
 ) {
-    // A inicialização da planilha e a troca de paleta são efeitos, não cálculos
-    // de remember. A chave garante nova execução apenas quando o tipo muda.
-    LaunchedEffect(viewModel, tipoPersonagem) {
-        viewModel.iniciarNovaPlanilha(tipoPersonagem)
-        aplicarPaletaPorTemplate(tipoPersonagem)
+    // O tipo é inicializado somente quando o usuário escolhe um template.
+    // Ao recriar a Activity, prevalece a planilha efetivamente carregada.
+    val sheet by viewModel.sheetState.collectAsState()
+    LaunchedEffect(sheet.tipoPersonagem) {
+        aplicarPaletaPorTemplate(sheet.tipoPersonagem)
     }
     val lifecycleOwner=LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner, viewModel) {
@@ -46,7 +46,6 @@ fun MainSheetScreen(
             lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
-    val sheet by viewModel.sheetState.collectAsState()
     var selectedTabIndex by rememberSaveable{mutableStateOf(0)}; var abilitiesSubTabIndex by rememberSaveable{mutableStateOf(0)}
     var encontroNomeManual by rememberSaveable{mutableStateOf("")}; var encontroArquetipo by rememberSaveable{mutableStateOf(ArquetipoEncontro.FISICO)}; var encontroGenero by rememberSaveable{mutableStateOf<com.example.data.GeneroNome?>(com.example.data.GeneroNome.MASCULINO)}; var encontroAbaSelecionadaId by rememberSaveable{mutableStateOf<String?>(null)}; var encontroMensagemLimite by rememberSaveable{mutableStateOf<String?>(null)}
     var showSheetsListDialog by remember{mutableStateOf(false)}; var buscaPlanilhasSalvas by remember{mutableStateOf("")}; var showBackupListDialog by remember{mutableStateOf(false)}; var showErrorLogDialog by remember{mutableStateOf(false)}; var showSettingsDialog by remember{mutableStateOf(false)}; var showCarregarMenu by remember{mutableStateOf(false)}; var showOpcoesMenu by remember{mutableStateOf(false)}; var showNovoConfirmDialog by remember{mutableStateOf(false)}; var showEscolhaTemplateNovaPlanilha by remember{mutableStateOf(false)}; var showCodeImportDialog by remember{mutableStateOf(false)}; var showCodeExportResultDialog by remember{mutableStateOf<String?>(null)}; var sheetToDelete by remember{mutableStateOf<CharacterSheet?>(null)}
