@@ -136,7 +136,7 @@ fun AppText(
         (fontSize.value != 0f && fontSize.value >= 18f))
 
     val requestedFontSize = if (fontSize != TextUnit.Unspecified) fontSize else style.fontSize
-    var fittedFontSize by remember(text, requestedFontSize, maxLines) { mutableStateOf(requestedFontSize) }
+    var fittedFontSize by remember(text, requestedFontSize, maxLines, minLines, modifier, style, fontFamily, letterSpacing, lineHeight, softWrap) { mutableStateOf(requestedFontSize) }
     val effectiveStyle = style.copy(
         color = if (isTitle) color else ExaltedTextFill,
         fontSize = fittedFontSize,
