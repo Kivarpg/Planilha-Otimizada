@@ -154,3 +154,9 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - Correção: createNewSheet, aplicarPlanilhaImportada, restaurarBackupPeriodico e deleteSheet também sincronizam a paleta após a troca. A paleta usa mutableStateOf em Color.kt.
 - Pendente: teste de alternância Solar/SDD/Lunar por todos os caminhos; confirmar comportamento de recomposição em componentes que memorizam coleções mutáveis; revisar o fluxo inicial e demais operações de reversão.
 - Não houve compilação ou teste no dispositivo.
+
+## Auditoria da reversão e inicialização — 2026-10-10
+- confirmarReversaoPlanilhaConcluida anteriormente substituía sheetState sem chamar onSheetChanged (sincronização dos grupos de batalha) nem reaplicar paleta. Corrigido com estado revertido local, onSheetChanged(revertida) e aplicarPaletaPorTemplate(revertida.tipoPersonagem).
+- MainActivity guarda templateEscolhido por rememberSaveable e MainSheetScreen executa iniciarNovaPlanilha(tipoPersonagem) em LaunchedEffect(viewModel, tipoPersonagem). Risco identificado: em recriação de Activity, um template persistido pode divergir do tipo da planilha ativa carregada pelo ViewModel, causando substituição inesperada. NÃO modificado nesta rodada: precisa definir regra de precedência entre escolha inicial e planilha persistida, e teste de reinicialização.
+- A atualização de paleta por vários caminhos deve ser validada em testes de Solar, Sangue de Dragão e Lunar.
+- Nenhuma compilação iniciada.
