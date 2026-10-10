@@ -134,3 +134,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Simbolos exclusivos por template: Solar somente sol e raios solares (nunca dragoes ou luas); Sangue de Dragao somente dragao ORIENTAL, serpentino e sem asas ocidentais (nunca sol ou lua); Lunar somente lua/fases lunares (nunca sol ou dragoes). Elementos compartilhados sempre neutros.
 - Sol e lua nao podem ter rosto, olhos ou boca. Nao adicionar dragoes ocidentais, wyverns ou silhuetas de lagartos alados.
 - Alteracao de acabamento e apenas um primeiro passo visual; nao constitui remodelacao completa das 15 abas. Conferir contraste, toque, tamanho de fonte e limites de cada painel em dispositivo.
+
+## Preparacao visual Exalted.850 (sem build automatico)
+- Selecao de templates: cartoes com altura minima de 136dp, emblema e espacamentos responsivos quando a largura util for inferior a 360dp; titulo principal permite duas linhas e reticencias.
+- A selecao continua usando icones exclusivos: Solar=tab_icon_sol, Sangue de Dragao=tab_icon_dragao, Lunar=tab_icon_lua. A arte do arquivo tab_icon_dragao ainda precisa de inspecao visual para confirmar anatomia oriental, pois a associacao de recurso nao comprova o desenho.
+- Removidas linhas verticais decorativas nas laterais do fundo da selecao, conforme preferencia anterior; sem alterar os cartoes nem o logotipo oficial.
+- Testes de contrato cobrem correspondencia de icones, largura responsiva e ausencia das linhas laterais; ainda nao substituem screenshot nem validacao no dispositivo.
