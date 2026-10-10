@@ -1152,16 +1152,20 @@ fun NpcEncontroCard(
             // Botões de XP ficam na linha imediatamente abaixo da última
             // gaveta de Encantos e alinhados à direita, sem competir com o
             // título da seção.
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
+            androidx.compose.foundation.layout.BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+                val xpActionsScrollable = maxWidth < 320.dp
+                Row(
+                    modifier = Modifier.fillMaxWidth().then(
+                        if (xpActionsScrollable) Modifier.horizontalScroll(rememberScrollState()) else Modifier
+                    ),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
                 InkButton(
                     visualTemplate = visualTemplate,
                     label = "+ Aumentar XP",
                     onClick = onAumentarExperiencia,
                     enabled = !gerando,
-                    modifier = Modifier.weight(1f),
+                    modifier = if (xpActionsScrollable) Modifier.width(156.dp) else Modifier.weight(1f),
                     fillMaxWidth = true,
                     size = InkButtonSize.Small,
                     variant = InkButtonVariant.Secondary,
@@ -1172,12 +1176,13 @@ fun NpcEncontroCard(
                     label = "− Diminuir XP",
                     onClick = onDiminuirExperiencia,
                     enabled = !gerando && npc.historicoXpBatches.isNotEmpty(),
-                    modifier = Modifier.weight(1f),
+                    modifier = if (xpActionsScrollable) Modifier.width(156.dp) else Modifier.weight(1f),
                     fillMaxWidth = true,
                     size = InkButtonSize.Small,
                     variant = InkButtonVariant.Secondary,
                     brushIndex = 2
                 )
+                }
             }
             Spacer(modifier = Modifier.height(8.dp))
 
