@@ -67,7 +67,8 @@ internal fun FeiticosPopup(
     sheet: CharacterSheet,
     viewModel: SheetViewModel,
     onDismiss: () -> Unit,
-    onShowDetail: (FeiticoDefinition) -> Unit
+    onShowDetail: (FeiticoDefinition) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val circulosDesbloqueados = remember(sheet) { viewModel.circulosDesbloqueados(sheet) }
     val circulos = when {
@@ -78,7 +79,7 @@ internal fun FeiticosPopup(
     var buscaFeiticos by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
+        modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = { AppText("Feitiços", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
         text = {
@@ -211,10 +212,14 @@ internal fun FeiticosPopup(
 }
 
 @Composable
-internal fun FeiticoDetailsDialog(def: FeiticoDefinition, onDismiss: () -> Unit) {
+internal fun FeiticoDetailsDialog(
+    def: FeiticoDefinition,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
+        modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = { com.example.ui.components.ChamTitleTwoLines(nomePt = def.nome, nomeEn = def.nomeIngles) },
         text = {
