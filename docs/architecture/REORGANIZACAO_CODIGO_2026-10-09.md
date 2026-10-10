@@ -43,3 +43,9 @@ A reorganização somente estará concluída quando os lotes forem executados e 
 ## Próximo portão
 **Solicitar uma compilação de validação antes de prosseguir com extrações estruturais maiores.**
 A compilação valida sintaxe e dependências, mas não substitui testes de regressão nem validação visual.
+
+## Terceira rodada — manutenção de baixo risco
+- SheetContentArea.kt: imports explícitos de Compose, espaçamento e blocos de composição padronizados.
+- A estrutura do layout, os gradientes, as dimensões e o gerenciamento de estado permanecem equivalentes.
+- Sem movimentação de packages, mudanças em API pública ou lógica de negócio.
+- O checkpoint segue aguardando compilação e testes. Não extrapolar esta validação para os 511 arquivos.
