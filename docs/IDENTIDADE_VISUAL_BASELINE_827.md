@@ -128,3 +128,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Limites: contratos sao verificacoes estaticas, nao testes instrumentados nem comprovacao de desempenho medido. Build 848 e testes JVM ainda pendentes.
 - Validacao pratica: abrir as 15 abas nos tres tipos; gerar NPCs e percorrer arvores de Encantos; abrir dialogs com fonte ampliada/tela dividida; testar QR, salvamento/restauracao e mapa/escala.
 - Encerramento definitivo exige build/testes aprovados e verificacao funcional/visual em dispositivo; nao equiparar sucesso de CI a aplicativo 100% validado.
+
+## Fase visual apos Exalted.848 — primeira consolidacao sem compilacao
+- Paineis existentes: acabamento escuro em degradê vertical, contorno metalico discreto e cantos de 8dp via exaltedSectionPanel. Sem introduzir imagens, emblemas ou campos; demais modificadores neutros preservados.
+- Simbolos exclusivos por template: Solar somente sol e raios solares (nunca dragoes ou luas); Sangue de Dragao somente dragao ORIENTAL, serpentino e sem asas ocidentais (nunca sol ou lua); Lunar somente lua/fases lunares (nunca sol ou dragoes). Elementos compartilhados sempre neutros.
+- Sol e lua nao podem ter rosto, olhos ou boca. Nao adicionar dragoes ocidentais, wyverns ou silhuetas de lagartos alados.
+- Alteracao de acabamento e apenas um primeiro passo visual; nao constitui remodelacao completa das 15 abas. Conferir contraste, toque, tamanho de fonte e limites de cada painel em dispositivo.
