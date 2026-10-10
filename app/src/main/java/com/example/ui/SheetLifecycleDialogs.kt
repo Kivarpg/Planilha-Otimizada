@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Column
@@ -371,28 +370,25 @@ fun EscolhaTemplateNovaPlanilhaDialog(show: Boolean, onDismiss: () -> Unit, onEs
             Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                 // Regra global de grupos de três: lado a lado quando couber;
                 // em largura compacta, 2 em cima e o terceiro centralizado.
-                BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-                    val compact = maxWidth < 420.dp
-                    val columns = if (compact) 2 else 3
-                    val buttonWidth = (maxWidth - 8.dp * (columns - 1)) / columns
-                    FlowRow(
-                        modifier = Modifier.fillMaxWidth(),
-                        maxItemsInEachRow = columns,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
-                        verticalArrangement = Arrangement.spacedBy(6.dp)
-                    ) {
-                        listOf(
-                            "Solar" to "Solar",
-                            "Sangue de Dragão" to "SangueDeDragao",
-                            "Lunar" to "Lunar"
-                        ).forEach { (rotulo, valor) ->
-                            com.example.ui.components.GildedDialogButton(
-                                text = rotulo,
-                                onClick = { onEscolhido(valor) },
-                                modifier = Modifier.width(buttonWidth),
-                                fillMaxWidth = true
-                            )
-                        }
+                // Avoid SubcomposeLayout intrinsic measurement inside AlertDialog.
+                // Two compact columns keep all three exalt types available on phones.
+                FlowRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    maxItemsInEachRow = 2,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    listOf(
+                        "Solar" to "Solar",
+                        "Sangue de Dragão" to "SangueDeDragao",
+                        "Lunar" to "Lunar"
+                    ).forEach { (rotulo, valor) ->
+                        com.example.ui.components.GildedDialogButton(
+                            text = rotulo,
+                            onClick = { onEscolhido(valor) },
+                            modifier = Modifier.width(120.dp),
+                            fillMaxWidth = true
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
