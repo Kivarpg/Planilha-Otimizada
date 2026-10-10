@@ -132,3 +132,11 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - SheetScreenDialogs: SettingsDialog, ReversionConfirmDialog, CommitmentErrorDialog e PendingMeritBreakDialog agora aceitam Modifier opcional e o encaminham ao AlertDialog com a borda temática preservada.
 - Atenção: lembrar por identidade de sheet não substitui uma emissão de novo valor de sheetState quando dados internos mudam; o ViewModel deve publicar atualizações.
 - Ainda falta inspecionar os diálogos de gerenciamento e os usos de remember com chaves incompletas. Não compilado.
+
+## Auditoria de diálogos de gerenciamento e salvamento — 2026-10-10
+- SheetLifecycleDialogs: cinco composables recebem Modifier opcional; DeleteSheetDialog encaminha ao ConfirmDeleteDialog, demais ao AlertDialog.
+- BackupListDialog: cache remember(show, viewModel); não há atualização automática de backups criados durante diálogo aberto.
+- CodeShareDialogs: CodeExportResultDialog e CodeImportDialog recebem Modifier opcional e encaminham aos AlertDialog.
+- FileManagementDialogs/SaveValidationDialog: removidas chamadas de dismissValidationDialog, onSaveSuccessful e showSnackbar do corpo de composição no caso válido; movidas para LaunchedEffect(viewModel, saveValidationEvent), com rememberUpdatedState para callback e snackbar. Modifier encaminhado ao SaveValidationModal.
+- Verificação obrigatória: testar salvar válido/inválido, navegação e Snackbar, inclusive mudança de ViewModel. O parâmetro scope foi mantido por compatibilidade com chamadas existentes.
+- Sem compilação, conforme instrução do usuário.
