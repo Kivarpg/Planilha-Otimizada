@@ -246,9 +246,8 @@ enum class InkButtonSize(val width: Dp, val height: Dp, val fontSize: TextUnit) 
  * @param customWidth / @param customHeight sobrescrevem o tamanho fixo de
  *   [size] — usado nas grades de pílulas pequenas (Dimens.PillMinWidth/
  *   Height), que não têm a mesma proporção 340:100 das pinceladas largas.
- *   A arte estica pra caber (preserveAspectRatio "none", igual ao SVG
- *   original) — numa caixa bem menor/mais quadrada que o desenho original,
- *   a pincelada fica mais compacta/reta, não idêntica ao botão grande.
+ *   A pincelada mantém escala uniforme pela altura e recebe recorte
+ *   horizontal em caixas estreitas, evitando desenhar sobre controles vizinhos.
  */
 @Composable
 fun InkButton(
