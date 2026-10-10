@@ -42,7 +42,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
@@ -1302,7 +1301,7 @@ fun NpcEncontroCard(
         modifier = Modifier
             .align(Alignment.TopEnd)
             .then(if (compactActions) Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()) else Modifier),
-        horizontalArrangement = if (compactActions) Arrangement.SpaceEvenly else Arrangement.spacedBy(4.dp)
+        horizontalArrangement = Arrangement.spacedBy(if (compactActions) 6.dp else 4.dp)
     ) {
         InkButton(
                     visualTemplate = visualTemplate,
