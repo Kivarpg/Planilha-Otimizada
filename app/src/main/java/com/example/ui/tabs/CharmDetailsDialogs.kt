@@ -23,7 +23,7 @@ import com.example.viewmodel.SheetViewModel
 @Composable
 fun CatalogDetailsDialog(def: EncantoSolarDefinition, onDismiss: () -> Unit, viewModel: SheetViewModel? = null, charmsParaArvore: List<Encanto>? = null, titleColor: androidx.compose.ui.graphics.Color = com.example.ui.theme.ExaltedAccentBright) {
     val detailsHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 500).dp
-    var mostrarArvore by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+    var mostrarArvore by remember(def.id) { mutableStateOf(false) }
     if (mostrarArvore && viewModel != null) {
         val charmsDaArvore = remember(def.id, def.preRequisitos, charmsParaArvore) {
             if (def.id.contains("::")) {
@@ -117,7 +117,7 @@ fun CharmDetailsDialog(
     titleColor: androidx.compose.ui.graphics.Color = com.example.ui.theme.ExaltedAccentBright
 ) {
     val detailsHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 500).dp
-    var mostrarArvore by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+    var mostrarArvore by remember(charm.id) { mutableStateOf(false) }
     if (mostrarArvore && viewModel != null) {
         val charmsDaArvore = remember(charm.id, charm.preRequisitos, tipoPersonagem, dragonBlooded) {
             tipoPersonagem?.let(viewModel::todosOsEncantosParaArvore)
