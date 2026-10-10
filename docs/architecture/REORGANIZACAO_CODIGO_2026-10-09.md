@@ -219,3 +219,10 @@ Inspecionados estaticamente mais 12 arquivos: AbilitySpecializationComponents, C
 - Ainda na vitalidade, BoxWithConstraints calcula maxPerRow a partir de labelWidth=36.dp, boxSize=40.dp, gap=6.dp; essas dimensões explicam diferenças de quebra de linha entre larguras.
 - SummaryCombatSection, SummaryVitalitySection e ExperienceCounterSection contêm medidas locais; alterações apenas no SummaryTab não as cobrem.
 - Nenhuma mudança funcional realizada nesta rodada. Nenhum build executado. Auditoria ainda não exaustiva em todos os arquivos do projeto.
+
+## Validação do fluxo de Vitalidade de NPC — 2026-10-10
+- EncounterNpcVitalityActions.cycleHealthDamage cria lista de caixas via toMutableList, substitui a caixa por copy e o NPC por npc.copy(healthBoxes=boxes) dentro de MutableStateFlow.update.
+- clearHealthDamage usa map { it.copy(tipoDano=0) }, removeExtraHealthBox cria nova lista e substitui NPC; agendarReorganizacao também cria nova lista quando há mudança.
+- Assim, nas operações examinadas, a chave remember(npc.healthBoxes) é invalidada corretamente por mudança estrutural. A suspeita anterior de cache visual obsoleto não foi confirmada para essas rotas. Preservar cache até evidência de outra mutação in-place.
+- A reorganização de ferimentos tem debounce intencional de 2 segundos; não confundir atraso de regra com falha de Compose.
+- Verificação estática, não teste em execução.
