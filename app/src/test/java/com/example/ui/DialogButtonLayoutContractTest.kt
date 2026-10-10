@@ -25,6 +25,12 @@ class DialogButtonLayoutContractTest {
         assertFalse(dialogComponents.contains("screenHeightDp - 260"))
     }
 
+    @Test fun `saved sheets and backups use proportional scroll limits`() {
+        assertTrue(lifecycleDialogs.contains("val savedListHeightLimit = (LocalConfiguration.current.screenHeightDp * 0.45f).coerceAtMost(480f).dp"))
+        assertTrue(lifecycleDialogs.contains("val backupListHeightLimit = (LocalConfiguration.current.screenHeightDp * 0.45f).coerceAtMost(480f).dp"))
+        assertFalse(lifecycleDialogs.contains("screenHeightDp - 240"))
+    }
+
     @Test fun `charm tree and close actions stay side by side in that order`() {
         assertTrue(charmDialogs.windowed("text = \"Árvore\"".length).count { it == "text = \"Árvore\"" } >= 2)
         assertTrue(charmDialogs.windowed("text = \"Fechar\"".length).count { it == "text = \"Fechar\"" } >= 2)
