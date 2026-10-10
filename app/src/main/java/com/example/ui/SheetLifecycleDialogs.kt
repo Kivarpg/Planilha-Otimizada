@@ -176,7 +176,9 @@ fun SheetsListDialog(
                                         else -> "Casta: ${s.casta.displayName} | Jogador: ${s.jogador.ifBlank { "-" }}"
                                     },
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = ExaltedMuted
+                                    color = ExaltedMuted,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis
                                 )
                             }
                             if (isCurrent) {
