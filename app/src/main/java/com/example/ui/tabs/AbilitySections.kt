@@ -54,7 +54,7 @@ internal fun SpecializationsSection(sheet: CharacterSheet) {
     else GildedCard(Modifier.fillMaxWidth(), colors=CardDefaults.cardColors(containerColor=ExaltedDarkSurfaceVariant)) {
         androidx.compose.foundation.layout.FlowRow(Modifier.fillMaxWidth().padding(14.dp), horizontalArrangement=Arrangement.spacedBy(8.dp), verticalArrangement=Arrangement.spacedBy(8.dp)) {
             sheet.specializations.forEach { spec -> Surface(color=ExaltedDarkSurface, shape=MaterialTheme.shapes.small, border=BorderStroke(1.dp,ExaltedAmber.copy(alpha=.5f))) {
-                AppText(if(spec.habilidade in martialArtNames) "Artes Marciais – ${spec.habilidade} – ${spec.nome}" else "${spec.habilidade} – ${spec.nome}", style=MaterialTheme.typography.bodySmall, color=ExaltedAccentBright, textAlign=androidx.compose.ui.text.style.TextAlign.Center, softWrap=false, modifier=Modifier.padding(horizontal=8.dp,vertical=5.dp))
+                AppText(if(spec.habilidade in martialArtNames) "Artes Marciais – ${spec.habilidade} – ${spec.nome}" else "${spec.habilidade} – ${spec.nome}", style=MaterialTheme.typography.bodySmall, color=ExaltedAccentBright, textAlign=androidx.compose.ui.text.style.TextAlign.Center, softWrap=true, maxLines=2, overflow=androidx.compose.ui.text.style.TextOverflow.Ellipsis, modifier=Modifier.padding(horizontal=8.dp,vertical=5.dp))
             }}
         }
     }
