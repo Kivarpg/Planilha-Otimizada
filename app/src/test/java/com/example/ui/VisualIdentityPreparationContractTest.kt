@@ -91,6 +91,7 @@ class VisualIdentityPreparationContractTest {
 
     @Test
     fun `qr bitmap uses one bulk pixel transfer`() {
+        assertTrue(codeDialogs.contains("codigo.isNotEmpty() && codigo.length <= LIMITE_CARACTERES_PARA_QR"))
         assertTrue(codeDialogs.contains("val pixels = IntArray(tamanhoPx * tamanhoPx)"))
         assertTrue(codeDialogs.contains("pixels[rowOffset + x] = if (matrix.get(x, y))"))
         assertTrue(codeDialogs.contains("bitmap.setPixels(pixels, 0, tamanhoPx, 0, 0, tamanhoPx, tamanhoPx)"))
