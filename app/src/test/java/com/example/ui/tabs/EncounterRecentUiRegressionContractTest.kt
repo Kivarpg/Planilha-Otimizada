@@ -70,7 +70,8 @@ class EncounterRecentUiRegressionContractTest {
         val actions = card.substring(actionStart, actionEnd)
         assertTrue(actions.contains("Row("))
         assertTrue(!actions.contains("FlowRow("))
-        assertTrue(actions.contains("Arrangement.SpaceEvenly"))
+        assertTrue(actions.contains("Arrangement.spacedBy(if (compactActions) 6.dp else 4.dp)"))
+        assertTrue(actions.contains("horizontalScroll(rememberScrollState())"))
 
         val archetypeStart = generator.indexOf("AppText(\"3. Arquétipo\"")
         val archetypeEnd = generator.indexOf("if (tipoSangueDeDragao)", archetypeStart)
