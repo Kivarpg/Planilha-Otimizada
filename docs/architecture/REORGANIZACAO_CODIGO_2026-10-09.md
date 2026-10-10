@@ -244,3 +244,13 @@ Varredura estática de todos os 17 arquivos Kotlin de ui/components (ButtonCompo
 - SearchComponents mantém draft de filtro com remember(currentFilter) e texto de busca com remember(value), comportamento possivelmente intencional de sincronização; verificar foco/edição antes de modificar.
 - A investigação das causas estruturais agora abrange os 47 arquivos de ui/tabs e 17 arquivos de ui/components em inventário estático; continuam pendentes host restante, temas, insets, acessibilidade, testes e screenshots.
 - Nenhuma alteração funcional nem build nesta rodada.
+
+## Auditoria estática dos 6 arquivos de ui/theme — 2026-10-10
+Inspecionados Color.kt, Dimens.kt, ExaltedVisualBlueprints.kt, Shape.kt, Theme.kt e Type.kt.
+- Theme.kt reconstrói darkColorScheme dentro do composable ExaltedTheme, lendo as cores reativas de Color.kt; não há evidência de esquema global congelado nesse caminho.
+- Color.kt armazena as cores e o motivo ativo em mutableStateOf; alterações de paleta devem invalidar leituras observadas pelo Compose.
+- Theme.kt preserva LocalDensity do sistema, inclusive escalonamento de fonte acessível; não introduzir override manual de fontScale.
+- Dimens.kt centraliza dimensões compartilhadas, mas os inventários anteriores mostram medidas literais espalhadas nas abas e componentes. Logo o comentário de que TODAS as medidas são centralizadas não corresponde à implementação integral.
+- ExaltedVisualBlueprints.kt especifica tokens para futuras skins, mas a presença do contrato não implica uso automático por todas as telas; verificar os call sites ao comparar mockups.
+- Shape.kt fixa CutCornerShape globalmente; uma mockup com geometria diferente exige distinguir Shapes do MaterialTheme de shapes explícitas dos componentes.
+- Inventário de theme concluído, não equivale a validação visual. Sem build.
