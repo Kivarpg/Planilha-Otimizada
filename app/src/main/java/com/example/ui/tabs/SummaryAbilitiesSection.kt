@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import com.example.model.*
@@ -39,7 +38,6 @@ internal fun SummaryAbilitiesSection(sheet: CharacterSheet) {
                 habilidadesDeCastaOuAspectoParaMarcador(sheet)
             }
             val favoredAbilities = remember(sheet.favoredAbilities) { sheet.favoredAbilities.toSet() }
-            val compactPhone = LocalConfiguration.current.screenWidthDp < 480
             val visibleAbilities = remember(sheet.abilities, casteOrAspectAbilities, favoredAbilities) {
                 ExaltedConstants.ALL_25_ABILITIES.filter { ability ->
                     val rating = sheet.abilities[ability] ?: 0
@@ -51,6 +49,8 @@ internal fun SummaryAbilitiesSection(sheet: CharacterSheet) {
                 visibleAbilities.chunked(columnSize)
             }
 
+            BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+                val compactPhone = maxWidth < 480.dp
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(14.dp)
@@ -91,6 +91,7 @@ internal fun SummaryAbilitiesSection(sheet: CharacterSheet) {
                         }
                     }
                 }
+            }
             }
         }
     }
