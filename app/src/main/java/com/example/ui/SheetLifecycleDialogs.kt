@@ -1,5 +1,8 @@
 package com.example.ui
 
+import com.example.model.isDragonBlooded
+import com.example.model.isLunar
+
 import androidx.compose.runtime.setValue
 
 import androidx.compose.runtime.getValue
