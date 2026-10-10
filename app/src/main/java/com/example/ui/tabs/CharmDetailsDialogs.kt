@@ -7,6 +7,7 @@ import androidx.compose.material3.AlertDialog
 import com.example.ui.components.AppText
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -21,6 +22,7 @@ import com.example.viewmodel.SheetViewModel
 
 @Composable
 fun CatalogDetailsDialog(def: EncantoSolarDefinition, onDismiss: () -> Unit, viewModel: SheetViewModel? = null, charmsParaArvore: List<Encanto>? = null, titleColor: androidx.compose.ui.graphics.Color = com.example.ui.theme.ExaltedAccentBright) {
+    val detailsHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 500).dp
     var mostrarArvore by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     if (mostrarArvore && viewModel != null) {
         val charmsDaArvore = remember(def.id, def.preRequisitos, charmsParaArvore) {
@@ -61,7 +63,7 @@ fun CatalogDetailsDialog(def: EncantoSolarDefinition, onDismiss: () -> Unit, vie
         title = { com.example.ui.components.ChamTitleTwoLines(nomePt = def.nome, nomeEn = def.nomeIngles, titleColor = titleColor) },
         text = {
             Column(
-                modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
+                modifier = Modifier.fillMaxWidth().heightIn(max = detailsHeightLimit).verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 CampoNegrito("Custo", def.custo)
@@ -153,6 +155,7 @@ fun CharmDetailsDialog(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .heightIn(max = detailsHeightLimit)
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(5.dp)
             ) {
