@@ -89,7 +89,7 @@ fun CodeExportResultDialog(
 ) {
     if (codigo == null) return
     val qrBitmap = remember(codigo) {
-        if (codigo.length <= LIMITE_CARACTERES_PARA_QR) gerarBitmapQrCode(codigo) else null
+        if (codigo.isNotEmpty() && codigo.length <= LIMITE_CARACTERES_PARA_QR) gerarBitmapQrCode(codigo) else null
     }
     val exportContentHeight = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 480).dp
     AlertDialog(
