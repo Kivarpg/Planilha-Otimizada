@@ -146,7 +146,7 @@ fun CharmDetailsDialog(
                 onDismiss = { mostrarArvore = false }
             )
         }
-    }
+    } else {
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
@@ -201,6 +201,7 @@ fun CharmDetailsDialog(
         },
         containerColor = ExaltedDarkSurfaceVariant
     )
+    }
 }
 
 /** Campo "Rótulo: valor" com o rótulo em negrito — confirmado contra os
