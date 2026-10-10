@@ -250,6 +250,9 @@ fun ErgonomicNumericSelector(
                     )
                 }
 
+                // O alvo de toque de GildedStepButton permanece >= 52.dp.
+                // Evite reduzir apenas o ícone: a largura real do controle
+                // inclui os dois alvos de toque e o marcador central.
                 val sideButtonSize = sideButtonSizeOverride ?: if (compact) 28.dp else 40.dp
                 if (!buttonsOnSameSide) {
                     if (invertButtons) incrementButton(sideButtonSize) else decrementButton(sideButtonSize)
