@@ -174,3 +174,10 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - InkButton: o Box raiz aplica modifier externo seguido de Modifier.size(width,height) ou fillMaxWidth/height; tamanhos mínimos de 48.dp e tamanhos nominais por InkButtonSize podem prevalecer sobre expectativas de layout e prejudicar reprodução de mockups em Rows estreitas. Necessária matriz de casos (weight, largura fixa, customWidth, texto longo, fontScale).
 - GildedCard: ornamentos drawBehind desenhados no próprio Card, inclusive dependência de ExaltedActiveMotif. Uma mudança no layout da aba não elimina automaticamente ornamentos internos. Preservar identidade aprovada; alterações visuais requerem autorização.
 - Ainda pendente: varredura de hierarquias, dimensões e testes de layout em todos os componentes e abas; nenhuma compilação.
+
+## Investigação da hierarquia visual — 2026-10-10 (continuação)
+- AppText: o mesmo modifier era aplicado a dois Text sobrepostos (stroke e fill) dentro de Box sem modifier. Corrigido: modifier externo somente no Box; Text internos com fillMaxWidth para manter centralização. Validar comportamento de largura intrínseca e wrapping em testes visuais.
+- SheetContentArea: contêiner global impõe padding(start=14.dp,end=8.dp,top=6.dp,bottom=8.dp) e largura máxima 900/980.dp por breakpoint. Esse é um limite concreto à reprodução de mockups, independente do código individual das abas. Não alterar sem especificação visual.
+- InkButton: tamanho nominal ou customizado com piso 48.dp aplicado ao Box raiz; Canvas usa tamanho nominal próprio. Candidato a conflitos de restrição em Rows/FlowRows, especialmente quando modifier externo aplica weight/widthIn; requer testes.
+- TabIdentitySurface: exaltedTabIdentity e exaltedContentStage são no-op; exaltedSectionPanel e exaltedControlBand adicionam backgrounds. Portanto a identidade da aba depende mais dos componentes internos e do host do que desses modificadores.
+- Sem compilação ou validação de screenshots.
