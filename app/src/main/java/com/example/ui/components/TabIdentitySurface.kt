@@ -1,6 +1,9 @@
 package com.example.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -25,7 +28,21 @@ fun Modifier.exaltedContentStage(chapter: Int): Modifier = this
 fun Modifier.exaltedSectionPanel(
     chapter: Int = 0,
     backgroundColor: Color = ExaltedDarkSurfaceVariant
-): Modifier = this.background(backgroundColor)
+): Modifier = this
+    .background(
+        Brush.verticalGradient(
+            listOf(
+                backgroundColor.copy(alpha = 0.96f),
+                backgroundColor,
+                ExaltedDarkSurface
+            )
+        )
+    )
+    .border(
+        width = 1.dp,
+        color = ExaltedOutline.copy(alpha = 0.32f),
+        shape = RoundedCornerShape(8.dp)
+    )
 
 fun Modifier.exaltedControlBand(
     surfaceColor: Color = ExaltedDarkSurface,
