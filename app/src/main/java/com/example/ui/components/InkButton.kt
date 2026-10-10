@@ -332,7 +332,7 @@ fun InkButton(
 
     Box(
         modifier = modifier
-            .then(if (fillMaxWidth) Modifier.fillMaxWidth().height(height) else Modifier.widthIn(max = width).height(height))
+            .then(if (fillMaxWidth) Modifier.fillMaxWidth().height(height) else Modifier.widthIn(min = 48.dp, max = width).height(height))
             .graphicsLayer { scaleX = scale; scaleY = scale }
             .feedbackClickable(
                 interactionSource = interactionSource,
