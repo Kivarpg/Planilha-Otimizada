@@ -165,7 +165,9 @@ fun SheetsListDialog(
                                     text = s.nomeArquivo(),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold,
-                                    color = if (isCurrent) ExaltedAmber else MaterialTheme.colorScheme.onSurface
+                                    color = if (isCurrent) ExaltedAmber else MaterialTheme.colorScheme.onSurface,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis
                                 )
                                 AppText(
                                     text = when {
