@@ -9,6 +9,7 @@ import androidx.compose.material3.*
 import com.example.ui.components.AppText
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -23,13 +24,17 @@ import com.example.ui.components.InkButton
 internal fun IntimidadeDialog(show:Boolean,nome:String,tipo:String,intensidade:String,onNome:(String)->Unit,onTipo:(String)->Unit,onIntensidade:(String)->Unit,onDismiss:()->Unit,viewModel:SheetViewModel){
     if(!show) return
 
+    val contentHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 460).dp
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = { AppText("Intimidade", color = ExaltedGold, maxLines = 2, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Column(
+                modifier = Modifier.fillMaxWidth().heightIn(max = contentHeightLimit).verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
                 OutlinedTextField(
                     value = nome,
                     onValueChange = com.example.ui.components.rememberTypingFeedback { onNome(it.take(60)) },
@@ -140,6 +145,7 @@ internal fun LinguaDialog(show:Boolean,sheet:CharacterSheet,onDismiss:()->Unit,v
         (it == "Outra" || it != sheet.linguaNativa) && it !in sheet.linguasAdicionais
     }
 
+    val languageContentHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 460).dp
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
@@ -148,7 +154,10 @@ internal fun LinguaDialog(show:Boolean,sheet:CharacterSheet,onDismiss:()->Unit,v
             AppText("Idioma", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true)
         },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+            Column(
+                modifier = Modifier.fillMaxWidth().heightIn(max = languageContentHeightLimit).verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(14.dp)
+            ) {
                 // --- Idioma Nativo ---
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     AppText("Idioma nativo", style = MaterialTheme.typography.labelMedium, color = ExaltedGold)
