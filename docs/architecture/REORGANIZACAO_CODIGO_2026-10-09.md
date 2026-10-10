@@ -226,3 +226,12 @@ Inspecionados estaticamente mais 12 arquivos: AbilitySpecializationComponents, C
 - Assim, nas operações examinadas, a chave remember(npc.healthBoxes) é invalidada corretamente por mudança estrutural. A suspeita anterior de cache visual obsoleto não foi confirmada para essas rotas. Preservar cache até evidência de outra mutação in-place.
 - A reorganização de ferimentos tem debounce intencional de 2 segundos; não confundir atraso de regra com falha de Compose.
 - Verificação estática, não teste em execução.
+
+## Fechamento do inventário dos 47 arquivos de ui/tabs — 2026-10-10
+Nesta rodada inspecionados os 10 arquivos restantes do diretório ui/tabs: AspectoTab, CasteTab, MartialArtsCharmsPopup, MeritSelectionDialog, SummaryAbilitiesSection, SummaryCharmsSection, SummaryExperienceSection, SummaryPersonalDataSection, SummarySpecialIndicator, EncounterCombatEquations. Com as rodadas anteriores, os 47 arquivos desse diretório foram cobertos por uma varredura estática de layout/estado de diferentes profundidades. Isso NÃO significa revisão manual integral de todas as linhas ou auditoria completa do aplicativo.
+- SummaryAbilitiesSection usa LocalConfiguration.current.screenWidthDp < 480, mas o host aplica padding lateral e limites próprios. Esse breakpoint é baseado na largura da tela, não na largura efetivamente disponível à seção; candidato a layout divergente em telas com outros insets ou painéis.
+- SummaryAbilitiesSection memoriza conjuntos e listas derivados de sheet.abilities, sheet.favoredAbilities e sheet.casteAbilities; validade depende de atualizações imutáveis dessas coleções.
+- SummaryCharmsSection agrupa sheet.charms via remember(sheet.charms), sujeito ao mesmo contrato de imutabilidade.
+- MartialArtsCharmsPopup memoriza catálogo por viewModel e elegibilidade por sheet/estilo; investigar invalidação se o catálogo mudar em runtime, mas não há evidência de bug no fluxo normal.
+- MeritSelectionDialog concentra 14 ocorrências de dimensões diretas .dp, demandando captura visual específica em dispositivos estreitos.
+- Nenhuma alteração funcional nesta rodada. Testes visuais e de compilação ainda pendentes.
