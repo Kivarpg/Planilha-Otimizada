@@ -388,6 +388,7 @@ fun InkButton(
         // O padding antigo de 28.dp por lado consumia quase toda a largura dos botões
         // compactos e cortava rótulos como "Automático". Mantemos uma margem segura e
         // reduzimos a fonte somente quando o layout realmente informa overflow.
+        var measuredTextWidthPx by remember { mutableStateOf(0) }
         val textModifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 2.dp)
@@ -395,7 +396,6 @@ fun InkButton(
         val baseFontSize = size.fontSize
         // Reset the fit when the measured width changes (e.g. a weighted Row
         // expands), rather than only when the requested nominal size changes.
-        var measuredTextWidthPx by remember { mutableStateOf(0) }
         var fittedFontSize by remember(label, baseFontSize, measuredTextWidthPx) {
             mutableStateOf(baseFontSize)
         }
