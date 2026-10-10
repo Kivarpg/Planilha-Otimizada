@@ -66,6 +66,15 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `backup restore rows reserve width for the action`() {
+        assertTrue(lifecycleDialogs.contains("text = snapshot.timestamp,"))
+        assertTrue(lifecycleDialogs.contains("modifier = Modifier.weight(1f),"))
+        assertTrue(lifecycleDialogs.contains("overflow = TextOverflow.Ellipsis"))
+        assertTrue(lifecycleDialogs.contains("text = \"Restaurar\""))
+        assertTrue(lifecycleDialogs.contains("viewModel.restaurarBackupPeriodico(snapshot)"))
+    }
+
+    @Test
     fun `settings and warning dialogs retain bounded scrollable content`() {
         assertTrue(dialogs.contains("val settingsContentHeight = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 500).dp"))
         assertTrue(dialogs.contains("heightIn(max = settingsContentHeight).verticalScroll(rememberScrollState())"))
