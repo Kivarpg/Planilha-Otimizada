@@ -53,7 +53,8 @@ internal fun SheetTopBar(
     buscaPlanilhasSalvas: String,
     onBuscaPlanilhasSalvas: (String) -> Unit,
     scope: kotlinx.coroutines.CoroutineScope,
-    snackbarHostState: SnackbarHostState
+    snackbarHostState: SnackbarHostState,
+    modifier: Modifier = Modifier
 ) {
     // Passo 9/12 — composição adaptativa sem criar um fluxo Compact paralelo.
     // O mesmo cabeçalho preserva conteúdo e ações; apenas redistribui espaço.
@@ -72,7 +73,7 @@ internal fun SheetTopBar(
     // uma peça de identidade + índice de capítulo; não é uma barra de app.
     // Estados, ações, tabs e callbacks permanecem inalterados.
     Column(
-        Modifier
+        modifier
             .fillMaxWidth()
             .background(ExaltedDarkBackground.copy(alpha = .985f))
             .drawBehind {
