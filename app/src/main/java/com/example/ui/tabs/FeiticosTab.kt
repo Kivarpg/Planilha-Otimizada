@@ -70,7 +70,7 @@ internal fun FeiticosPopup(
     onShowDetail: (FeiticoDefinition) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val circulosDesbloqueados = remember(sheet) { viewModel.circulosDesbloqueados(sheet) }
+    val circulosDesbloqueados = remember(sheet, viewModel) { viewModel.circulosDesbloqueados(sheet) }
     val circulos = when {
         sheet.tipoPersonagem.isDragonBlooded() -> listOf("Terrestre")
         sheet.tipoPersonagem.isLunar() -> listOf("Terrestre", "Celestial")
