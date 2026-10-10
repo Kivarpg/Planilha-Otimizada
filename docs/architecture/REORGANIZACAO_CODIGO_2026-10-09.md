@@ -94,3 +94,11 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - FeiticosPopup calculava circulosDesbloqueados com remember(sheet), ignorando troca de instância de SheetViewModel. Chave ajustada para remember(sheet, viewModel).
 - O cálculo de círculos ainda depende de sheet; se houver mutação interna sem emissão de novo sheetState, deve ser investigada no ViewModel.
 - Sem compilação ou verificação visual; manter status não validado.
+
+## Auditoria de componentes compartilhados — 2026-10-10
+- InkButton, InkGhostButton, GildedCard, LongPressCard, SectionHeader: parâmetro Modifier e encaminhamento confirmados por inspeção.
+- EncantoQuadroBox: parâmetro Modifier opcional adicionado, encaminhado ao Column raiz.
+- ConfirmDeleteDialog e SaveValidationModal: Modifier opcional adicionado, encaminhado ao AlertDialog antes de gildedDialogBorder().
+- Valores de textos de confirmação são conteúdo estático ou parâmetros; não converter indiscriminadamente para mutableStateOf.
+- Mudanças compatíveis com chamadas posicionais existentes por acrescentar parâmetros opcionais ao final.
+- Não compilado; verificar via build quando autorizado.
