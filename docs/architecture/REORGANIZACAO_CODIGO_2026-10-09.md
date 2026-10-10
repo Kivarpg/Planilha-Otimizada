@@ -87,3 +87,10 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - As demais assinaturas inspecionadas já declaravam Modifier opcional. Isso não prova que todos os nós internos o propagam corretamente.
 - Os campos editáveis da aba 13 usam remember/mutableStateOf e battleGroups é observado via collectAsState; valores iniciais e rótulos constantes não exigem UIState próprio.
 - Ainda não foi feita validação por build ou instrumentação.
+
+## Auditoria de dialogs e cache de estado — 2026-10-10
+- Confirmado encaminhamento de Modifier nas telas AspectoTab, CasteTab, SolarCasteTabContent e LunarCasteTabContent, inclusive ramos sem casta selecionada.
+- FeiticosPopup e FeiticoDetailsDialog passaram a receber Modifier opcional e encaminhá-lo ao AlertDialog, preservando gildedDialogBorder.
+- FeiticosPopup calculava circulosDesbloqueados com remember(sheet), ignorando troca de instância de SheetViewModel. Chave ajustada para remember(sheet, viewModel).
+- O cálculo de círculos ainda depende de sheet; se houver mutação interna sem emissão de novo sheetState, deve ser investigada no ViewModel.
+- Sem compilação ou verificação visual; manter status não validado.
