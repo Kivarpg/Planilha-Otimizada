@@ -140,3 +140,10 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - FileManagementDialogs/SaveValidationDialog: removidas chamadas de dismissValidationDialog, onSaveSuccessful e showSnackbar do corpo de composição no caso válido; movidas para LaunchedEffect(viewModel, saveValidationEvent), com rememberUpdatedState para callback e snackbar. Modifier encaminhado ao SaveValidationModal.
 - Verificação obrigatória: testar salvar válido/inválido, navegação e Snackbar, inclusive mudança de ViewModel. O parâmetro scope foi mantido por compatibilidade com chamadas existentes.
 - Sem compilação, conforme instrução do usuário.
+
+## Auditoria de estado observável — 2026-10-10 (rodada seguinte)
+- Color.kt: tokens de paleta dinâmica usam mutableStateOf; não foi encontrada ausência geral de estado nas cores globais.
+- AbilitiesTab: filtro de habilidades já possui chaves de remember para subTabIndex, casteAbilities, favoredAbilities e abilities; sem alteração.
+- SheetTabsBar: removido remember(sheet, viewModel) dos cálculos de saldo de BP e pontos de Habilidade para impedir resultado desatualizado quando a mesma instância de CharacterSheet contém coleções alteradas. O cálculo ocorre apenas nos ramos visíveis da barra e em recomposições pertinentes. Atenção: isso troca cache por correção de dados, podendo aumentar custo de recomposição; medir após compilação e, se necessário, expor saldos derivados via StateFlow do ViewModel.
+- Pendente: confirmar que mutações do modelo disparam emissão em sheetState, pois retirar remember não força recomposição por si só.
+- Nenhuma build disparada.
