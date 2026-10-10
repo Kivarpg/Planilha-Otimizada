@@ -3,6 +3,7 @@ package com.example.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.example.ui.theme.ExaltedBackdropGlow
@@ -35,8 +35,8 @@ internal fun SheetContentArea(
     // IDENTIDADE VISUAL v4 — o conteúdo é um "fólio" contínuo. A moldura
     // externa desaparece; os componentes internos definem sua própria
     // hierarquia e a tela passa a ter um único campo de leitura.
-    Box(
-        modifier
+    BoxWithConstraints(
+        modifier = modifier
             .fillMaxSize()
             .background(sheetBackgroundBrush())
             .pointerInput(Unit) {
@@ -44,7 +44,9 @@ internal fun SheetContentArea(
             }
 
     ) {
-        val widthDp = LocalConfiguration.current.screenWidthDp
+        // Decide the folio width using this host's actual constraints,
+        // not the physical screen width (which can differ in split-screen).
+        val widthDp = maxWidth.value
         val contentModifier = when {
             widthDp >= 1000 -> Modifier.widthIn(max = 980.dp).align(Alignment.TopCenter)
             widthDp >= 720 -> Modifier.widthIn(max = 900.dp).align(Alignment.TopCenter)
