@@ -1,8 +1,13 @@
 package com.example.ui
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.Alignment
@@ -30,22 +35,26 @@ internal fun SheetContentArea(tabs: List<SheetTab>, selectedTabIndex: Int) {
         Modifier
             .fillMaxSize()
             .background(sheetBackgroundBrush())
-            .pointerInput(Unit){detectTapGestures(onTap={focusManager.clearFocus()})}
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = { focusManager.clearFocus() })
+            }
 
-    ){
+    ) {
         val widthDp = LocalConfiguration.current.screenWidthDp
         val contentModifier = when {
-            widthDp >= 1000 -> Modifier.widthIn(max=980.dp).align(Alignment.TopCenter)
-            widthDp >= 720 -> Modifier.widthIn(max=900.dp).align(Alignment.TopCenter)
+            widthDp >= 1000 -> Modifier.widthIn(max = 980.dp).align(Alignment.TopCenter)
+            widthDp >= 720 -> Modifier.widthIn(max = 900.dp).align(Alignment.TopCenter)
             else -> Modifier.fillMaxWidth()
         }
         Box(
             contentModifier
                 .fillMaxHeight()
-                .padding(start=14.dp,end=8.dp,top=6.dp,bottom=8.dp)
-        ){
+                .padding(start = 14.dp, end = 8.dp, top = 6.dp, bottom = 8.dp)
+        ) {
             val holder = rememberSaveableStateHolder()
-            holder.SaveableStateProvider(selectedTabIndex){tabs[selectedTabIndex].content()}
+            holder.SaveableStateProvider(selectedTabIndex) {
+                tabs[selectedTabIndex].content()
+            }
         }
     }
 }
