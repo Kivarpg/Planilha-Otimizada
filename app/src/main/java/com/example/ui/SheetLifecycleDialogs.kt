@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -386,7 +386,7 @@ fun EscolhaTemplateNovaPlanilhaDialog(show: Boolean, onDismiss: () -> Unit, onEs
                         com.example.ui.components.GildedDialogButton(
                             text = rotulo,
                             onClick = { onEscolhido(valor) },
-                            modifier = Modifier.width(120.dp),
+                            modifier = Modifier.widthIn(min = 96.dp, max = 120.dp),
                             fillMaxWidth = true
                         )
                     }
