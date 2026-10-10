@@ -203,3 +203,11 @@ Os números acima contam apenas expressões diretas de width/height/size/widthIn
 - CombatTab usa breakpoint maxWidth < 430.dp para empilhar controles de motes; EquipmentTab usa 360.dp para mudar campos de mistos; MeritsTab usa 360.dp para reorganizar cartões; EncounterGeneratorTab usa 430.dp no cabeçalho. Essas regras podem produzir estruturas diferentes da mockup dependendo da largura disponível após padding do host.
 - Principal conclusão: o desenho final é determinado por hierarquia de host + breakpoints por aba + dimensões de componentes compartilhados, e não por uma única propriedade global. Mudanças em mockup exigem mapear esses três níveis antes de editar.
 - Ainda pendente: inspeção dos arquivos auxiliares, matriz de captura visual e teste de regressão. Sem build.
+
+## Segunda camada: componentes auxiliares de abas — 2026-10-10
+Varredura estática de AbilityRowComponents, AbilitySections, CombatCards, EncounterNpcCardComponents, EncounterNpcCardSections, SummaryComponents, PersonalDataSections, WeaponSection, ArmorSection e CharmListComponents.
+- AbilitySections usa breakpoint 620.dp para grade de Habilidades; WeaponSection usa 380.dp para parte do catálogo. Esses pontos se somam aos breakpoints encontrados nos arquivos principais.
+- PersonalDataSections/ItemAspecto impõe .width(102.dp) depois do modifier do chamador. Esse tamanho fixo foi introduzido intencionalmente para a identidade visual aprovada de Sangue de Dragão; não alterar sem verificar distribuição e mockup correspondente.
+- EncounterNpcCardSections tem espaçamentos de 28.dp em seções; são candidatos a divergências de densidade visual, não erros comprovados.
+- O inventário confirma que mudanças só em arquivos Tab.kt não abrangem os layouts dos componentes extraídos. Auditar auxiliares é obrigatório para fidelidade por aba.
+- Limitação: não houve execução de UI, comparação de screenshots, inspeção de todos os auxiliares restantes ou validação do build.
