@@ -125,3 +125,10 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - Varredura dos componentes de arquivos ButtonComponents, CardComponents, CounterControls, DecorativeComponents, DialogComponents, InkButton, LunarCasteEmblemButton, NumericRatingControls, RatingDisplayControls, SearchComponents, TextComponents e SplashScreen: funções visuais públicas identificadas agora possuem Modifier opcional.
 - Não confundir auditoria estática de assinaturas com verificação completa de comportamento. Pendente: teste de build, teste de troca Solar/SDD/Lunar, revisão de recomposição dos consumidores e validação visual em aparelho.
 - Não iniciar compilação sem autorização.
+
+## Auditoria adicional de estado e Modifier — 2026-10-10
+- TemplateSelectionScreen: Modifier opcional e encaminhamento ao Box raiz.
+- SheetTabsBar: Modifier opcional e encaminhamento ao Column raiz. Caches de saldo de BP e pontos de Habilidade usam remember(sheet, viewModel), não apenas remember(sheet).
+- SheetScreenDialogs: SettingsDialog, ReversionConfirmDialog, CommitmentErrorDialog e PendingMeritBreakDialog agora aceitam Modifier opcional e o encaminham ao AlertDialog com a borda temática preservada.
+- Atenção: lembrar por identidade de sheet não substitui uma emissão de novo valor de sheetState quando dados internos mudam; o ViewModel deve publicar atualizações.
+- Ainda falta inspecionar os diálogos de gerenciamento e os usos de remember com chaves incompletas. Não compilado.
