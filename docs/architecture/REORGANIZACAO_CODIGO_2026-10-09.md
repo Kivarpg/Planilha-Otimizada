@@ -254,3 +254,10 @@ Inspecionados Color.kt, Dimens.kt, ExaltedVisualBlueprints.kt, Shape.kt, Theme.k
 - ExaltedVisualBlueprints.kt especifica tokens para futuras skins, mas a presença do contrato não implica uso automático por todas as telas; verificar os call sites ao comparar mockups.
 - Shape.kt fixa CutCornerShape globalmente; uma mockup com geometria diferente exige distinguir Shapes do MaterialTheme de shapes explícitas dos componentes.
 - Inventário de theme concluído, não equivale a validação visual. Sem build.
+
+## Integração host + responsividade — 2026-10-10
+- SheetContentArea usa LocalConfiguration.current.screenWidthDp para escolher limite de largura 900/980.dp e padding horizontal 14+8.dp; isso não corresponde necessariamente à largura real medida do contêiner após outros insets/constraints.
+- SheetTabsBar e SheetTopBar também escolhem modo compacto usando screenWidthDp < 600; componentes filhos em CombatTab, EquipmentTab, MeritsTab e EncounterGeneratorTab usam BoxWithConstraints/maxWidth real, enquanto SummaryAbilitiesSection usa screenWidthDp < 480. Há três estratégias de largura coexistindo (tela, host, filho). Este é um fator estrutural concreto de divergência entre mockup e resultado.
+- SheetScreen/MainSheetScreen guarda selectedTabIndex com rememberSaveable e usa SheetContentArea(tabs, selectedTabIndex); SheetContentArea usa SaveableStateProvider(selectedTabIndex). Investigar mudanças na lista/ordem das abas para garantir que índices continuem identificando a mesma aba; não há evidência de falha na ordem atual.
+- Plano seguro: padronizar breakpoints por largura medida do componente quando houver necessidade visual comprovada; manter limites de largura e insets atuais até teste comparativo. Não substituir todos os breakpoints em lote sem screenshots e testes.
+- Ainda não foi feita compilação, captura visual ou auditoria de todos os arquivos de ui fora dos diretórios inventariados.
