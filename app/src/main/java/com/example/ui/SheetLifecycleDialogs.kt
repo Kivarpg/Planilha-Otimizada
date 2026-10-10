@@ -109,7 +109,7 @@ fun SheetsListDialog(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
-                if (savedSheets.size > 4) {
+                if (savedSheets.size > 4 || buscaPlanilhasSalvas.isNotBlank()) {
                     OutlinedTextField(
                         value = buscaPlanilhasSalvas,
                         onValueChange = onBuscaChange,
