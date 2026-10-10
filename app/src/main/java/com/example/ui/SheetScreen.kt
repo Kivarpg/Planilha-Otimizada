@@ -184,7 +184,10 @@ fun MainSheetScreen(
                     conteudoLog,
                     style = MaterialTheme.typography.bodySmall,
                     color = ExaltedOnSurface,
-                    modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(max = (androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp * 0.45f).coerceAtMost(480f).dp)
+                        .verticalScroll(rememberScrollState())
                 )
             },
             dismissButton = {
