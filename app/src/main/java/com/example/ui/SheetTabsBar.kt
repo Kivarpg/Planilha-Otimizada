@@ -138,7 +138,7 @@ internal fun SheetTabsBar(
                         fontWeight = if (selected) FontWeight.Black else FontWeight.Medium,
                         fontSize = when { enlargedText -> 14.sp; compact -> 13.sp; else -> 13.sp },
                         letterSpacing = if (compact) .15.sp else .25.sp,
-                        maxLines = if (compact) 2 else 1, softWrap = compact, overflow = TextOverflow.Ellipsis,
+                        maxLines = if (compact || enlargedText) 2 else 1, softWrap = compact || enlargedText, overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center
                     )
