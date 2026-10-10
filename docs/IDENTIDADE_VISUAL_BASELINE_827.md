@@ -89,3 +89,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Teste de regressao estatico cobre a associacao do estado aos IDs `def.id` e `charm.id`.
 - A alteracao nao modifica regras de Encantos, pre-requisitos, atributos, Habilidades ou conteudo de arvores.
 - Pendente: compilar, executar testes JVM e validar troca de Encantos/abertura/fechamento da arvore em emulador.
+
+## Preparacao da Exalted.841 (sem compilacao)
+- Aba 8 / dialogos de Encantos: caches `remember` de catalogo e arvore incluem o `viewModel` ativo como chave, evitando reutilizar entradas de instancia anterior.
+- Dialogo compartilhado de confirmacao de exclusao: conteudo com nomes extensos fica em coluna rolavel e altura maxima de 35% da tela, limitada a 280dp; preserva os botoes Remover e Cancelar.
+- Testes estaticos adicionados para os dois contratos.
+- Pendente: compilacao Kotlin, testes JVM e verificacao visual em emulador de exclusao com nome longo e troca de planilha/Encanto.
