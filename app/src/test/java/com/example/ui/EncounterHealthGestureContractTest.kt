@@ -43,4 +43,14 @@ class EncounterHealthGestureContractTest {
         assertTrue(health.contains("onClick = onLimparDano"))
     }
 
+    @Test
+    fun `npc header actions use card constraints and remain accessible on narrow widths`() {
+        assertTrue(source.contains("BoxWithConstraints(modifier = Modifier.fillMaxWidth().padding(16.dp))"))
+        assertTrue(source.contains("val compactPhone = maxWidth < 480.dp"))
+        assertTrue(source.contains("val compactActions = compactPhone"))
+        assertTrue(source.contains("Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())"))
+        listOf("label = \"Exportar\"", "label = \"Salvar\"", "label = \"Carregar\"")
+            .forEach { assertTrue(source.contains(it), "Missing NPC action: $it") }
+    }
+
 }
