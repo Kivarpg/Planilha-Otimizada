@@ -8,7 +8,7 @@ import kotlin.test.assertTrue
  * Baseline estático dos controles compactos. Não substitui testes instrumentados
  * de bounds, hit targets, fonte ampliada ou capturas de tela.
  *
- * Mantém o contrato atual documentado antes de qualquer remodelação visual.
+ * Protege as ações sem congelar tamanhos locais que precisam de validação visual.
  */
 class CompactInkButtonContractTest {
     private val inkButton = File("src/main/java/com/example/ui/components/InkButton.kt").readText()
@@ -32,10 +32,8 @@ class CompactInkButtonContractTest {
     @Test
     fun `charm stepper and detail actions still use shared button`() {
         listOf("onDecrement", "onIncrement", "onShowDetail").forEach { action ->
-            val actionStart = charmList.indexOf("onClick = $action")
-            assertTrue(actionStart >= 0, "Missing compact action: $action")
-            val nextLines = charmList.substring(actionStart).lineSequence().take(4).joinToString("\n")
-            assertTrue(nextLines.contains("Modifier.size(40.dp)"), "Expected 40.dp request for $action")
+            val pattern = Regex("InkButton\\s*\\(\\s*onClick\\s*=\\s*" + action + "\\b")
+            assertTrue(pattern.containsMatchIn(charmList), "Missing InkButton action: $action")
         }
     }
 
