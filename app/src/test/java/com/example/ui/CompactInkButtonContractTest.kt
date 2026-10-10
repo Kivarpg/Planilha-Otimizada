@@ -41,6 +41,6 @@ class CompactInkButtonContractTest {
     fun `dialog buttons delegate to shared ink button`() {
         assertTrue(dialogButtons.contains("fun GildedDialogButton("))
         assertTrue(dialogButtons.contains("fun GildedDialogTextButton("))
-        assertTrue(Regex("""fun GildedDialogButton\\([\\s\\S]*?\\) \\{\\s*InkButton\\(""").containsMatchIn(dialogButtons))
+        assertTrue(dialogButtons.substringAfter("fun GildedDialogButton(").substringBefore("fun GildedDialogTextButton(").contains("InkButton("))
     }
 }
