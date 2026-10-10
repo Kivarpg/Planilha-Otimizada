@@ -274,6 +274,7 @@ fun ReversionConfirmDialog(viewModel: SheetViewModel, modifier: Modifier = Modif
 fun CommitmentErrorDialog(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
     val message by viewModel.commitmentError.collectAsState()
     if (message == null) return
+    val messageHeightLimit = (LocalConfiguration.current.screenHeightDp - 260).coerceIn(120, 420).dp
     AlertDialog(
         onDismissRequest = { viewModel.dismissCommitmentError() },
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
@@ -291,7 +292,11 @@ fun CommitmentErrorDialog(viewModel: SheetViewModel, modifier: Modifier = Modifi
                 modifier = Modifier.fillMaxWidth()
             )
         },
-        text = { AppText(text = message ?: "", color = MaterialTheme.colorScheme.onSurface) },
+        text = {
+            Column(modifier = Modifier.fillMaxWidth().heightIn(max = messageHeightLimit).verticalScroll(rememberScrollState())) {
+                AppText(text = message ?: "", color = MaterialTheme.colorScheme.onSurface)
+            }
+        },
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "OK", onClick = { viewModel.dismissCommitmentError() })
         },
@@ -308,6 +313,7 @@ fun CommitmentErrorDialog(viewModel: SheetViewModel, modifier: Modifier = Modifi
 fun PendingMeritBreakDialog(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
     val pendente by viewModel.pendingMeritBreak.collectAsState()
     val info = pendente ?: return
+    val affectedMeritsHeightLimit = (LocalConfiguration.current.screenHeightDp - 260).coerceIn(120, 420).dp
     AlertDialog(
         onDismissRequest = { viewModel.cancelarPendingMeritBreak() },
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
@@ -326,7 +332,10 @@ fun PendingMeritBreakDialog(viewModel: SheetViewModel, modifier: Modifier = Modi
             )
         },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(
+                modifier = Modifier.fillMaxWidth().heightIn(max = affectedMeritsHeightLimit).verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 AppText(
                     text = "Você está reduzindo ${info.descricaoMudanca}.",
                     color = MaterialTheme.colorScheme.onSurface
