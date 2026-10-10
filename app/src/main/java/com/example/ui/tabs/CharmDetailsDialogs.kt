@@ -116,6 +116,7 @@ fun CharmDetailsDialog(
     tipoPersonagem: String? = null,
     titleColor: androidx.compose.ui.graphics.Color = com.example.ui.theme.ExaltedAccentBright
 ) {
+    val detailsHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 500).dp
     var mostrarArvore by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     if (mostrarArvore && viewModel != null) {
         val charmsDaArvore = remember(charm.id, charm.preRequisitos, tipoPersonagem, dragonBlooded) {
