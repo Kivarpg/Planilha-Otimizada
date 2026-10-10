@@ -102,3 +102,11 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - Valores de textos de confirmação são conteúdo estático ou parâmetros; não converter indiscriminadamente para mutableStateOf.
 - Mudanças compatíveis com chamadas posicionais existentes por acrescentar parâmetros opcionais ao final.
 - Não compilado; verificar via build quando autorizado.
+
+## Auditoria de controles de busca e indicadores — 2026-10-10
+- SearchComponents: FilterChip, SkillSearchModal, NumericFilterRow e MultiSelectChips receberam Modifier opcional e encaminhamento ao componente raiz.
+- SkillSearchModal: rascunho agora é remember(currentFilter), permitindo recomeçar a partir de um novo filtro recebido. Atenção: se currentFilter mudar enquanto o diálogo está aberto, alterações locais não aplicadas serão descartadas; comportamento deve ser validado com o fluxo de busca.
+- CounterControls: RingStepSymbol agora recebe Modifier opcional e o encaminha ao Box raiz.
+- RatingDisplayControls: DiamondPip agora recebe Modifier opcional e o encaminha ao Canvas raiz.
+- Cores dos controles permanecem derivadas dos tokens observáveis Exalted*.
+- Não compilado; testes de interação e UI pendentes.
