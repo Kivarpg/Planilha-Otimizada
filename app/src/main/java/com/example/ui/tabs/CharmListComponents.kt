@@ -356,10 +356,10 @@ internal fun AcquiredCharmCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 3.dp)
-            .pointerInput(charm.id) {
-                detectTapGestures(onTap = { onClick() }, onLongPress = { onLongPress() })
-            }
-            .feedbackOnPress(),
+            .feedbackCombinedClickable(
+                onClick = onClick,
+                onLongClick = onLongPress,
+            ),
         color = ExaltedDarkSurfaceVariant,
         shape = MaterialTheme.shapes.small,
         border = BorderStroke(1.dp, if (isPinned) ExaltedAccentBright else ExaltedStructuralMetal.copy(alpha = 0.55f))
