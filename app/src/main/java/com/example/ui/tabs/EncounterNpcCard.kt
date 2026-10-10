@@ -1160,28 +1160,28 @@ fun NpcEncontroCard(
                     ),
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                InkButton(
-                    visualTemplate = visualTemplate,
-                    label = "+ Aumentar XP",
-                    onClick = onAumentarExperiencia,
-                    enabled = !gerando,
-                    modifier = if (xpActionsScrollable) Modifier.width(156.dp) else Modifier.weight(1f),
-                    fillMaxWidth = true,
-                    size = InkButtonSize.Small,
-                    variant = InkButtonVariant.Secondary,
-                    brushIndex = 1
-                )
-                InkButton(
-                    visualTemplate = visualTemplate,
-                    label = "− Diminuir XP",
-                    onClick = onDiminuirExperiencia,
-                    enabled = !gerando && npc.historicoXpBatches.isNotEmpty(),
-                    modifier = if (xpActionsScrollable) Modifier.width(156.dp) else Modifier.weight(1f),
-                    fillMaxWidth = true,
-                    size = InkButtonSize.Small,
-                    variant = InkButtonVariant.Secondary,
-                    brushIndex = 2
-                )
+                    InkButton(
+                        visualTemplate = visualTemplate,
+                        label = "+ Aumentar XP",
+                        onClick = onAumentarExperiencia,
+                        enabled = !gerando,
+                        modifier = if (xpActionsScrollable) Modifier.width(156.dp) else Modifier.weight(1f),
+                        fillMaxWidth = true,
+                        size = InkButtonSize.Small,
+                        variant = InkButtonVariant.Secondary,
+                        brushIndex = 1
+                    )
+                    InkButton(
+                        visualTemplate = visualTemplate,
+                        label = "− Diminuir XP",
+                        onClick = onDiminuirExperiencia,
+                        enabled = !gerando && npc.historicoXpBatches.isNotEmpty(),
+                        modifier = if (xpActionsScrollable) Modifier.width(156.dp) else Modifier.weight(1f),
+                        fillMaxWidth = true,
+                        size = InkButtonSize.Small,
+                        variant = InkButtonVariant.Secondary,
+                        brushIndex = 2
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
