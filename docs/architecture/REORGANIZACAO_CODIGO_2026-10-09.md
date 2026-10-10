@@ -160,3 +160,9 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - MainActivity guarda templateEscolhido por rememberSaveable e MainSheetScreen executa iniciarNovaPlanilha(tipoPersonagem) em LaunchedEffect(viewModel, tipoPersonagem). Risco identificado: em recriação de Activity, um template persistido pode divergir do tipo da planilha ativa carregada pelo ViewModel, causando substituição inesperada. NÃO modificado nesta rodada: precisa definir regra de precedência entre escolha inicial e planilha persistida, e teste de reinicialização.
 - A atualização de paleta por vários caminhos deve ser validada em testes de Solar, Sangue de Dragão e Lunar.
 - Nenhuma compilação iniciada.
+
+## Correção de precedência de estado na inicialização — 2026-10-10
+- Antes: MainSheetScreen chamava iniciarNovaPlanilha(tipoPersonagem) em LaunchedEffect, podendo sobrescrever uma planilha carregada após recriação da Activity quando rememberSaveable preservava um template antigo.
+- Agora: MainActivity chama iniciarNovaPlanilha apenas no callback explícito de seleção de template; MainSheetScreen observa sheetState e aplica a paleta em LaunchedEffect(sheet.tipoPersonagem). Planilhas carregadas/restauradas passam a determinar a paleta.
+- Atenção: MainSheetScreen mantém o parâmetro tipoPersonagem por compatibilidade com o chamador, mas não o usa para reinicializar dados.
+- Validação pendente: iniciar os três templates; alternar tipo via carregar/importar/backup; recriar Activity; confirmar que o ID e os campos da planilha não são perdidos. Sem compilação.
