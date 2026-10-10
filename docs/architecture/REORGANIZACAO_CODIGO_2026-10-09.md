@@ -110,3 +110,10 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - RatingDisplayControls: DiamondPip agora recebe Modifier opcional e o encaminha ao Canvas raiz.
 - Cores dos controles permanecem derivadas dos tokens observáveis Exalted*.
 - Não compilado; testes de interação e UI pendentes.
+
+## Auditoria de controles de combate e navegador SDD — 2026-10-10
+- IniciativaAjusteButton: Modifier opcional adicionado e encaminhado a InkButton; larguras e regras de cores preservadas.
+- SangueDeDragaoBrowserDialog: Modifier opcional adicionado e encaminhado aos dois AlertDialogs (navegação e detalhes), preservando borda existente.
+- DecorativeComponents: MedallionIcon, PriorityShieldBadge, Starfield, OnyxTexturedBackground e OrnateFlourish já declaram Modifier.
+- LunarCasteEmblemButton já declara Modifier.
+- Ainda pendente inspeção completa dos demais componentes e teste de build. Não compilar automaticamente.
