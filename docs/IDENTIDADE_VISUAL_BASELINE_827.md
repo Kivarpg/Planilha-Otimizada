@@ -101,3 +101,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Teste estatico cobre a condicao `savedSheets.size > 4 || buscaPlanilhasSalvas.isNotBlank()` e a edicao do filtro.
 - Sem mudanca de persistencia, busca por nome, regras de personagem ou identidade visual.
 - Pendente: compilar, executar testes JVM e testar em dispositivo a transicao de cinco para quatro planilhas com filtro preenchido.
+
+## Preparacao da Exalted.843 (sem compilacao)
+- Janela de planilhas salvas: lista vazia passa a exibir mensagem explicita, sem alterar o armazenamento ou carregamento.
+- Busca por planilhas: botao acessivel `Limpar busca` aparece quando o campo contem texto e chama `onBuscaChange("")`.
+- Contratos estaticos de regressao cobrem estado vazio, icone de limpeza e preservacao do filtro.
+- Pendente: compilacao Kotlin, testes JVM e validacao visual em emulador com lista vazia, filtros sem resultado e teclado aberto.
