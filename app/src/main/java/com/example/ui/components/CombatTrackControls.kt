@@ -196,10 +196,12 @@ fun IniciativaAjusteButton(
     delta: Int,
     onClick: () -> Unit,
     width: androidx.compose.ui.unit.Dp? = null,
-    visualTemplate: ExaltVisualTemplate? = null
+    visualTemplate: ExaltVisualTemplate? = null,
+    modifier: Modifier = Modifier
 ) {
     val texto = if (delta > 0) "+$delta" else "$delta"
     InkButton(
+        modifier = modifier,
         visualTemplate = visualTemplate,
         label = texto,
         onClick = onClick,
