@@ -59,3 +59,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Dialogo Planilhas Salvas: nomes longos recebem limite de duas linhas e truncamento para nao disputar espaco com o indicador Ativa.
 - Testes estaticos adicionados em VisualIdentityPreparationContractTest; falta executar o CI e validar em emulador com fonte ampliada e nomes longos.
 - Nao foram alteradas as regras de restauracao, carregamento ou exclusao de planilhas.
+
+## Preparacao da Exalted.835 (sem compilacao)
+- Log de Erros: conteudo limitado a 45% da altura da tela (maximo 480dp) com rolagem vertical, preservando os controles Copiar e Fechar.
+- Teste estatico cobre a existencia do limite, rolagem e acoes do dialogo.
+- Verificacao no emulador ainda necessaria para relatorios extensos, fonte ampliada e tela dividida.
+- CI atual executa testes JVM e gera APK, mas nao executa testes instrumentados no emulador. Automatizacao visual completa exigira infraestrutura adicional, testes de navegacao e imagens de referencia aprovadas.
