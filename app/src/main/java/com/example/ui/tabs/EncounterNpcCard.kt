@@ -909,17 +909,16 @@ fun NpcEncontroCard(
                                     }
                                 }
                             }
-                            if (penalidadeRotulo == "Inc") {
-                                Spacer(modifier = Modifier.width(8.dp))
-                                InkButton(
-                                    visualTemplate = visualTemplate, label = "Limpar", onClick = onLimparDano,
-                                    enabled = npc.healthBoxes.any { it.tipoDano != 0 }, size = InkButtonSize.Small,
-                                    variant = InkButtonVariant.Secondary, brushIndex = 0
-                                )
-                            }
                         }
                     }
                 }
+                // A ação não compete com a largura das caixas de vitalidade.
+                // Mantém-se disponível mesmo quando não há caixas no grupo "Inc".
+                InkButton(
+                    visualTemplate = visualTemplate, label = "Limpar", onClick = onLimparDano,
+                    enabled = npc.healthBoxes.any { it.tipoDano != 0 }, size = InkButtonSize.Small,
+                    variant = InkButtonVariant.Secondary, brushIndex = 0
+                )
             }
 
             Spacer(modifier = Modifier.height(18.dp))
