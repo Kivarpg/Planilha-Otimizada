@@ -159,6 +159,16 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `settings rows reserve remaining width for labels`() {
+        assertTrue(dialogs.contains("AppText(label, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))"))
+        assertTrue(dialogs.contains("AppText(\"Português\", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))"))
+        assertTrue(dialogs.contains("AppText(\"English\", color = ExaltedMuted, modifier = Modifier.weight(1f))"))
+        assertTrue(dialogs.contains("AppText(\"Vibração ao tocar\", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f).padding(start = 8.dp))"))
+        assertTrue(dialogs.contains("AppText(\"Som ao tocar\", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f).padding(start = 8.dp))"))
+        assertTrue(dialogs.contains("AppText(\"Modo Livre\", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))"))
+    }
+
+    @Test
     fun `navigation preserves compact sizing scrolling and selected tab focus`() {
         assertTrue(navigation.contains("val compact = maxWidth < 600.dp"))
         assertTrue(navigation.contains("val enlargedText = fontScale > 1.20f"))
