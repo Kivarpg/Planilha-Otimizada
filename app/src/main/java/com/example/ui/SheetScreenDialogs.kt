@@ -275,6 +275,7 @@ fun ReversionConfirmDialog(viewModel: SheetViewModel, modifier: Modifier = Modif
 fun CommitmentErrorDialog(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
     val message by viewModel.commitmentError.collectAsState()
     if (message == null) return
+    // Mantem a area de aviso rolavel em telas compactas sem modificar a confirmacao.
     val messageHeightLimit = (LocalConfiguration.current.screenHeightDp - 260).coerceIn(120, 420).dp
     AlertDialog(
         onDismissRequest = { viewModel.dismissCommitmentError() },
@@ -314,6 +315,7 @@ fun CommitmentErrorDialog(viewModel: SheetViewModel, modifier: Modifier = Modifi
 fun PendingMeritBreakDialog(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
     val pendente by viewModel.pendingMeritBreak.collectAsState()
     val info = pendente ?: return
+    // Preserva a lista rolavel de meritos afetados ate a validacao em dispositivo.
     val affectedMeritsHeightLimit = (LocalConfiguration.current.screenHeightDp - 260).coerceIn(120, 420).dp
     AlertDialog(
         onDismissRequest = { viewModel.cancelarPendingMeritBreak() },
