@@ -46,4 +46,16 @@ class CompactInkButtonContractTest {
         assertTrue(primary.contains("InkButton("))
         assertTrue(secondary.contains("InkButton("))
     }
+    @Test
+    fun `charm InkButtons do not duplicate press feedback`() {
+        listOf("onDecrement", "onIncrement", "onShowDetail").forEach { action ->
+            val start = charmList.indexOf("onClick = $action")
+            assertTrue(start >= 0, "Missing action: $action")
+            val snippet = charmList.substring(start).lineSequence().take(4).joinToString("\n")
+            assertTrue(!snippet.contains("feedbackOnPress("), "Duplicate feedback on $action")
+        }
+        val pin = charmList.substringAfter("onClick = onTogglePin").substringBefore("val corCoracao")
+        assertTrue(!pin.contains("feedbackOnPress("), "Duplicate feedback on pin action")
+    }
+
 }
