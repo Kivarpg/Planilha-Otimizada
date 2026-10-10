@@ -98,7 +98,7 @@ fun SyncedCounterColumn(
 // Cores de "+"/"−" e do estado desativado vêm de Color.kt.
 
 @Composable
-internal fun RingStepSymbol(symbol: String, onClick: () -> Unit, size: Dp, enabled: Boolean = true) {
+internal fun RingStepSymbol(symbol: String, onClick: () -> Unit, size: Dp, enabled: Boolean = true, modifier: Modifier = Modifier) {
     val corPreenchimento = if (!enabled) {
         ExaltedMuted.copy(alpha = 0.20f)
     } else {
@@ -107,7 +107,7 @@ internal fun RingStepSymbol(symbol: String, onClick: () -> Unit, size: Dp, enabl
     val corBorda = if (enabled) ExaltedAccentBright else ExaltedMuted.copy(alpha = 0.45f)
     val corSimbolo = if (enabled) Color.White else ExaltedMuted.copy(alpha = 0.6f)
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(size)
             .feedbackClickable(enabled = enabled, onClick = onClick)
             .drawBehind {
