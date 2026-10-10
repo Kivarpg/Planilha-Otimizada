@@ -19,6 +19,7 @@ class VisualIdentityPreparationContractTest {
     private val mainSheet = File("src/main/java/com/example/ui/SheetScreen.kt").readText()
     private val codeDialogs = File("src/main/java/com/example/ui/CodeShareDialogs.kt").readText()
     private val charmDialogs = File("src/main/java/com/example/ui/tabs/CharmDetailsDialogs.kt").readText()
+    private val commonDialogs = File("src/main/java/com/example/ui/components/DialogComponents.kt").readText()
 
     @Test
     fun `all fifteen existing tabs remain declared in order`() {
@@ -103,6 +104,21 @@ class VisualIdentityPreparationContractTest {
     fun `charm tree modal state is scoped to the selected charm`() {
         assertTrue(charmDialogs.contains("var mostrarArvore by remember(def.id) { mutableStateOf(false) }"))
         assertTrue(charmDialogs.contains("var mostrarArvore by remember(charm.id) { mutableStateOf(false) }"))
+    }
+
+    @Test
+    fun `charm tree cache tracks the active view model`() {
+        assertTrue(charmDialogs.contains("remember(viewModel, def.id, def.preRequisitos, charmsParaArvore)"))
+        assertTrue(charmDialogs.contains("remember(viewModel, charm.id, charm.preRequisitos, tipoPersonagem, dragonBlooded)"))
+    }
+
+    @Test
+    fun `delete confirmation keeps long names scrollable`() {
+        assertTrue(commonDialogs.contains("fun ConfirmDeleteDialog("))
+        assertTrue(commonDialogs.contains("val confirmationHeightLimit = (LocalConfiguration.current.screenHeightDp * 0.35f).coerceAtMost(280f).dp"))
+        assertTrue(commonDialogs.contains("heightIn(max = confirmationHeightLimit).verticalScroll(rememberScrollState())"))
+        assertTrue(commonDialogs.contains("text = \"Remover\""))
+        assertTrue(commonDialogs.contains("text = \"Cancelar\""))
     }
 
     @Test
