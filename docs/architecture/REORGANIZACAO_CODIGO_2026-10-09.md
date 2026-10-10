@@ -235,3 +235,12 @@ Nesta rodada inspecionados os 10 arquivos restantes do diretório ui/tabs: Aspec
 - MartialArtsCharmsPopup memoriza catálogo por viewModel e elegibilidade por sheet/estilo; investigar invalidação se o catálogo mudar em runtime, mas não há evidência de bug no fluxo normal.
 - MeritSelectionDialog concentra 14 ocorrências de dimensões diretas .dp, demandando captura visual específica em dispositivos estreitos.
 - Nenhuma alteração funcional nesta rodada. Testes visuais e de compilação ainda pendentes.
+
+## Inventário dos 17 componentes compartilhados — 2026-10-10
+Varredura estática de todos os 17 arquivos Kotlin de ui/components (ButtonComponents, CardComponents, CombatTrackControls, CounterControls, CustomAbilityIcons, DecorativeComponents, DialogComponents, InkButton, InteractionFeedback, LunarCasteEmblemButton, NumericRatingControls, RatingDisplayControls, SangueDeDragaoBrowser, SearchComponents, SplashScreen, TabIdentitySurface, TextComponents). Não equivale a teste de UI ou revisão exaustiva linha a linha.
+- InkButton.kt: fittedFontSize usa remember(label, baseFontSize, width, height, fillMaxWidth), mas não a largura real resultante de modifier.weight, insets ou constraints. Se o botão ficar estreito e encolher a fonte, pode permanecer reduzido quando a largura real aumentar sem mudar essas chaves. Requer solução baseada em medida real e teste de regressão, não adicionar modifier cegamente como chave.
+- InkButton.kt aplica tamanho explícito no Box raiz e no Canvas; em Rows ponderadas o espaço efetivo pode diferir do nominal. Conferir responsividade e texto em dispositivos reais.
+- TextComponents.kt: as chaves recém-adicionadas de remember incluem modifier; isso evita parte dos caches obsoletos mas pode reinicializar a fonte em recomposições se um Modifier instável for recriado. Melhor solução futura: medir largura disponível e invalidar com tamanho real, com teste de convergência e sem loop de onTextLayout.
+- SearchComponents mantém draft de filtro com remember(currentFilter) e texto de busca com remember(value), comportamento possivelmente intencional de sincronização; verificar foco/edição antes de modificar.
+- A investigação das causas estruturais agora abrange os 47 arquivos de ui/tabs e 17 arquivos de ui/components em inventário estático; continuam pendentes host restante, temas, insets, acessibilidade, testes e screenshots.
+- Nenhuma alteração funcional nem build nesta rodada.
