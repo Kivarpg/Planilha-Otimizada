@@ -352,12 +352,12 @@ fun NpcEncontroCard(
         border = null,
         visualTemplate = visualTemplate
     ) {
-        Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+        androidx.compose.foundation.layout.BoxWithConstraints(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
         val context = androidx.compose.ui.platform.LocalContext.current
         var mostrarCarregar by remember { mutableStateOf(false) }
         var mostrarEditorEquipamento by remember { mutableStateOf(false) }
         var boxParaRemover by remember { mutableStateOf<com.example.model.CaixaVitalidade?>(null) }
-        val compactPhone = LocalConfiguration.current.screenWidthDp < 480
+        val compactPhone = maxWidth < 480.dp
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -1297,11 +1297,11 @@ fun NpcEncontroCard(
     val npcIoScope = rememberCoroutineScope()
     var operacaoNpcEmAndamento by remember { mutableStateOf(false) }
 
-    val compactActions = LocalConfiguration.current.screenWidthDp < 480
+    val compactActions = compactPhone
     Row(
         modifier = Modifier
             .align(Alignment.TopEnd)
-            .then(if (compactActions) Modifier.fillMaxWidth() else Modifier),
+            .then(if (compactActions) Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()) else Modifier),
         horizontalArrangement = if (compactActions) Arrangement.SpaceEvenly else Arrangement.spacedBy(4.dp)
     ) {
         InkButton(
