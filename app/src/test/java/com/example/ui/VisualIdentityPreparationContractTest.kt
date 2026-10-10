@@ -17,6 +17,7 @@ class VisualIdentityPreparationContractTest {
     private val dialogs = File("src/main/java/com/example/ui/SheetScreenDialogs.kt").readText()
     private val lifecycleDialogs = File("src/main/java/com/example/ui/SheetLifecycleDialogs.kt").readText()
     private val mainSheet = File("src/main/java/com/example/ui/SheetScreen.kt").readText()
+    private val codeDialogs = File("src/main/java/com/example/ui/CodeShareDialogs.kt").readText()
 
     @Test
     fun `all fifteen existing tabs remain declared in order`() {
@@ -75,6 +76,15 @@ class VisualIdentityPreparationContractTest {
         assertTrue(lifecycleDialogs.contains("overflow = TextOverflow.Ellipsis"))
         assertTrue(lifecycleDialogs.contains("text = \"Restaurar\""))
         assertTrue(lifecycleDialogs.contains("viewModel.restaurarBackupPeriodico(snapshot)"))
+    }
+
+    @Test
+    fun `sharing dialogs preserve QR and paste control on compact screens`() {
+        assertTrue(codeDialogs.contains("Modifier.fillMaxWidth().widthIn(max = 240.dp).aspectRatio(1f)"))
+        assertTrue(codeDialogs.contains("modifier = Modifier.weight(1f),"))
+        assertTrue(codeDialogs.contains("text = \"Colar\""))
+        assertTrue(codeDialogs.contains("text = \"Copiar\""))
+        assertTrue(codeDialogs.contains("heightIn(max = importContentHeight).verticalScroll(rememberScrollState())"))
     }
 
     @Test
