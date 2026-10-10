@@ -25,6 +25,13 @@ Nao interpretar esta nota como homologacao visual no dispositivo.
 6. Aba 14: escala do mapa em modo maximizado.
 7. Registro de dimensoes e versao do dispositivo para comparar antes/depois.
 
+## Auditoria complementar da navegacao
+- SheetTabsBar utiliza LazyRow com rolagem para a aba selecionada.
+- O tamanho dos rotulos varia com largura disponivel e fontScale.
+- TabIdentitySurface conserva superfícies neutras; nao reinserir ornamentacao removida.
+- Teste VisualIdentityPreparationContractTest protege esses contratos estaticamente.
+- Risco residual: textos truncados e alvos de toque so podem ser verificados com medicao visual/instrumentada.
+
 ## Gate antes de remodelar
 - Confirmar baseline por screenshots e registrar problemas existentes.
 - Definir tokens visuais sem alterar a logica de negocio.
