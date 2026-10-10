@@ -181,7 +181,9 @@ fun AppText(
             color = ExaltedTextFill,
             drawStyle = androidx.compose.ui.graphics.drawscope.Fill
         )
-        // O Modifier externo pertence ao contêiner, não deve ser aplicado duas vezes.\n        // Os Text internos ocupam a largura medida pelo Box para preservar centralização.\n        Box(modifier = modifier.onSizeChanged { measuredAppTextWidthPx = it.width }) {
+        // O Modifier externo pertence ao contêiner, não deve ser aplicado duas vezes.
+        // Os Text internos ocupam a largura medida pelo Box para preservar centralização.
+        Box(modifier = modifier.onSizeChanged { measuredAppTextWidthPx = it.width }) {
             androidx.compose.material3.Text(
                 text = text,
                 modifier = Modifier.fillMaxWidth(),
