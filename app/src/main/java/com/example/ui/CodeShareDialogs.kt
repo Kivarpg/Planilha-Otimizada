@@ -77,7 +77,8 @@ fun CodeExportResultDialog(
     onDismiss: () -> Unit,
     clipboardManager: androidx.compose.ui.platform.ClipboardManager,
     scope: kotlinx.coroutines.CoroutineScope,
-    snackbarHostState: androidx.compose.material3.SnackbarHostState
+    snackbarHostState: androidx.compose.material3.SnackbarHostState,
+    modifier: Modifier = Modifier
 ) {
     if (codigo == null) return
     val qrBitmap = remember(codigo) {
@@ -85,7 +86,7 @@ fun CodeExportResultDialog(
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
+        modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = {
             AppText(
@@ -158,7 +159,8 @@ fun CodeImportDialog(
     viewModel: SheetViewModel,
     scope: kotlinx.coroutines.CoroutineScope,
     clipboardManager: androidx.compose.ui.platform.ClipboardManager,
-    snackbarHostState: androidx.compose.material3.SnackbarHostState
+    snackbarHostState: androidx.compose.material3.SnackbarHostState,
+    modifier: Modifier = Modifier
 ) {
     if (!show) return
     var codeImportText by remember { mutableStateOf("") }
@@ -167,7 +169,7 @@ fun CodeImportDialog(
 
     AlertDialog(
         onDismissRequest = { if (!codeImportLoading) onDismiss() },
-        modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
+        modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = { AppText("Carregar por Código", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
         text = {
