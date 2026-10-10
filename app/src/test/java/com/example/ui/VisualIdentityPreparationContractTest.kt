@@ -84,7 +84,8 @@ class VisualIdentityPreparationContractTest {
         assertTrue(lifecycleDialogs.contains("if (savedSheets.isEmpty()) {"))
         assertTrue(lifecycleDialogs.contains("text = \"Nenhuma planilha salva.\""))
         assertTrue(lifecycleDialogs.contains("trailingIcon = if (buscaPlanilhasSalvas.isNotEmpty())"))
-        assertTrue(lifecycleDialogs.contains("IconButton(onClick = { onBuscaChange(\"\") })"))
+        assertTrue(lifecycleDialogs.contains("onClick = { onBuscaChange(\"\") }"))
+        assertTrue(lifecycleDialogs.contains("contentDescription = \"Limpar busca\""))
         assertTrue(lifecycleDialogs.contains("AppText(text = \"×\", color = MaterialTheme.colorScheme.onSurface)"))
     }
 
