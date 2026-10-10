@@ -14,6 +14,7 @@ class VisualIdentityPreparationContractTest {
     private val host = File("src/main/java/com/example/ui/SheetContentArea.kt").readText()
     private val identity = File("src/main/java/com/example/ui/components/TabIdentitySurface.kt").readText()
     private val navigation = File("src/main/java/com/example/ui/SheetTabsBar.kt").readText()
+    private val dialogs = File("src/main/java/com/example/ui/SheetScreenDialogs.kt").readText()
 
     @Test
     fun `all fifteen existing tabs remain declared in order`() {
@@ -51,6 +52,16 @@ class VisualIdentityPreparationContractTest {
         assertTrue(identity.contains("fun Modifier.exaltedTabIdentity(chapter: Int = 0): Modifier = this"))
         assertTrue(identity.contains("fun Modifier.exaltedContentStage(chapter: Int): Modifier = this"))
         assertTrue(identity.contains("fun Modifier.exaltedExistingPanel(): Modifier = exaltedSectionPanel()"))
+    }
+
+    @Test
+    fun `settings and warning dialogs retain bounded scrollable content`() {
+        assertTrue(dialogs.contains("val settingsContentHeight = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 500).dp"))
+        assertTrue(dialogs.contains("heightIn(max = settingsContentHeight).verticalScroll(rememberScrollState())"))
+        assertTrue(dialogs.contains("val messageHeightLimit = (LocalConfiguration.current.screenHeightDp - 260).coerceIn(120, 420).dp"))
+        assertTrue(dialogs.contains("heightIn(max = messageHeightLimit).verticalScroll(rememberScrollState())"))
+        assertTrue(dialogs.contains("val affectedMeritsHeightLimit = (LocalConfiguration.current.screenHeightDp - 260).coerceIn(120, 420).dp"))
+        assertTrue(dialogs.contains("heightIn(max = affectedMeritsHeightLimit).verticalScroll(rememberScrollState())"))
     }
 
     @Test
