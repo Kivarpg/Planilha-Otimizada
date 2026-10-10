@@ -64,3 +64,11 @@ Correções concretas: MainSheetScreen (Modifier no Scaffold), SheetTopBar (Modi
 Achados de estado: MainSheetScreen observa sheetState via collectAsState; EncounterGeneratorTab observa npcsEncontro, gerandoNpcEncontro e erroNpcEncontro via collectAsState; o estado de seleção da Aba 11 utiliza rememberSaveable. Nem todo texto fixo deve virar mutableStateOf: títulos estáticos são conteúdo; cores derivadas de paleta global precisam ser observáveis na fonte da verdade, não copiadas para remember local. A paleta ExaltedActiveMotif e cores globais são suspeitas de falta de invalidação de recomposição, exigindo inspeção da implementação e dos pontos de atualização.
 
 Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação de que todos os composables possuem Modifier. Não foi feita compilação nem teste visual deste lote.
+
+## Auditoria de recomposição — continuação (2026-10-10)
+- Color.kt já mantém ExaltedActiveMotif e os tokens dinâmicos em mutableStateOf; a hipótese de que eram variáveis comuns estava incorreta.
+- Theme.kt calcula darkColorScheme no corpo do composable e lê os tokens observáveis.
+- Achado concreto: MainSheetScreen executava iniciarNovaPlanilha() e aplicarPaletaPorTemplate() como efeitos colaterais dentro de remember(tipoPersonagem), durante a composição.
+- Correção: transferidos para LaunchedEffect(viewModel, tipoPersonagem), com chave explícita; nenhuma mudança no algoritmo da paleta.
+- ATENÇÃO: a execução agora ocorre após a composição; verificar visualmente a primeira renderização e a troca de template para descartar flash de paleta anterior, e verificar persistência ao retornar ao app.
+- Compilação e testes instrumentados ainda não executados. Não presumir equivalência funcional sem validação.
