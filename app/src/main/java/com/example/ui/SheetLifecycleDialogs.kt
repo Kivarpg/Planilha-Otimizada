@@ -372,10 +372,12 @@ fun EscolhaTemplateNovaPlanilhaDialog(show: Boolean, onDismiss: () -> Unit, onEs
                 // em largura compacta, 2 em cima e o terceiro centralizado.
                 BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
                     val compact = maxWidth < 420.dp
+                    val columns = if (compact) 2 else 3
+                    val buttonWidth = (maxWidth - 8.dp * (columns - 1)) / columns
                     FlowRow(
                         modifier = Modifier.fillMaxWidth(),
-                        maxItemsInEachRow = if (compact) 2 else 3,
-                        horizontalArrangement = Arrangement.Center,
+                        maxItemsInEachRow = columns,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
                         verticalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
                         listOf(
@@ -386,7 +388,7 @@ fun EscolhaTemplateNovaPlanilhaDialog(show: Boolean, onDismiss: () -> Unit, onEs
                             com.example.ui.components.GildedDialogButton(
                                 text = rotulo,
                                 onClick = { onEscolhido(valor) },
-                                modifier = Modifier.fillMaxWidth(if (compact) 0.49f else 0.32f),
+                                modifier = Modifier.width(buttonWidth),
                                 fillMaxWidth = true
                             )
                         }
