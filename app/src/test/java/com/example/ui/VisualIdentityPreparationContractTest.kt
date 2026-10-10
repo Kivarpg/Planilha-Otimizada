@@ -66,6 +66,7 @@ class VisualIdentityPreparationContractTest {
         assertTrue(lifecycleDialogs.contains("s.casta.displayName"))
         assertTrue(lifecycleDialogs.contains("text = s.nomeArquivo(),"))
         assertTrue(lifecycleDialogs.contains("maxLines = 2,\n                                    overflow = TextOverflow.Ellipsis"))
+        assertTrue(lifecycleDialogs.contains("color = ExaltedMuted,\n                                    maxLines = 2,\n                                    overflow = TextOverflow.Ellipsis"))
         assertTrue(lifecycleDialogs.contains("viewModel.loadSheet(s)"))
         assertTrue(lifecycleDialogs.contains("onDeleteRequest(s)"))
     }
