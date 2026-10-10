@@ -57,6 +57,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -330,7 +331,7 @@ fun InkButton(
 
     Box(
         modifier = modifier
-            .then(if (fillMaxWidth) Modifier.fillMaxWidth().height(height) else Modifier.size(width, height))
+            .then(if (fillMaxWidth) Modifier.fillMaxWidth().height(height) else Modifier.widthIn(max = width).height(height))
             .graphicsLayer { scaleX = scale; scaleY = scale }
             .feedbackClickable(
                 interactionSource = interactionSource,
