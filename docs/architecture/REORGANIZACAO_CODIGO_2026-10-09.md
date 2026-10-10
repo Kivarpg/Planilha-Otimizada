@@ -181,3 +181,25 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - InkButton: tamanho nominal ou customizado com piso 48.dp aplicado ao Box raiz; Canvas usa tamanho nominal próprio. Candidato a conflitos de restrição em Rows/FlowRows, especialmente quando modifier externo aplica weight/widthIn; requer testes.
 - TabIdentitySurface: exaltedTabIdentity e exaltedContentStage são no-op; exaltedSectionPanel e exaltedControlBand adicionam backgrounds. Portanto a identidade da aba depende mais dos componentes internos e do host do que desses modificadores.
 - Sem compilação ou validação de screenshots.
+
+## Inventário de restrições das abas principais — 2026-10-10
+Varredura estática dos arquivos principais de 15 abas (não abrange ainda todos os arquivos auxiliares nem prova fidelidade em dispositivo):
+- AttributesTab: 4 ocorrências de dimensões literais .dp; 1 região de scroll; 1 weight.
+- AbilitiesTab: 3; 1 scroll; 1 weight.
+- CombatTab: 17; 1 scroll; 10 weight; 2 BoxWithConstraints.
+- EquipmentTab: 4; 1 scroll; 2 weight; 1 BoxWithConstraints.
+- PersonalDataTab: 4; 1 scroll; 3 weight.
+- MeritsTab: 2; 1 scroll; 2 weight; 1 BoxWithConstraints.
+- CharmsTab: 2; 1 scroll.
+- FeiticosTab: 6; 2 scroll; 1 weight.
+- EncounterGeneratorTab: 21; 5 scroll; 11 weight; 3 BoxWithConstraints.
+- MapTab: 8; 0 scroll; 5 weight; 2 BoxWithConstraints.
+- SummaryTab: 7; 1 scroll.
+- NPCsTab: 7; 2 scroll; 1 weight.
+- BattleGroupsTab: 11; 1 scroll.
+- CasteTabSolar: 10; 2 scroll.
+- CasteTabLunar: 10; 2 scroll; 2 weight.
+Os números acima contam apenas expressões diretas de width/height/size/widthIn/heightIn com literal dp, não Spacer ou Dimens nem componentes filhos. Não são contagens de bugs.
+- CombatTab usa breakpoint maxWidth < 430.dp para empilhar controles de motes; EquipmentTab usa 360.dp para mudar campos de mistos; MeritsTab usa 360.dp para reorganizar cartões; EncounterGeneratorTab usa 430.dp no cabeçalho. Essas regras podem produzir estruturas diferentes da mockup dependendo da largura disponível após padding do host.
+- Principal conclusão: o desenho final é determinado por hierarquia de host + breakpoints por aba + dimensões de componentes compartilhados, e não por uma única propriedade global. Mudanças em mockup exigem mapear esses três níveis antes de editar.
+- Ainda pendente: inspeção dos arquivos auxiliares, matriz de captura visual e teste de regressão. Sem build.
