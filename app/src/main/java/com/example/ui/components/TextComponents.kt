@@ -234,12 +234,12 @@ fun AppText(
         textAlign = textAlign ?: style.textAlign
     )
     val density = LocalDensity.current
-    // Mesmo ajuste do overload de String acima: o modifier vai nos BasicText
-    // internos, não no Box, para que fillMaxWidth + textAlign realmente centralize.
-    Box {
+    // O Modifier externo pertence ao contêiner. Aplicá-lo em ambos os
+    // BasicText duplicava padding e podia deslocar contorno e preenchimento.
+    Box(modifier = modifier) {
         BasicText(
             text = text,
-            modifier = modifier,
+            modifier = Modifier.fillMaxWidth(),
             style = effectiveStyle.copy(
                 color = ExaltedTextStroke,
                 drawStyle = androidx.compose.ui.graphics.drawscope.Stroke(
@@ -250,7 +250,7 @@ fun AppText(
         )
         BasicText(
             text = text,
-            modifier = modifier,
+            modifier = Modifier.fillMaxWidth(),
             style = effectiveStyle,
             overflow = overflow, softWrap = softWrap, maxLines = maxLines, minLines = minLines,
             onTextLayout = onTextLayout
