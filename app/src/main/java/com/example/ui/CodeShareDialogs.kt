@@ -55,11 +55,15 @@ private fun gerarBitmapQrCode(texto: String, tamanhoPx: Int = 512): android.grap
         )
         val matrix = writer.encode(texto, com.google.zxing.BarcodeFormat.QR_CODE, tamanhoPx, tamanhoPx, hints)
         val bitmap = android.graphics.Bitmap.createBitmap(tamanhoPx, tamanhoPx, android.graphics.Bitmap.Config.ARGB_8888)
-        for (x in 0 until tamanhoPx) {
-            for (y in 0 until tamanhoPx) {
-                bitmap.setPixel(x, y, if (matrix.get(x, y)) android.graphics.Color.BLACK else android.graphics.Color.WHITE)
+        // Uma unica transferencia de pixels evita 262 mil chamadas JNI setPixel no QR 512x512.
+        val pixels = IntArray(tamanhoPx * tamanhoPx)
+        for (y in 0 until tamanhoPx) {
+            val rowOffset = y * tamanhoPx
+            for (x in 0 until tamanhoPx) {
+                pixels[rowOffset + x] = if (matrix.get(x, y)) android.graphics.Color.BLACK else android.graphics.Color.WHITE
             }
         }
+        bitmap.setPixels(pixels, 0, tamanhoPx, 0, 0, tamanhoPx, tamanhoPx)
         bitmap
     } catch (e: Exception) {
         null
