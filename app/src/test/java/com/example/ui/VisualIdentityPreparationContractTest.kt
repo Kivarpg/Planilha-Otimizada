@@ -18,6 +18,7 @@ class VisualIdentityPreparationContractTest {
     private val lifecycleDialogs = File("src/main/java/com/example/ui/SheetLifecycleDialogs.kt").readText()
     private val mainSheet = File("src/main/java/com/example/ui/SheetScreen.kt").readText()
     private val codeDialogs = File("src/main/java/com/example/ui/CodeShareDialogs.kt").readText()
+    private val charmDialogs = File("src/main/java/com/example/ui/tabs/CharmDetailsDialogs.kt").readText()
 
     @Test
     fun `all fifteen existing tabs remain declared in order`() {
@@ -85,6 +86,16 @@ class VisualIdentityPreparationContractTest {
         assertTrue(codeDialogs.contains("text = \"Colar\""))
         assertTrue(codeDialogs.contains("text = \"Copiar\""))
         assertTrue(codeDialogs.contains("heightIn(max = importContentHeight).verticalScroll(rememberScrollState())"))
+    }
+
+    @Test
+    fun `charm details hide while prerequisite tree dialog is open`() {
+        val start = charmDialogs.indexOf("fun CharmDetailsDialog(")
+        assertTrue(start >= 0)
+        val charmSection = charmDialogs.substring(start)
+        assertTrue(charmSection.contains("if (mostrarArvore && viewModel != null) {"))
+        assertTrue(charmSection.contains("    } else {\n    AlertDialog("))
+        assertTrue(charmSection.contains("onDismiss = { mostrarArvore = false }"))
     }
 
     @Test
