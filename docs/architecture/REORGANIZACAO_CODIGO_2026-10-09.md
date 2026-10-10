@@ -166,3 +166,11 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - Agora: MainActivity chama iniciarNovaPlanilha apenas no callback explícito de seleção de template; MainSheetScreen observa sheetState e aplica a paleta em LaunchedEffect(sheet.tipoPersonagem). Planilhas carregadas/restauradas passam a determinar a paleta.
 - Atenção: MainSheetScreen mantém o parâmetro tipoPersonagem por compatibilidade com o chamador, mas não o usa para reinicializar dados.
 - Validação pendente: iniciar os três templates; alternar tipo via carregar/importar/backup; recriar Activity; confirmar que o ID e os campos da planilha não são perdidos. Sem compilação.
+
+## Investigação de bloqueios de fidelidade visual — 2026-10-10
+- TextComponents/AutoSizeText: fonte reduzida ficava memorizada mesmo quando mudavam modifier, style, letterSpacing ou minFontSize. Ampliadas chaves de remember para reiniciar o ajuste nessas mudanças.
+- TextComponents/AppText: mesmo risco com fittedFontSize; ampliadas chaves de remember para estilo, dimensões via modifier e atributos tipográficos.
+- Problema estrutural pendente: AppText (texto com contorno) aplica o mesmo modifier aos dois Text filhos dentro de Box sem modifier. Modifiers de layout, deslocamento, semântica ou interação podem ser duplicados ou não atuar no contêiner como o chamador espera. Necessária refatoração cuidadosa para modifier no Box e fillMaxWidth/textAlign nos filhos, com teste visual, pois o comportamento anterior corrigia centralização em vários campos.
+- InkButton: o Box raiz aplica modifier externo seguido de Modifier.size(width,height) ou fillMaxWidth/height; tamanhos mínimos de 48.dp e tamanhos nominais por InkButtonSize podem prevalecer sobre expectativas de layout e prejudicar reprodução de mockups em Rows estreitas. Necessária matriz de casos (weight, largura fixa, customWidth, texto longo, fontScale).
+- GildedCard: ornamentos drawBehind desenhados no próprio Card, inclusive dependência de ExaltedActiveMotif. Uma mudança no layout da aba não elimina automaticamente ornamentos internos. Preservar identidade aprovada; alterações visuais requerem autorização.
+- Ainda pendente: varredura de hierarquias, dimensões e testes de layout em todos os componentes e abas; nenhuma compilação.
