@@ -38,7 +38,9 @@ class DialogButtonLayoutContractTest {
         val end = lifecycleDialogs.indexOf("Spacer(modifier = Modifier.height(8.dp))", start)
         val block = lifecycleDialogs.substring(start, end)
         assertTrue(block.contains("FlowRow("))
-        assertTrue(block.contains("maxItemsInEachRow = if (compact) 2 else 3"))
+        assertTrue(block.contains("maxItemsInEachRow = columns"))
+        assertTrue(block.contains("val buttonWidth = (maxWidth - 8.dp * (columns - 1)) / columns"))
+        assertTrue(block.contains("modifier = Modifier.width(buttonWidth)"))
         assertTrue(block.contains("horizontalArrangement = Arrangement.Center"))
         assertFalse(block.contains("Cada opção ocupa uma linha própria"))
     }
