@@ -100,6 +100,12 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `charm tree modal state is scoped to the selected charm`() {
+        assertTrue(charmDialogs.contains("var mostrarArvore by remember(def.id) { mutableStateOf(false) }"))
+        assertTrue(charmDialogs.contains("var mostrarArvore by remember(charm.id) { mutableStateOf(false) }"))
+    }
+
+    @Test
     fun `error log dialog keeps large reports scrollable within viewport`() {
         assertTrue(mainSheet.contains("if (showErrorLogDialog)"))
         assertTrue(mainSheet.contains("screenHeightDp * 0.45f"))
