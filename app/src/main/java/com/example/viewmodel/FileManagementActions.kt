@@ -148,7 +148,10 @@ class FileManagementActions(
                 current
             }
         } else current
-        sheetState.value = SheetCalculations.normalizeEssence(restaurado.copy(planilhaConcluida = false, snapshotConclusao = "", experienciaGastaTotal = 0, historicoExperiencia = emptyList()))
+        val revertida = SheetCalculations.normalizeEssence(restaurado.copy(planilhaConcluida = false, snapshotConclusao = "", experienciaGastaTotal = 0, historicoExperiencia = emptyList()))
+        sheetState.value = revertida
+        onSheetChanged(revertida)
+        com.example.ui.theme.aplicarPaletaPorTemplate(revertida.tipoPersonagem)
         showReversionConfirm.value = false
     }
 
