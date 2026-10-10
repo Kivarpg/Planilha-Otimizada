@@ -6,6 +6,9 @@ import androidx.compose.runtime.getValue
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Modifier
 import com.example.ui.components.SaveValidationModal
 import com.example.viewmodel.SheetViewModel
 import kotlinx.coroutines.launch
@@ -16,22 +19,27 @@ fun SaveValidationDialog(
     viewModel: SheetViewModel,
     scope: kotlinx.coroutines.CoroutineScope,
     snackbarHostState: androidx.compose.material3.SnackbarHostState,
-    onSaveSuccessful: () -> Unit
+    onSaveSuccessful: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val saveValidationEvent by viewModel.saveValidationEvent.collectAsState()
-    saveValidationEvent?.let { valResult ->
-        if (!valResult.isValid) {
+    val latestOnSaveSuccessful by rememberUpdatedState(onSaveSuccessful)
+    val latestSnackbarHostState by rememberUpdatedState(snackbarHostState)
+
+    if (saveValidationEvent?.isValid == true) {
+        LaunchedEffect(viewModel, saveValidationEvent) {
+            viewModel.dismissValidationDialog()
+            latestOnSaveSuccessful()
+            latestSnackbarHostState.showSnackbar("Planilha salva com sucesso!")
+        }
+    } else {
+        saveValidationEvent?.let { valResult ->
             SaveValidationModal(
                 errors = valResult.errors,
                 onDismiss = { viewModel.dismissValidationDialog() },
-                onConfirmIncompleteSave = { viewModel.confirmSaveIncompleteSheet() }
+                onConfirmIncompleteSave = { viewModel.confirmSaveIncompleteSheet() },
+                modifier = modifier
             )
-        } else {
-            viewModel.dismissValidationDialog()
-            onSaveSuccessful()
-            scope.launch {
-                snackbarHostState.showSnackbar("Planilha salva com sucesso!")
-            }
         }
     }
 }
