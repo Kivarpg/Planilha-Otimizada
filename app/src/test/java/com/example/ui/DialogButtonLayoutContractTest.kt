@@ -29,6 +29,8 @@ class DialogButtonLayoutContractTest {
         assertTrue(lifecycleDialogs.contains("val savedListHeightLimit = (LocalConfiguration.current.screenHeightDp * 0.45f).coerceAtMost(480f).dp"))
         assertTrue(lifecycleDialogs.contains("val backupListHeightLimit = (LocalConfiguration.current.screenHeightDp * 0.45f).coerceAtMost(480f).dp"))
         assertFalse(lifecycleDialogs.contains("screenHeightDp - 240"))
+        assertTrue(lifecycleDialogs.contains(".heightIn(max = savedListHeightLimit)"))
+        assertTrue(lifecycleDialogs.contains(".heightIn(max = backupListHeightLimit)"))
     }
 
     @Test fun `charm tree and close actions stay side by side in that order`() {
