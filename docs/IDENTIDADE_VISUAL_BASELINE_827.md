@@ -1,6 +1,6 @@
 # Exalted — baseline preventiva da identidade visual
 
-Base compilada confirmada: Exalted.827.
+Base compilada confirmada: Exalted.830 (informada pelo usuario; execucao anterior da 829 confirmada no CI).
 Estado: preparacao, sem nova remodelacao artistica.
 Nao interpretar esta nota como homologacao visual no dispositivo.
 
@@ -32,6 +32,11 @@ Nao interpretar esta nota como homologacao visual no dispositivo.
 - Teste VisualIdentityPreparationContractTest protege esses contratos estaticamente.
 - Risco residual: textos truncados e alvos de toque so podem ser verificados com medicao visual/instrumentada.
 
+## Auditoria complementar de dialogos
+- SettingsDialog, CommitmentErrorDialog e PendingMeritBreakDialog mantem altura maxima limitada e rolagem vertical.
+- Contratos estaticos protegem a presenca dos limites, mas nao garantem ausencia de sobreposicao com teclado ou janela reduzida.
+- Evitar substituir alturas de modo indiscriminado sem capturas em dispositivos.
+
 ## Gate antes de remodelar
 - Confirmar baseline por screenshots e registrar problemas existentes.
 - Definir tokens visuais sem alterar a logica de negocio.
@@ -42,4 +47,4 @@ Nao interpretar esta nota como homologacao visual no dispositivo.
 ## Limites da evidencia
 Os testes de contrato atuais inspecionam texto-fonte; nao medem bounds,
 nao demonstram ausencia de sobreposicao e nao substituem instrumentacao.
-A Exalted.827 passou pelo CI, mas isso nao certifica fidelidade visual.
+Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobreposicao.
