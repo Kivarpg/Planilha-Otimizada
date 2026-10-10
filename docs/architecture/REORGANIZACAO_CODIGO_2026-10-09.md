@@ -57,3 +57,10 @@ A compilação valida sintaxe e dependências, mas não substitui testes de regr
 - Não atualizar Lifecycle 2.11.0 neste lote: sua linha recente de Compose exige atenção a compileSdk e compatibilidade; avaliar em checkpoint separado.
 - Não atualizar Kotlin, AGP, Gradle ou Compose BOM em conjunto.
 - Compilação e testes de regressão obrigatórios antes de considerar as atualizações validadas.
+
+## Auditoria Modifier e recomposição — 2026-10-10
+Correções concretas: MainSheetScreen (Modifier no Scaffold), SheetTopBar (Modifier no Column), SheetContentArea (Modifier no Box) e EncounterGeneratorTab (Modifier no Column raiz). APIs preservadas por parâmetros opcionais finais; sem mudanças em cálculos de NPC.
+
+Achados de estado: MainSheetScreen observa sheetState via collectAsState; EncounterGeneratorTab observa npcsEncontro, gerandoNpcEncontro e erroNpcEncontro via collectAsState; o estado de seleção da Aba 11 utiliza rememberSaveable. Nem todo texto fixo deve virar mutableStateOf: títulos estáticos são conteúdo; cores derivadas de paleta global precisam ser observáveis na fonte da verdade, não copiadas para remember local. A paleta ExaltedActiveMotif e cores globais são suspeitas de falta de invalidação de recomposição, exigindo inspeção da implementação e dos pontos de atualização.
+
+Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação de que todos os composables possuem Modifier. Não foi feita compilação nem teste visual deste lote.
