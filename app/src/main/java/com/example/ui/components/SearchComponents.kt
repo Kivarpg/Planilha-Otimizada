@@ -91,24 +91,24 @@ fun ActiveFilterChips(
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         if (filter.query.isNotBlank()) {
-            FilterChip("Nome: \"${filter.query}\"") { onRemove(filter.copy(query = "")) }
+            FilterChip(text = "Nome: \"${filter.query}\"", onRemove = { onRemove(filter.copy(query = "")) })
         }
         filter.minHabilidade?.let { v ->
             val prefixo = if (filter.minHabilidadeMode == NumericMatchMode.EXACT) "Mins = " else "Mins ≥ "
-            FilterChip("$prefixo$v") { onRemove(filter.copy(minHabilidade = null)) }
+            FilterChip(text = "$prefixo$v", onRemove = { onRemove(filter.copy(minHabilidade = null)) })
         }
         filter.essencia?.let { v ->
             val prefixo = if (filter.essenciaMode == NumericMatchMode.EXACT) "Essência = " else "Essência ≥ "
-            FilterChip("$prefixo$v") { onRemove(filter.copy(essencia = null)) }
+            FilterChip(text = "$prefixo$v", onRemove = { onRemove(filter.copy(essencia = null)) })
         }
         filter.types.forEach { t ->
-            FilterChip(t) { onRemove(filter.copy(types = filter.types - t)) }
+            FilterChip(text = t, onRemove = { onRemove(filter.copy(types = filter.types - t)) })
         }
         filter.keywords.forEach { k ->
-            FilterChip(k) { onRemove(filter.copy(keywords = filter.keywords - k)) }
+            FilterChip(text = k, onRemove = { onRemove(filter.copy(keywords = filter.keywords - k)) })
         }
         filter.durations.forEach { d ->
-            FilterChip(d) { onRemove(filter.copy(durations = filter.durations - d)) }
+            FilterChip(text = d, onRemove = { onRemove(filter.copy(durations = filter.durations - d)) })
         }
     }
 }
