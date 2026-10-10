@@ -5,8 +5,6 @@ import com.example.ui.components.feedbackOnPress
 import com.example.ui.components.feedbackCombinedClickable
 
 import androidx.compose.foundation.*
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
