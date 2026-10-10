@@ -254,7 +254,14 @@ fun BackupListDialog(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        AppText(snapshot.timestamp, color = MaterialTheme.colorScheme.onSurface)
+                        AppText(
+                            text = snapshot.timestamp,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.weight(1f),
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        Spacer(modifier = Modifier.size(8.dp))
                         com.example.ui.components.GildedDialogTextButton(
                             text = "Restaurar",
                             onClick = {
