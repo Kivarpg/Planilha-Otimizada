@@ -25,7 +25,7 @@ fun CatalogDetailsDialog(def: EncantoSolarDefinition, onDismiss: () -> Unit, vie
     val detailsHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 500).dp
     var mostrarArvore by remember(def.id) { mutableStateOf(false) }
     if (mostrarArvore && viewModel != null) {
-        val charmsDaArvore = remember(def.id, def.preRequisitos, charmsParaArvore) {
+        val charmsDaArvore = remember(viewModel, def.id, def.preRequisitos, charmsParaArvore) {
             if (def.id.contains("::")) {
                 viewModel.encantosDaArteMarcialParaArvore(def.id.substringBefore("::"))
             } else {
@@ -119,7 +119,7 @@ fun CharmDetailsDialog(
     val detailsHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 500).dp
     var mostrarArvore by remember(charm.id) { mutableStateOf(false) }
     if (mostrarArvore && viewModel != null) {
-        val charmsDaArvore = remember(charm.id, charm.preRequisitos, tipoPersonagem, dragonBlooded) {
+        val charmsDaArvore = remember(viewModel, charm.id, charm.preRequisitos, tipoPersonagem, dragonBlooded) {
             tipoPersonagem?.let(viewModel::todosOsEncantosParaArvore)
                 ?: viewModel.todosOsEncantosParaArvore(dragonBlooded)
         }
