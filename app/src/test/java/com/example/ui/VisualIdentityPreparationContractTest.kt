@@ -80,6 +80,15 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `saved sheet picker handles empty state and clear search`() {
+        assertTrue(lifecycleDialogs.contains("if (savedSheets.isEmpty()) {"))
+        assertTrue(lifecycleDialogs.contains("text = \"Nenhuma planilha salva.\""))
+        assertTrue(lifecycleDialogs.contains("trailingIcon = if (buscaPlanilhasSalvas.isNotEmpty())"))
+        assertTrue(lifecycleDialogs.contains("IconButton(onClick = { onBuscaChange(\"\") })"))
+        assertTrue(lifecycleDialogs.contains("contentDescription = \"Limpar busca\""))
+    }
+
+    @Test
     fun `backup restore rows reserve width for the action`() {
         assertTrue(lifecycleDialogs.contains("text = snapshot.timestamp,"))
         assertTrue(lifecycleDialogs.contains("modifier = Modifier.weight(1f),"))
