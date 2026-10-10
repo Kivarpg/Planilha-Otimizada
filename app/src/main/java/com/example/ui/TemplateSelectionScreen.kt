@@ -66,9 +66,8 @@ fun TemplateSelectionScreen(onTemplateSelected: (String) -> Unit, modifier: Modi
         modifier = modifier
             .fillMaxSize()
             .background(
-                Brush.radialGradient(
-                    listOf(ExaltedBackdropGlow.copy(alpha = 0.18f), ExaltedBackdropCore, ExaltedDarkBackground),
-                    radius = 1100f
+                Brush.verticalGradient(
+                    listOf(ExaltedDarkBackground, ExaltedDarkSurface, ExaltedDarkBackground)
                 )
             )
 
