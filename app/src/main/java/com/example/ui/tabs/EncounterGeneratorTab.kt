@@ -117,7 +117,8 @@ fun EncounterGeneratorTab(
     abaSelecionadaId: String?,
     onAbaSelecionadaChange: (String?) -> Unit,
     mensagemLimite: String?,
-    onMensagemLimiteChange: (String?) -> Unit
+    onMensagemLimiteChange: (String?) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val npcsGerados by viewModel.npcsEncontro.collectAsState()
     val gerando by viewModel.gerandoNpcEncontro.collectAsState()
@@ -453,7 +454,7 @@ fun EncounterGeneratorTab(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .exaltedTabIdentity(11).exaltedContentStage(11)
             .verticalScroll(rememberScrollState())
