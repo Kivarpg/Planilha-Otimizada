@@ -129,7 +129,15 @@ fun SheetsListDialog(
                             it.nomeArquivo().contains(termoBusca, ignoreCase = true)
                     }
                 }
-                if (planilhasFiltradas.isEmpty() && termoBusca.isNotEmpty()) {
+                if (savedSheets.isEmpty()) {
+                    AppText(
+                        text = "Nenhuma planilha salva.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = ExaltedMuted,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(vertical = 12.dp)
+                    )
+                } else if (planilhasFiltradas.isEmpty() && termoBusca.isNotEmpty()) {
                     AppText(
                         text = "Nenhuma planilha encontrada para \"$termoBusca\".",
                         style = MaterialTheme.typography.bodySmall,
