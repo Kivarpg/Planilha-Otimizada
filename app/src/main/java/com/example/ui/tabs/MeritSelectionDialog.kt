@@ -27,6 +27,7 @@ import com.example.ui.components.AppText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -65,6 +66,9 @@ internal fun MeritSelectionDialog(
     var textoPreRequisitoPersonalizado by remember { mutableStateOf("") }
     var categoriaPersonalizada by remember { mutableStateOf("normal") }
 
+    // Reserve space for the title, actions and system insets on short displays.
+    val contentHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 420).dp
+
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
@@ -90,7 +94,7 @@ internal fun MeritSelectionDialog(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(max = 420.dp)
+                    .heightIn(max = contentHeightLimit)
                     .verticalScroll(rememberScrollState())
             ) {
                 if (mostrarPersonalizado) {
