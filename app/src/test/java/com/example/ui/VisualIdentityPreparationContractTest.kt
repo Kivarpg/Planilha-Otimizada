@@ -32,6 +32,18 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `template selection preserves exclusive emblems and responsive cards`() {
+        val selection = File("src/main/java/com/example/ui/TemplateSelectionScreen.kt").readText()
+        assertTrue(selection.contains("isDragon -> R.drawable.tab_icon_dragao"))
+        assertTrue(selection.contains("template.nome == \"Lunar\" -> R.drawable.tab_icon_lua"))
+        assertTrue(selection.contains("else -> R.drawable.tab_icon_sol"))
+        assertTrue(selection.contains("val narrowCard = maxWidth < 360.dp"))
+        assertTrue(selection.contains("val emblemSize = if (narrowCard) 74.dp else 104.dp"))
+        assertTrue(selection.contains("heightIn(min = 136.dp)"))
+        assertTrue(selection.contains("overflow = TextOverflow.Ellipsis"))
+    }
+
+    @Test
     fun `all fifteen existing tabs remain declared in order`() {
         val names = listOf(
             "1. Dados Pessoais", "2. Aspecto", "3. Atributos",
