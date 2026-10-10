@@ -51,10 +51,10 @@ internal fun SummaryAbilitiesSection(sheet: CharacterSheet) {
 
             BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
                 val compactPhone = maxWidth < 480.dp
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(14.dp)
-            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(if (compactPhone) 6.dp else 14.dp)
+                ) {
                 columns.forEach { columnAbilities ->
                     Column(modifier = Modifier.weight(1f)) {
                         columnAbilities.forEach { ability ->
