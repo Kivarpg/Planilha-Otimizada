@@ -24,7 +24,11 @@ import com.example.ui.theme.ExaltedBlack
 
 /** Hosts one tab at a time; each tab owns its vertical scrolling. */
 @Composable
-internal fun SheetContentArea(tabs: List<SheetTab>, selectedTabIndex: Int) {
+internal fun SheetContentArea(
+    tabs: List<SheetTab>,
+    selectedTabIndex: Int,
+    modifier: Modifier = Modifier
+) {
     val focusManager = LocalFocusManager.current
     // APPROVED VISUAL CUSTOMIZATION
     // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
@@ -32,7 +36,7 @@ internal fun SheetContentArea(tabs: List<SheetTab>, selectedTabIndex: Int) {
     // externa desaparece; os componentes internos definem sua própria
     // hierarquia e a tela passa a ter um único campo de leitura.
     Box(
-        Modifier
+        modifier
             .fillMaxSize()
             .background(sheetBackgroundBrush())
             .pointerInput(Unit) {
