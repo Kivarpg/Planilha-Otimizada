@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.example.ui.components.feedbackOnPress
 import com.example.ui.components.feedbackClickable
+import com.example.ui.components.feedbackCombinedClickable
 
 import com.example.iniciativas.ajustarIniciativa
 
@@ -894,8 +895,10 @@ fun NpcEncontroCard(
                                                     Box(
                                                         modifier = Modifier.size(boxSize).clip(RoundedCornerShape(6.dp)).background(visualTemplate.surface)
                                                             .border(if (ehExtra) 2.dp else 1.dp, if (ehExtra) visualTemplate.accent else corDano.takeIf { box.tipoDano != 0 } ?: visualTemplate.gold.copy(alpha = 0.45f), RoundedCornerShape(6.dp))
-                                                            .pointerInput(box.id) { detectTapGestures(onTap = { onCiclarDano(box.id) }, onLongPress = { if (ehExtra) boxParaRemover = box }) }
-                                                            .feedbackOnPress(),
+                                                            .feedbackCombinedClickable(
+                                                                onClick = { onCiclarDano(box.id) },
+                                                                onLongClick = if (ehExtra) ({ boxParaRemover = box }) else null,
+                                                            ),
                                                         contentAlignment = Alignment.Center
                                                     ) {
                                                         AppText(textoDano, style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), color = corDano, forceStroke = true)
