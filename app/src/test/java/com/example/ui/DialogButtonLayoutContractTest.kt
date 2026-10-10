@@ -13,7 +13,7 @@ class DialogButtonLayoutContractTest {
     private val dialogComponents = File("src/main/java/com/example/ui/components/DialogComponents.kt").readText()
 
     @Test fun `ink brush uses the measured button bounds`() {
-        assertTrue(inkButton.contains("Modifier.widthIn(max = width).height(height)"))
+        assertTrue(inkButton.contains("Modifier.widthIn(min = 48.dp, max = width).height(height)"))
         assertTrue(inkButton.contains("modifier = Modifier.fillMaxSize()"))
         assertTrue(inkButton.contains("clipRect {"))
         assertFalse(inkButton.contains("Modifier.size(width, height)"))
