@@ -72,10 +72,15 @@ fun ConfirmDeleteDialog(
             )
         },
         text = {
-            AppText(
-                text = "Deseja realmente remover \"$itemTitle\"?",
-                color = MaterialTheme.colorScheme.onSurface
-            )
+            val confirmationHeightLimit = (LocalConfiguration.current.screenHeightDp * 0.35f).coerceAtMost(280f).dp
+            Column(
+                modifier = Modifier.fillMaxWidth().heightIn(max = confirmationHeightLimit).verticalScroll(rememberScrollState())
+            ) {
+                AppText(
+                    text = "Deseja realmente remover \"$itemTitle\"?",
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
         },
         dismissButton = {
             GildedDialogButton(text = "Remover", onClick = onConfirm, isDanger = true)
