@@ -77,3 +77,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Importacao: contador de caracteres usa peso flexivel, truncamento e reserva largura para botao Colar.
 - Teste estatico de regressao verifica limites, acoes e rolagem da importacao.
 - Ainda e necessario executar compilacao e testes JVM, e validar visualmente QR, texto longo, fonte ampliada e teclado no emulador.
+
+## Preparacao da Exalted.839 (sem compilacao)
+- Aba 8 / dialogos de Encantos: ao abrir arvore de pre-requisitos, o dialogo de detalhes deixa de ser composto ate a arvore ser fechada; evita duas janelas modais simultaneas.
+- Lista de planilhas: metadados Casta/Aspecto e Jogador limitados a duas linhas com reticencias, preservando indicador Ativa.
+- Testes estaticos de regressao adicionados para ambos os ajustes.
+- Pendente: compilacao Kotlin, suite JVM e validacao em emulador dos dialogos de arvore, retorno aos detalhes e nomes extensos.
