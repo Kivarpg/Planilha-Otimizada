@@ -23,10 +23,12 @@ class CompactInkButtonContractTest {
     }
 
     @Test
-    fun `shared ink button retains explicit minimum dimensions`() {
+    fun `shared ink button declares minimum dimensions without assuming measured bounds`() {
         assertTrue(inkButton.contains("customWidth?.coerceAtLeast(48.dp)"))
         assertTrue(inkButton.contains("customHeight?.coerceAtLeast(48.dp)"))
         assertTrue(inkButton.contains("Modifier.widthIn(min = 48.dp, max = width).height(height)"))
+        // Modifier.size at the call site may constrain the resulting layout.
+        // Actual touch bounds require a Compose layout or instrumentation test.
     }
 
     @Test
