@@ -83,3 +83,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Lista de planilhas: metadados Casta/Aspecto e Jogador limitados a duas linhas com reticencias, preservando indicador Ativa.
 - Testes estaticos de regressao adicionados para ambos os ajustes.
 - Pendente: compilacao Kotlin, suite JVM e validacao em emulador dos dialogos de arvore, retorno aos detalhes e nomes extensos.
+
+## Preparacao da Exalted.840 (sem compilacao)
+- Dialogos de detalhes de Encantos (catalogo e personagem): estado `mostrarArvore` passa a ser memorizado por ID do Encanto. Ao trocar o Encanto selecionado sem destruir a composicao, a arvore anterior nao permanece aberta por engano.
+- Teste de regressao estatico cobre a associacao do estado aos IDs `def.id` e `charm.id`.
+- A alteracao nao modifica regras de Encantos, pre-requisitos, atributos, Habilidades ou conteudo de arvores.
+- Pendente: compilar, executar testes JVM e validar troca de Encantos/abertura/fechamento da arvore em emulador.
