@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.*
 import com.example.ui.components.AppText
@@ -33,17 +32,8 @@ internal fun SheetTabsBar(
     val listState = rememberLazyListState()
     // Passo 9/12 — a composição reage ao espaço realmente disponível e ao
     // fontScale do usuário sem alterar a ordem, quantidade ou ação das abas.
-    val screenWidthDp = LocalConfiguration.current.screenWidthDp
     val fontScale = LocalDensity.current.fontScale
-    val compact = screenWidthDp < 600
     val enlargedText = fontScale > 1.20f
-    val tabHeight = when { enlargedText -> 68.dp; compact -> 62.dp; else -> 60.dp }
-    val tabMinWidth = when {
-        enlargedText -> 132.dp
-        compact -> 112.dp
-        else -> 112.dp
-    }
-    val tabMaxWidth = if (enlargedText) 178.dp else 156.dp
     LaunchedEffect(selectedTabIndex) {
         val visible = listState.layoutInfo.visibleItemsInfo
         val firstVisible = visible.firstOrNull()?.index
@@ -72,7 +62,12 @@ internal fun SheetTabsBar(
     // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
     // IDENTIDADE VISUAL v4 — índice de capítulos. Sem cartões, sem medalhões,
     // sem caixas individuais: cada aba é uma entrada editorial contínua.
-    Column(modifier.fillMaxWidth().background(ExaltedDarkBackground.copy(alpha = .98f))) {
+    BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
+        val compact = maxWidth < 600.dp
+        val tabHeight = when { enlargedText -> 68.dp; compact -> 62.dp; else -> 60.dp }
+        val tabMinWidth = if (enlargedText) 132.dp else 112.dp
+        val tabMaxWidth = if (enlargedText) 178.dp else 156.dp
+    Column(Modifier.fillMaxWidth().background(ExaltedDarkBackground.copy(alpha = .98f))) {
         LazyRow(
             state = listState,
             modifier = Modifier
@@ -177,5 +172,6 @@ internal fun SheetTabsBar(
                 }
             }
         }
+    }
     }
 }
