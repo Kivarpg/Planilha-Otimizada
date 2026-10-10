@@ -118,9 +118,9 @@ fun RatingDisplay(value: Int, maxValue: Int, style: RatingStyle, modifier: Modif
 
 
 @Composable
-private fun DiamondPip(filled: Boolean, onClick: () -> Unit, size: Dp = 15.dp, enabled: Boolean = true) {
+private fun DiamondPip(filled: Boolean, onClick: () -> Unit, size: Dp = 15.dp, enabled: Boolean = true, modifier: Modifier = Modifier) {
     Canvas(
-        modifier = Modifier
+        modifier = modifier
             .size(size)
             .feedbackClickable(enabled = enabled, onClick = onClick)
     ) {
