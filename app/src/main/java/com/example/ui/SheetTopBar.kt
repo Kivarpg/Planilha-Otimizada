@@ -16,7 +16,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.*
 import com.example.R
@@ -58,22 +57,22 @@ internal fun SheetTopBar(
 ) {
     // Passo 9/12 — composição adaptativa sem criar um fluxo Compact paralelo.
     // O mesmo cabeçalho preserva conteúdo e ações; apenas redistribui espaço.
-    val screenWidthDp = LocalConfiguration.current.screenWidthDp
     val fontScale = LocalDensity.current.fontScale
-    val compactHeader = screenWidthDp < 600
     val enlargedHeaderText = fontScale > 1.20f
     val headerHeight = if (enlargedHeaderText) 144.dp else 132.dp
-    val identityWidth = if (compactHeader) 68.dp else 84.dp
-    val actionsWidth = if (compactHeader) 80.dp else 88.dp
-    val identityIconSize = if (compactHeader) 36.dp else 42.dp
 
     // APPROVED VISUAL CUSTOMIZATION
     // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
     // IDENTIDADE VISUAL v4 — composição editorial agressiva. O topo agora é
     // uma peça de identidade + índice de capítulo; não é uma barra de app.
     // Estados, ações, tabs e callbacks permanecem inalterados.
+    BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
+    val compactHeader = maxWidth < 600.dp
+    val identityWidth = if (compactHeader) 68.dp else 84.dp
+    val actionsWidth = if (compactHeader) 80.dp else 88.dp
+    val identityIconSize = if (compactHeader) 36.dp else 42.dp
     Column(
-        modifier
+        Modifier
             .fillMaxWidth()
             .background(ExaltedDarkBackground.copy(alpha = .985f))
             .drawBehind {
@@ -257,6 +256,7 @@ internal fun SheetTopBar(
         // Índice de capítulos: somente tipografia, ícone mínimo e linha ativa.
         // A navegação deixa de parecer uma fileira de botões.
         SheetTabsBar(sheet, viewModel, tabs, selectedTabIndex, onSelectedTab)
+    }
     }
 
     if(showCarregarMenu){
