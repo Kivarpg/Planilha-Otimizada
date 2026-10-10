@@ -21,4 +21,15 @@ class EncounterHealthGestureContractTest {
         assertTrue(!healthBox.contains(".feedbackOnPress("))
         assertTrue(!healthBox.contains(".pointerInput("))
     }
+    @Test
+    fun `encounter charm and spell details remain long press only`() {
+        val charm = source.substringAfter("groupAccumulatedEncounterCharms(encantosDaGaveta)")
+            .substringBefore("if (mostrarDetalhes)")
+        assertTrue(charm.contains("detectTapGestures(onLongPress = { mostrarDetalhes = true })"))
+        val spell = source.substringAfter("npc.feiticos.forEach { feitico ->")
+            .substringBefore("if (mostrarDetalhesFeitico)")
+        assertTrue(spell.contains("detectTapGestures(onLongPress = { mostrarDetalhesFeitico = true })"))
+        // A tap must not open these dialogs. Gesture/haptic timing needs device validation.
+    }
+
 }
