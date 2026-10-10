@@ -1,6 +1,6 @@
 # Exalted — baseline preventiva da identidade visual
 
-Base compilada confirmada: Exalted.830 (informada pelo usuario; execucao anterior da 829 confirmada no CI).
+Base compilada confirmada: Exalted.831 (informada pelo usuario).
 Estado: preparacao, sem nova remodelacao artistica.
 Nao interpretar esta nota como homologacao visual no dispositivo.
 
@@ -31,6 +31,11 @@ Nao interpretar esta nota como homologacao visual no dispositivo.
 - TabIdentitySurface conserva superfícies neutras; nao reinserir ornamentacao removida.
 - Teste VisualIdentityPreparationContractTest protege esses contratos estaticamente.
 - Risco residual: textos truncados e alvos de toque so podem ser verificados com medicao visual/instrumentada.
+
+## Auditoria das planilhas salvas
+- A lista de planilhas salvas deve mostrar Aspecto para Sangue de Dragao, Casta Lunar para Lunar e Casta Solar para Solar.
+- As acoes existentes de carregar e excluir permanecem intactas.
+- Teste estatico adicionado; ainda exige verificacao em dispositivo com planilhas dos tres tipos.
 
 ## Auditoria complementar de dialogos
 - SettingsDialog, CommitmentErrorDialog e PendingMeritBreakDialog mantem altura maxima limitada e rolagem vertical.
