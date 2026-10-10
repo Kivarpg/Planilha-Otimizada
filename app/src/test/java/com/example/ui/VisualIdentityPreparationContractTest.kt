@@ -73,6 +73,13 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `saved sheet search stays editable when a filter reduces the list`() {
+        assertTrue(lifecycleDialogs.contains("if (savedSheets.size > 4 || buscaPlanilhasSalvas.isNotBlank()) {"))
+        assertTrue(lifecycleDialogs.contains("onValueChange = onBuscaChange"))
+        assertTrue(lifecycleDialogs.contains("val termoBusca = buscaPlanilhasSalvas.trim()"))
+    }
+
+    @Test
     fun `backup restore rows reserve width for the action`() {
         assertTrue(lifecycleDialogs.contains("text = snapshot.timestamp,"))
         assertTrue(lifecycleDialogs.contains("modifier = Modifier.weight(1f),"))
