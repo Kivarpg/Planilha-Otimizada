@@ -114,8 +114,9 @@ fun ActiveFilterChips(
 }
 
 @Composable
-private fun FilterChip(text: String, onRemove: () -> Unit) {
+private fun FilterChip(text: String, onRemove: () -> Unit, modifier: Modifier = Modifier) {
     Surface(
+        modifier = modifier,
         color = ExaltedDarkSurfaceVariant,
         shape = MaterialTheme.shapes.small,
         border = BorderStroke(1.dp, ExaltedAmber.copy(alpha = 0.6f))
@@ -137,9 +138,10 @@ fun SkillSearchModal(
     config: SkillSearchConfig,
     currentFilter: SkillFilter,
     onApply: (SkillFilter) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    var draft by remember { mutableStateOf(currentFilter) }
+    var draft by remember(currentFilter) { mutableStateOf(currentFilter) }
     var skillQuery by remember { mutableStateOf("") }
     // Cada seção começa recolhida — só mostra as opções depois que o
     // usuário toca no respectivo cabeçalho.
@@ -150,7 +152,7 @@ fun SkillSearchModal(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
+        modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = { AppText("Busca e Filtros", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
         text = {
@@ -333,9 +335,10 @@ private fun NumericFilterRow(
     value: Int?,
     mode: NumericMatchMode,
     onValueChange: (Int?) -> Unit,
-    onModeChange: (NumericMatchMode) -> Unit
+    onModeChange: (NumericMatchMode) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = modifier.fillMaxWidth()) {
         AppText(label, style = MaterialTheme.typography.labelMedium, color = ExaltedGold)
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             (1..5).forEach { n ->
@@ -366,9 +369,9 @@ private fun NumericFilterRow(
 
 @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
-fun MultiSelectChips(options: List<String>, selected: Set<String>, onToggle: (String) -> Unit) {
+fun MultiSelectChips(options: List<String>, selected: Set<String>, onToggle: (String) -> Unit, modifier: Modifier = Modifier) {
     FlowRow(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
