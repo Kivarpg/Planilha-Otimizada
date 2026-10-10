@@ -45,6 +45,7 @@ class FileManagementActions(
         val newSheet = CharacterSheet(id = UUID.randomUUID().toString(), tipoPersonagem = tipoPersonagem, essencia = essenciaInicial)
         sheetState.value = newSheet
         onSheetChanged(newSheet)
+        com.example.ui.theme.aplicarPaletaPorTemplate(newSheet.tipoPersonagem)
         repository.saveActiveSheet(newSheet)
         reloadSavedSheets()
     }
@@ -61,6 +62,7 @@ class FileManagementActions(
         val normalized = charmsActions.sanitizeKnownCharms(SheetCalculations.normalizeEssence(sheet))
         sheetState.value = normalized
         onSheetChanged(normalized)
+        com.example.ui.theme.aplicarPaletaPorTemplate(normalized.tipoPersonagem)
     }
 
     fun listarBackupsPeriodicos(): List<SheetRepository.BackupSnapshot> =
@@ -72,6 +74,7 @@ class FileManagementActions(
             val normalized = charmsActions.sanitizeKnownCharms(SheetCalculations.normalizeEssence(sheet))
             sheetState.value = normalized
             onSheetChanged(normalized)
+            com.example.ui.theme.aplicarPaletaPorTemplate(normalized.tipoPersonagem)
             repository.saveActiveSheet(normalized)
             true
         } catch (e: Exception) {
@@ -84,6 +87,7 @@ class FileManagementActions(
         reloadSavedSheets()
         sheetState.value = repository.loadActiveSheet()
         onSheetChanged(sheetState.value)
+        com.example.ui.theme.aplicarPaletaPorTemplate(sheetState.value.tipoPersonagem)
     }
 
     fun dismissValidationDialog() {
