@@ -4,6 +4,9 @@ Base compilada confirmada: Exalted.827.
 Estado: preparacao, sem nova remodelacao artistica.
 Nao interpretar esta nota como homologacao visual no dispositivo.
 
+## Simbolos celestes
+- Sol e lua devem ser representados sem rostos, olhos, bocas ou qualquer feicao humana; nunca antropomorfizar esses simbolos.
+
 ## Invariantes
 - Manter as 15 abas, seus nomes, ordem, campos e funcionalidades.
 - Dar igual prioridade a Solar, Sangue de Dragao e Lunar.
