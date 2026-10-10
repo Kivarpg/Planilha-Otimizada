@@ -42,7 +42,7 @@ class CompactInkButtonContractTest {
         assertTrue(dialogButtons.contains("fun GildedDialogButton("))
         assertTrue(dialogButtons.contains("fun GildedDialogTextButton("))
         val primary = dialogButtons.substringAfter("fun GildedDialogButton(").substringBefore("fun GildedDialogTextButton(")
-        val secondary = dialogButtons.substringAfter("fun GildedDialogTextButton(").substringBefore("// SKIN: forma")
+        val secondary = dialogButtons.substringAfter("fun GildedDialogTextButton(")
         assertTrue(primary.contains("InkButton("))
         assertTrue(secondary.contains("InkButton("))
     }
