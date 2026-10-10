@@ -141,8 +141,8 @@ private fun AttributeRow(
                 ),
                 color = ExaltedOnSurface,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Start,
-                maxLines = 1,
-                softWrap = false,
+                maxLines = 2,
+                softWrap = true,
                 modifier = Modifier.fillMaxWidth()
             )
         }
