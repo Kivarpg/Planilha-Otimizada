@@ -177,7 +177,17 @@ class MainActivity : ComponentActivity() {
                     )
                 } else if (templateEscolhido == null) {
                     com.example.ui.TemplateSelectionScreen(
-                        onTemplateSelected = { templateEscolhido = it }
+                        onTemplateSelected = { selected ->
+                            val tipoSelecionado = when (selected) {
+                                "Sangue de Dragão" -> CharacterType.DRAGON_BLOODED
+                                "Lunar" -> CharacterType.LUNAR
+                                else -> CharacterType.SOLAR
+                            }
+                            // Somente uma escolha explícita inicia um novo tipo.
+                            // Restaurar rememberSaveable não deve substituir a planilha persistida.
+                            viewModel.iniciarNovaPlanilha(tipoSelecionado)
+                            templateEscolhido = selected
+                        }
                     )
                 } else {
                     val tipoPersonagem = when (templateEscolhido) {
