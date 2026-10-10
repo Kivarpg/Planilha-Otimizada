@@ -180,8 +180,8 @@ fun ErgonomicNumericSelector(
                         color = MaterialTheme.colorScheme.onSurface,
                         textAlign = if (centerLabel) TextAlign.Center else TextAlign.Start,
                         modifier = Modifier.weight(1f),
-                        maxLines = 1,
-                        softWrap = false,
+                        maxLines = 2,
+                        softWrap = true,
                         overflow = TextOverflow.Ellipsis
                     )
                     Spacer(modifier = Modifier.width(6.dp))
