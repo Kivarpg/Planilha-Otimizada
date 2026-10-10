@@ -95,3 +95,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Dialogo compartilhado de confirmacao de exclusao: conteudo com nomes extensos fica em coluna rolavel e altura maxima de 35% da tela, limitada a 280dp; preserva os botoes Remover e Cancelar.
 - Testes estaticos adicionados para os dois contratos.
 - Pendente: compilacao Kotlin, testes JVM e verificacao visual em emulador de exclusao com nome longo e troca de planilha/Encanto.
+
+## Preparacao da Exalted.842 (sem compilacao)
+- Lista de planilhas salvas: campo de pesquisa permanece visivel quando existe texto de busca, mesmo que a quantidade de planilhas caia para quatro ou menos. Evita filtro ativo sem campo editavel para limpa-lo.
+- Teste estatico cobre a condicao `savedSheets.size > 4 || buscaPlanilhasSalvas.isNotBlank()` e a edicao do filtro.
+- Sem mudanca de persistencia, busca por nome, regras de personagem ou identidade visual.
+- Pendente: compilar, executar testes JVM e testar em dispositivo a transicao de cinco para quatro planilhas com filtro preenchido.
