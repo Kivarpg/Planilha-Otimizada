@@ -9,6 +9,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
@@ -60,6 +64,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
     var soundEnabled by remember { mutableStateOf(InteractionFeedback.isSoundEnabled(context)) }
     val currentStyle by viewModel.ratingStyle.collectAsState()
     val sheetAtual by viewModel.sheetState.collectAsState()
+    val settingsContentHeight = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 500).dp
     androidx.compose.material3.AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
@@ -73,12 +78,15 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                 color = ExaltedAccentBright,
                 fontWeight = FontWeight.Bold,
                 maxFontSize = MaterialTheme.typography.titleLarge.fontSize,
-                modifier = Modifier.fillMaxWidth().fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center
                 )
         },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Column(
+                modifier = Modifier.fillMaxWidth().heightIn(max = settingsContentHeight).verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
                 AppText(
                     "Estilo de avaliação (Atributos, Habilidades e Méritos)",
                     style = MaterialTheme.typography.labelMedium,
