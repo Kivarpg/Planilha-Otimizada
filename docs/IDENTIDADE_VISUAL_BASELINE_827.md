@@ -140,3 +140,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - A selecao continua usando icones exclusivos: Solar=tab_icon_sol, Sangue de Dragao=tab_icon_dragao, Lunar=tab_icon_lua. A arte do arquivo tab_icon_dragao ainda precisa de inspecao visual para confirmar anatomia oriental, pois a associacao de recurso nao comprova o desenho.
 - Removidas linhas verticais decorativas nas laterais do fundo da selecao, conforme preferencia anterior; sem alterar os cartoes nem o logotipo oficial.
 - Testes de contrato cobrem correspondencia de icones, largura responsiva e ausencia das linhas laterais; ainda nao substituem screenshot nem validacao no dispositivo.
+
+## Preparacao visual seguinte a Exalted.850 (ainda sem compilacao)
+- A tela de selecao nao deve assumir a identidade Solar antes de o usuario escolher o Tipo de Exaltado. Fundo agora usa gradiente escuro neutro; cada cartao continua com a paleta e o icone de seu proprio tipo.
+- Teste de contrato garante ausencia do antigo brilho ExaltedBackdropGlow na tela de selecao e presenca do gradiente neutro.
+- Nao houve alteracao das regras de negocio, das tres opcoes, dos callbacks nem dos 15 destinos de navegacao.
+- Pendencias para aceite visual: verificar arte do dragao oriental no PNG, telas reais pequenas com fonte ampliada e remodelacao individual das 15 abas. O sucesso de compilacao da 850 nao valida estas pendencias.
