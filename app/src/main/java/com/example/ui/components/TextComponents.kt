@@ -136,7 +136,13 @@ fun AppText(
         (fontSize.value != 0f && fontSize.value >= 18f))
 
     val requestedFontSize = if (fontSize != TextUnit.Unspecified) fontSize else style.fontSize
-    var fittedFontSize by remember(text, requestedFontSize, maxLines, minLines, modifier, style, fontFamily, letterSpacing, lineHeight, softWrap) { mutableStateOf(requestedFontSize) }
+    // A largura real pode mudar sem que o Modifier ou o texto mudem.
+    // Reiniciar o ajuste nesse caso permite recuperar o tamanho original.
+    var measuredAppTextWidthPx by remember { mutableStateOf(0) }
+    var fittedFontSize by remember(
+        text, requestedFontSize, maxLines, minLines, style, fontFamily,
+        letterSpacing, lineHeight, softWrap, measuredAppTextWidthPx
+    ) { mutableStateOf(requestedFontSize) }
     val effectiveStyle = style.copy(
         color = if (isTitle) color else ExaltedTextFill,
         fontSize = fittedFontSize,
@@ -152,7 +158,7 @@ fun AppText(
     if (isTitle) {
         androidx.compose.material3.Text(
             text = text,
-            modifier = modifier,
+            modifier = modifier.onSizeChanged { measuredAppTextWidthPx = it.width },
             color = color,
             style = effectiveStyle,
             overflow = overflow,
@@ -175,7 +181,7 @@ fun AppText(
             color = ExaltedTextFill,
             drawStyle = androidx.compose.ui.graphics.drawscope.Fill
         )
-        // O Modifier externo pertence ao contêiner, não deve ser aplicado duas vezes.\n        // Os Text internos ocupam a largura medida pelo Box para preservar centralização.\n        Box(modifier = modifier) {
+        // O Modifier externo pertence ao contêiner, não deve ser aplicado duas vezes.\n        // Os Text internos ocupam a largura medida pelo Box para preservar centralização.\n        Box(modifier = modifier.onSizeChanged { measuredAppTextWidthPx = it.width }) {
             androidx.compose.material3.Text(
                 text = text,
                 modifier = Modifier.fillMaxWidth(),
