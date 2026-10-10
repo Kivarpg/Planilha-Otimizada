@@ -49,3 +49,11 @@ A compilação valida sintaxe e dependências, mas não substitui testes de regr
 - A estrutura do layout, os gradientes, as dimensões e o gerenciamento de estado permanecem equivalentes.
 - Sem movimentação de packages, mudanças em API pública ou lógica de negócio.
 - O checkpoint segue aguardando compilação e testes. Não extrapolar esta validação para os 511 arquivos.
+
+## Atualização de dependências estáveis — 2026-10-09
+- androidx.activity:activity-compose: 1.9.3 -> 1.13.0 (versão final estável).
+- androidx.core:core-splashscreen: 1.0.1 -> 1.2.0 (versão final estável).
+- Alterações limitadas a gradle/libs.versions.toml.
+- Não atualizar Lifecycle 2.11.0 neste lote: sua linha recente de Compose exige atenção a compileSdk e compatibilidade; avaliar em checkpoint separado.
+- Não atualizar Kotlin, AGP, Gradle ou Compose BOM em conjunto.
+- Compilação e testes de regressão obrigatórios antes de considerar as atualizações validadas.
