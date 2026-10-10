@@ -58,6 +58,18 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `personal data identity fields retain callbacks in responsive layout`() {
+        val tab = File("src/main/java/com/example/ui/tabs/PersonalDataTab.kt").readText()
+        assertTrue(tab.contains("if (maxWidth < 390.dp)"))
+        assertTrue(tab.contains("BoxNames.PersonalData.NAME, Modifier.fillMaxWidth()"))
+        assertTrue(tab.contains("BoxNames.PersonalData.PLAYER, Modifier.fillMaxWidth()"))
+        assertTrue(tab.contains("BoxNames.PersonalData.CONCEPT, Modifier.fillMaxWidth()"))
+        assertTrue(tab.contains("BoxNames.PersonalData.NAME, Modifier.weight(1f)"))
+        assertTrue(tab.contains("BoxNames.PersonalData.PLAYER, Modifier.weight(1f)"))
+        assertTrue(tab.contains("BoxNames.PersonalData.CONCEPT, Modifier.weight(1f)"))
+    }
+
+    @Test
     fun `all fifteen existing tabs remain declared in order`() {
         val names = listOf(
             "1. Dados Pessoais", "2. Aspecto", "3. Atributos",
