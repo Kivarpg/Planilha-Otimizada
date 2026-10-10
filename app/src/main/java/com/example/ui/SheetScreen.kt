@@ -33,7 +33,19 @@ fun MainSheetScreen(
         aplicarPaletaPorTemplate(tipoPersonagem)
     }
     val lifecycleOwner=LocalLifecycleOwner.current
-    DisposableEffect(lifecycleOwner){val observer=androidx.lifecycle.LifecycleEventObserver{_,event->when(event){androidx.lifecycle.Lifecycle.Event.ON_START->viewModel.onAppForegrounded();androidx.lifecycle.Lifecycle.Event.ON_STOP->viewModel.onAppBackgrounded();else->{}}};lifecycleOwner.lifecycle.addObserver(observer);onDispose{lifecycleOwner.lifecycle.removeObserver(observer)}}
+    DisposableEffect(lifecycleOwner, viewModel) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            when (event) {
+                androidx.lifecycle.Lifecycle.Event.ON_START -> viewModel.onAppForegrounded()
+                androidx.lifecycle.Lifecycle.Event.ON_STOP -> viewModel.onAppBackgrounded()
+                else -> Unit
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
     val sheet by viewModel.sheetState.collectAsState()
     var selectedTabIndex by rememberSaveable{mutableStateOf(0)}; var abilitiesSubTabIndex by rememberSaveable{mutableStateOf(0)}
     var encontroNomeManual by rememberSaveable{mutableStateOf("")}; var encontroArquetipo by rememberSaveable{mutableStateOf(ArquetipoEncontro.FISICO)}; var encontroGenero by rememberSaveable{mutableStateOf<com.example.data.GeneroNome?>(com.example.data.GeneroNome.MASCULINO)}; var encontroAbaSelecionadaId by rememberSaveable{mutableStateOf<String?>(null)}; var encontroMensagemLimite by rememberSaveable{mutableStateOf<String?>(null)}
