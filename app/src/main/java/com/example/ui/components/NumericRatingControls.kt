@@ -96,8 +96,9 @@ fun GildedStepButton(
     }
 }
 
-// Regra de layout padrão do app: o texto de rótulo ocupa sempre uma linha única e
-// inteira; o elemento gráfico (contador/trilha) fica posicionado na linha abaixo.
+// Regra de layout: o rótulo aceita até duas linhas para preservar nomes longos.
+// O elemento gráfico (contador/trilha) permanece na linha abaixo; quando há
+// indicador à direita, apenas o rótulo recebe peso flexível.
 
 @Composable
 fun ErgonomicNumericSelector(
