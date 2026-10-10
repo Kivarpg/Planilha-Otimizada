@@ -21,7 +21,11 @@ import kotlinx.coroutines.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainSheetScreen(viewModel: SheetViewModel, tipoPersonagem: String = CharacterType.SOLAR) {
+fun MainSheetScreen(
+    viewModel: SheetViewModel,
+    tipoPersonagem: String = CharacterType.SOLAR,
+    modifier: Modifier = Modifier
+) {
     remember(tipoPersonagem){viewModel.iniciarNovaPlanilha(tipoPersonagem);aplicarPaletaPorTemplate(tipoPersonagem)}
     val lifecycleOwner=LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner){val observer=androidx.lifecycle.LifecycleEventObserver{_,event->when(event){androidx.lifecycle.Lifecycle.Event.ON_START->viewModel.onAppForegrounded();androidx.lifecycle.Lifecycle.Event.ON_STOP->viewModel.onAppBackgrounded();else->{}}};lifecycleOwner.lifecycle.addObserver(observer);onDispose{lifecycleOwner.lifecycle.removeObserver(observer)}}
@@ -34,6 +38,7 @@ fun MainSheetScreen(viewModel: SheetViewModel, tipoPersonagem: String = Characte
     val navigationKey = tabs.map { it.title to it.iconRes }
     val navigationTabs = remember(navigationKey) { tabs.navigationItems() }
     Scaffold(
+        modifier = modifier,
         topBar = {
             SheetTopBar(sheet = sheet,
                 viewModel = viewModel,
