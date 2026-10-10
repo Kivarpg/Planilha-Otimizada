@@ -57,7 +57,7 @@ import com.example.viewmodel.SheetViewModel
 /** Battle Group management UI. */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun BattleGroupsTab(viewModel: SheetViewModel) {
+fun BattleGroupsTab(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
     val groups by viewModel.battleGroups.collectAsState()
     var editingId by remember { mutableStateOf<String?>(null) }
     var selectedType by remember { mutableStateOf<String?>(battleGroupTroopTypes.firstOrNull()?.name) }
@@ -156,7 +156,7 @@ fun BattleGroupsTab(viewModel: SheetViewModel) {
         unfocusedContainerColor = ExaltedDarkSurface
     )
 
-    Column(Modifier.fillMaxSize().exaltedTabIdentity(13).exaltedContentStage(13).verticalScroll(rememberScrollState()).padding(12.dp)) {
+    Column(modifier.fillMaxSize().exaltedTabIdentity(13).exaltedContentStage(13).verticalScroll(rememberScrollState()).padding(12.dp)) {
         GildedCard(Modifier.fillMaxWidth()) {
             Column(Modifier.padding(12.dp)) {
                 OutlinedTextField(name, { name = it }, label = { AppText("Nome") }, modifier = Modifier.fillMaxWidth(), colors = coresCampoTexto)
