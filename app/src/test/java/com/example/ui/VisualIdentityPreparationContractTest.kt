@@ -46,6 +46,16 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `sheet header avoids full-height decorative side rails`() {
+        val header = File("src/main/java/com/example/ui/SheetTopBar.kt").readText()
+        assertTrue(!header.contains("Offset(7.dp.toPx(), 0f), Offset(7.dp.toPx(), size.height)"))
+        assertTrue(!header.contains("Offset(12.dp.toPx(), 0f), Offset(12.dp.toPx(), size.height)"))
+        assertTrue(header.contains("R.drawable.tab_icon_dragao"))
+        assertTrue(header.contains("R.drawable.tab_icon_lua"))
+        assertTrue(header.contains("R.drawable.tab_icon_sol"))
+    }
+
+    @Test
     fun `all fifteen existing tabs remain declared in order`() {
         val names = listOf(
             "1. Dados Pessoais", "2. Aspecto", "3. Atributos",
