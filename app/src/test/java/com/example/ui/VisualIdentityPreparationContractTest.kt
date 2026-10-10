@@ -15,6 +15,7 @@ class VisualIdentityPreparationContractTest {
     private val identity = File("src/main/java/com/example/ui/components/TabIdentitySurface.kt").readText()
     private val navigation = File("src/main/java/com/example/ui/SheetTabsBar.kt").readText()
     private val dialogs = File("src/main/java/com/example/ui/SheetScreenDialogs.kt").readText()
+    private val lifecycleDialogs = File("src/main/java/com/example/ui/SheetLifecycleDialogs.kt").readText()
 
     @Test
     fun `all fifteen existing tabs remain declared in order`() {
@@ -52,6 +53,16 @@ class VisualIdentityPreparationContractTest {
         assertTrue(identity.contains("fun Modifier.exaltedTabIdentity(chapter: Int = 0): Modifier = this"))
         assertTrue(identity.contains("fun Modifier.exaltedContentStage(chapter: Int): Modifier = this"))
         assertTrue(identity.contains("fun Modifier.exaltedExistingPanel(): Modifier = exaltedSectionPanel()"))
+    }
+
+    @Test
+    fun `saved sheets list displays correct type specific caste or aspect`() {
+        assertTrue(lifecycleDialogs.contains("s.tipoPersonagem.isDragonBlooded() -> \"Aspecto:"))
+        assertTrue(lifecycleDialogs.contains("s.tipoPersonagem.isLunar() -> \"Casta:"))
+        assertTrue(lifecycleDialogs.contains("s.lunarCasta.displayName"))
+        assertTrue(lifecycleDialogs.contains("s.casta.displayName"))
+        assertTrue(lifecycleDialogs.contains("viewModel.loadSheet(s)"))
+        assertTrue(lifecycleDialogs.contains("onDeleteRequest(s)"))
     }
 
     @Test
