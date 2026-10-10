@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,6 +33,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.R
@@ -133,10 +135,10 @@ fun TemplateSelectionScreen(onTemplateSelected: (String) -> Unit, modifier: Modi
                         template.nome == "Lunar" -> R.drawable.tab_icon_lua
                         else -> R.drawable.tab_icon_sol
                     }
-                    Box(
+                    BoxWithConstraints(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(148.dp)
+                            .heightIn(min = 136.dp)
                             .clip(RoundedCornerShape(12.dp))
                             .background(
                                 Brush.horizontalGradient(
@@ -153,13 +155,16 @@ fun TemplateSelectionScreen(onTemplateSelected: (String) -> Unit, modifier: Modi
                                 drawCircle(accent.copy(alpha = 0.14f), size.minDimension * 0.52f, Offset(size.width * 0.88f, size.height * 0.5f))
                             }
                     ) {
+                        val narrowCard = maxWidth < 360.dp
+                        val emblemSize = if (narrowCard) 74.dp else 104.dp
+                        val emblemImageSize = if (narrowCard) 62.dp else 86.dp
                         Row(
-                            modifier = Modifier.fillMaxSize().padding(horizontal = 18.dp, vertical = 12.dp),
+                            modifier = Modifier.fillMaxWidth().heightIn(min = 136.dp).padding(horizontal = if (narrowCard) 10.dp else 18.dp, vertical = 12.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Box(
                                 modifier = Modifier
-                                    .size(104.dp)
+                                    .size(emblemSize)
                                     .clip(RoundedCornerShape(10.dp))
                                     .background(accent.copy(alpha = 0.07f))
                                     .border(1.dp, accent.copy(alpha = 0.4f), RoundedCornerShape(10.dp)),
@@ -169,18 +174,19 @@ fun TemplateSelectionScreen(onTemplateSelected: (String) -> Unit, modifier: Modi
                                     painter = painterResource(icon),
                                     contentDescription = template.nome,
                                     modifier = Modifier
-                                        .size(86.dp),
+                                        .size(emblemImageSize),
                                     contentScale = androidx.compose.ui.layout.ContentScale.Fit
                                 )
                             }
-                            Spacer(modifier = Modifier.width(16.dp))
+                            Spacer(modifier = Modifier.width(if (narrowCard) 10.dp else 16.dp))
                             Column(modifier = Modifier.weight(1f)) {
                                 AppText(
                                     text = if (isDragon) "Dragon-Blooded" else template.nome,
                                     color = accent,
                                     style = MaterialTheme.typography.titleLarge.copy(fontSize = 20.sp),
                                     fontWeight = FontWeight.Bold,
-                                    maxLines = 1
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis
                                 )
                                 AppText(
                                     text = if (isSolar) "Solar" else if (isDragon) "Sangue de Dragão" else "Lunar",
