@@ -46,7 +46,7 @@ class DialogButtonLayoutContractTest {
         val block = lifecycleDialogs.substring(start)
         assertTrue(block.contains("FlowRow("))
         assertTrue(block.contains("maxItemsInEachRow = 2"))
-        assertTrue(block.contains("modifier = Modifier.width(120.dp)"))
+        assertTrue(block.contains("modifier = Modifier.widthIn(min = 96.dp, max = 120.dp)"))
         assertTrue(block.contains("Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)"))
         assertFalse(block.contains("BoxWithConstraints("))
         assertTrue(block.contains("\"Solar\" to \"Solar\""))
