@@ -105,6 +105,7 @@ class VisualIdentityPreparationContractTest {
         assertTrue(navigation.contains("listState.scrollToItem(selectedTabIndex)"))
         assertTrue(navigation.contains("onSelectedTab(index)"))
         assertTrue(navigation.contains("softWrap = compact || enlargedText"))
+        assertTrue(navigation.contains("height(if (enlargedText) 34.dp else 25.dp)"))
         assertTrue(navigation.contains("maxLines = if (compact || enlargedText) 2 else 1"))
     }
 }
