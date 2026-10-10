@@ -119,3 +119,12 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Contrato de regressao ampliado para cobrir o rotulo de log junto das seis linhas ajustadas na Exalted.846.
 - Mudanca estritamente de layout, sem alterar o acesso ao log, o estado das preferencias ou a logica de negocio.
 - Pendente: compilacao e testes JVM; inspecao real em emulador de largura estreita, fonte ampliada e janela dividida.
+
+## Consolidacao planejada Exalted.848 — fechamento da fase de ajustes conhecidos
+- QR Code: geracao do bitmap com IntArray e transferencia unica setPixels, mantendo matriz ZXing, nivel H, margem, cores e dimensoes anteriores.
+- QR vazio: nao tenta gerar imagem sem dados; mantem o codigo textual e a opcao de copiar.
+- Regressao: contrato estatico cobre transferencia em lote, ausencia de setPixel individual e codigo nao vazio.
+- Escopo preservado: 15 abas, tres tipos de Exaltado e regras de NPC/Encantos sem alteracoes nesta consolidacao. Ajustes responsivos das versoes 846 e 847 permanecem.
+- Limites: contratos sao verificacoes estaticas, nao testes instrumentados nem comprovacao de desempenho medido. Build 848 e testes JVM ainda pendentes.
+- Validacao pratica: abrir as 15 abas nos tres tipos; gerar NPCs e percorrer arvores de Encantos; abrir dialogs com fonte ampliada/tela dividida; testar QR, salvamento/restauracao e mapa/escala.
+- Encerramento definitivo exige build/testes aprovados e verificacao funcional/visual em dispositivo; nao equiparar sucesso de CI a aplicativo 100% validado.
