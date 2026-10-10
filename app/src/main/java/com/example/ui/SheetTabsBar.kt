@@ -147,7 +147,7 @@ internal fun SheetTabsBar(
         }
         if (showsProgressStrip) {
             Row(
-                Modifier.fillMaxWidth().height(25.dp).background(ExaltedDarkSurface.copy(alpha = .72f)),
+                Modifier.fillMaxWidth().height(if (enlargedText) 34.dp else 25.dp).background(ExaltedDarkSurface.copy(alpha = .72f)),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(Modifier.width(7.dp).fillMaxHeight().background(ExaltedAccentBright.copy(alpha = .72f)))
