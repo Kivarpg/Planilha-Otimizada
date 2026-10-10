@@ -6,6 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -117,7 +119,7 @@ fun CodeExportResultDialog(
                     Image(
                         bitmap = qrBitmap.asImageBitmap(),
                         contentDescription = "QR Code do código de compartilhamento",
-                        modifier = Modifier.size(240.dp)
+                        modifier = Modifier.fillMaxWidth().widthIn(max = 240.dp).aspectRatio(1f)
                     )
                 }
                 Box(
@@ -199,7 +201,10 @@ fun CodeImportDialog(
                     AppText(
                         text = "${codeImportText.length} / ${com.example.data.ShareCodeCodec.TAMANHO_MAXIMO_CODIGO}",
                         style = MaterialTheme.typography.labelSmall,
-                        color = if (codeImportText.length > com.example.data.ShareCodeCodec.TAMANHO_MAXIMO_CODIGO) ExaltedDangerCore else ExaltedMuted
+                        color = if (codeImportText.length > com.example.data.ShareCodeCodec.TAMANHO_MAXIMO_CODIGO) ExaltedDangerCore else ExaltedMuted,
+                        modifier = Modifier.weight(1f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                     com.example.ui.components.GildedDialogTextButton(
                         text = "Colar",
