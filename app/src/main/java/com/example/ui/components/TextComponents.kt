@@ -554,14 +554,14 @@ fun ChamTitleTwoLines(
     }
 }
 @Composable
-fun EncantoQuadroBox(quadro: EncantoQuadro) {
+fun EncantoQuadroBox(quadro: EncantoQuadro, modifier: Modifier = Modifier) {
     // "Quadro" (caixa de destaque) do livro original: título e corpo
     // centralizados, com borda e fundo sutil
     // pra parecer uma caixa de verdade, não só um parágrafo a mais no meio
     // do texto. Movido de CharmsTab.kt pra cá (2026-09) pra ser reutilizado
     // também na navegação de Sangue de Dragão, sem duplicar o composable.
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .border(1.dp, ExaltedOutline.copy(alpha = 0.6f), MaterialTheme.shapes.small)
             .background(ExaltedDarkSurfaceVariant.copy(alpha = 0.5f), MaterialTheme.shapes.small)
