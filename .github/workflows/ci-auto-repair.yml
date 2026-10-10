@@ -1,0 +1,99 @@
+# Diagnóstico automático de falhas de compilação.
+# O agente cria uma proposta de correção em PR; não modifica main nem faz deploy.
+name: Diagnose and propose CI repair
+
+on:
+  workflow_run:
+    workflows: ["Build APK"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-repair-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: false
+
+jobs:
+  propose-fix:
+    if: >-
+      ${{ github.event.workflow_run.conclusion == 'failure' &&
+          github.event.workflow_run.head_branch == 'main' &&
+          github.event.workflow_run.head_repository.full_name == github.repository }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: read
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Check agent configuration
+        id: agent
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -n "$OPENAI_API_KEY" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Configure OPENAI_API_KEY to enable automated repair proposals."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Fetch failing build logs
+        if: steps.agent.outputs.enabled == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          mkdir -p /tmp/exalted-ci
+          gh api "repos/${{ github.repository }}/actions/runs/$RUN_ID/jobs" --jq '.jobs[] | select(.conclusion == "failure") | .id' > /tmp/exalted-ci/job-ids.txt
+          while IFS= read -r job_id; do
+            [ -n "$job_id" ] || continue
+            gh api -H "Accept: application/vnd.github+json" "repos/${{ github.repository }}/actions/jobs/$job_id/logs" > "/tmp/exalted-ci/job-$job_id.log" || true
+          done < /tmp/exalted-ci/job-ids.txt
+          grep -E -i -B 2 -A 6 '(^e: |error:|FAILURE:|What went wrong|Unresolved reference|Compilation error|AssertionError)' /tmp/exalted-ci/job-*.log | tail -n 320 > /tmp/exalted-ci/errors.txt || true
+          test -s /tmp/exalted-ci/errors.txt || echo "See full logs in GitHub Actions run $RUN_ID" > /tmp/exalted-ci/errors.txt
+
+      - name: Ask Codex for a minimal repair
+        if: steps.agent.outputs.enabled == 'true'
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          permission-profile: ":workspace"
+          prompt: |
+            Investigate the failing Android Kotlin build. Read /tmp/exalted-ci/errors.txt
+            and inspect the relevant repository files. Apply the smallest safe source
+            changes needed to resolve confirmed errors. Preserve Exalted gameplay
+            rules, all Solar/Dragon-Blooded/Lunar features, UI identity, names,
+            signing configuration and APK version. Do not edit GitHub workflows,
+            secrets, build authorization, settings.gradle.kts, or version numbers.
+            Do not run Gradle or initiate builds. If the error cannot be fixed
+            confidently, make no changes. Never weaken tests or validation.
+
+      - name: Propose repair pull request
+        if: steps.agent.outputs.enabled == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- app/src/main app/src/test
+          if git diff --cached --quiet; then
+            echo "No safe source changes proposed."
+            exit 0
+          fi
+          branch="ci-repair/run-$RUN_ID"
+          git checkout -b "$branch"
+          git commit -m "Propose Kotlin CI repair for run $RUN_ID [skip ci]"
+          git -c http.extraheader="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)" push "https://github.com/${{ github.repository }}.git" "HEAD:refs/heads/$branch"
+          gh pr create --base main --head "$branch" \
+            --title "Proposed CI repair for Exalted build $RUN_ID" \
+            --body "Automated minimal repair proposal for failed [Build APK run](https://github.com/${{ github.repository }}/actions/runs/$RUN_ID). Review and merge before another compilation. No automatic merging or builds."
