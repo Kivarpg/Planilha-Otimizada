@@ -90,6 +90,14 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `qr bitmap uses one bulk pixel transfer`() {
+        assertTrue(codeDialogs.contains("val pixels = IntArray(tamanhoPx * tamanhoPx)"))
+        assertTrue(codeDialogs.contains("pixels[rowOffset + x] = if (matrix.get(x, y))"))
+        assertTrue(codeDialogs.contains("bitmap.setPixels(pixels, 0, tamanhoPx, 0, 0, tamanhoPx, tamanhoPx)"))
+        assertTrue(!codeDialogs.contains("bitmap.setPixel(x, y,"))
+    }
+
+    @Test
     fun `backup restore rows reserve width for the action`() {
         assertTrue(lifecycleDialogs.contains("text = snapshot.timestamp,"))
         assertTrue(lifecycleDialogs.contains("modifier = Modifier.weight(1f),"))
