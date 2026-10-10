@@ -336,7 +336,7 @@ fun AutoSizeText(
     style: androidx.compose.ui.text.TextStyle? = null,
     brush: Brush? = null
 ) {
-    var fontSize by remember(text, maxFontSize) { mutableStateOf(maxFontSize) }
+    var fontSize by remember(text, maxFontSize, minFontSize, modifier, style, letterSpacing) { mutableStateOf(maxFontSize) }
     val baseStyle = style ?: MaterialTheme.typography.bodyMedium
     val effectiveStyle = baseStyle.copy(
         fontWeight = fontWeight,
