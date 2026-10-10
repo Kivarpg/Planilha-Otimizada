@@ -64,7 +64,8 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
     var soundEnabled by remember { mutableStateOf(InteractionFeedback.isSoundEnabled(context)) }
     val currentStyle by viewModel.ratingStyle.collectAsState()
     val sheetAtual by viewModel.sheetState.collectAsState()
-    // Limite legado: validar em modo de tela dividida e com IME antes de alterar.\n    val settingsContentHeight = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 500).dp
+    // Limite legado: validar em modo de tela dividida e com IME antes de alterar.
+    val settingsContentHeight = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 500).dp
     androidx.compose.material3.AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
