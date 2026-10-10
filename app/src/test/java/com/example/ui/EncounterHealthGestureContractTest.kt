@@ -32,4 +32,15 @@ class EncounterHealthGestureContractTest {
         // A tap must not open these dialogs. Gesture/haptic timing needs device validation.
     }
 
+    @Test
+    fun `health clear action does not steal width from damage rows`() {
+        val health = source.substringAfter("val ordemPenalidadesNpc = NPC_HEALTH_PENALTY_ORDER")
+            .substringBefore("Spacer(modifier = Modifier.height(18.dp))")
+        val clear = health.indexOf("label = \"Limpar\"")
+        val groupEnd = health.indexOf("// A ação não compete com a largura")
+        assertTrue(groupEnd >= 0 && clear > groupEnd)
+        assertTrue(health.contains("enabled = npc.healthBoxes.any { it.tipoDano != 0 }"))
+        assertTrue(health.contains("onClick = onLimparDano"))
+    }
+
 }
