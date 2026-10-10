@@ -175,16 +175,10 @@ fun AppText(
             color = ExaltedTextFill,
             drawStyle = androidx.compose.ui.graphics.drawscope.Fill
         )
-        // O `modifier` (ex.: fillMaxWidth vindo do chamador) precisa ir nos
-        // dois Text internos, não só no Box — senão cada Text mede a própria
-        // largura pelo conteúdo e textAlign=Center não tem nenhuma "sobra"
-        // de espaço pra centralizar dentro de, ficando sempre encostado no
-        // canto superior-esquerdo do Box (bug que deixava os nomes de
-        // Casta/Aspecto desalinhados nas caixas de seleção).
-        Box {
+        // O Modifier externo pertence ao contêiner, não deve ser aplicado duas vezes.\n        // Os Text internos ocupam a largura medida pelo Box para preservar centralização.\n        Box(modifier = modifier) {
             androidx.compose.material3.Text(
                 text = text,
-                modifier = modifier,
+                modifier = Modifier.fillMaxWidth(),
                 style = strokeStyle,
                 overflow = overflow,
                 softWrap = softWrap,
@@ -193,7 +187,7 @@ fun AppText(
             )
             androidx.compose.material3.Text(
                 text = text,
-                modifier = modifier,
+                modifier = Modifier.fillMaxWidth(),
                 style = fillStyle,
                 overflow = overflow,
                 softWrap = softWrap,
