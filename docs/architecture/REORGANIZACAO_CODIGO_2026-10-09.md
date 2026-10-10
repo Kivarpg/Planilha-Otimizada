@@ -147,3 +147,10 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - SheetTabsBar: removido remember(sheet, viewModel) dos cálculos de saldo de BP e pontos de Habilidade para impedir resultado desatualizado quando a mesma instância de CharacterSheet contém coleções alteradas. O cálculo ocorre apenas nos ramos visíveis da barra e em recomposições pertinentes. Atenção: isso troca cache por correção de dados, podendo aumentar custo de recomposição; medir após compilação e, se necessário, expor saldos derivados via StateFlow do ViewModel.
 - Pendente: confirmar que mutações do modelo disparam emissão em sheetState, pois retirar remember não força recomposição por si só.
 - Nenhuma build disparada.
+
+## Auditoria do fluxo de emissão e troca de tipo — 2026-10-10
+- SheetViewModel publica CharacterSheet por MutableStateFlow; módulos AbilitiesActions, AttributesActions, CombatActions, CharmsActions, HealthActions, PersonalDataActions, EquipmentActions, MeritsActions e MartialArtsActions foram inspecionados e utilizam update/copy para alterações de estado examinadas.
+- FileManagementActions usa atribuição de sheetState.value em operações de substituição completa da planilha, o que emite um novo valor quando diferente. Problema real encontrado: apenas loadSheet sincronizava explicitamente a paleta via aplicarPaletaPorTemplate.
+- Correção: createNewSheet, aplicarPlanilhaImportada, restaurarBackupPeriodico e deleteSheet também sincronizam a paleta após a troca. A paleta usa mutableStateOf em Color.kt.
+- Pendente: teste de alternância Solar/SDD/Lunar por todos os caminhos; confirmar comportamento de recomposição em componentes que memorizam coleções mutáveis; revisar o fluxo inicial e demais operações de reversão.
+- Não houve compilação ou teste no dispositivo.
