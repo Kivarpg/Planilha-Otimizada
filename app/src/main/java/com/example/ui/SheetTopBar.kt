@@ -78,9 +78,7 @@ internal fun SheetTopBar(
             .drawBehind {
                 val accent = ExaltedAccentBright
                 val deep = ExaltedStructuralMetalDeep
-                // Grande eixo vertical de identidade.
-                drawLine(accent.copy(alpha = .75f), Offset(7.dp.toPx(), 0f), Offset(7.dp.toPx(), size.height), 3.dp.toPx())
-                drawLine(deep.copy(alpha = .65f), Offset(12.dp.toPx(), 0f), Offset(12.dp.toPx(), size.height), 1.dp.toPx())
+                // Sem trilhos verticais laterais: ornamentacao de fundo removida.
                 // Linha de horizonte interrompida.
                 drawLine(accent.copy(alpha = .16f), Offset(22.dp.toPx(), size.height - 1.dp.toPx()), Offset(size.width * .48f, size.height - 1.dp.toPx()), 1.dp.toPx())
                 drawLine(accent.copy(alpha = .38f), Offset(size.width * .62f, size.height - 1.dp.toPx()), Offset(size.width - 12.dp.toPx(), size.height - 1.dp.toPx()), 1.dp.toPx())
