@@ -53,3 +53,9 @@ Nao interpretar esta nota como homologacao visual no dispositivo.
 Os testes de contrato atuais inspecionam texto-fonte; nao medem bounds,
 nao demonstram ausencia de sobreposicao e nao substituem instrumentacao.
 Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobreposicao.
+
+## Preparacao da Exalted.834 (sem compilacao)
+- Dialogo Restaurar Backup: o horario da copia recebe largura flexivel, no maximo duas linhas e truncamento, preservando o botao Restaurar.
+- Dialogo Planilhas Salvas: nomes longos recebem limite de duas linhas e truncamento para nao disputar espaco com o indicador Ativa.
+- Testes estaticos adicionados em VisualIdentityPreparationContractTest; falta executar o CI e validar em emulador com fonte ampliada e nomes longos.
+- Nao foram alteradas as regras de restauracao, carregamento ou exclusao de planilhas.
