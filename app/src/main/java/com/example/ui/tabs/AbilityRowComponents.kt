@@ -117,7 +117,8 @@ internal fun AbilityCompactRow(
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Start,
                     modifier = Modifier.fillMaxWidth(),
-                    maxLines = 1,
+                    maxLines = 2,
+                    softWrap = true,
                     overflow = TextOverflow.Ellipsis
                 )
                 if (!badgeText.isNullOrBlank()) {
