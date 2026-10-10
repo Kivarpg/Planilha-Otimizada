@@ -33,3 +33,13 @@
 
 ## Critério de conclusão
 A reorganização somente estará concluída quando os lotes forem executados e os testes e a compilação forem aprovados. Este documento não representa conclusão da refatoração total.
+
+## Segunda rodada — checkpoint pré-compilação
+- SheetScreen.kt: removida importação não utilizada de OnyxTexturedBackground; composição Scaffold reorganizada sem mudança de parâmetros.
+- Arquivos extensos identificados: EncounterNpcCard.kt (74.895 bytes), EncounterGeneratorTab.kt (55.798), MapTab.kt (44.592), WeaponSection.kt (43.622).
+- Refatoração da Aba 11 deliberadamente adiada até haver cobertura de testes e validação de comportamento.
+- Nenhuma mudança intencional em lógica de XP, Encantos, NPCs ou persistência.
+
+## Próximo portão
+**Solicitar uma compilação de validação antes de prosseguir com extrações estruturais maiores.**
+A compilação valida sintaxe e dependências, mas não substitui testes de regressão nem validação visual.
