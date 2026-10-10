@@ -160,7 +160,7 @@ fun SaveValidationModal(
     modifier: Modifier = Modifier
 ) {
     // Keep long validation reports scrollable while preserving footer actions.
-    val reportHeightLimit = (LocalConfiguration.current.screenHeightDp - 260).coerceIn(120, 420).dp
+    val reportHeightLimit = (LocalConfiguration.current.screenHeightDp * 0.45f).coerceAtMost(420f).dp
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.then(gildedDialogBorder()),
