@@ -41,13 +41,25 @@ fun PersonalDataTab(sheet: CharacterSheet, viewModel: SheetViewModel, modifier: 
 
 @Composable
 private fun PersonalIdentitySection(sheet:CharacterSheet,viewModel:SheetViewModel){
-    Row(
-        Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(6.dp)
-    ) {
-        CompactAutoSizeField(sheet.nome, { viewModel.updateNome(it) }, BoxNames.PersonalData.NAME, Modifier.weight(1f))
-        CompactAutoSizeField(sheet.jogador, { viewModel.updateJogador(it) }, BoxNames.PersonalData.PLAYER, Modifier.weight(1f))
-        CompactAutoSizeField(sheet.conceito, { viewModel.updateConceito(it) }, BoxNames.PersonalData.CONCEPT, Modifier.weight(1f))
+    // Em telas estreitas, três campos lado a lado cortam os rótulos.
+    // Preserva os mesmos campos e callbacks, alterando apenas a composição.
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        if (maxWidth < 390.dp) {
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                CompactAutoSizeField(sheet.nome, { viewModel.updateNome(it) }, BoxNames.PersonalData.NAME, Modifier.fillMaxWidth())
+                CompactAutoSizeField(sheet.jogador, { viewModel.updateJogador(it) }, BoxNames.PersonalData.PLAYER, Modifier.fillMaxWidth())
+                CompactAutoSizeField(sheet.conceito, { viewModel.updateConceito(it) }, BoxNames.PersonalData.CONCEPT, Modifier.fillMaxWidth())
+            }
+        } else {
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                CompactAutoSizeField(sheet.nome, { viewModel.updateNome(it) }, BoxNames.PersonalData.NAME, Modifier.weight(1f))
+                CompactAutoSizeField(sheet.jogador, { viewModel.updateJogador(it) }, BoxNames.PersonalData.PLAYER, Modifier.weight(1f))
+                CompactAutoSizeField(sheet.conceito, { viewModel.updateConceito(it) }, BoxNames.PersonalData.CONCEPT, Modifier.weight(1f))
+            }
+        }
     }
     Spacer(Modifier.height(5.dp))
     OutlinedTextField(value=sheet.descricaoAnima,onValueChange={viewModel.updateDescricaoAnima(it.take(500))},label={AppText(BoxNames.PersonalData.ANIMA_DESCRIPTION)},modifier=Modifier.fillMaxWidth(),textStyle=androidx.compose.material3.LocalTextStyle.current.copy(textAlign=TextAlign.Justify),colors=OutlinedTextFieldDefaults.colors(focusedBorderColor=ExaltedAccentBright,unfocusedBorderColor=ExaltedOutline.copy(alpha=.55f),focusedLabelColor=ExaltedAccentBright,unfocusedLabelColor=ExaltedMuted,cursorColor=ExaltedGold,focusedTextColor=ExaltedOnSurface,unfocusedTextColor=ExaltedOnSurface,focusedContainerColor=ExaltedDarkSurface,unfocusedContainerColor=ExaltedDarkSurface,focusedPlaceholderColor=ExaltedMuted,unfocusedPlaceholderColor=ExaltedMuted))
