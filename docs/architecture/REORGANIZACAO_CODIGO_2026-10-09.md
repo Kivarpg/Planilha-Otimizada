@@ -72,3 +72,11 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - Correção: transferidos para LaunchedEffect(viewModel, tipoPersonagem), com chave explícita; nenhuma mudança no algoritmo da paleta.
 - ATENÇÃO: a execução agora ocorre após a composição; verificar visualmente a primeira renderização e a troca de template para descartar flash de paleta anterior, e verificar persistência ao retornar ao app.
 - Compilação e testes instrumentados ainda não executados. Não presumir equivalência funcional sem validação.
+
+## Auditoria de lifecycle — 2026-10-10
+- MainSheetScreen: DisposableEffect passou de chave única lifecycleOwner para chaves lifecycleOwner e viewModel.
+- Motivo: evitar callback de foreground/background retendo ViewModel antigo caso o parâmetro seja substituído.
+- A inscrição e remoção do LifecycleEventObserver continuam simétricas.
+- A proposta de executar aplicarPaletaPorTemplate em SideEffect a cada recomposição foi rejeitada por potencial repetição de escritas de estado e recomposições desnecessárias.
+- Pendente: teste de primeira renderização de cada template após a mudança anterior para LaunchedEffect; se houver flash de cor, resolver na fonte de estado de tema, não reescrevendo paleta a cada frame.
+- Sem compilação nesta rodada.
