@@ -119,10 +119,7 @@ fun SheetsListDialog(
                         trailingIcon = if (buscaPlanilhasSalvas.isNotEmpty()) {
                             {
                                 androidx.compose.material3.IconButton(onClick = { onBuscaChange("") }) {
-                                    androidx.compose.material3.Icon(
-                                        imageVector = androidx.compose.material.icons.Icons.Outlined.Cancel,
-                                        contentDescription = "Limpar busca"
-                                    )
+                                    AppText(text = "×", color = MaterialTheme.colorScheme.onSurface)
                                 }
                             }
                         } else null
