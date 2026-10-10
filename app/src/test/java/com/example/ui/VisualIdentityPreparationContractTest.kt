@@ -38,6 +38,8 @@ class VisualIdentityPreparationContractTest {
         assertTrue(selection.contains("template.nome == \"Lunar\" -> R.drawable.tab_icon_lua"))
         assertTrue(selection.contains("else -> R.drawable.tab_icon_sol"))
         assertTrue(selection.contains("val narrowCard = maxWidth < 360.dp"))
+        assertTrue(!selection.contains("Offset(size.width * 0.05f, 0f)"))
+        assertTrue(!selection.contains("Offset(size.width * 0.95f, 0f)"))
         assertTrue(selection.contains("val emblemSize = if (narrowCard) 74.dp else 104.dp"))
         assertTrue(selection.contains("heightIn(min = 136.dp)"))
         assertTrue(selection.contains("overflow = TextOverflow.Ellipsis"))
