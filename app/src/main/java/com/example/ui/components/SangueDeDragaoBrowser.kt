@@ -41,7 +41,7 @@ import com.example.ui.theme.ExaltedOnSurface
 // Encantos na própria planilha). Acessível via Opções > Consultar Sangue
 // de Dragão (SheetScreen.kt).
 @Composable
-fun SangueDeDragaoBrowserDialog(show: Boolean, onDismiss: () -> Unit, definitions: List<EncantoSangueDeDragaoDefinition>) {
+fun SangueDeDragaoBrowserDialog(show: Boolean, onDismiss: () -> Unit, definitions: List<EncantoSangueDeDragaoDefinition>, modifier: Modifier = Modifier) {
     if (!show) return
 
     var habilidadeExpandida by remember { mutableStateOf<String?>(null) }
@@ -67,7 +67,7 @@ fun SangueDeDragaoBrowserDialog(show: Boolean, onDismiss: () -> Unit, definition
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = Modifier.then(gildedDialogBorder()),
+        modifier = modifier.then(gildedDialogBorder()),
         shape = dialogShape,
         title = { AppText("Encantos — Sangue de Dragão", color = ExaltedAccentBright, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
         text = {
@@ -114,7 +114,7 @@ fun SangueDeDragaoBrowserDialog(show: Boolean, onDismiss: () -> Unit, definition
     if (def != null) {
         AlertDialog(
             onDismissRequest = { encantoSelecionado = null },
-            modifier = Modifier.then(gildedDialogBorder()),
+            modifier = modifier.then(gildedDialogBorder()),
             shape = dialogShape,
             title = { ChamTitleTwoLines(nomePt = def.nome, nomeEn = def.nomeIngles) },
             text = {
