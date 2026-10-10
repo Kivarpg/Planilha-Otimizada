@@ -1295,9 +1295,8 @@ fun NpcEncontroCard(
         onDismiss = { mostrarConfirmacaoJuntarSe = false }
     ) // fim do Column principal
 
-    // Ícones pequenos no canto superior direito, sobrepostos ao card —
-    // pedido explícito do usuário: botões menores, substituídos por
-    // símbolos, na parte superior direita em vez de uma linha cheia.
+    // Ações de arquivo no topo do cartão: preservam seus rótulos e
+    // oferecem rolagem horizontal quando a largura do cartão é reduzida.
     val npcIoScope = rememberCoroutineScope()
     var operacaoNpcEmAndamento by remember { mutableStateOf(false) }
 
@@ -1309,7 +1308,7 @@ fun NpcEncontroCard(
         horizontalArrangement = Arrangement.spacedBy(if (compactActions) 6.dp else 4.dp)
     ) {
         InkButton(
-                    visualTemplate = visualTemplate,
+            visualTemplate = visualTemplate,
             label = "Exportar",
             onClick = {
                 if (operacaoNpcEmAndamento) return@InkButton
@@ -1328,7 +1327,7 @@ fun NpcEncontroCard(
             brushIndex = 0, customWidth = if (compactActions) 96.dp else 136.dp, customHeight = 44.dp
         )
         InkButton(
-                    visualTemplate = visualTemplate,
+            visualTemplate = visualTemplate,
             label = "Salvar",
             onClick = {
                 if (operacaoNpcEmAndamento) return@InkButton
@@ -1350,7 +1349,7 @@ fun NpcEncontroCard(
             brushIndex = 1, customWidth = if (compactActions) 88.dp else 116.dp, customHeight = 44.dp
         )
         InkButton(
-                    visualTemplate = visualTemplate,
+            visualTemplate = visualTemplate,
             label = "Carregar",
             onClick = { mostrarCarregar = true },
             size = InkButtonSize.Small,
