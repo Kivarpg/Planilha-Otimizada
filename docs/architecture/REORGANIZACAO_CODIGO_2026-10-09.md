@@ -211,3 +211,11 @@ Varredura estática de AbilityRowComponents, AbilitySections, CombatCards, Encou
 - EncounterNpcCardSections tem espaçamentos de 28.dp em seções; são candidatos a divergências de densidade visual, não erros comprovados.
 - O inventário confirma que mudanças só em arquivos Tab.kt não abrangem os layouts dos componentes extraídos. Auditar auxiliares é obrigatório para fidelidade por aba.
 - Limitação: não houve execução de UI, comparação de screenshots, inspeção de todos os auxiliares restantes ou validação do build.
+
+## Terceira camada: auxiliares de NPC, resumos e diálogos — 2026-10-10
+Inspecionados estaticamente mais 12 arquivos: AbilitySpecializationComponents, CharmAbilityAndAcquiredSection, CharmDetailsDialogs, CharmDisplayGrouping, EncounterNpcCard, EncounterCardTitle, ExperienceCounterSection, SummaryAttributesSection, SummaryCombatSection, SummaryVitalitySection, PersonalDataDialogs e AbilityCharmTreeDialog.
+- EncounterNpcCard.kt (1357 linhas) possui 25 dimensões diretas com literal dp, além de diversos espaçamentos; é um ponto de alta complexidade visual que exige comparação própria.
+- Vitalidade de NPC: linhas próximas de 849 usam remember(npc.healthBoxes) para agrupar caixas. Se healthBoxes for mutada in-place sem mudar igualdade/identidade da chave, agrupamento pode ficar desatualizado; verificar contratos de atualização no ViewModel antes de remover cache. Comentário do código diz que ordem recalcula a cada renderização, mas remember limita recálculo à mudança da chave.
+- Ainda na vitalidade, BoxWithConstraints calcula maxPerRow a partir de labelWidth=36.dp, boxSize=40.dp, gap=6.dp; essas dimensões explicam diferenças de quebra de linha entre larguras.
+- SummaryCombatSection, SummaryVitalitySection e ExperienceCounterSection contêm medidas locais; alterações apenas no SummaryTab não as cobrem.
+- Nenhuma mudança funcional realizada nesta rodada. Nenhum build executado. Auditoria ainda não exaustiva em todos os arquivos do projeto.
