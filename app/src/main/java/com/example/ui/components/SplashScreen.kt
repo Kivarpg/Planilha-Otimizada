@@ -58,7 +58,8 @@ private const val DURACAO_QUEDA_MS = 700
 @Composable
 fun SplashScreen(
     isAppReady: Boolean,
-    onFinished: () -> Unit
+    onFinished: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val fallingDrawables = remember {
         listOf(
@@ -122,7 +123,7 @@ fun SplashScreen(
     }
 
     BoxWithConstraints(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
             .clickable(
