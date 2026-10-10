@@ -34,7 +34,6 @@ fun MainSheetScreen(viewModel: SheetViewModel, tipoPersonagem: String = Characte
     val tabs=createSheetTabs(sheet,viewModel,abilitiesSubTabIndex,{abilitiesSubTabIndex=it},encontroNomeManual,{encontroNomeManual=it},encontroArquetipo,{encontroArquetipo=it},encontroGenero,{encontroGenero=it},encontroAbaSelecionadaId,{encontroAbaSelecionadaId=it},encontroMensagemLimite,{encontroMensagemLimite=it})
     val navigationKey = tabs.map { it.title to it.iconRes }
     val navigationTabs = remember(navigationKey) { tabs.navigationItems() }
-    ExaltedPanoramaBackground(tipoPersonagem, selectedTabIndex, tabs.size) {
         Scaffold(topBar={SheetTopBar(sheet = sheet,
                 viewModel = viewModel,
                 tabs = navigationTabs,
@@ -61,7 +60,6 @@ fun MainSheetScreen(viewModel: SheetViewModel, tipoPersonagem: String = Characte
                 scope = scope,
                 snackbarHostState = snackbarHostState
             )},snackbarHost={SnackbarHost(snackbarHostState)},containerColor=Color.Transparent){innerPadding->Box(Modifier.padding(innerPadding)){SheetContentArea(tabs,selectedTabIndex)}}
-    }
     // dialogs remain centralized below; state and callbacks are unchanged.
     SaveValidationDialog(viewModel = viewModel, scope = scope, snackbarHostState = snackbarHostState, onSaveSuccessful = { buscaPlanilhasSalvas = ""; showSheetsListDialog = true })
 
