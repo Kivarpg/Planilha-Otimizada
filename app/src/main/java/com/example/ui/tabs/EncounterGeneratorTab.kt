@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -221,7 +222,7 @@ fun EncounterGeneratorTab(
                 ) },
             text = {
                 LazyColumn(
-                    modifier = Modifier.fillMaxWidth().height(dialogListHeight)
+                    modifier = Modifier.fillMaxWidth().heightIn(max = dialogListHeight)
                         .background(ExaltedDarkSurface.copy(alpha = .72f))
                         .border(1.dp, ExaltedStructuralMetalDeep.copy(alpha = .52f))
                         .padding(horizontal = 6.dp, vertical = 4.dp)
