@@ -31,16 +31,21 @@ class CompactInkButtonContractTest {
 
     @Test
     fun `charm stepper and detail actions still use shared button`() {
-        assertTrue(charmList.contains("onClick = onDecrement"))
-        assertTrue(charmList.contains("onClick = onIncrement"))
-        assertTrue(charmList.contains("onClick = onShowDetail"))
-        assertTrue(charmList.contains("Modifier.size(40.dp)"))
+        listOf("onDecrement", "onIncrement", "onShowDetail").forEach { action ->
+            val actionStart = charmList.indexOf("onClick = $action")
+            assertTrue(actionStart >= 0, "Missing compact action: $action")
+            val nextLines = charmList.substring(actionStart).lineSequence().take(4).joinToString("\n")
+            assertTrue(nextLines.contains("Modifier.size(40.dp)"), "Expected 40.dp request for $action")
+        }
     }
 
     @Test
     fun `dialog buttons delegate to shared ink button`() {
         assertTrue(dialogButtons.contains("fun GildedDialogButton("))
         assertTrue(dialogButtons.contains("fun GildedDialogTextButton("))
-        assertTrue(dialogButtons.substringAfter("fun GildedDialogButton(").substringBefore("fun GildedDialogTextButton(").contains("InkButton("))
+        val primary = dialogButtons.substringAfter("fun GildedDialogButton(").substringBefore("fun GildedDialogTextButton(")
+        val secondary = dialogButtons.substringAfter("fun GildedDialogTextButton(").substringBefore("// SKIN: forma")
+        assertTrue(primary.contains("InkButton("))
+        assertTrue(secondary.contains("InkButton("))
     }
 }
