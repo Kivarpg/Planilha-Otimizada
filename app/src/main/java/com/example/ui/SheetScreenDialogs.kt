@@ -109,7 +109,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                             colors = androidx.compose.material3.RadioButtonDefaults.colors(selectedColor = ExaltedAccentBright)
                         
 )
-                        AppText(label, color = MaterialTheme.colorScheme.onSurface)
+                        AppText(label, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
                     }
                 }
 
@@ -131,7 +131,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                         colors = androidx.compose.material3.RadioButtonDefaults.colors(selectedColor = ExaltedAccentBright)
                     
 )
-                    AppText("Português", color = MaterialTheme.colorScheme.onSurface)
+                    AppText("Português", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -145,7 +145,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                     ,
     modifier = Modifier.feedbackOnPress(enabled = false)
 )
-                    AppText("English", color = ExaltedMuted)
+                    AppText("English", color = ExaltedMuted, modifier = Modifier.weight(1f))
                 }
 
                 androidx.compose.material3.HorizontalDivider(color = ExaltedMuted.copy(alpha = 0.3f))
@@ -171,7 +171,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                         }
                     
 )
-                    AppText("Vibração ao tocar", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.padding(start = 8.dp))
+                    AppText("Vibração ao tocar", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f).padding(start = 8.dp))
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -186,7 +186,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                         }
                     
 )
-                    AppText("Som ao tocar", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.padding(start = 8.dp))
+                    AppText("Som ao tocar", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f).padding(start = 8.dp))
                 }
 
                 androidx.compose.material3.HorizontalDivider(color = ExaltedMuted.copy(alpha = 0.3f))
@@ -207,7 +207,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                         colors = androidx.compose.material3.CheckboxDefaults.colors(checkedColor = ExaltedAccentBright)
                     
 )
-                    AppText("Modo Livre", color = MaterialTheme.colorScheme.onSurface)
+                    AppText("Modo Livre", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
                 }
 
                 androidx.compose.material3.HorizontalDivider(color = ExaltedMuted.copy(alpha = 0.3f))
