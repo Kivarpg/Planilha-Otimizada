@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -28,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -73,6 +75,7 @@ fun SheetsListDialog(
     if (!show) return
     val sheet by viewModel.sheetState.collectAsState()
     val savedSheets by viewModel.savedSheets.collectAsState()
+    val savedListHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 480).dp
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
@@ -91,6 +94,7 @@ fun SheetsListDialog(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .heightIn(max = savedListHeightLimit)
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -212,13 +216,17 @@ fun BackupListDialog(
 ) {
     if (!show) return
     val backups = remember(show, viewModel) { viewModel.listarBackupsPeriodicos() }
+    val backupListHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 480).dp
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = { AppText("Restaurar Backup", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(
+                modifier = Modifier.fillMaxWidth().heightIn(max = backupListHeightLimit).verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 AppText(
                     text = "Cópias automáticas salvas a cada 5 minutos, independentes do salvamento manual. Restaurar substitui a planilha atual na tela — a planilha em si só é sobrescrita de vez se você apertar Salvar depois.",
                     style = MaterialTheme.typography.bodySmall,
