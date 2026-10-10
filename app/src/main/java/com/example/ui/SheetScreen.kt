@@ -26,7 +26,12 @@ fun MainSheetScreen(
     tipoPersonagem: String = CharacterType.SOLAR,
     modifier: Modifier = Modifier
 ) {
-    remember(tipoPersonagem){viewModel.iniciarNovaPlanilha(tipoPersonagem);aplicarPaletaPorTemplate(tipoPersonagem)}
+    // A inicialização da planilha e a troca de paleta são efeitos, não cálculos
+    // de remember. A chave garante nova execução apenas quando o tipo muda.
+    LaunchedEffect(viewModel, tipoPersonagem) {
+        viewModel.iniciarNovaPlanilha(tipoPersonagem)
+        aplicarPaletaPorTemplate(tipoPersonagem)
+    }
     val lifecycleOwner=LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner){val observer=androidx.lifecycle.LifecycleEventObserver{_,event->when(event){androidx.lifecycle.Lifecycle.Event.ON_START->viewModel.onAppForegrounded();androidx.lifecycle.Lifecycle.Event.ON_STOP->viewModel.onAppBackgrounded();else->{}}};lifecycleOwner.lifecycle.addObserver(observer);onDispose{lifecycleOwner.lifecycle.removeObserver(observer)}}
     val sheet by viewModel.sheetState.collectAsState()
