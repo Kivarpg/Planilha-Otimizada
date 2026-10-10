@@ -117,3 +117,11 @@ Escopo: auditoria parcial dos principais pontos de entrada, NÃO confirmação d
 - DecorativeComponents: MedallionIcon, PriorityShieldBadge, Starfield, OnyxTexturedBackground e OrnateFlourish já declaram Modifier.
 - LunarCasteEmblemButton já declara Modifier.
 - Ainda pendente inspeção completa dos demais componentes e teste de build. Não compilar automaticamente.
+
+## Varredura das telas principais e SplashScreen — 2026-10-10
+- SplashScreen: Modifier opcional adicionado e encaminhado ao BoxWithConstraints raiz. Animação e controle de toque mantidos.
+- Varredura das funções principais *Tab em Abilities, Aspecto, Attributes, BattleGroups, Caste, Charms, Combat, EncounterGenerator, Equipment, Map, Merits, NPCs, PersonalData e Summary: todas possuem Modifier opcional. A função EncounterGeneratorTab possui assinatura longa e o Modifier no final.
+- FeiticosTab.kt não define uma função *Tab principal; contém popups auditados anteriormente.
+- Varredura dos componentes de arquivos ButtonComponents, CardComponents, CounterControls, DecorativeComponents, DialogComponents, InkButton, LunarCasteEmblemButton, NumericRatingControls, RatingDisplayControls, SearchComponents, TextComponents e SplashScreen: funções visuais públicas identificadas agora possuem Modifier opcional.
+- Não confundir auditoria estática de assinaturas com verificação completa de comportamento. Pendente: teste de build, teste de troca Solar/SDD/Lunar, revisão de recomposição dos consumidores e validação visual em aparelho.
+- Não iniciar compilação sem autorização.
