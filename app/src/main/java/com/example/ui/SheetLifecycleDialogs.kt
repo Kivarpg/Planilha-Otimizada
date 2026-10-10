@@ -44,7 +44,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun DeleteSheetDialog(sheetToDelete: com.example.model.CharacterSheet?, onDismiss: () -> Unit, viewModel: SheetViewModel) {
+fun DeleteSheetDialog(sheetToDelete: com.example.model.CharacterSheet?, onDismiss: () -> Unit, viewModel: SheetViewModel, modifier: Modifier = Modifier) {
     sheetToDelete?.let { s ->
         ConfirmDeleteDialog(
             itemTitle = s.nome,
@@ -52,7 +52,8 @@ fun DeleteSheetDialog(sheetToDelete: com.example.model.CharacterSheet?, onDismis
                 viewModel.deleteSheet(s.id)
                 onDismiss()
             },
-            onDismiss = onDismiss
+            onDismiss = onDismiss,
+            modifier = modifier
         )
     }
 }
@@ -66,14 +67,15 @@ fun SheetsListDialog(
     buscaPlanilhasSalvas: String,
     onBuscaChange: (String) -> Unit,
     onDeleteRequest: (com.example.model.CharacterSheet) -> Unit,
-    onNovaPlanilha: () -> Unit
+    onNovaPlanilha: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     if (!show) return
     val sheet by viewModel.sheetState.collectAsState()
     val savedSheets by viewModel.savedSheets.collectAsState()
     AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
+        modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = {
             AppText(
@@ -205,13 +207,14 @@ fun BackupListDialog(
     onDismiss: () -> Unit,
     viewModel: SheetViewModel,
     scope: kotlinx.coroutines.CoroutineScope,
-    snackbarHostState: androidx.compose.material3.SnackbarHostState
+    snackbarHostState: androidx.compose.material3.SnackbarHostState,
+    modifier: Modifier = Modifier
 ) {
     if (!show) return
-    val backups = remember(show) { viewModel.listarBackupsPeriodicos() }
+    val backups = remember(show, viewModel) { viewModel.listarBackupsPeriodicos() }
     AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
+        modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = { AppText("Restaurar Backup", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
         text = {
@@ -265,11 +268,11 @@ fun BackupListDialog(
 // salvos (mesmo cuidado já aplicado em "Restaurar Backup"/"Carregar").
 
 @Composable
-fun NovoConfirmDialog(show: Boolean, onDismiss: () -> Unit, onProceed: (salvarAntes: Boolean) -> Unit) {
+fun NovoConfirmDialog(show: Boolean, onDismiss: () -> Unit, onProceed: (salvarAntes: Boolean) -> Unit, modifier: Modifier = Modifier) {
     if (!show) return
     AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
+        modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = {
             AppText(
@@ -331,11 +334,11 @@ fun NovoConfirmDialog(show: Boolean, onDismiss: () -> Unit, onProceed: (salvarAn
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun EscolhaTemplateNovaPlanilhaDialog(show: Boolean, onDismiss: () -> Unit, onEscolhido: (tipoPersonagem: String) -> Unit) {
+fun EscolhaTemplateNovaPlanilhaDialog(show: Boolean, onDismiss: () -> Unit, onEscolhido: (tipoPersonagem: String) -> Unit, modifier: Modifier = Modifier) {
     if (!show) return
     AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
+        modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = {
             AppText(
