@@ -59,9 +59,9 @@ val TEMPLATES_DISPONIVEIS = listOf(
 )
 
 @Composable
-fun TemplateSelectionScreen(onTemplateSelected: (String) -> Unit) {
+fun TemplateSelectionScreen(onTemplateSelected: (String) -> Unit, modifier: Modifier = Modifier) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(
                 Brush.radialGradient(
