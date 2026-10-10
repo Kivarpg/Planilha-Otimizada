@@ -66,6 +66,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.drawscope.clipRect
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.PathParser
 import androidx.compose.ui.semantics.Role
@@ -390,8 +391,12 @@ fun InkButton(
         val textModifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 2.dp)
+            .onSizeChanged { measuredTextWidthPx = it.width }
         val baseFontSize = size.fontSize
-        var fittedFontSize by remember(label, baseFontSize, width, height, fillMaxWidth) {
+        // Reset the fit when the measured width changes (e.g. a weighted Row
+        // expands), rather than only when the requested nominal size changes.
+        var measuredTextWidthPx by remember { mutableStateOf(0) }
+        var fittedFontSize by remember(label, baseFontSize, measuredTextWidthPx) {
             mutableStateOf(baseFontSize)
         }
         val textStyle = androidx.compose.ui.text.TextStyle(
