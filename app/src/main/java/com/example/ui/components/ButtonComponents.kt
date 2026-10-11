@@ -212,12 +212,7 @@ fun ErgonomicMultiWordButton(
                         drawLine(a, androidx.compose.ui.geometry.Offset(size.width*.40f, 2f), androidx.compose.ui.geometry.Offset(size.width*.60f, 2f), 1.4f)
                         drawCircle(a.copy(alpha=.45f), 2.2.dp.toPx(), androidx.compose.ui.geometry.Offset(size.width*.5f, 2.5.dp.toPx()), style = androidx.compose.ui.graphics.drawscope.Stroke(.9f))
                     }
-                    ExaltedVisualMotif.DRAGON_BLOODED -> {
-                        val y = 3.dp.toPx()
-                        drawLine(a, androidx.compose.ui.geometry.Offset(size.width*.36f,y+2.dp.toPx()), androidx.compose.ui.geometry.Offset(size.width*.44f,y),1.2f)
-                        drawLine(a, androidx.compose.ui.geometry.Offset(size.width*.44f,y), androidx.compose.ui.geometry.Offset(size.width*.52f,y+3.dp.toPx()),1.2f)
-                        drawLine(a, androidx.compose.ui.geometry.Offset(size.width*.52f,y+3.dp.toPx()), androidx.compose.ui.geometry.Offset(size.width*.64f,y),1.2f)
-                    }
+                    ExaltedVisualMotif.DRAGON_BLOODED -> Unit // Sem zigue-zague ornamental sobre o botão.
                     ExaltedVisualMotif.LUNAR -> {
                         drawArc(a, 205f, 130f, false, topLeft = androidx.compose.ui.geometry.Offset(size.width*.44f, -3.dp.toPx()), size = androidx.compose.ui.geometry.Size(size.width*.12f, 10.dp.toPx()), style = androidx.compose.ui.graphics.drawscope.Stroke(1.1f))
                     }
