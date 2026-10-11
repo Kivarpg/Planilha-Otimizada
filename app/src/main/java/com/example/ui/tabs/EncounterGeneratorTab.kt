@@ -515,7 +515,7 @@ fun EncounterGeneratorTab(
                                 }
                                 Box(
                                     modifier = Modifier.widthIn(min = 104.dp).height(64.dp)
-                                        .background(ExaltedDarkSurface, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
+                                        .background(ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
                                         .border(1.dp, ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
                                         .feedbackClickable(
                                         enabled = !gerando, role = Role.Button,
@@ -536,8 +536,8 @@ fun EncounterGeneratorTab(
                                     AppText(
                                         text = "Gerar NPC",
                                         modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
-                                        color = if (gerando) ExaltedMuted else ExaltedOnSurface,
-                                        style = MaterialTheme.typography.labelMedium,
+                                        color = if (gerando) ExaltedMuted else ExaltedDarkSurface,
+                                        style = MaterialTheme.typography.titleSmall,
                                         fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                         textAlign = TextAlign.Center,
                                         maxLines = 2
@@ -594,7 +594,7 @@ fun EncounterGeneratorTab(
                                             Box(
                                                 modifier = Modifier
                                                     .widthIn(min = 104.dp).height(64.dp)
-                                                    .background(ExaltedDarkSurface, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
+                                                    .background(ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
                                                     .border(1.dp, ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
                                                     .feedbackClickable(
                                                         enabled = !gerando,
@@ -616,8 +616,8 @@ fun EncounterGeneratorTab(
                                                 AppText(
                                         text = "Gerar NPC",
                                         modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
-                                        color = if (gerando) ExaltedMuted else ExaltedOnSurface,
-                                        style = MaterialTheme.typography.labelMedium,
+                                        color = if (gerando) ExaltedMuted else ExaltedDarkSurface,
+                                        style = MaterialTheme.typography.titleSmall,
                                         fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                         textAlign = TextAlign.Center,
                                         maxLines = 2
