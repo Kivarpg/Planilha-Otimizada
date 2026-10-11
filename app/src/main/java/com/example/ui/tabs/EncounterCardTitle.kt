@@ -66,7 +66,7 @@ fun EncounterCardTitle(
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier)
-            .padding(bottom = 4.dp)
+            .padding(top = 3.dp, bottom = 7.dp)
     ) {
         Text(
             text = text,
