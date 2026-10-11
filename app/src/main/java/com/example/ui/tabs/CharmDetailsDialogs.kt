@@ -17,11 +17,13 @@ import com.example.data.EncantoSolarDefinition
 import com.example.model.Encanto
 import com.example.feature.charmtree.paraArvoreDePreRequisitos
 import com.example.ui.components.EncantoQuadroBox
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 
 @Composable
-fun CatalogDetailsDialog(def: EncantoSolarDefinition, onDismiss: () -> Unit, viewModel: SheetViewModel? = null, charmsParaArvore: List<Encanto>? = null, titleColor: androidx.compose.ui.graphics.Color = com.example.ui.theme.ExaltedAccentBright) {
+fun CatalogDetailsDialog(def: EncantoSolarDefinition, onDismiss: () -> Unit, viewModel: SheetViewModel? = null, charmsParaArvore: List<Encanto>? = null, titleColor: androidx.compose.ui.graphics.Color = androidx.compose.ui.graphics.Color.Unspecified) {
+    val visual = LocalExaltedVisualTemplate.current
+    val resolvedTitleColor = if (titleColor != androidx.compose.ui.graphics.Color.Unspecified) titleColor else visual.accentBright
     val detailsHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 500).dp
     var mostrarArvore by remember(def.id) { mutableStateOf(false) }
     if (mostrarArvore && viewModel != null) {
@@ -60,7 +62,7 @@ fun CatalogDetailsDialog(def: EncantoSolarDefinition, onDismiss: () -> Unit, vie
         onDismissRequest = onDismiss,
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
-        title = { com.example.ui.components.ChamTitleTwoLines(nomePt = def.nome, nomeEn = def.nomeIngles, titleColor = titleColor) },
+        title = { com.example.ui.components.ChamTitleTwoLines(nomePt = def.nome, nomeEn = def.nomeIngles, titleColor = resolvedTitleColor) },
         text = {
             Column(
                 modifier = Modifier.fillMaxWidth().heightIn(max = detailsHeightLimit).verticalScroll(rememberScrollState()),
@@ -101,8 +103,10 @@ fun CatalogDetailsDialog(def: EncantoSolarDefinition, onDismiss: () -> Unit, vie
                 )
             }
         },
-        containerColor = ExaltedDarkSurfaceVariant
-        )
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
+    )
     }
 }
 
@@ -116,6 +120,8 @@ fun CharmDetailsDialog(
     tipoPersonagem: String? = null,
     titleColor: androidx.compose.ui.graphics.Color = com.example.ui.theme.ExaltedAccentBright
 ) {
+    val visual = LocalExaltedVisualTemplate.current
+    val resolvedTitleColor = if (titleColor != androidx.compose.ui.graphics.Color.Unspecified) titleColor else visual.accentBright
     val detailsHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 500).dp
     var mostrarArvore by remember(charm.id) { mutableStateOf(false) }
     if (mostrarArvore && viewModel != null) {
@@ -151,7 +157,7 @@ fun CharmDetailsDialog(
         onDismissRequest = onDismiss,
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
-        title = { com.example.ui.components.ChamTitleTwoLines(nomePt = charm.nome, nomeEn = charm.nomeIngles, titleColor = titleColor) },
+        title = { com.example.ui.components.ChamTitleTwoLines(nomePt = charm.nome, nomeEn = charm.nomeIngles, titleColor = resolvedTitleColor) },
         text = {
             Column(
                 modifier = Modifier
@@ -199,7 +205,9 @@ fun CharmDetailsDialog(
                 )
             }
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
     }
 }
