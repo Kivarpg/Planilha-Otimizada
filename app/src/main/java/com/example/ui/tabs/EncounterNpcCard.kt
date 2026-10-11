@@ -961,12 +961,12 @@ fun NpcEncontroCard(
                         .fillMaxWidth()
                         .padding(vertical = 4.dp)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(visualTemplate.surfaceVariant)
-                        .border(1.dp, visualTemplate.accentBright.copy(alpha = 0.55f), RoundedCornerShape(8.dp))
+                        .background(visualTemplate.accentBright.copy(alpha = 0.18f))
+                        .border(2.dp, visualTemplate.accentBright, RoundedCornerShape(8.dp))
                         .feedbackClickable {
                             gavetasExpandidas = if (expandida) gavetasExpandidas - habilidade else gavetasExpandidas + habilidade
                         }
-                        .padding(horizontal = 10.dp, vertical = 8.dp)
+                        .padding(horizontal = 14.dp, vertical = 12.dp)
                 ) {
                     AppText(
                         if (expandida) "▾" else "▸",
@@ -974,7 +974,7 @@ fun NpcEncontroCard(
                         modifier = Modifier.padding(end = 8.dp),
                         forceStroke = true
                     )
-                    EncounterCardTitle(
+                    AppText(
                         text = "$habilidade (${encantosDaGaveta.size})",
                         style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp),
                         fontWeight = FontWeight.Bold,
