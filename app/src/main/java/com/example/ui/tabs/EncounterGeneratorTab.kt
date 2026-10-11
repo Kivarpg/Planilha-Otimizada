@@ -49,6 +49,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -956,7 +958,9 @@ fun EncounterGeneratorTab(
                                     Spacer(modifier = Modifier.width(4.dp))
                                     androidx.compose.foundation.layout.Box(
                                         modifier = Modifier
-                                            .size(18.dp)
+                                            // Alvo de toque ampliado sem mudar a acao de exclusao.
+                                            .size(40.dp)
+                                            .semantics { contentDescription = "Remover NPC ${npc.nome}" }
                                             .feedbackClickable {
                                                 viewModel.removeNpcEncontro(npc.id)
                                                 if (abaSelecionadaId == npc.id) onAbaSelecionadaChange(null)
