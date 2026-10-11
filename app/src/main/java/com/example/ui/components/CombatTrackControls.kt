@@ -36,9 +36,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.unit.dp
-import com.example.ui.theme.ExaltedAmber
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedOutline
 import com.example.ui.theme.ExaltVisualTemplate
@@ -61,9 +59,9 @@ fun WillpowerTrack(
 ) {
     val surfaceVariant = visualTemplate?.surfaceVariant ?: ExaltedDarkSurfaceVariant
     val outline = visualTemplate?.outline ?: ExaltedOutline
-    val accent = visualTemplate?.accent ?: ExaltedAmber
+    val accent = visualTemplate?.accent ?: ExaltedAccentBright
     val accentBright = visualTemplate?.accentBright ?: ExaltedAccentBright
-    val shine = visualTemplate?.metalShine ?: ExaltedGold
+    val shine = visualTemplate?.metalShine ?: ExaltedAccentBright
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = surfaceVariant),
