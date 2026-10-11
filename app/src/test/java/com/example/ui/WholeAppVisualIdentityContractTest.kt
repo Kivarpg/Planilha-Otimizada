@@ -88,10 +88,12 @@ class WholeAppVisualIdentityContractTest {
     @Test
     fun `button labels derive contrast from actual painted gradient`() {
         val ink = File("src/main/java/com/example/ui/components/InkButton.kt").readText()
-        assertTrue(ink.contains("corTextoContraste(resolvedGradient.mid)"))
+        assertTrue(ink.contains("corTextoContraste(renderedMid)"))
         assertTrue(ink.contains("styleOverride.gradientMiddle ?: gradient.mid"))
         assertTrue(ink.contains("styleOverride.labelColor"))
         assertTrue(ink.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(ink.contains("LocalContentColor provides effectiveTextColor"))
+        assertTrue(ink.contains("if (enabled) resolvedGradient.mid else InkColors.disabledGray"))
         assertFalse(ink.contains("selected -> corTextoContraste(ownerSelected.mid)"))
         assertFalse(ink.contains("variant == InkButtonVariant.OnDark -> InkColors.textOnDark"))
     }
