@@ -7,6 +7,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import com.example.ui.theme.ExaltedStructuralMetalDeep
+import com.example.ui.theme.ExaltedStructuralMetalShine
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
@@ -40,7 +42,14 @@ fun Modifier.exaltedSectionPanel(
     )
     .border(
         width = 1.dp,
-        color = ExaltedOutline.copy(alpha = 0.32f),
+        brush = Brush.linearGradient(
+            listOf(
+                ExaltedStructuralMetalDeep.copy(alpha = 0.72f),
+                ExaltedStructuralMetalShine.copy(alpha = 0.62f),
+                ExaltedOutline.copy(alpha = 0.52f),
+                ExaltedStructuralMetalDeep.copy(alpha = 0.72f)
+            )
+        ),
         shape = RoundedCornerShape(8.dp)
     )
 
