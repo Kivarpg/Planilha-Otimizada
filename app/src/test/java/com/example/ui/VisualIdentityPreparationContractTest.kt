@@ -498,7 +498,7 @@ class VisualIdentityPreparationContractTest {
         assertTrue(lifecycleDialogs.contains("trailingIcon = if (buscaPlanilhasSalvas.isNotEmpty())"))
         assertTrue(lifecycleDialogs.contains("onClick = { onBuscaChange(\"\") }"))
         assertTrue(lifecycleDialogs.contains("contentDescription = \"Limpar busca\""))
-        assertTrue(lifecycleDialogs.contains("AppText(text = \"×\", color = MaterialTheme.colorScheme.onSurface)"))
+        assertTrue(lifecycleDialogs.contains("AppText(text = \"×\", color = visual.onSurface)"))
     }
 
     @Test
