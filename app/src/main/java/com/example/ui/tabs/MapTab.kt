@@ -192,7 +192,7 @@ fun MapTab(
             .fillMaxSize()
             .exaltedTabIdentity(14).exaltedContentStage(14)
             .background(background.copy(alpha = 0.82f))
-            .padding(horizontal = 16.dp, vertical = 14.dp)
+            .padding(horizontal = 18.dp, vertical = 18.dp)
     ) {
         // APPROVED VISUAL CUSTOMIZATION
         // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
@@ -565,7 +565,7 @@ private fun TravelSummaryPanel(
             .heightIn(min = 52.dp)
             .background(Color.Black.copy(alpha = 0.72f), RoundedCornerShape(6.dp))
             .border(1.dp, gold.copy(alpha = 0.42f), RoundedCornerShape(6.dp))
-            .padding(horizontal = 12.dp, vertical = 9.dp)
+            .padding(horizontal = 14.dp, vertical = 12.dp)
     ) {
         AppText(
             text = "Transporte: ${transportName.ifBlank { "—" }} • Tempo de viagem: $travelTime • Pontos: $pointCount • Distância: ${formatKm(distanceKm)} km",
