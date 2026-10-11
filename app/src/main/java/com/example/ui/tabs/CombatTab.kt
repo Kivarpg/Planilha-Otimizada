@@ -74,6 +74,7 @@ import com.example.ui.theme.ExaltedDarkSurfaceVariant
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import com.example.ui.theme.ExaltedOutline
+import com.example.ui.theme.corTextoContraste
 import com.example.viewmodel.SheetViewModel
 
 // APPROVED VISUAL CUSTOMIZATION
