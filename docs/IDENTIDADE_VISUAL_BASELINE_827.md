@@ -152,3 +152,8 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Os mesmos callbacks updateNome, updateJogador e updateConceito permanecem nos dois modos, sem mudanca de regras ou persistencia.
 - Teste estatico protege os dois modos e seus tres campos. Validacao visual e compilacao ainda pendentes.
 - Esta e uma melhoria especifica da Aba 1, nao declaracao de remodelacao integral da aba ou das 15 abas.
+
+## Preparacao Exalted.853 — Aba Habilidades
+- Os filtros existentes Todas / Casta ou Aspecto e Favorecidas / Com Pontos passam a ocupar uma coluna quando o espaco disponivel e inferior a 390dp; em telas maiores permanecem duas colunas.
+- Preservada a diferenca Lunar (sem filtro de habilidades de casta) e os callbacks originais.
+- Acrescentado teste estatico. Compilacao e verificacao visual ainda pendentes; nao considerar a aba artisticamente remodelada.
