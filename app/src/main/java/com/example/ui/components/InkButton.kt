@@ -363,68 +363,12 @@ fun InkButton(
             ),
         contentAlignment = Alignment.Center,
     ) {
-        Canvas(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            // Em botões estreitos (Rows com weight no telefone), não deformamos a
-            // pincelada horizontalmente. Escala uniforme pela altura e recorte central
-            // preservam a identidade visual mesmo quando a largura disponível diminui.
-            val uniformScale = minOf(this.size.width / VIEWBOX_W, this.size.height / VIEWBOX_H)
-            val translatedX = (this.size.width - VIEWBOX_W * uniformScale) / 2f
-            val translatedY = (this.size.height - VIEWBOX_H * uniformScale) / 2f
-            val brush = if (enabled) {
-                resolvedGradient.toBrush(this.size.width)
-            } else {
-                Brush.horizontalGradient(
-                    colors = listOf(
-                        InkColors.disabledGray.copy(alpha = 0.5f),
-                        InkColors.disabledGray.copy(alpha = 0.35f),
-                    ),
-                    startX = 0f,
-                    endX = this.size.width,
-                )
-            }
-            // O desenho da pincelada pode ser mais largo que o espaço realmente
-            // concedido pelo Row/FlowRow (especialmente em telas de telefone).
-            // Sem recorte, o Canvas do botão desenhava sobre os irmãos e cobria
-            // inclusive seus rótulos. O recorte torna o limite visual do botão
-            // idêntico ao limite medido pelo layout, globalmente.
-            clipRect {
-                translate(left = translatedX, top = translatedY) {
-                    scale(uniformScale, uniformScale, pivot = Offset.Zero) {
-                        drawPath(path = path, brush = brush)
-                    }
-                }
-                // Filetes discretos de metal acompanham a pincelada sem criar
-                // uma caixa retangular nem invadir os botões adjacentes.
-                if (enabled) {
-                    val metal = visualTemplate?.metalShine ?: ExaltedAccentBright
-                    val inset = 9.dp.toPx().coerceAtMost(this.size.width / 5f)
-                    val metalOpacity = when {
-                        selected -> .72f
-                        variant == InkButtonVariant.Primary -> .56f
-                        else -> .40f
-                    }
-                    drawLine(
-                        brush = Brush.horizontalGradient(
-                            listOf(Color.Transparent, metal.copy(alpha = metalOpacity), Color.Transparent)
-                        ),
-                        start = Offset(inset, 3.dp.toPx()),
-                        end = Offset(this.size.width - inset, 3.dp.toPx()),
-                        strokeWidth = 1.dp.toPx()
-                    )
-                    // Segundo filete, mais escuro, reforça a profundidade da tinta.
-                    drawLine(
-                        brush = Brush.horizontalGradient(
-                            listOf(Color.Transparent, metal.copy(alpha = 0.24f), Color.Transparent)
-                        ),
-                        start = Offset(inset, this.size.height - 3.dp.toPx()),
-                        end = Offset(this.size.width - inset, this.size.height - 3.dp.toPx()),
-                        strokeWidth = .8.dp.toPx()
-                    )
-                }
-            }
-        }
+        // A geometria primária do botão é o Box com gradiente/borda acima.
+        // O antigo Canvas/SVG foi removido deste caminho principal porque sua
+        // cadeia clipRect/translate/scale já havia causado interferência entre
+        // controles estreitos. A decoração não participa mais de constraints,
+        // hit-testing ou posicionamento do rótulo.
+
         // APPROVED VISUAL CUSTOMIZATION
         // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
         // Acabamento padrão: contorno + preenchimento, igual à tipografia
