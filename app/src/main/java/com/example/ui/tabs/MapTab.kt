@@ -192,7 +192,7 @@ fun MapTab(
             .fillMaxSize()
             .exaltedTabIdentity(14).exaltedContentStage(14)
             .background(background.copy(alpha = 0.82f))
-            .padding(horizontal = 12.dp, vertical = 10.dp)
+            .padding(horizontal = 16.dp, vertical = 14.dp)
     ) {
         // APPROVED VISUAL CUSTOMIZATION
         // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
