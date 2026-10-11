@@ -159,6 +159,32 @@ fun GildedCard(
                 topLeft = Offset(size.width - rail, 0f),
                 size = androidx.compose.ui.geometry.Size(rail, size.height)
             )
+            // Assinatura arquitetônica exclusiva de cada Tipo de Exaltado.
+            // Todos os elementos ficam confinados aos 12dp periféricos do cartão.
+            val emblemInk = accent.copy(alpha = .72f)
+            val emblemX = size.width / 2f
+            val emblemY = 3.dp.toPx()
+            when (motif) {
+                ExaltedVisualMotif.SOLAR -> {
+                    val span = 34.dp.toPx()
+                    drawLine(emblemInk, Offset(emblemX - span, emblemY), Offset(emblemX - 12.dp.toPx(), emblemY), 2.dp.toPx())
+                    drawLine(emblemInk, Offset(emblemX + 12.dp.toPx(), emblemY), Offset(emblemX + span, emblemY), 2.dp.toPx())
+                    drawCircle(emblemInk, 5.dp.toPx(), Offset(emblemX, emblemY), style = androidx.compose.ui.graphics.drawscope.Stroke(1.4.dp.toPx()))
+                }
+                ExaltedVisualMotif.DRAGON_BLOODED -> {
+                    val teeth = 8.dp.toPx()
+                    for (step in 0..2) {
+                        val x = emblemX + (step - 1) * 14.dp.toPx()
+                        drawLine(emblemInk, Offset(x - teeth / 2f, emblemY), Offset(x, emblemY + teeth), 1.5.dp.toPx())
+                        drawLine(emblemInk, Offset(x, emblemY + teeth), Offset(x + teeth / 2f, emblemY), 1.5.dp.toPx())
+                    }
+                }
+                ExaltedVisualMotif.LUNAR -> {
+                    val arcSize = androidx.compose.ui.geometry.Size(28.dp.toPx(), 12.dp.toPx())
+                    drawArc(emblemInk, 195f, 150f, false, Offset(emblemX - arcSize.width / 2f, 0f), arcSize, style = androidx.compose.ui.graphics.drawscope.Stroke(1.25.dp.toPx()))
+                }
+                null -> Unit
+            }
             // Filetes superior/inferior em degradê metálico.
             drawLine(Brush.horizontalGradient(listOf(Color.Transparent, deep, accent, deep, Color.Transparent)), Offset(8.dp.toPx(),2.dp.toPx()), Offset(size.width-8.dp.toPx(),2.dp.toPx()), outer)
             drawLine(Brush.horizontalGradient(listOf(Color.Transparent, deep.copy(.45f), accent.copy(.48f), deep.copy(.45f), Color.Transparent)), Offset(12.dp.toPx(),size.height-2.dp.toPx()), Offset(size.width-12.dp.toPx(),size.height-2.dp.toPx()), 1.dp.toPx())
