@@ -22,7 +22,7 @@ fun SummaryTab(
 ) {
     val bpInfo = remember(sheet) { viewModel.calculateBpBreakdown(sheet) }
     Column(
-        modifier = modifier.fillMaxSize().exaltedTabIdentity(9).exaltedContentStage(9).padding(horizontal = 14.dp, vertical = 12.dp).verticalScroll(rememberScrollState()),
+        modifier = modifier.fillMaxSize().exaltedTabIdentity(9).exaltedContentStage(9).padding(horizontal = 18.dp, vertical = 16.dp).verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ExperienceCounterSection(sheet, viewModel)
