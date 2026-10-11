@@ -42,11 +42,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ui.theme.visual.accent
-import com.example.ui.theme.visual.surfaceVariant
-import com.example.ui.theme.visual.accentBright
-import com.example.ui.theme.visual.accentBright
-import com.example.ui.theme.visual.muted
 import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.ui.theme.ExaltedTextFill
 import com.example.ui.theme.ExaltedTextStroke
