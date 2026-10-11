@@ -81,13 +81,13 @@ fun MeritsTab(
         GildedCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 12.dp)
+                .padding(bottom = 20.dp)
                 .exaltedSectionPanel(6)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 18.dp, vertical = 18.dp),
+                    .padding(horizontal = 20.dp, vertical = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AppText(
@@ -157,7 +157,7 @@ fun MeritsTab(
             )
         }
 
-        Spacer(modifier = Modifier.height(7.dp))
+        Spacer(modifier = Modifier.height(18.dp))
 
         if (sheet.merits.isNotEmpty()) {
             sheet.merits.forEach { m ->
@@ -188,8 +188,8 @@ fun MeritsTab(
                                         style = MaterialTheme.typography.titleMedium,
                                         fontWeight = FontWeight.Bold,
                                         maxFontSize = MaterialTheme.typography.titleMedium.fontSize,
-                                        minFontSize = 12.sp,
-                                        color = MaterialTheme.colorScheme.onSurface
+                                        minFontSize = 14.sp,
+                                        color = ExaltedAccentBright
                                     )
                                     if (m.detalhe.isNotBlank() && m.origemAutomatica != "Idioma") {
                                         AppText(
