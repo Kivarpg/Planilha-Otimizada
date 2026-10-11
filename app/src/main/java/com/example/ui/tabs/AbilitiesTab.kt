@@ -59,8 +59,12 @@ fun AbilitiesTab(
         modifier = modifier.fillMaxSize().exaltedTabIdentity(4).exaltedContentStage(4).padding(horizontal = 10.dp, vertical = 8.dp).verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        AbilitySubTabSelector(sheet, subTabIndex, onSubTabChange)
-        Spacer(Modifier.height(6.dp))
+        GildedCard(modifier = Modifier.fillMaxWidth().exaltedSectionPanel(4)) {
+            Box(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 10.dp)) {
+                AbilitySubTabSelector(sheet, subTabIndex, onSubTabChange)
+            }
+        }
+        Spacer(Modifier.height(10.dp))
         AbilityGridSection(
             habilidades = habilidadesFiltradas,
             martialArts = martialArtsFiltradas,
