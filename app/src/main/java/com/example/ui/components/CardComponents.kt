@@ -126,6 +126,24 @@ fun GildedCard(
                 ExaltedVisualMotif.LUNAR -> 15.dp.toPx()
                 null -> 18.dp.toPx()
             }
+            // Arquitetura ornamental visível: faixa superior de metal e lâminas
+            // verticais nas bordas, sem desenhar sobre a área de leitura.
+            val rail = 3.dp.toPx()
+            drawRect(
+                brush = Brush.horizontalGradient(listOf(deep.copy(alpha = .72f), accent.copy(alpha = .36f), deep.copy(alpha = .72f))),
+                topLeft = Offset(0f, 0f),
+                size = androidx.compose.ui.geometry.Size(size.width, rail)
+            )
+            drawRect(
+                brush = Brush.verticalGradient(listOf(accent.copy(alpha = .60f), deep.copy(alpha = .18f), deep.copy(alpha = .55f))),
+                topLeft = Offset(0f, 0f),
+                size = androidx.compose.ui.geometry.Size(rail, size.height)
+            )
+            drawRect(
+                brush = Brush.verticalGradient(listOf(accent.copy(alpha = .60f), deep.copy(alpha = .18f), deep.copy(alpha = .55f))),
+                topLeft = Offset(size.width - rail, 0f),
+                size = androidx.compose.ui.geometry.Size(rail, size.height)
+            )
             // Filetes superior/inferior em degradê metálico.
             drawLine(Brush.horizontalGradient(listOf(Color.Transparent, deep, accent, deep, Color.Transparent)), Offset(8.dp.toPx(),2.dp.toPx()), Offset(size.width-8.dp.toPx(),2.dp.toPx()), outer)
             drawLine(Brush.horizontalGradient(listOf(Color.Transparent, deep.copy(.45f), accent.copy(.48f), deep.copy(.45f), Color.Transparent)), Offset(12.dp.toPx(),size.height-2.dp.toPx()), Offset(size.width-12.dp.toPx(),size.height-2.dp.toPx()), 1.dp.toPx())
