@@ -157,7 +157,7 @@ internal fun FeiticosPopup(
                             "Círculo $circulo",
                             style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
                             color = if (desbloqueado) ExaltedAccentBright else ExaltedMuted,
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 9.dp)
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 13.dp)
                         )
                     }
                     feiticos.forEach { def ->
