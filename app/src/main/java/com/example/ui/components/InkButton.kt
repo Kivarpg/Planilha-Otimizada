@@ -170,12 +170,11 @@ fun InkButton(
         styleOverride.gradientMiddle ?: gradient.mid,
         styleOverride.gradientEnd ?: gradient.end,
     )
-    val textColor = styleOverride.labelColor ?: when {
-        selected -> corTextoContraste(ownerSelected.mid)
-        variant == InkButtonVariant.Danger -> InkColors.textOnLight
-        variant == InkButtonVariant.OnDark -> InkColors.textOnDark
-        else -> resolvedVisual.onSurface
-    }
+    // A cor precisa acompanhar o preenchimento realmente exibido, inclusive
+    // overrides e estados selecionados. Uma cor fixa pode sumir sobre metais
+    // claros de Solar/Lunar ou sobre um gradiente customizado.
+    val textColor = styleOverride.labelColor
+        ?: corTextoContraste(resolvedGradient.mid)
     // APPROVED VISUAL CUSTOMIZATION
     // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
     // Área de toque ampliada para impedir cortes de texto e facilitar interação.
