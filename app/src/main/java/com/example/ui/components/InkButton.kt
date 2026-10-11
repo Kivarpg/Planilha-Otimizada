@@ -380,9 +380,10 @@ fun InkButton(
                 if (enabled) {
                     val metal = visualTemplate?.metalShine ?: ExaltedAccentBright
                     val inset = 9.dp.toPx().coerceAtMost(this.size.width / 5f)
+                    val metalOpacity = if (selected) .65f else .48f
                     drawLine(
                         brush = Brush.horizontalGradient(
-                            listOf(Color.Transparent, metal.copy(alpha = 0.48f), Color.Transparent)
+                            listOf(Color.Transparent, metal.copy(alpha = metalOpacity), Color.Transparent)
                         ),
                         start = Offset(inset, 3.dp.toPx()),
                         end = Offset(this.size.width - inset, 3.dp.toPx()),
