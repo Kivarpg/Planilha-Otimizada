@@ -968,15 +968,19 @@ fun NpcEncontroCard(
                         }
                         .padding(horizontal = 10.dp, vertical = 8.dp)
                 ) {
-                    AppText(if (expandida) "▾" else "▸", color = visualTemplate.gold, modifier = Modifier.padding(end = 6.dp),
-                    forceStroke = true
-)
+                    AppText(
+                        if (expandida) "▾" else "▸",
+                        color = visualTemplate.accentBright,
+                        modifier = Modifier.padding(end = 8.dp),
+                        forceStroke = true
+                    )
                     androidx.compose.material3.Text(
                         text = "$habilidade (${encantosDaGaveta.size})",
                         style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp),
                         fontWeight = FontWeight.Bold,
                         color = visualTemplate.accentBright,
-                        maxLines = 2
+                        maxLines = 2,
+                        modifier = Modifier.weight(1f)
                     )
                 }
                 if (expandida) {
