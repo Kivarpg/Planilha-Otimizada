@@ -47,7 +47,6 @@ import com.example.ui.theme.ExaltedDarkBackground
 import com.example.ui.theme.ExaltedBlack
 import com.example.R
 import com.example.model.Casta
-import com.example.ui.theme.ExaltedAmber
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
