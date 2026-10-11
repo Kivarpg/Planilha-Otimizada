@@ -26,16 +26,16 @@ fun PersonalDataTab(sheet: CharacterSheet, viewModel: SheetViewModel, modifier: 
     var newIntimidadeIntensidade by remember { mutableStateOf("Menor") }
     Column(modifier.fillMaxSize().exaltedTabIdentity(1).exaltedContentStage(1).padding(horizontal=18.dp,vertical=16.dp).verticalScroll(rememberScrollState()), horizontalAlignment=Alignment.CenterHorizontally) {
         GildedCard(modifier = Modifier.fillMaxWidth().exaltedSectionPanel(1)) {
-            Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 18.dp)) {
+            Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 22.dp)) {
                 PersonalIdentitySection(sheet,viewModel)
             }
         }
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(20.dp))
         AspectSelectionSection(sheet,viewModel)
         CasteSection(sheet,viewModel)
-        Spacer(Modifier.height(18.dp))
+        Spacer(Modifier.height(24.dp))
         LanguageSection(sheet){showLinguaDialog=true}
-        Spacer(Modifier.height(18.dp))
+        Spacer(Modifier.height(24.dp))
         IntimaciesSection(sheet,onOpenAdd={showIntimidadeDialog=true},onDelete={itemToDelete=it})
     }
     IntimidadeDialog(show=showIntimidadeDialog,nome=newIntimidadeNome,tipo=newIntimidadeTipo,intensidade=newIntimidadeIntensidade,onNome={newIntimidadeNome=it},onTipo={newIntimidadeTipo=it},onIntensidade={newIntimidadeIntensidade=it},onDismiss={showIntimidadeDialog=false},viewModel=viewModel)
