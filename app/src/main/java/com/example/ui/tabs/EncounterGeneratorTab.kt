@@ -65,7 +65,6 @@ import com.example.ui.components.InkButton
 import com.example.ui.components.InkButtonSize
 import com.example.ui.components.InkButtonVariant
 import com.example.ui.components.SectionHeader
-import com.example.ui.theme.ExaltedStructuralMetalDeep
 import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.ui.components.exaltedTextFieldColors
 import com.example.ui.theme.visualTemplateParaExaltado
