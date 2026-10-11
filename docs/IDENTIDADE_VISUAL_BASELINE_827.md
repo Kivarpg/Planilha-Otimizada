@@ -232,3 +232,8 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - SheetScreenDialogs.kt: substituidos acentos globais Solar (`ExaltedGold`/`ExaltedAmber`) pela cor do Tipo de Exaltado ativo em titulos, secoes e alertas. Fluxos de configuracao, vibracao e som preservados.
 - SheetLifecycleDialogs.kt: titulo da lista de planilhas, nome ativo e marcador 'Ativa' seguem a paleta ativa. Fluxos de carregar/excluir planilhas preservados.
 - Teste estatico cobre ausencia de acentos legados e preservacao de chamadas centrais. Ainda exige compilacao e revisao visual real.
+
+## Preparacao Exalted.869 — Icones de acoes no cabecalho
+- SheetTopBar.kt: botoes Configuracoes e Opcoes passam a seguir ExaltedAccentBright em vez do dourado Solar fixo. Os callbacks, alvos de 48dp e largura reservada de 96/104dp permanecem intactos.
+- Contrato estatico confirma as duas cores e a largura dos controles.
+- Mudanca ainda nao compilada; a compilacao Exalted.868 estava em andamento durante a preparacao. Nao inferir auditoria visual de dispositivo a partir de testes estaticos.
