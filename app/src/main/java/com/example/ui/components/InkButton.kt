@@ -1,6 +1,5 @@
 package com.example.ui.components
 
-import com.example.ui.theme.ExaltedAccentBright
 
 
 import androidx.compose.runtime.getValue
@@ -50,12 +49,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedMetalGoldCore
-import com.example.ui.theme.ExaltedMetalGoldDeep
-import com.example.ui.theme.ExaltedMetalGoldFlash
-import com.example.ui.theme.ExaltedMetalGoldShine
 import com.example.ui.theme.ExaltedOnSurface
 import com.example.ui.theme.corTextoContraste
 import com.example.ui.theme.ExaltVisualTemplate
@@ -68,58 +61,13 @@ import com.example.ui.theme.LocalExaltedVisualTemplate
 private data class InkGradient(val start: Color, val mid: Color, val end: Color)
 
 private object InkColors {
-    // APPROVED VISUAL CUSTOMIZATION
-    // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
-    // A pincelada acompanha a paleta do tipo de Exaltado ativo:
-    // Solar = dourado, Sangue de Dragão = vermelho, Lunar = prata.
-    // Getters são intencionais: a paleta pode mudar em runtime.
-    val primary: InkGradient
-        get() = InkGradient(
-            ExaltedDarkSurface,
-            ExaltedMetalGoldDeep,
-            ExaltedMetalGoldCore
-        )
-
-    val secondary: InkGradient
-        get() = InkGradient(
-            ExaltedDarkSurfaceVariant,
-            ExaltedDarkSurface,
-            ExaltedMetalGoldDeep
-        )
-
-    val selected: InkGradient
-        get() = InkGradient(
-            ExaltedMetalGoldCore,
-            ExaltedMetalGoldShine,
-            ExaltedMetalGoldFlash
-        )
-
-    // Ação destrutiva tradicional: vermelho fixo, para diálogos/ações que
-    // precisam manter a semântica universal de perigo.
+    // Perigo permanece vermelho fixo por semântica, independentemente do Tipo.
     val danger = InkGradient(Color(0xFF4C150D), Color(0xFF7A241A), Color(0xFFA6503F))
-
-    // Ação destrutiva temática: preserva a intenção de "Danger", mas acompanha
-    // a paleta visual do Exaltado ativo (Solar = dourado, Sangue de Dragão =
-    // vermelho, Lunar = prata). Usado quando a identidade visual da seção
-    // deve permanecer coerente com a planilha aberta.
-    val thematicDanger: InkGradient
-        get() = InkGradient(
-            ExaltedMetalGoldDeep,
-            ExaltedMetalGoldShine,
-            ExaltedMetalGoldFlash
-        )
     val onDark = InkGradient(Color(0xFFFFFAF0), Color(0xFFF2ECE0), Color(0xFFC9C0AC))
     val textOnLight = ExaltedOnSurface
     val textOnDark = Color(0xFF221D16)
-    val textBody = Color(0xFF2A2620)
     val disabledGray = Color(0xFF8A8578)
 }
-
-private fun InkGradient.toBrush(widthPx: Float): Brush = Brush.horizontalGradient(
-    colorStops = arrayOf(0f to start, 0.55f to mid, 1f to end),
-    startX = 0f,
-    endX = widthPx
-)
 
 // ---------------------------------------------------------------------
 // 3. API pública do componente
@@ -140,7 +88,7 @@ data class InkButtonStyle(
 )
 
 enum class InkButtonSize(val width: Dp, val height: Dp, val fontSize: TextUnit) {
-    // Mantém a proporção 340:100 do viewBox — não distorce a pincelada.
+    // Tamanhos nominais preservados para não alterar os layouts existentes.
     Small(160.dp, 56.dp, 14.sp),
     Medium(236.dp, 68.dp, 16.sp),
     Large(300.dp, 84.dp, 18.sp),
@@ -154,13 +102,12 @@ enum class InkButtonSize(val width: Dp, val height: Dp, val fontSize: TextUnit) 
  * devem reorganizar seus containers (Row/Flow/Column) em vez de reduzir os
  * botões abaixo destes limites.
  *
- * Botão com fundo em pincelada de tinta (gradiente esquerda→direita
- * simulando a tinta secando) e rótulo centralizado.
+ * Botão com fundo em gradiente temático e rótulo centralizado. A geometria
+ * clicável é retangular/arredondada e independente de qualquer decoração.
  *
- * @param brushIndex escolhe entre as 3 pinceladas (0, 1 ou 2). Varie esse
- *   índice quando dois botões desse estilo aparecerem juntos na mesma
- *   tela, pra não parecer o mesmo carimbo copiado — mesma lógica do
- *   protótipo HTML.
+ * @param brushIndex parâmetro legado mantido para compatibilidade de chamadas.
+ *   A versão estrutural segura não usa mais SVG/Canvas e, portanto, não varia
+ *   geometria por índice.
  * @param label rótulo curto (1–3 palavras); textos longos truncam com "…".
  * @param selected destaca o botão com a cor temática do Exaltado ativo — usado nas pílulas de
  *   seleção (Habilidade/Atributo, Méritos etc.), equivalente ao
@@ -168,9 +115,7 @@ enum class InkButtonSize(val width: Dp, val height: Dp, val fontSize: TextUnit) 
  *   variant = Ghost (o traço fino não tem estado selecionado).
  * @param customWidth / @param customHeight sobrescrevem o tamanho fixo de
  *   [size] — usado nas grades de pílulas pequenas (Dimens.PillMinWidth/
- *   Height), que não têm a mesma proporção 340:100 das pinceladas largas.
- *   A pincelada mantém escala uniforme pela altura e recebe recorte
- *   horizontal em caixas estreitas, evitando desenhar sobre controles vizinhos.
+ *   Height). O conteúdo sempre permanece dentro das constraints do próprio Box.
  */
 @Composable
 fun InkButton(
@@ -262,7 +207,11 @@ fun InkButton(
             )
             .border(
                 width = 1.dp,
-                brush = Brush.horizontalGradient(listOf(resolvedGradient.start, resolvedGradient.mid, resolvedGradient.end)),
+                brush = styleOverride.outlineColor?.let { outline ->
+                    Brush.horizontalGradient(listOf(outline, outline, outline))
+                } ?: Brush.horizontalGradient(
+                    listOf(resolvedGradient.start, resolvedGradient.mid, resolvedGradient.end)
+                ),
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
             )
             .feedbackClickable(
