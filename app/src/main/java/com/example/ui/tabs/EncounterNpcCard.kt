@@ -974,14 +974,13 @@ fun NpcEncontroCard(
                         modifier = Modifier.padding(end = 8.dp),
                         forceStroke = true
                     )
-                    AppText(
+                    EncounterCardTitle(
                         text = "$habilidade (${encantosDaGaveta.size})",
                         style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp),
                         fontWeight = FontWeight.Bold,
                         color = visualTemplate.accentBright,
-                        maxLines = 2,
                         modifier = Modifier.weight(1f),
-                        forceStroke = true
+                        textAlign = TextAlign.Start
                     )
                 }
                 if (expandida) {
