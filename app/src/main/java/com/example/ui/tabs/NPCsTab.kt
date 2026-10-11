@@ -199,7 +199,7 @@ fun NPCsTab(
             val itensDaGaveta = npcsPorGaveta[lealdade].orEmpty()
             if (itensDaGaveta.isNotEmpty()) {
                 SectionHeader(title = rotuloGaveta(lealdade))
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(10.dp))
                 itensDaGaveta.forEach { npc ->
                     LongPressCard(
                         onLongClick = { npcParaExcluir = npc },
