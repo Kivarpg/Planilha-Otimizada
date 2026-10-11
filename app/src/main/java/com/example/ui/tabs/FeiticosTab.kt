@@ -196,7 +196,7 @@ internal fun FeiticosPopup(
                                     modifier = Modifier.weight(1f)
                                 )
                                 InkButton(onClick = { onShowDetail(def) }, modifier = Modifier.size(40.dp)) {
-                                    Icon(Icons.Outlined.Info, contentDescription = "Ver detalhes", tint = ExaltedGold, modifier = Modifier.size(18.dp))
+                                    Icon(Icons.Outlined.Info, contentDescription = "Ver detalhes", tint = ExaltedAccentBright, modifier = Modifier.size(18.dp))
                                 }
                             }
                         }
