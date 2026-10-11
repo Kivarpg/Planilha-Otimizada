@@ -69,7 +69,7 @@ fun AspectoTab(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SectionHeader(title = "Aspecto selecionado")
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         if (aspectoAtual == null) {
             AppText(
@@ -106,7 +106,7 @@ fun AspectoTab(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         com.example.ui.components.ExpandableTextCard(
             titulo = "Poder da Anima",
@@ -129,9 +129,9 @@ fun AspectoTab(
             FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(14.dp),
-                horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
+                    .padding(18.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 habilidadesRestantes.forEach { ab ->
                     val isSelected = sheet.favoredAbilities.contains(ab)
