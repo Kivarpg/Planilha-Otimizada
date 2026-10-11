@@ -134,6 +134,14 @@ fun GildedCard(
             drawLine(accent.copy(.70f),Offset(size.width,0f),Offset(size.width-flourish,0f),outer); drawLine(accent.copy(.70f),Offset(size.width,0f),Offset(size.width,flourish),outer)
             drawLine(deep.copy(.72f),Offset(0f,size.height),Offset(flourish,size.height),outer); drawLine(deep.copy(.72f),Offset(0f,size.height),Offset(0f,size.height-flourish),outer)
             drawLine(deep.copy(.72f),Offset(size.width,size.height),Offset(size.width-flourish,size.height),outer); drawLine(deep.copy(.72f),Offset(size.width,size.height),Offset(size.width,size.height-flourish),outer)
+            // Cantoneiras orientais em duas camadas: gravura angular discreta, sem imagens de fundo.
+            val inset = 9.dp.toPx()
+            val notch = 9.dp.toPx()
+            val engraving = accent.copy(alpha = .48f)
+            drawLine(engraving, Offset(inset, inset + notch), Offset(inset + notch, inset), .9.dp.toPx())
+            drawLine(engraving, Offset(size.width - inset - notch, inset), Offset(size.width - inset, inset + notch), .9.dp.toPx())
+            drawLine(deep.copy(alpha = .62f), Offset(inset, size.height - inset - notch), Offset(inset + notch, size.height - inset), .9.dp.toPx())
+            drawLine(deep.copy(alpha = .62f), Offset(size.width - inset - notch, size.height - inset), Offset(size.width - inset, size.height - inset - notch), .9.dp.toPx())
             val cx=size.width/2f
             drawCircle(accent.copy(.30f), 2.6.dp.toPx(), Offset(cx,2.5.dp.toPx()))
             // Assinatura ornamental do Exaltado no próprio componente, não só no fundo da aba.
