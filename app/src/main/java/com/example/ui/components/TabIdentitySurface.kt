@@ -3,77 +3,92 @@ package com.example.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import com.example.ui.theme.ExaltedStructuralMetalDeep
-import com.example.ui.theme.ExaltedStructuralMetalShine
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedOutline
+import androidx.compose.ui.unit.dp
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 /**
- * Base visual neutra das abas.
+ * Base visual segura das abas.
  *
- * A antiga identidade ornamental desenhada em Compose foi removida:
- * sem sol/lua, molduras temáticas, trilhos, zigue-zagues, arcos,
- * névoa, coroas, marcas de canto ou ornamentos por Tipo de Exaltado.
- * Estes modificadores permanecem apenas para preservar as chamadas
- * existentes e evitar qualquer alteração funcional nas telas.
+ * A identidade vem exclusivamente do template composicional atual. Não há
+ * Canvas, Path, clip manual nem símbolo decorativo de fundo: a estrutura usa
+ * somente background/border para nunca interferir em conteúdo ou hit-testing.
  */
-fun Modifier.exaltedTabIdentity(chapter: Int = 0): Modifier = this.background(ExaltedDarkSurface)
+@Composable
+fun Modifier.exaltedTabIdentity(chapter: Int = 0): Modifier {
+    val visual = LocalExaltedVisualTemplate.current
+    return this.background(visual.surface)
+}
 
-fun Modifier.exaltedContentStage(chapter: Int): Modifier = this.background(
-    Brush.verticalGradient(
-        listOf(
-            ExaltedDarkSurface,
-            ExaltedDarkSurfaceVariant.copy(alpha = 0.72f),
-            ExaltedDarkSurface
-        )
-    )
-)
-
-fun Modifier.exaltedSectionPanel(
-    chapter: Int = 0,
-    backgroundColor: Color = ExaltedDarkSurfaceVariant
-): Modifier = this
-    .background(
+@Composable
+fun Modifier.exaltedContentStage(chapter: Int): Modifier {
+    val visual = LocalExaltedVisualTemplate.current
+    return this.background(
         Brush.verticalGradient(
             listOf(
-                ExaltedStructuralMetalDeep.copy(alpha = 0.62f),
-                backgroundColor,
-                backgroundColor.copy(alpha = 0.98f),
-                ExaltedDarkSurface
+                visual.surface,
+                visual.surfaceVariant.copy(alpha = 0.76f),
+                visual.surface
             )
         )
     )
-    .border(
-        width = 1.5.dp,
-        brush = Brush.linearGradient(
-            listOf(
-                ExaltedStructuralMetalDeep.copy(alpha = 0.94f),
-                ExaltedAccentBright.copy(alpha = 0.92f),
-                ExaltedStructuralMetalShine.copy(alpha = 0.90f),
-                ExaltedStructuralMetalDeep.copy(alpha = 0.94f)
-            )
-        ),
-        shape = RoundedCornerShape(10.dp)
-    )
+}
 
+@Composable
+fun Modifier.exaltedSectionPanel(
+    chapter: Int = 0,
+    backgroundColor: Color? = null
+): Modifier {
+    val visual = LocalExaltedVisualTemplate.current
+    val background = backgroundColor ?: visual.surfaceVariant
+    return this
+        .background(
+            Brush.verticalGradient(
+                listOf(
+                    visual.metalDeep.copy(alpha = 0.52f),
+                    background,
+                    background.copy(alpha = 0.98f),
+                    visual.surface
+                )
+            ),
+            shape = RoundedCornerShape(10.dp)
+        )
+        .border(
+            width = 1.5.dp,
+            brush = Brush.linearGradient(
+                listOf(
+                    visual.metalDeep.copy(alpha = 0.92f),
+                    visual.accentBright.copy(alpha = 0.88f),
+                    visual.metalShine.copy(alpha = 0.82f),
+                    visual.metalDeep.copy(alpha = 0.92f)
+                )
+            ),
+            shape = RoundedCornerShape(10.dp)
+        )
+}
+
+@Composable
 fun Modifier.exaltedControlBand(
-    surfaceColor: Color = ExaltedDarkSurface,
-    accentColor: Color = ExaltedAccentBright,
+    surfaceColor: Color? = null,
+    accentColor: Color? = null,
     accentAlpha: Float = 0.12f
-): Modifier = this.background(
-    Brush.horizontalGradient(
-        listOf(
-            surfaceColor,
-            accentColor.copy(alpha = accentAlpha.coerceIn(0f, 1f)),
-            surfaceColor
+): Modifier {
+    val visual = LocalExaltedVisualTemplate.current
+    val surface = surfaceColor ?: visual.surface
+    val accent = accentColor ?: visual.accentBright
+    return this.background(
+        Brush.horizontalGradient(
+            listOf(
+                surface,
+                accent.copy(alpha = accentAlpha.coerceIn(0f, 1f)),
+                surface
+            )
         )
     )
-)
+}
 
+@Composable
 fun Modifier.exaltedExistingPanel(): Modifier = exaltedSectionPanel()
