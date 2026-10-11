@@ -28,7 +28,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Text
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
@@ -173,8 +175,9 @@ fun InkButton(
     // A cor precisa acompanhar o preenchimento realmente exibido, inclusive
     // overrides e estados selecionados. Uma cor fixa pode sumir sobre metais
     // claros de Solar/Lunar ou sobre um gradiente customizado.
+    val renderedMid = if (enabled) resolvedGradient.mid else InkColors.disabledGray
     val textColor = styleOverride.labelColor
-        ?: corTextoContraste(resolvedGradient.mid)
+        ?: corTextoContraste(renderedMid)
     // APPROVED VISUAL CUSTOMIZATION
     // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
     // Área de toque ampliada para impedir cortes de texto e facilitar interação.
@@ -233,7 +236,7 @@ fun InkButton(
         // Acabamento padrão: contorno + preenchimento, igual à tipografia
         // temática usada no restante do aplicativo. O contorno fica abaixo
         // do preenchimento para manter a leitura sobre qualquer pincelada.
-        val effectiveTextColor = if (enabled) textColor else textColor.copy(alpha = 0.55f)
+        val effectiveTextColor = if (enabled) textColor else textColor.copy(alpha = 0.72f)
         // O InkButton é usado em larguras muito diferentes (inclusive em Rows com weight).
         // O padding antigo de 28.dp por lado consumia quase toda a largura dos botões
         // compactos e cortava rótulos como "Automático". Mantemos uma margem segura e
@@ -260,7 +263,9 @@ fun InkButton(
             textAlign = androidx.compose.ui.text.style.TextAlign.Center,
         )
         if (content != null) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { content() }
+            CompositionLocalProvider(LocalContentColor provides effectiveTextColor) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { content() }
+            }
         } else Box(contentAlignment = Alignment.Center) {
             Text(
                 text = label,
