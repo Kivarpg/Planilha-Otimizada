@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 import com.example.ui.theme.ExaltedOnSurface
 import com.example.ui.theme.ExaltedVisualMotif
 import com.example.ui.theme.visualTemplatePorMotif
+import com.example.ui.theme.corTextoContraste
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.pow
@@ -45,6 +46,25 @@ class VisualContrastAuditTest {
             val variantRatio = contrast(visual.accentBright, visual.surfaceVariant)
             assertTrue(surfaceRatio >= 3.0, "$motif accent/surface contrast=$surfaceRatio")
             assertTrue(variantRatio >= 3.0, "$motif accent/surfaceVariant contrast=$variantRatio")
+        }
+    }
+
+    @Test
+    fun `automatic button text contrast stays readable on themed fills`() {
+        ExaltedVisualMotif.entries.forEach { motif ->
+            val visual = visualTemplatePorMotif(motif)
+            val fills = listOf(
+                "accent" to visual.accent,
+                "accentBright" to visual.accentBright,
+                "metalShine" to visual.metalShine,
+                "surface" to visual.surface,
+                "surfaceVariant" to visual.surfaceVariant
+            )
+            fills.forEach { (name, background) ->
+                val foreground = corTextoContraste(background)
+                val ratio = contrast(foreground, background)
+                assertTrue(ratio >= 4.5, "$motif $name automatic text contrast=$ratio")
+            }
         }
     }
 
