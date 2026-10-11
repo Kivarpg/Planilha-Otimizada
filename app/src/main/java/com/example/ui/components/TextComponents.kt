@@ -120,36 +120,10 @@ fun AppText(
     onTextLayout: (androidx.compose.ui.text.TextLayoutResult) -> Unit = {},
     forceStroke: Boolean = false
 ) {
-    // APPROVED VISUAL CUSTOMIZATION
-    // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
-    // Texto normal e texto de botões: branco com contorno preto.
-    // Títulos continuam usando a tipografia original, sem stroke.
-    val titleFonts = setOf(
-        MaterialTheme.typography.headlineSmall.fontFamily,
-        MaterialTheme.typography.titleLarge.fontFamily,
-        MaterialTheme.typography.titleMedium.fontFamily,
-        MaterialTheme.typography.titleSmall.fontFamily
-    )
-    // FontFamily may be null for both body and title typography. A null
-    // membership match previously classified ordinary labels as titles.
-    // Use explicit text size and non-null title families only.
-    val isTitle = !forceStroke && (
-        (style.fontFamily != null && style.fontFamily in titleFonts) ||
-        (fontFamily != null && fontFamily in titleFonts) ||
-        (fontSize != TextUnit.Unspecified && fontSize.value >= 18f)
-    )
-
-    val requestedFontSize = if (fontSize != TextUnit.Unspecified) fontSize else style.fontSize
-    // A largura real pode mudar sem que o Modifier ou o texto mudem.
-    // Reiniciar o ajuste nesse caso permite recuperar o tamanho original.
-    var measuredAppTextWidthPx by remember { mutableStateOf(0) }
-    var fittedFontSize by remember(
-        text, requestedFontSize, maxLines, minLines, style, fontFamily,
-        letterSpacing, lineHeight, softWrap, measuredAppTextWidthPx
-    ) { mutableStateOf(requestedFontSize) }
-    val effectiveStyle = style.copy(
-        color = if (color != Color.Unspecified) color else if (isTitle) style.color else ExaltedTextFill,
-        fontSize = fittedFontSize,
+    val resolvedColor = if (color != Color.Unspecified) color else if (style.color != Color.Unspecified) style.color else ExaltedOnSurface
+    val resolvedStyle = style.copy(
+        color = resolvedColor,
+        fontSize = if (fontSize != TextUnit.Unspecified) fontSize else style.fontSize,
         fontWeight = fontWeight ?: style.fontWeight,
         fontStyle = fontStyle ?: style.fontStyle,
         fontFamily = fontFamily ?: style.fontFamily,
@@ -158,64 +132,8 @@ fun AppText(
         textAlign = textAlign ?: style.textAlign,
         lineHeight = if (lineHeight != TextUnit.Unspecified) lineHeight else style.lineHeight
     )
-
-    if (isTitle) {
-        androidx.compose.material3.Text(
-            text = text,
-            modifier = modifier.onSizeChanged { measuredAppTextWidthPx = it.width },
-            color = color,
-            style = effectiveStyle,
-            overflow = overflow,
-            softWrap = softWrap,
-            maxLines = maxLines,
-            minLines = minLines,
-            onTextLayout = { result ->
-                if (result.hasVisualOverflow && fittedFontSize.isSp && fittedFontSize.value > 8f) {
-                    fittedFontSize = (fittedFontSize.value - 1f).coerceAtLeast(8f).sp
-                }
-                onTextLayout(result)
-            }
-        )
-    } else {
-        val strokeStyle = effectiveStyle.copy(
-            color = ExaltedTextStroke,
-            drawStyle = androidx.compose.ui.graphics.drawscope.Stroke(width = with(LocalDensity.current) { Dimens.TextStrokeWidth.toPx() })
-        )
-        val fillStyle = effectiveStyle.copy(
-            color = effectiveStyle.color,
-            drawStyle = androidx.compose.ui.graphics.drawscope.Fill
-        )
-        // O Modifier externo pertence ao contêiner, não deve ser aplicado duas vezes.
-        // Os Text internos ocupam a largura medida pelo Box para preservar centralização.
-        Box(modifier = modifier.onSizeChanged { measuredAppTextWidthPx = it.width }) {
-            androidx.compose.material3.Text(
-                text = text,
-                modifier = Modifier.fillMaxWidth(),
-                style = strokeStyle,
-                overflow = overflow,
-                softWrap = softWrap,
-                maxLines = maxLines,
-                minLines = minLines
-            )
-            androidx.compose.material3.Text(
-                text = text,
-                modifier = Modifier.fillMaxWidth(),
-                style = fillStyle,
-                overflow = overflow,
-                softWrap = softWrap,
-                maxLines = maxLines,
-                minLines = minLines,
-                onTextLayout = { result ->
-                    if (result.hasVisualOverflow && fittedFontSize.isSp && fittedFontSize.value > 8f) {
-                        fittedFontSize = (fittedFontSize.value - 1f).coerceAtLeast(8f).sp
-                    }
-                    onTextLayout(result)
-                }
-            )
-        }
-    }
+    Text(text = text, modifier = modifier, color = resolvedColor, style = resolvedStyle, overflow = overflow, softWrap = softWrap, maxLines = maxLines, minLines = minLines, onTextLayout = onTextLayout)
 }
-
 @Composable
 fun AppText(
     text: androidx.compose.ui.text.AnnotatedString,
