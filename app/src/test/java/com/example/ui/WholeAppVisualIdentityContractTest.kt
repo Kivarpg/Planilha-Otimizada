@@ -94,6 +94,8 @@ class WholeAppVisualIdentityContractTest {
         assertTrue(ink.contains("LocalExaltedVisualTemplate.current"))
         assertTrue(ink.contains("LocalContentColor provides effectiveTextColor"))
         assertTrue(ink.contains("if (enabled) resolvedGradient.mid else InkColors.disabledGray"))
+        assertTrue(ink.contains("val effectiveTextColor = textColor"))
+        assertTrue(ink.contains("listOf(resolvedVisual.outline, resolvedVisual.accent, resolvedVisual.outline)"))
         assertFalse(ink.contains("selected -> corTextoContraste(ownerSelected.mid)"))
         assertFalse(ink.contains("variant == InkButtonVariant.OnDark -> InkColors.textOnDark"))
     }
