@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import com.example.ui.components.AppText
 import androidx.compose.runtime.Composable
@@ -42,13 +41,7 @@ import com.example.model.ExaltedConstants
 import com.example.model.isLunar
 import com.example.ui.components.GildedCard
 import com.example.ui.components.SectionHeader
-import com.example.ui.theme.ExaltedDarkBackground
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedOnSurface
-import com.example.ui.theme.ExaltedOutline
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 
 // VISUAL IDENTITY 314: remodelação específica desta aba; somente apresentação, sem novos campos.
@@ -59,13 +52,14 @@ private fun PriorityBadge(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     Box(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
-            .background(if (isSelected) ExaltedAccentBright.copy(alpha = 0.46f) else ExaltedDarkSurfaceVariant)
+            .background(if (isSelected) visual.accentBright.copy(alpha = 0.46f) else visual.surfaceVariant)
             .border(
                 1.dp,
-                if (isSelected) ExaltedAccentBright else ExaltedOutline.copy(alpha = 0.72f),
+                if (isSelected) visual.accentBright else visual.outline.copy(alpha = 0.72f),
                 MaterialTheme.shapes.small
             )
             .feedbackClickable(onClick = onClick)
@@ -78,7 +72,7 @@ private fun PriorityBadge(
                 fontSize = 12.sp,
                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium
             ),
-            color = if (isSelected) ExaltedAccentBright else ExaltedMuted,
+            color = if (isSelected) visual.accentBright else visual.muted,
             maxLines = 1
         )
     }
@@ -98,6 +92,7 @@ private fun AttributeRow(
     // interface sugira que os 2 + 2 são uma lista única.
     favoritoInfo: FavoritoAtributoInfo? = null
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -109,18 +104,18 @@ private fun AttributeRow(
                 modifier = Modifier
                     .padding(end = 4.dp)
                     .size(18.dp)
-                    .background(if (favoritoInfo.ehCasta) ExaltedAccentBright else Color.Transparent)
-                    .border(1.5.dp, if (favoritoInfo.ehCasta) ExaltedAccentBright else ExaltedOutline)
+                    .background(if (favoritoInfo.ehCasta) visual.accentBright else Color.Transparent)
+                    .border(1.5.dp, if (favoritoInfo.ehCasta) visual.accentBright else visual.outline)
                     .feedbackClickable(enabled = false) {},
                 contentAlignment = Alignment.Center
             ) {
                 if (favoritoInfo.ehCasta) {
-                    AppText("C", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = ExaltedOnSurface)
+                    AppText("C", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = visual.onSurface)
                 }
             }
             AppText(
                 text = if (favoritoInfo.ehFavorecido) "★" else "☆",
-                color = if (favoritoInfo.ehFavorecido) ExaltedAccentBright else ExaltedMuted,
+                color = if (favoritoInfo.ehFavorecido) visual.accentBright else visual.muted,
                 fontSize = 18.sp,
                 modifier = Modifier
                     .padding(end = 6.dp)
@@ -138,7 +133,7 @@ private fun AttributeRow(
                     fontSize = 15.sp,
                     letterSpacing = 0.4.sp
                 ),
-                color = ExaltedOnSurface,
+                color = visual.onSurface,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Start,
                 maxLines = 2,
                 softWrap = true,
@@ -169,6 +164,7 @@ private fun AttributeGroupCard(
     priorityLabel: String,
     ratingStyle: com.example.model.RatingStyle
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val currentPriority = sheet.attributePriorities[groupName] ?: "1º"
     val totalAdded = attributes.sumOf { (sheet.attributes[it] ?: 1) - 1 }
     val baseGranted = when (currentPriority) {
@@ -188,8 +184,7 @@ private fun AttributeGroupCard(
             .padding(top = 7.dp)
     ) {
         GildedCard(
-            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(3),
-            colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(3)
         ) {
             Column(
                 modifier = Modifier
@@ -207,8 +202,8 @@ private fun AttributeGroupCard(
                     Box(
                     modifier = Modifier
                         .clip(MaterialTheme.shapes.extraLarge)
-                        .background(ExaltedDarkSurface)
-                        .border(1.dp, ExaltedAccentBright.copy(alpha = 0.7f), MaterialTheme.shapes.extraLarge)
+                        .background(visual.surface)
+                        .border(1.dp, visual.accentBright.copy(alpha = 0.7f), MaterialTheme.shapes.extraLarge)
                         .padding(horizontal = 14.dp, vertical = 8.dp),
                     contentAlignment = Alignment.Center
                 ) {
@@ -216,12 +211,12 @@ private fun AttributeGroupCard(
                         AppText(
                             text = "Total",
                             style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.6.sp),
-                            color = ExaltedAccentBright
+                            color = visual.accentBright
                         )
                         AppText(
                             text = "$restante",
                             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                            color = ExaltedAccentBright
+                            color = visual.accentBright
                         )
                     }
                 }
@@ -236,7 +231,7 @@ private fun AttributeGroupCard(
                 AppText(
                     text = priorityLabel,
                     style = MaterialTheme.typography.bodySmall,
-                    color = ExaltedMuted
+                    color = visual.muted
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -275,13 +270,13 @@ private fun AttributeGroupCard(
         }
         }
 
-        // Faixa decorativa com o nome do grupo, sobreposta à borda superior
-        // do card — sol pequeno + flourish nos dois lados.
+        // Faixa estrutural com o nome do grupo, sobreposta à borda superior.
+        // Sem símbolos ou ornamentos desenhados manualmente.
         Row(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .offset(y = (-11).dp)
-                .background(ExaltedDarkBackground)
+                .background(visual.surface)
                 .padding(horizontal = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -292,7 +287,7 @@ private fun AttributeGroupCard(
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 1.sp
                 ),
-                color = ExaltedAccentBright
+                color = visual.accentBright
             )
         }
     }
