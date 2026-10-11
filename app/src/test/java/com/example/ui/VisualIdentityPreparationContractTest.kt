@@ -298,7 +298,7 @@ class VisualIdentityPreparationContractTest {
         assertTrue(combat.contains("color = visual.accentBright.copy(alpha = 0.12f)"))
         assertTrue(combat.contains("if (ativo) visual.accentBright else visual.outline"))
         assertTrue(combat.contains("corTextoContraste(essenciaGradientColor(nivel))"))
-        assertTrue(attributes.contains("visual.accentBright.copy(alpha = 0.46f) else visual.surfaceVariant"))
+        assertTrue(attributes.contains(".background(if (isSelected) visual.accent else visual.surfaceVariant)"))
         assertTrue(attributes.contains("if (favoritoInfo.ehCasta) visual.accentBright else visual.outline"))
         assertTrue(personal.contains("colors = exaltedTextFieldColors()"))
     }
