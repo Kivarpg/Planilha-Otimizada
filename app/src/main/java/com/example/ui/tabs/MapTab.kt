@@ -560,7 +560,7 @@ fun MapTab(
 @Composable
 private fun TravelSummaryPanel(
     modifier: Modifier = Modifier,
-    gold: Color,
+    mapAccent: Color,
     transportName: String,
     pointCount: Int,
     distanceKm: Float,
@@ -572,7 +572,7 @@ private fun TravelSummaryPanel(
             .fillMaxWidth()
             .heightIn(min = 52.dp)
             .background(Color.Black.copy(alpha = 0.72f), RoundedCornerShape(6.dp))
-            .border(1.dp, gold.copy(alpha = 0.42f), RoundedCornerShape(6.dp))
+            .border(1.dp, mapAccent.copy(alpha = 0.42f), RoundedCornerShape(6.dp))
             .padding(horizontal = 14.dp, vertical = 12.dp)
     ) {
         AppText(
@@ -597,7 +597,7 @@ private fun portraitFullscreenViewportScale(width: androidx.compose.ui.unit.Dp, 
 @Composable
 private fun TravelScaleBar(
     modifier: Modifier = Modifier,
-    gold: Color,
+    mapAccent: Color,
     representedKm: Float
 ) {
     // A largura visual é fixa em 70dp, mas os quilômetros NÃO são fixos.
@@ -608,7 +608,7 @@ private fun TravelScaleBar(
         modifier = modifier
             .height(28.dp)
             .background(Color.Black.copy(alpha = 0.55f), RoundedCornerShape(4.dp))
-            .border(1.dp, gold.copy(alpha = 0.35f), RoundedCornerShape(4.dp))
+            .border(1.dp, mapAccent.copy(alpha = 0.35f), RoundedCornerShape(4.dp))
             .padding(horizontal = 10.dp, vertical = 4.dp)
     ) {
         // Antes usava Modifier.fillMaxSize() aqui: como este Row é um filho
@@ -629,7 +629,7 @@ private fun TravelScaleBar(
                 modifier = Modifier
                     .width(82.dp)
                     .height(3.dp)
-                    .background(gold)
+                    .background(mapAccent)
             )
             AppText(
                 text = "${formatKm(representedKm)} km",
@@ -751,13 +751,13 @@ private fun MapaInterativo(
     onScaleChange: (Float) -> Unit,
     onNormalizedOffsetChange: (Offset) -> Unit,
     routePoints: androidx.compose.runtime.snapshots.SnapshotStateList<Offset>,
-    gold: Color
+    mapAccent: Color
 ) {
     val mapIntrinsic = remember { androidx.compose.ui.geometry.Size(MAP_INTRINSIC_WIDTH_PX, MAP_INTRINSIC_HEIGHT_PX) }
 
     BoxWithConstraints(
         modifier = modifier
-            .border(1.5.dp, gold.copy(alpha = 0.55f), RoundedCornerShape(6.dp))
+            .border(1.5.dp, mapAccent.copy(alpha = 0.55f), RoundedCornerShape(6.dp))
             .clipToBounds()
             .background(Color(0xFF0A0A0A))
     ) {
@@ -945,7 +945,7 @@ private fun MapaInterativo(
                     }
                     drawPath(
                         path = path,
-                        color = gold.copy(alpha = 0.9f),
+                        color = mapAccent.copy(alpha = 0.9f),
                         style = androidx.compose.ui.graphics.drawscope.Stroke(
                             // O Canvas inteiro recebe effectiveScale no graphicsLayer.
                             // Compensamos aqui para a rota não engrossar ao ampliar:
@@ -971,7 +971,7 @@ private fun MapaInterativo(
                         center = c
                     )
                     drawCircle(
-                        color = gold,
+                        color = mapAccent,
                         radius = 6.dp.toPx() * markerLayerScale,
                         center = c
                     )
