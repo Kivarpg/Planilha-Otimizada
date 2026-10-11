@@ -460,7 +460,7 @@ fun EncounterGeneratorTab(
             .fillMaxWidth()
             .exaltedTabIdentity(11).exaltedContentStage(11)
             .verticalScroll(rememberScrollState())
-            .padding(10.dp)
+            .padding(horizontal = 16.dp, vertical = 14.dp)
     ) {
         Spacer(modifier = Modifier.height(10.dp))
 
