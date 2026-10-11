@@ -50,6 +50,7 @@ require(Regex("^Exalted\\.\\d+$").matches(exaltedProjectName)) {
     "rootProject.name deve seguir o formato Exalted.<versão>; valor atual: $exaltedProjectName"
 }
 val exaltedVersionNumber = exaltedProjectName.substringAfter("Exalted.").toInt()
+val exaltedBuildCommit = (System.getenv("GITHUB_SHA") ?: "local").take(12)
 
 android {
     namespace = "com.example"
@@ -90,6 +91,7 @@ android {
         targetSdk = 36
         versionCode = exaltedVersionNumber
         versionName = exaltedVersionNumber.toString()
+        buildConfigField("String", "BUILD_COMMIT", "\"$exaltedBuildCommit\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -159,6 +161,8 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons.core)
     implementation(libs.androidx.compose.material.icons.extended)
+    debugImplementation("androidx.compose.ui:ui-tooling-preview")
+    debugImplementation("androidx.compose.ui:ui-tooling")
 
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.zxing.core)
