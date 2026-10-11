@@ -38,13 +38,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.model.Casta
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedDivider
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedMetalGoldCore
-import com.example.ui.theme.ExaltedMetalGoldDeep
-import com.example.ui.theme.ExaltedMetalGoldShine
+import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.theme.corTextoContraste
 
 @Composable
 fun GildedStepButton(
@@ -55,16 +50,13 @@ fun GildedStepButton(
     size: Dp = com.example.ui.theme.Dimens.StepperRingSize,
     iconFontSize: TextUnit = 20.sp
 ) {
-    // Neutro dourado — sem semântica vermelho/verde entre "+" e "−" (mesma
-    // decisão de design do RingStepSymbol, Atributos/Habilidades/Méritos):
-    // incrementar e decrementar são ações igualmente válidas de edição,
-    // não "bom" vs "ruim".
-    val corPreenchimento = if (enabled) com.example.ui.theme.ExaltedStepperNeutral else ExaltedMuted.copy(alpha = 0.25f)
-    val symbolColor = if (enabled) Color.White else ExaltedMuted.copy(alpha = 0.55f)
+    val visual = LocalExaltedVisualTemplate.current
+    val corPreenchimento = if (enabled) visual.accent else visual.muted.copy(alpha = 0.25f)
+    val symbolColor = if (enabled) corTextoContraste(corPreenchimento) else visual.muted.copy(alpha = 0.55f)
     val borderBrush = if (enabled) {
-        Brush.linearGradient(listOf(ExaltedAccentBright, ExaltedAccentBright, ExaltedAccentBright))
+        Brush.linearGradient(listOf(visual.accentBright, visual.accentBright, visual.accentBright))
     } else {
-        Brush.linearGradient(listOf(ExaltedDivider, ExaltedDivider, ExaltedDivider))
+        Brush.linearGradient(listOf(visual.divider, visual.divider, visual.divider))
     }
     Box(
         modifier = modifier
@@ -106,7 +98,7 @@ fun ErgonomicNumericSelector(
     onValueChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
     badgeText: String? = null,
-    badgeColor: Color = ExaltedAccentBright,
+    resolvedBadgeColor: Color = Color.Unspecified,
     enlargedDots: Boolean = false,
     invertButtons: Boolean = false,
     buttonsOnSameSide: Boolean = false,
@@ -143,15 +135,17 @@ fun ErgonomicNumericSelector(
     // reduzir o destaque dos botões sem afetar outros usos.
     sameSideButtonSizeOverride: Dp? = null
 ) {
+    val visual = LocalExaltedVisualTemplate.current
+    val resolvedBadgeColor = if (resolvedBadgeColor != Color.Unspecified) resolvedBadgeColor else visual.accentBright
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant),
+        colors = CardDefaults.cardColors(containerColor = visual.surfaceVariant),
         border = BorderStroke(
             1.dp,
             Brush.linearGradient(
-                listOf(ExaltedMetalGoldDeep, ExaltedMetalGoldShine, ExaltedMetalGoldCore, ExaltedMetalGoldDeep)
+                listOf(visual.metalDeep, visual.metalShine, visual.accent, visual.metalDeep)
             )
         ),
         shape = MaterialTheme.shapes.medium
@@ -184,9 +178,9 @@ fun ErgonomicNumericSelector(
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Surface(
-                        color = badgeColor.copy(alpha = 0.15f),
+                        color = resolvedBadgeColor.copy(alpha = 0.15f),
                         shape = MaterialTheme.shapes.extraSmall,
-                        border = BorderStroke(1.dp, badgeColor.copy(alpha = 0.6f))
+                        border = BorderStroke(1.dp, resolvedBadgeColor.copy(alpha = 0.6f))
                     ) {
                         AppText(
                             text = badgeText,
@@ -194,7 +188,7 @@ fun ErgonomicNumericSelector(
                                 fontWeight = FontWeight.Bold,
                                 fontSize = badgeFontSize ?: MaterialTheme.typography.labelSmall.fontSize
                             ),
-                            color = badgeColor,
+                            color = resolvedBadgeColor,
                             maxLines = 2,
                             softWrap = true,
                             textAlign = TextAlign.Center,
@@ -268,8 +262,8 @@ fun ErgonomicNumericSelector(
                                 val dotSize = if (enlargedDots) baseDotSize + 8.dp else baseDotSize
                                 val isFilled = i <= value
                                 val isFinalDot = i == maxVal
-                                val fillColor = ExaltedAccentBright
-                                val glowColor = ExaltedAccentBright
+                                val fillColor = visual.accentBright
+                                val glowColor = visual.accentBright
                                 val borderWidth = if (enlargedDots || isFinalDot) 2.dp else 1.dp
                                 Box(
                                     modifier = Modifier
@@ -286,18 +280,18 @@ fun ErgonomicNumericSelector(
                                         )
                                         .size(dotSize)
                                         .clip(CircleShape)
-                                        .background(if (isFilled) fillColor else ExaltedDarkSurfaceVariant)
+                                        .background(if (isFilled) fillColor else visual.surfaceVariant)
                                         .border(borderWidth, fillColor, CircleShape)
                                 )
                             }
                         }
                     } else {
                         Surface(
-                            color = ExaltedAccentBright.copy(alpha = 0.12f),
+                            color = visual.accentBright.copy(alpha = 0.12f),
                             shape = MaterialTheme.shapes.small,
                             border = BorderStroke(
                                 1.dp,
-                                ExaltedAccentBright.copy(alpha = 0.5f)
+                                visual.accentBright.copy(alpha = 0.5f)
                             ),
                             modifier = Modifier.padding(horizontal = if (compact) 2.dp else 8.dp)
                         ) {
@@ -307,7 +301,7 @@ fun ErgonomicNumericSelector(
                                     fontWeight = FontWeight.Bold,
                                     fontSize = markerFontSize ?: MaterialTheme.typography.titleMedium.fontSize
                                 ),
-                                color = ExaltedAccentBright,
+                                color = visual.accentBright,
                                 forceStroke = true,
                                 modifier = Modifier.padding(horizontal = if (compact) 6.dp else 12.dp, vertical = if (compact) 2.dp else 4.dp)
                             )
@@ -332,14 +326,14 @@ fun ErgonomicNumericSelector(
             if (!topRightBadge && !badgeText.isNullOrEmpty()) {
                 Spacer(modifier = Modifier.height(6.dp))
                 Surface(
-                    color = badgeColor.copy(alpha = 0.15f),
+                    color = resolvedBadgeColor.copy(alpha = 0.15f),
                     shape = MaterialTheme.shapes.extraSmall,
-                    border = BorderStroke(1.dp, badgeColor.copy(alpha = 0.6f))
+                    border = BorderStroke(1.dp, resolvedBadgeColor.copy(alpha = 0.6f))
                 ) {
                     AppText(
                         text = badgeText,
                         style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                        color = badgeColor,
+                        color = resolvedBadgeColor,
                         maxLines = 1,
                         softWrap = false,
                         overflow = TextOverflow.Ellipsis,
