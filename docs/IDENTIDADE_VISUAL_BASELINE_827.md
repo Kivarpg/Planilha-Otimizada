@@ -221,3 +221,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - NumericRatingControls.kt: removidas referencias legadas ExaltedAmber/ExaltedGold/ExaltedAmberVariant dos seletores numericos, dos pontos e do contorno de GildedStepButton. A cor agora acompanha ExaltedAccentBright (Solar, Sangue de Dragao ou Lunar).
 - Mantidos os callbacks de incremento/decremento, os limites min/max, a disposicao dos botoes e as dimensoes; nenhum calculo de personagem foi alterado.
 - Adicionado teste de contrato estatico. Compilacao e inspecao visual no Android pendentes.
+
+## Preparacao Exalted.867 — Componentes compartilhados
+- NumericRatingControls.kt: simplificado ramo de cores identicas dos pontos apos migracao para paleta ativa; comportamento mantido.
+- CounterControls.kt: linha do contador sincronizado ocupa largura disponivel e centraliza elementos com espacamento menor, reduzindo risco de estouro em telas compactas.
+- DialogComponents.kt: dialogos compartilhados de exclusao e validacao passam a usar ExaltedAccentBright nos acentos, preservando vermelho semantico de exclusao e rolagem de mensagens longas.
+- Contratos de teste estatico acrescentados. Revisao visual em dispositivo e compilacao ainda pendentes; esta rodada nao equivale a auditoria integral das 15 abas.
