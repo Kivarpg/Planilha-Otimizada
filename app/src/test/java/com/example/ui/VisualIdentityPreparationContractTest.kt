@@ -58,6 +58,16 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `sorcery circle controls and commitment dialog use active palette`() {
+        val sorcery = File("src/main/java/com/example/ui/tabs/FeiticosTab.kt").readText()
+        val equipment = File("src/main/java/com/example/ui/tabs/EquipmentTab.kt").readText()
+        assertTrue(sorcery.contains("color = if (desbloqueado) ExaltedAccentBright else ExaltedMuted"))
+        assertTrue(sorcery.contains("checkedColor = ExaltedAccentBright"))
+        assertTrue(sorcery.contains("border = BorderStroke(1.dp, if (desbloqueado) ExaltedAccentBright"))
+        assertTrue(equipment.contains("color = com.example.ui.theme.ExaltedAccentBright,\n                fontWeight = FontWeight.Bold"))
+    }
+
+    @Test
     fun `merits and equipment totals wrap with active palette`() {
         val merits = File("src/main/java/com/example/ui/tabs/MeritsTab.kt").readText()
         val equipment = File("src/main/java/com/example/ui/tabs/EquipmentTab.kt").readText()
