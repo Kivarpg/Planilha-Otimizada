@@ -100,7 +100,8 @@ internal fun MeritSelectionDialog(
                         value = nomePersonalizado,
                         onValueChange = com.example.ui.components.rememberTypingFeedback { nomePersonalizado = it.take(60); erroMensagem = null },
                         label = { AppText("Nome do Mérito") },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = com.example.ui.components.exaltedTextFieldColors()
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                     AppText("Graduação:", fontWeight = FontWeight.Bold, color = visual.accentBright)
@@ -159,7 +160,8 @@ internal fun MeritSelectionDialog(
                             value = textoPreRequisitoPersonalizado,
                             onValueChange = com.example.ui.components.rememberTypingFeedback { textoPreRequisitoPersonalizado = it.take(200) },
                             label = { AppText("Descreva o pré-requisito") },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = com.example.ui.components.exaltedTextFieldColors()
                         )
                     }
                     erroMensagem?.let {
