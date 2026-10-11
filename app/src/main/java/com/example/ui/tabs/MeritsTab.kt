@@ -97,7 +97,11 @@ fun MeritsTab(
                     text = "Total de Pontos de Mérito: $totalMeritPoints / $orcamentoMeritos",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = ExaltedAmber
+                    color = ExaltedAccentBright,
+                    textAlign = TextAlign.Center,
+                    maxLines = 3,
+                    softWrap = true,
+                    modifier = Modifier.fillMaxWidth()
                 )
                 if (totalMeritPoints > orcamentoMeritos) {
                     val excess = totalMeritPoints - orcamentoMeritos
