@@ -98,7 +98,7 @@ fun ErgonomicNumericSelector(
     onValueChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
     badgeText: String? = null,
-    resolvedBadgeColor: Color = Color.Unspecified,
+    badgeColor: Color = Color.Unspecified,
     enlargedDots: Boolean = false,
     invertButtons: Boolean = false,
     buttonsOnSameSide: Boolean = false,
@@ -136,7 +136,7 @@ fun ErgonomicNumericSelector(
     sameSideButtonSizeOverride: Dp? = null
 ) {
     val visual = LocalExaltedVisualTemplate.current
-    val resolvedBadgeColor = if (resolvedBadgeColor != Color.Unspecified) resolvedBadgeColor else visual.accentBright
+    val resolvedBadgeColor = if (badgeColor != Color.Unspecified) badgeColor else visual.accentBright
     Card(
         modifier = modifier
             .fillMaxWidth()
