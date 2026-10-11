@@ -156,7 +156,7 @@ fun GildedCard(
                 null -> Unit // Template de NPC: a moldura usa apenas a paleta do NPC, sem o símbolo da ficha ativa.
             }
         },
-        colors = CardDefaults.cardColors(containerColor = surface.copy(alpha=.94f)),
+        colors = CardDefaults.cardColors(containerColor = surface.copy(alpha=.98f)),
         border = border ?: BorderStroke(1.25.dp, Brush.linearGradient(listOf(deep.copy(alpha=.82f),accent.copy(alpha=.86f),deep.copy(alpha=.82f)))),
         shape = shape,
         elevation = elevation
