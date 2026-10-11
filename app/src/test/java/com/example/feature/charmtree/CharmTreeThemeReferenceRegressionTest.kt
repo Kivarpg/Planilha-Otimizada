@@ -6,7 +6,7 @@ import kotlin.test.assertTrue
 
 class CharmTreeThemeReferenceRegressionTest {
     @Test
-    fun `blocked visual status imports the existing muted theme token`() {
+    fun `blocked visual status uses the scoped muted visual token`() {
         fun projectFile(relative: String): File = listOf(
             File(relative),
             File("app", relative)
