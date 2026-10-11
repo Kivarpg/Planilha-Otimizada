@@ -529,11 +529,12 @@ fun EncounterGeneratorTab(
                                     ),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.gerar_npc_0000),
-                                        contentDescription = "Gerar NPC",
-                                        modifier = Modifier.size(60.dp),
-                                        alpha = if (gerando) 0.45f else 1f
+                                    androidx.compose.material3.Text(
+                                        text = "Gerar NPC",
+                                        color = if (gerando) ExaltedMuted else ExaltedOnSurface,
+                                        style = MaterialTheme.typography.labelMedium,
+                                        textAlign = TextAlign.Center,
+                                        maxLines = 2
                                     )
                                 }
                             }
@@ -605,12 +606,13 @@ fun EncounterGeneratorTab(
                                                     ),
                                                 contentAlignment = Alignment.Center
                                             ) {
-                                                Image(
-                                                    painter = painterResource(id = R.drawable.gerar_npc_0000),
-                                                    contentDescription = "Gerar NPC",
-                                                    modifier = Modifier.size(60.dp),
-                                                    alpha = if (gerando) 0.45f else 1f
-                                                )
+                                                androidx.compose.material3.Text(
+                                        text = "Gerar NPC",
+                                        color = if (gerando) ExaltedMuted else ExaltedOnSurface,
+                                        style = MaterialTheme.typography.labelMedium,
+                                        textAlign = TextAlign.Center,
+                                        maxLines = 2
+                                    )
                                             }
                                         }
                         
