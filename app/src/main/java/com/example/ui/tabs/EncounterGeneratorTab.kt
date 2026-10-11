@@ -536,7 +536,7 @@ fun EncounterGeneratorTab(
                                     AppText(
                                         text = "Gerar NPC",
                                         modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
-                                        color = if (gerando) ExaltedMuted else ExaltedDarkSurface,
+                                        color = ExaltedDarkSurface,
                                         style = MaterialTheme.typography.titleSmall,
                                         fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                         textAlign = TextAlign.Center,
@@ -616,7 +616,7 @@ fun EncounterGeneratorTab(
                                                 AppText(
                                         text = "Gerar NPC",
                                         modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
-                                        color = if (gerando) ExaltedMuted else ExaltedDarkSurface,
+                                        color = ExaltedDarkSurface,
                                         style = MaterialTheme.typography.titleSmall,
                                         fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                         textAlign = TextAlign.Center,
