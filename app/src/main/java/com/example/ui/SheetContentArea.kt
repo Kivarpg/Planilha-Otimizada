@@ -17,10 +17,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
-import com.example.ui.theme.ExaltedBackdropGlow
-import com.example.ui.theme.ExaltedDarkBackground
-import com.example.ui.theme.ExaltedBackdropCore
-import com.example.ui.theme.ExaltedBlack
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 /** Hosts one tab at a time; each tab owns its vertical scrolling. */
 @Composable
@@ -65,7 +62,16 @@ internal fun SheetContentArea(
     }
 }
 
-/** Original opaque backdrop, kept separate from tab content. */
-private fun sheetBackgroundBrush(): Brush = Brush.verticalGradient(
-    listOf(ExaltedBackdropGlow, ExaltedDarkBackground, ExaltedBackdropCore, ExaltedBlack)
-)
+/** Backdrop do shell: tokens do Tipo atual, sem símbolos ou overlays manuais. */
+@Composable
+private fun sheetBackgroundBrush(): Brush {
+    val visual = LocalExaltedVisualTemplate.current
+    return Brush.verticalGradient(
+        listOf(
+            visual.metalDeep.copy(alpha = 0.34f),
+            visual.surface,
+            visual.surfaceVariant.copy(alpha = 0.92f),
+            visual.surface
+        )
+    )
+}
