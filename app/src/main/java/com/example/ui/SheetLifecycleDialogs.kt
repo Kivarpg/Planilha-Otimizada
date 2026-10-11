@@ -42,16 +42,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.ui.components.ConfirmDeleteDialog
 import com.example.ui.components.LongPressCard
-import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedOnSurface
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 import kotlinx.coroutines.launch
 
 
 @Composable
 fun DeleteSheetDialog(sheetToDelete: com.example.model.CharacterSheet?, onDismiss: () -> Unit, viewModel: SheetViewModel, modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     sheetToDelete?.let { s ->
         ConfirmDeleteDialog(
             itemTitle = s.nome,
@@ -77,6 +76,7 @@ fun SheetsListDialog(
     onNovaPlanilha: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     if (!show) return
     val sheet by viewModel.sheetState.collectAsState()
     val savedSheets by viewModel.savedSheets.collectAsState()
@@ -89,7 +89,7 @@ fun SheetsListDialog(
             AppText(
                 forceStroke = true,
                 text = "Planilhas de Personagem Salvas",
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -106,7 +106,7 @@ fun SheetsListDialog(
                 AppText(
                     text = "Selecione uma planilha para carregar ou mantenha pressionado para excluir:",
                     style = MaterialTheme.typography.bodySmall,
-                    color = ExaltedMuted,
+                    color = visual.muted,
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(8.dp))
@@ -124,7 +124,7 @@ fun SheetsListDialog(
                                     onClick = { onBuscaChange("") },
                                     modifier = Modifier.semantics { contentDescription = "Limpar busca" }
                                 ) {
-                                    AppText(text = "×", color = MaterialTheme.colorScheme.onSurface)
+                                    AppText(text = "×", color = visual.onSurface)
                                 }
                             }
                         } else null
@@ -145,7 +145,7 @@ fun SheetsListDialog(
                     AppText(
                         text = "Nenhuma planilha salva.",
                         style = MaterialTheme.typography.bodySmall,
-                        color = ExaltedMuted,
+                        color = visual.muted,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(vertical = 12.dp)
                     )
@@ -153,7 +153,7 @@ fun SheetsListDialog(
                     AppText(
                         text = "Nenhuma planilha encontrada para \"$termoBusca\".",
                         style = MaterialTheme.typography.bodySmall,
-                        color = ExaltedMuted,
+                        color = visual.muted,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(vertical = 12.dp)
                     )
@@ -185,7 +185,7 @@ fun SheetsListDialog(
                                     text = s.nomeArquivo(),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold,
-                                    color = if (isCurrent) ExaltedAccentBright else MaterialTheme.colorScheme.onSurface,
+                                    color = if (isCurrent) visual.accentBright else visual.onSurface,
                                     maxLines = 2,
                                     overflow = TextOverflow.Ellipsis
                                 )
@@ -196,20 +196,20 @@ fun SheetsListDialog(
                                         else -> "Casta: ${s.casta.displayName} | Jogador: ${s.jogador.ifBlank { "-" }}"
                                     },
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = ExaltedMuted,
+                                    color = visual.muted,
                                     maxLines = 2,
                                     overflow = TextOverflow.Ellipsis
                                 )
                             }
                             if (isCurrent) {
                                 Surface(
-                                    color = ExaltedAccentBright.copy(alpha = 0.2f),
+                                    color = visual.accentBright.copy(alpha = 0.2f),
                                     shape = RoundedCornerShape(4.dp)
                                 ) {
                                     AppText(
                                         text = "Ativa",
                                         style = MaterialTheme.typography.labelSmall,
-                                        color = ExaltedAccentBright,
+                                        color = visual.accentBright,
                                         modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                                     )
                                 }
@@ -231,9 +231,9 @@ fun SheetsListDialog(
         confirmButton = {
             com.example.ui.components.GildedDialogTextButton(text = "Fechar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurface,
-        titleContentColor = ExaltedOnSurface,
-        textContentColor = ExaltedOnSurface,
+        containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface,
     )
 }
 
@@ -247,6 +247,7 @@ fun BackupListDialog(
     snackbarHostState: androidx.compose.material3.SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     if (!show) return
     val backups = remember(show, viewModel) { viewModel.listarBackupsPeriodicos() }
     val backupListHeightLimit = (LocalConfiguration.current.screenHeightDp * 0.45f).coerceAtMost(480f).dp
@@ -254,7 +255,7 @@ fun BackupListDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
-        title = { AppText("Restaurar Backup", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
+        title = { AppText("Restaurar Backup", color = visual.accentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
         text = {
             Column(
                 modifier = Modifier.fillMaxWidth().heightIn(max = backupListHeightLimit).verticalScroll(rememberScrollState()),
@@ -263,13 +264,13 @@ fun BackupListDialog(
                 AppText(
                     text = "Cópias automáticas salvas a cada 5 minutos, independentes do salvamento manual. Restaurar substitui a planilha atual na tela — a planilha em si só é sobrescrita de vez se você apertar Salvar depois.",
                     style = MaterialTheme.typography.bodySmall,
-                    color = ExaltedMuted
+                    color = visual.muted
                 )
                 if (backups.isEmpty()) {
                     AppText(
                         text = "Nenhum backup automático ainda. Eles aparecem aqui depois de alguns minutos de uso.",
                         style = MaterialTheme.typography.bodySmall,
-                        color = ExaltedMuted,
+                        color = visual.muted,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(vertical = 12.dp)
                     )
@@ -282,7 +283,7 @@ fun BackupListDialog(
                     ) {
                         AppText(
                             text = snapshot.timestamp,
-                            color = MaterialTheme.colorScheme.onSurface,
+                            color = visual.onSurface,
                             modifier = Modifier.weight(1f),
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis
@@ -307,9 +308,9 @@ fun BackupListDialog(
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "Fechar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurface,
-        titleContentColor = ExaltedOnSurface,
-        textContentColor = ExaltedOnSurface,
+        containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface,
     )
 }
 
@@ -319,6 +320,7 @@ fun BackupListDialog(
 
 @Composable
 fun NovoConfirmDialog(show: Boolean, onDismiss: () -> Unit, onProceed: (salvarAntes: Boolean) -> Unit, modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     if (!show) return
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -328,7 +330,7 @@ fun NovoConfirmDialog(show: Boolean, onDismiss: () -> Unit, onProceed: (salvarAn
             AppText(
                 forceStroke = true,
                 text = "Criar Nova Planilha",
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -337,7 +339,7 @@ fun NovoConfirmDialog(show: Boolean, onDismiss: () -> Unit, onProceed: (salvarAn
         text = {
             AppText(
                 text = "Deseja salvar a planilha atual antes de criar uma nova? Alterações não salvas serão perdidas.",
-                color = MaterialTheme.colorScheme.onSurface,
+                color = visual.onSurface,
                 modifier = Modifier.fillMaxWidth()
             )
         },
@@ -372,9 +374,9 @@ fun NovoConfirmDialog(show: Boolean, onDismiss: () -> Unit, onProceed: (salvarAn
                 )
             }
         },
-        containerColor = ExaltedDarkSurface,
-        titleContentColor = ExaltedOnSurface,
-        textContentColor = ExaltedOnSurface,
+        containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface,
     )
 }
 
@@ -387,6 +389,7 @@ fun NovoConfirmDialog(show: Boolean, onDismiss: () -> Unit, onProceed: (salvarAn
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EscolhaTemplateNovaPlanilhaDialog(show: Boolean, onDismiss: () -> Unit, onEscolhido: (tipoPersonagem: String) -> Unit, modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     if (!show) return
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -396,7 +399,7 @@ fun EscolhaTemplateNovaPlanilhaDialog(show: Boolean, onDismiss: () -> Unit, onEs
             AppText(
                 forceStroke = true,
                 text = "Nova Planilha",
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -405,7 +408,7 @@ fun EscolhaTemplateNovaPlanilhaDialog(show: Boolean, onDismiss: () -> Unit, onEs
         text = {
             AppText(
                 text = "Qual o tipo de Exaltado da nova planilha?",
-                color = MaterialTheme.colorScheme.onSurface,
+                color = visual.onSurface,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -440,8 +443,8 @@ fun EscolhaTemplateNovaPlanilhaDialog(show: Boolean, onDismiss: () -> Unit, onEs
                 }
             }
         },
-        containerColor = ExaltedDarkSurface,
-        titleContentColor = ExaltedOnSurface,
-        textContentColor = ExaltedOnSurface,
+        containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface,
     )
 }
