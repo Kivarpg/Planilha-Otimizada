@@ -211,3 +211,8 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Auditoria do cabecalho identificou dois botoes de 48dp na mesma linha (96dp no total), mas largura reservada de apenas 80dp em telas compactas e 88dp nas demais.
 - Corrigida a reserva horizontal para 96dp e 104dp respectivamente, sem alterar acoes ou ordem dos botoes.
 - Adicionado teste estatico de regressao. Conferencia de layout real, fontScale e compilacao permanecem pendentes.
+
+## Preparacao Exalted.865 — Cabecalho e contador compartilhado
+- Cabecalho: titulo de Casta/Aspecto e indicador de validade nao competem mais na mesma linha; agora usam linhas independentes com quebra de texto e limite de duas linhas.
+- Contador sincronizado compartilhado: substituidas cores legadas ExaltedAmber por ExaltedAccentBright em botoes, valor e contorno, preservando limites e callbacks.
+- Testes de contrato estatico acrescentados; compilacao e verificacao visual Android ainda pendentes.
