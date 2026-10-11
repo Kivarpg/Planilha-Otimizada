@@ -130,6 +130,15 @@ fun GildedCard(
             drawLine(deep.copy(.28f), Offset(inner,inner), Offset(inner,size.height-inner), 1.dp.toPx())
             drawLine(deep.copy(.28f), Offset(size.width-inner,inner), Offset(size.width-inner,size.height-inner), 1.dp.toPx())
             // Quatro cantos escalonados, próximos da referência ornamental.
+            // Friso interior curto acrescenta profundidade sem cobrir campos do cartão.
+            val topInset = 7.dp.toPx()
+            val topFlourish = 22.dp.toPx()
+            drawLine(
+                Brush.horizontalGradient(listOf(deep.copy(alpha = .20f), accent.copy(alpha = .48f), deep.copy(alpha = .20f))),
+                Offset(topInset + topFlourish, topInset),
+                Offset(size.width - topInset - topFlourish, topInset),
+                .75.dp.toPx()
+            )
             drawLine(accent.copy(.88f),Offset(0f,0f),Offset(flourish,0f),outer); drawLine(accent.copy(.88f),Offset(0f,0f),Offset(0f,flourish),outer)
             drawLine(accent.copy(.70f),Offset(size.width,0f),Offset(size.width-flourish,0f),outer); drawLine(accent.copy(.70f),Offset(size.width,0f),Offset(size.width,flourish),outer)
             drawLine(deep.copy(.72f),Offset(0f,size.height),Offset(flourish,size.height),outer); drawLine(deep.copy(.72f),Offset(0f,size.height),Offset(0f,size.height-flourish),outer)
