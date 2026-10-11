@@ -60,7 +60,6 @@ import androidx.compose.ui.unit.sp
 import com.example.model.EncantoQuadro
 import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import com.example.ui.theme.ExaltedOnSurface
@@ -579,7 +578,7 @@ fun EncantoQuadroBox(quadro: EncantoQuadro, modifier: Modifier = Modifier) {
             AppText(
                 quadro.titulo,
                 fontWeight = FontWeight.Bold,
-                color = ExaltedGold,
+                color = ExaltedAccentBright,
                 style = MaterialTheme.typography.labelLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -626,7 +625,7 @@ fun ExpandableTextCard(
             AppText(
                 titulo,
                 fontWeight = FontWeight.Bold,
-                color = ExaltedGold,
+                color = ExaltedAccentBright,
                 style = MaterialTheme.typography.labelLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1f).fillMaxWidth()
@@ -634,7 +633,7 @@ fun ExpandableTextCard(
             androidx.compose.material3.Icon(
                 imageVector = if (expandido) androidx.compose.material.icons.Icons.Default.ArrowDropUp else androidx.compose.material.icons.Icons.Default.ArrowDropDown,
                 contentDescription = if (expandido) "Retrair" else "Expandir",
-                tint = ExaltedGold
+                tint = ExaltedAccentBright
             )
         }
         androidx.compose.animation.AnimatedVisibility(visible = expandido) {
