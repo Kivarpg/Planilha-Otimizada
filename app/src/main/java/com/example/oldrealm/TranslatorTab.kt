@@ -192,7 +192,7 @@ fun TranslatorTab(
                 }
             }
         }
-        Spacer(Modifier.height(14.dp))
+        Spacer(Modifier.height(20.dp))
         // key(system): força uma instância nova do campo (e uma conexão de
         // IME nova) sempre que o sistema de escrita muda. Sem isso, abrir o
         // DropdownMenu de seleção de idioma podia deixar a conexão de IME
