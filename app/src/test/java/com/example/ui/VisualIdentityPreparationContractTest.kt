@@ -28,9 +28,9 @@ class VisualIdentityPreparationContractTest {
         assertTrue(identity.contains("backgroundColor.copy(alpha = 0.98f)"))
         assertTrue(identity.contains("brush = Brush.linearGradient("))
         assertTrue(identity.contains("ExaltedStructuralMetalDeep.copy(alpha = 0.94f)"))
-        assertTrue(identity.contains("ExaltedStructuralMetalShine.copy(alpha = 0.74f)"))
-        assertTrue(identity.contains("ExaltedAccentBright.copy(alpha = 0.78f)"))
-        assertTrue(identity.contains("RoundedCornerShape(8.dp)"))
+        assertTrue(identity.contains("ExaltedStructuralMetalShine.copy(alpha = 0.90f)"))
+        assertTrue(identity.contains("ExaltedAccentBright.copy(alpha = 0.92f)"))
+        assertTrue(identity.contains("RoundedCornerShape(10.dp)"))
         assertTrue(!identity.contains("drawArc("))
         assertTrue(!identity.contains("drawPath("))
     }
