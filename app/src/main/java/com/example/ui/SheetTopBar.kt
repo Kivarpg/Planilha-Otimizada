@@ -69,7 +69,8 @@ internal fun SheetTopBar(
     BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
     val compactHeader = maxWidth < 600.dp
     val identityWidth = if (compactHeader) 68.dp else 84.dp
-    val actionsWidth = if (compactHeader) 80.dp else 88.dp
+    // Dois controles de 48.dp exigem ao menos 96.dp, mesmo no celular.
+    val actionsWidth = if (compactHeader) 96.dp else 104.dp
     val identityIconSize = if (compactHeader) 36.dp else 42.dp
     Column(
         Modifier
