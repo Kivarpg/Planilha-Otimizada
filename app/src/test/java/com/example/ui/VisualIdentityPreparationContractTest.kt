@@ -199,7 +199,7 @@ class VisualIdentityPreparationContractTest {
         assertFalse(ink.contains("clipRect"))
         assertFalse(ink.contains("drawPath("))
         assertTrue(ink.contains("contentAlignment = Alignment.Center"))
-        assertTrue(ink.contains("resolvedVisual.onSurface"))
+        assertTrue(ink.contains("corTextoContraste(resolvedGradient.mid)"))
     }
 
     @Test
