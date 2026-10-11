@@ -139,7 +139,7 @@ fun TranslatorTab(
 
     Box(modifier = modifier.fillMaxSize()) {
     Column(
-        modifier = Modifier.fillMaxSize().exaltedTabIdentity(15).exaltedContentStage(15).background(background.copy(alpha = 0.78f)).padding(horizontal = 16.dp, vertical = 14.dp)
+        modifier = Modifier.fillMaxSize().exaltedTabIdentity(15).exaltedContentStage(15).background(background.copy(alpha = 0.78f)).padding(horizontal = 20.dp, vertical = 18.dp)
     ) {
         // APPROVED VISUAL CUSTOMIZATION
         // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
@@ -192,7 +192,7 @@ fun TranslatorTab(
                 }
             }
         }
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(28.dp))
         // key(system): força uma instância nova do campo (e uma conexão de
         // IME nova) sempre que o sistema de escrita muda. Sem isso, abrir o
         // DropdownMenu de seleção de idioma podia deixar a conexão de IME
