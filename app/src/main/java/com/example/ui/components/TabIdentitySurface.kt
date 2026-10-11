@@ -25,7 +25,15 @@ import com.example.ui.theme.ExaltedOutline
  */
 fun Modifier.exaltedTabIdentity(chapter: Int = 0): Modifier = this
 
-fun Modifier.exaltedContentStage(chapter: Int): Modifier = this
+fun Modifier.exaltedContentStage(chapter: Int): Modifier = this.background(
+    Brush.verticalGradient(
+        listOf(
+            ExaltedDarkSurface,
+            ExaltedDarkSurfaceVariant.copy(alpha = 0.34f),
+            ExaltedDarkSurface
+        )
+    )
+)
 
 fun Modifier.exaltedSectionPanel(
     chapter: Int = 0,
