@@ -972,7 +972,7 @@ fun NpcEncontroCard(
                         if (expandida) "▾" else "▸",
                         color = visualTemplate.accentBright,
                         modifier = Modifier.padding(end = 8.dp),
-                        forceStroke = true
+                        forceStroke = false
                     )
                     AppText(
                         text = "$habilidade (${encantosDaGaveta.size})",
@@ -996,7 +996,7 @@ fun NpcEncontroCard(
                             nomeExibicao,
                             style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
                             fontWeight = FontWeight.SemiBold,
-                            color = visualTemplate.onSurface,
+                            color = ExaltedOnSurface,
                             modifier = Modifier
                                 .padding(start = 18.dp, bottom = 2.dp)
                                 .pointerInput(npc.id, c.nome) {
