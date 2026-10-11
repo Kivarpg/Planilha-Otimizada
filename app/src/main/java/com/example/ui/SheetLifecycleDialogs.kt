@@ -42,7 +42,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.ui.components.ConfirmDeleteDialog
 import com.example.ui.components.LongPressCard
-import com.example.ui.theme.ExaltedAmber
 import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
@@ -89,7 +88,7 @@ fun SheetsListDialog(
             AppText(
                 forceStroke = true,
                 text = "Planilhas de Personagem Salvas",
-                color = ExaltedAmber,
+                color = ExaltedAccentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -185,7 +184,7 @@ fun SheetsListDialog(
                                     text = s.nomeArquivo(),
                                     style = MaterialTheme.typography.titleMedium,
                                     fontWeight = FontWeight.Bold,
-                                    color = if (isCurrent) ExaltedAmber else MaterialTheme.colorScheme.onSurface,
+                                    color = if (isCurrent) ExaltedAccentBright else MaterialTheme.colorScheme.onSurface,
                                     maxLines = 2,
                                     overflow = TextOverflow.Ellipsis
                                 )
@@ -203,13 +202,13 @@ fun SheetsListDialog(
                             }
                             if (isCurrent) {
                                 Surface(
-                                    color = ExaltedAmber.copy(alpha = 0.2f),
+                                    color = ExaltedAccentBright.copy(alpha = 0.2f),
                                     shape = RoundedCornerShape(4.dp)
                                 ) {
                                     AppText(
                                         text = "Ativa",
                                         style = MaterialTheme.typography.labelSmall,
-                                        color = ExaltedAmber,
+                                        color = ExaltedAccentBright,
                                         modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                                     )
                                 }
