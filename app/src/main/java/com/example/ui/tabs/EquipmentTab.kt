@@ -74,7 +74,7 @@ fun EquipmentTab(
         modifier = modifier
             .fillMaxSize()
             .exaltedTabIdentity(7).exaltedContentStage(7)
-            .padding(horizontal = 14.dp, vertical = 12.dp)
+            .padding(horizontal = 18.dp, vertical = 16.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
