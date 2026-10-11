@@ -3,6 +3,7 @@ package com.example.ui.theme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.material3.MaterialTheme
 
 /**
  * Contexto visual único para componentes compartilhados.
@@ -22,6 +23,30 @@ fun ProvideExaltedVisualTemplate(
 ) {
     CompositionLocalProvider(
         LocalExaltedVisualTemplate provides template,
-        content = content
+        content = {
+            MaterialTheme(
+                colorScheme = MaterialTheme.colorScheme.copy(
+                    primary = template.accent,
+                    onPrimary = corTextoContraste(template.accent),
+                    primaryContainer = template.surfaceVariant,
+                    onPrimaryContainer = template.onSurface,
+                    secondary = template.metalShine,
+                    onSecondary = corTextoContraste(template.metalShine),
+                    secondaryContainer = template.surfaceVariant,
+                    onSecondaryContainer = template.onSurface,
+                    tertiary = template.accentBright,
+                    onTertiary = corTextoContraste(template.accentBright),
+                    background = template.surface,
+                    onBackground = template.onSurface,
+                    surface = template.surface,
+                    onSurface = template.onSurface,
+                    surfaceVariant = template.surfaceVariant,
+                    onSurfaceVariant = template.onSurface,
+                    outline = template.outline,
+                    outlineVariant = template.divider
+                ),
+                content = content
+            )
+        }
     )
 }
