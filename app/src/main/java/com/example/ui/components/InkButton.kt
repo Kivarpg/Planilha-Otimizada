@@ -2,7 +2,6 @@ package com.example.ui.components
 
 import com.example.ui.theme.ExaltedAccentBright
 
-import androidx.compose.ui.draw.drawBehind
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -68,10 +67,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Fill
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.scale
-import androidx.compose.ui.graphics.drawscope.translate
-import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.PathParser
@@ -89,8 +85,6 @@ import com.example.ui.theme.ExaltedMetalGoldDeep
 import com.example.ui.theme.ExaltedMetalGoldFlash
 import com.example.ui.theme.ExaltedMetalGoldShine
 import com.example.ui.theme.ExaltedOnSurface
-import com.example.ui.theme.ExaltedTextStroke
-import com.example.ui.theme.Dimens
 import com.example.ui.theme.corTextoContraste
 import com.example.ui.theme.ExaltVisualTemplate
 
@@ -319,7 +313,6 @@ fun InkButton(
         variant == InkButtonVariant.OnDark -> InkColors.textOnDark
         else -> InkColors.textOnLight
     }
-    val path = remember(brushIndex) { svgPath(InkBrushPaths.all[brushIndex.coerceIn(0, 2)]) }
     // APPROVED VISUAL CUSTOMIZATION
     // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
     // Área de toque ampliada para impedir cortes de texto e facilitar interação.
