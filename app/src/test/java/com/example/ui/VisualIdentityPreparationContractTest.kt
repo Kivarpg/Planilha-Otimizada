@@ -252,21 +252,23 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
-    fun `troop and npc labels use the active exalt palette`() {
+    fun `troop and npc labels use their active exalt palette`() {
         val troops = File("src/main/java/com/example/ui/tabs/BattleGroupsTab.kt").readText()
         val npcs = File("src/main/java/com/example/ui/tabs/NPCsTab.kt").readText()
         assertTrue(troops.contains("cursorColor = ExaltedAccentBright"))
         assertTrue(troops.contains("AppText(\"Tipo de tropa\", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)"))
-        assertTrue(npcs.contains("AppText(\"Lealdade\", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)"))
+        assertTrue(npcs.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(npcs.contains("AppText(\"Lealdade\", style = MaterialTheme.typography.labelMedium, color = visual.accentBright)"))
         assertFalse(troops.contains("ExaltedGold"))
         assertFalse(npcs.contains("ExaltedAmber"))
     }
 
     @Test
-    fun `encounter header inputs follow active exalt palette in both layouts`() {
+    fun `encounter header inputs follow scoped exalt palette in both layouts`() {
         val encounter = File("src/main/java/com/example/ui/tabs/EncounterGeneratorTab.kt").readText()
-        assertTrue(encounter.split("cursorColor = ExaltedAccentBright,").size >= 3)
-        assertTrue(encounter.split("checkedColor = ExaltedAccentBright,").size >= 3)
+        assertTrue(encounter.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(encounter.split("colors = exaltedTextFieldColors()").size >= 3)
+        assertTrue(encounter.split("checkedColor = visual.accentBright,").size >= 3)
         assertFalse(encounter.contains("cursorColor = ExaltedGold,"))
         assertFalse(encounter.contains("checkedColor = ExaltedAmber,"))
     }
@@ -302,10 +304,12 @@ class VisualIdentityPreparationContractTest {
         val merits = File("src/main/java/com/example/ui/tabs/MeritsTab.kt").readText()
         val equipment = File("src/main/java/com/example/ui/tabs/EquipmentTab.kt").readText()
         assertTrue(sorcery.contains("tint = ExaltedAccentBright, modifier = Modifier.size(18.dp)"))
-        assertTrue(merits.contains("color = ExaltedAccentBright,\n                    fontWeight = FontWeight.Bold,\n                    textAlign = TextAlign.Center"))
-        assertTrue(equipment.contains("selectedColor = com.example.ui.theme.ExaltedAccentBright"))
-        assertTrue(equipment.contains("cursorColor = com.example.ui.theme.ExaltedAccentBright"))
-        assertTrue(equipment.contains("if (isSelected) com.example.ui.theme.ExaltedAccentBright else ExaltedOutline"))
+        assertTrue(merits.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(merits.contains("color = visual.accentBright"))
+        assertTrue(equipment.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(equipment.contains("selectedColor = visual.accentBright"))
+        assertTrue(equipment.contains("colors = exaltedTextFieldColors()"))
+        assertTrue(equipment.contains("if (isSelected) visual.accentBright else visual.outline"))
     }
 
     @Test
@@ -315,17 +319,37 @@ class VisualIdentityPreparationContractTest {
         assertTrue(sorcery.contains("color = if (desbloqueado) ExaltedAccentBright else ExaltedMuted"))
         assertTrue(sorcery.contains("checkedColor = ExaltedAccentBright"))
         assertTrue(sorcery.contains("border = BorderStroke(1.dp, if (desbloqueado) ExaltedAccentBright"))
-        assertTrue(equipment.contains("color = com.example.ui.theme.ExaltedAccentBright,\n                fontWeight = FontWeight.Bold"))
+        assertTrue(equipment.contains("color = visual.accentBright"))
+        assertTrue(equipment.contains("titleContentColor = visual.onSurface"))
+        assertTrue(equipment.contains("textContentColor = visual.onSurface"))
     }
 
     @Test
-    fun `merits and equipment totals wrap with active palette`() {
+    fun `merits and equipment totals wrap with scoped active palette`() {
         val merits = File("src/main/java/com/example/ui/tabs/MeritsTab.kt").readText()
         val equipment = File("src/main/java/com/example/ui/tabs/EquipmentTab.kt").readText()
         assertTrue(merits.contains("text = \"Total de Pontos de Mérito:"))
-        assertTrue(merits.contains("color = ExaltedAccentBright,\n                    textAlign = TextAlign.Center,\n                    maxLines = 3"))
+        assertTrue(merits.contains("color = visual.accentBright,\n                    textAlign = TextAlign.Center,\n                    maxLines = 3"))
         assertTrue(equipment.contains("text = \"Motes Comitados:"))
-        assertTrue(equipment.contains("color = com.example.ui.theme.ExaltedAccentBright,\n                    textAlign = TextAlign.Center,\n                    maxLines = 3"))
+        assertTrue(equipment.contains("color = visual.accentBright,\n                    textAlign = TextAlign.Center,\n                    maxLines = 3"))
+    }
+
+    @Test
+    fun `tabs six through eleven use the safe scoped visual foundation`() {
+        val merits = File("src/main/java/com/example/ui/tabs/MeritsTab.kt").readText()
+        val equipment = File("src/main/java/com/example/ui/tabs/EquipmentTab.kt").readText()
+        val charms = File("src/main/java/com/example/ui/tabs/CharmsTab.kt").readText()
+        val summary = File("src/main/java/com/example/ui/tabs/SummaryComponents.kt").readText()
+        val npcs = File("src/main/java/com/example/ui/tabs/NPCsTab.kt").readText()
+        val encounter = File("src/main/java/com/example/ui/tabs/EncounterGeneratorTab.kt").readText()
+
+        listOf(merits, equipment, charms, summary, npcs, encounter).forEach { source ->
+            assertTrue(source.contains("LocalExaltedVisualTemplate.current"))
+        }
+        assertTrue(equipment.contains("colors = exaltedTextFieldColors()"))
+        assertTrue(encounter.contains("colors = exaltedTextFieldColors()"))
+        assertTrue(encounter.contains("onClick = gerarNpcDaInterface"))
+        assertFalse(encounter.contains(".background(ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))"))
     }
 
     @Test
