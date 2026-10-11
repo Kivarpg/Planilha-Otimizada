@@ -193,3 +193,11 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Combate: cursor, rotulos de vitalidade, bordas das caixas extras e titulos do dialogo de configuracao usam a cor ativa; cores semanticas de dano permanecem preservadas.
 - Atributos: rotulo Total acompanha a cor ativa do tipo.
 - Teste de contrato estatico adicionado. Compilacao e validacao visual em dispositivo pendentes.
+
+## Preparacao Exalted.862 — Varredura estatica das 15 abas
+- Auditados os 15 arquivos *Tab.kt quanto a referencias fixas ExaltedGold/ExaltedAmber fora de imports.
+- BattleGroupsTab: cursor e titulos de tropa, entrada manual e ataque passaram a usar ExaltedAccentBright.
+- NPCsTab: titulo Lealdade passou a usar ExaltedAccentBright.
+- Removidos imports de paleta fixa obsoletos em seis abas, sem alterar logica.
+- Acrescentados testes de contrato estatico para os controles de tropas e NPCs.
+- Esta auditoria e apenas de codigo-fonte: nao substitui capturas de tela, testes de sobreposicao ou verificacao de dispositivo. Compilacao pendente.
