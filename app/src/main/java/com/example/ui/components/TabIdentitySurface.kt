@@ -44,10 +44,10 @@ fun Modifier.exaltedSectionPanel(
         width = 1.dp,
         brush = Brush.linearGradient(
             listOf(
-                ExaltedStructuralMetalDeep.copy(alpha = 0.72f),
-                ExaltedStructuralMetalShine.copy(alpha = 0.62f),
-                ExaltedOutline.copy(alpha = 0.52f),
-                ExaltedStructuralMetalDeep.copy(alpha = 0.72f)
+                ExaltedStructuralMetalDeep.copy(alpha = 0.94f),
+                ExaltedAccentBright.copy(alpha = 0.78f),
+                ExaltedStructuralMetalShine.copy(alpha = 0.74f),
+                ExaltedStructuralMetalDeep.copy(alpha = 0.94f)
             )
         ),
         shape = RoundedCornerShape(8.dp)
