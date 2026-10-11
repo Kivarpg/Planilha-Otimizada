@@ -76,8 +76,9 @@ class VisualIdentityPreparationContractTest {
         assertTrue(textControls.contains("LocalExaltedVisualTemplate.current"))
         assertFalse(search.contains("ExaltedGold"))
         assertFalse(search.contains("ExaltedAmber"))
-        assertTrue(combatTrack.contains("visualTemplate?.accent ?: ExaltedAccentBright"))
-        assertTrue(combatTrack.contains("visualTemplate?.metalShine ?: ExaltedAccentBright"))
+        assertTrue(combatTrack.contains("visualTemplate ?: LocalExaltedVisualTemplate.current"))
+        assertTrue(combatTrack.contains("resolvedVisual.accent"))
+        assertTrue(combatTrack.contains("resolvedVisual.metalShine"))
     }
 
     @Test
