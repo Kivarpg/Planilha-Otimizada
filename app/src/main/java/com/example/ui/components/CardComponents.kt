@@ -137,7 +137,12 @@ fun GildedCard(
             // Cantoneiras orientais em duas camadas: gravura angular discreta, sem imagens de fundo.
             val inset = 9.dp.toPx()
             val notch = 9.dp.toPx()
-            val engraving = accent.copy(alpha = .48f)
+            val engraving = when (motif) {
+                ExaltedVisualMotif.SOLAR -> accent.copy(alpha = .62f)
+                ExaltedVisualMotif.DRAGON_BLOODED -> deep.copy(alpha = .74f)
+                ExaltedVisualMotif.LUNAR -> accent.copy(alpha = .42f)
+                null -> accent.copy(alpha = .48f)
+            }
             drawLine(engraving, Offset(inset, inset + notch), Offset(inset + notch, inset), .9.dp.toPx())
             drawLine(engraving, Offset(size.width - inset - notch, inset), Offset(size.width - inset, inset + notch), .9.dp.toPx())
             drawLine(deep.copy(alpha = .62f), Offset(inset, size.height - inset - notch), Offset(inset + notch, size.height - inset), .9.dp.toPx())
