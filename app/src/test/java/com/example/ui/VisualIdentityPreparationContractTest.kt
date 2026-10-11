@@ -70,11 +70,12 @@ class VisualIdentityPreparationContractTest {
         val search = File("src/main/java/com/example/ui/components/SearchComponents.kt").readText()
         val textControls = File("src/main/java/com/example/ui/components/TextComponents.kt").readText()
         val combatTrack = File("src/main/java/com/example/ui/components/CombatTrackControls.kt").readText()
-        listOf(search, textControls, combatTrack).forEach { source ->
-            assertFalse(source.contains("ExaltedGold"))
-            assertFalse(source.contains("ExaltedAmber"))
-            assertTrue(source.contains("ExaltedAccentBright"))
-        }
+        assertTrue(search.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(search.contains("visual.accentBright"))
+        assertTrue(search.contains("exaltedTextFieldColors()"))
+        assertTrue(textControls.contains("LocalExaltedVisualTemplate.current"))
+        assertFalse(search.contains("ExaltedGold"))
+        assertFalse(search.contains("ExaltedAmber"))
         assertTrue(combatTrack.contains("visualTemplate?.accent ?: ExaltedAccentBright"))
         assertTrue(combatTrack.contains("visualTemplate?.metalShine ?: ExaltedAccentBright"))
     }
@@ -115,7 +116,8 @@ class VisualIdentityPreparationContractTest {
         val settings = File("src/main/java/com/example/ui/SheetScreenDialogs.kt").readText()
         val lifecycle = File("src/main/java/com/example/ui/SheetLifecycleDialogs.kt").readText()
         for (source in listOf(settings, lifecycle)) {
-            assertTrue(source.contains("ExaltedAccentBright"))
+            assertTrue(source.contains("LocalExaltedVisualTemplate.current"))
+            assertTrue(source.contains("visual.accentBright"))
             assertFalse(source.contains("ExaltedAmber"))
             assertFalse(source.contains("ExaltedGold"))
             assertTrue(source.contains("TextAlign.Center"))
@@ -129,7 +131,8 @@ class VisualIdentityPreparationContractTest {
         val dialogs = File("src/main/java/com/example/ui/components/DialogComponents.kt").readText()
         val counters = File("src/main/java/com/example/ui/components/CounterControls.kt").readText()
         assertFalse(dialogs.contains("ExaltedAmber"))
-        assertTrue(dialogs.contains("ExaltedAccentBright"))
+        assertTrue(dialogs.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(dialogs.contains("visual.accentBright"))
         assertTrue(dialogs.contains("verticalScroll(rememberScrollState())"))
         assertTrue(counters.contains("LocalExaltedVisualTemplate.current"))
         assertTrue(counters.contains("modifier = Modifier.fillMaxWidth(),"))
@@ -142,9 +145,9 @@ class VisualIdentityPreparationContractTest {
         val combatDialogs = File("src/main/java/com/example/ui/tabs/CombatTab.kt").readText()
         val sources = listOf(commonDialogs, searchDialogs, dialogs, lifecycleDialogs, combatDialogs)
         for (source in sources) {
-            if (source.contains("containerColor = ExaltedDarkSurface") || source.contains("containerColor = ExaltedDarkSurfaceVariant")) {
-                assertTrue(source.contains("titleContentColor = ExaltedOnSurface"))
-                assertTrue(source.contains("textContentColor = ExaltedOnSurface"))
+            if (source.contains("containerColor = visual.surface") || source.contains("containerColor = visual.surfaceVariant")) {
+                assertTrue(source.contains("titleContentColor = visual.onSurface"))
+                assertTrue(source.contains("textContentColor = visual.onSurface"))
             }
         }
     }
@@ -304,7 +307,8 @@ class VisualIdentityPreparationContractTest {
         val sorcery = File("src/main/java/com/example/ui/tabs/FeiticosTab.kt").readText()
         val merits = File("src/main/java/com/example/ui/tabs/MeritsTab.kt").readText()
         val equipment = File("src/main/java/com/example/ui/tabs/EquipmentTab.kt").readText()
-        assertTrue(sorcery.contains("tint = ExaltedAccentBright, modifier = Modifier.size(18.dp)"))
+        assertTrue(sorcery.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(sorcery.contains("tint = visual.accentBright, modifier = Modifier.size(18.dp)"))
         assertTrue(merits.contains("LocalExaltedVisualTemplate.current"))
         assertTrue(merits.contains("color = visual.accentBright"))
         assertTrue(equipment.contains("LocalExaltedVisualTemplate.current"))
@@ -317,9 +321,9 @@ class VisualIdentityPreparationContractTest {
     fun `sorcery circle controls and commitment dialog use active palette`() {
         val sorcery = File("src/main/java/com/example/ui/tabs/FeiticosTab.kt").readText()
         val equipment = File("src/main/java/com/example/ui/tabs/EquipmentTab.kt").readText()
-        assertTrue(sorcery.contains("color = if (desbloqueado) ExaltedAccentBright else ExaltedMuted"))
-        assertTrue(sorcery.contains("checkedColor = ExaltedAccentBright"))
-        assertTrue(sorcery.contains("border = BorderStroke(1.dp, if (desbloqueado) ExaltedAccentBright"))
+        assertTrue(sorcery.contains("color = if (desbloqueado) visual.accentBright else visual.muted"))
+        assertTrue(sorcery.contains("checkedColor = visual.accentBright"))
+        assertTrue(sorcery.contains("border = BorderStroke(1.dp, if (desbloqueado) visual.accentBright"))
         assertTrue(equipment.contains("color = visual.accentBright"))
         assertTrue(equipment.contains("titleContentColor = visual.onSurface"))
         assertTrue(equipment.contains("textContentColor = visual.onSurface"))
@@ -474,7 +478,7 @@ class VisualIdentityPreparationContractTest {
         assertTrue(lifecycleDialogs.contains("s.casta.displayName"))
         assertTrue(lifecycleDialogs.contains("text = s.nomeArquivo(),"))
         assertTrue(lifecycleDialogs.contains("maxLines = 2,\n                                    overflow = TextOverflow.Ellipsis"))
-        assertTrue(lifecycleDialogs.contains("color = ExaltedMuted,\n                                    maxLines = 2,\n                                    overflow = TextOverflow.Ellipsis"))
+        assertTrue(lifecycleDialogs.contains("color = visual.muted,\n                                    maxLines = 2,\n                                    overflow = TextOverflow.Ellipsis"))
         assertTrue(lifecycleDialogs.contains("viewModel.loadSheet(s)"))
         assertTrue(lifecycleDialogs.contains("onDeleteRequest(s)"))
     }
@@ -578,7 +582,7 @@ class VisualIdentityPreparationContractTest {
     fun `settings rows reserve remaining width for labels`() {
         assertTrue(dialogs.contains("AppText(label, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))"))
         assertTrue(dialogs.contains("AppText(\"Português\", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))"))
-        assertTrue(dialogs.contains("AppText(\"English\", color = ExaltedMuted, modifier = Modifier.weight(1f))"))
+        assertTrue(dialogs.contains("AppText(\"English\", color = visual.muted, modifier = Modifier.weight(1f))"))
         assertTrue(dialogs.contains("AppText(\"Vibração ao tocar\", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f).padding(start = 8.dp))"))
         assertTrue(dialogs.contains("AppText(\"Som ao tocar\", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f).padding(start = 8.dp))"))
         assertTrue(dialogs.contains("AppText(\"Modo Livre\", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))"))
