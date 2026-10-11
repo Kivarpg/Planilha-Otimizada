@@ -100,7 +100,7 @@ private fun ValorCalculadoCard(label: String, valor: Int, modifier: Modifier = M
             AppText(
                 text = label,
                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
-                color = MaterialTheme.colorScheme.onSurface,
+                color = visual.onSurface,
                 textAlign = TextAlign.Center,
                 maxLines = 2,
                 softWrap = true,
@@ -277,7 +277,7 @@ fun CombatTab(
         AppText(
             text = "Contador de iniciativa",
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Black),
-            color = MaterialTheme.colorScheme.onSurface,
+            color = visual.onSurface,
             textAlign = TextAlign.Center,
             maxLines = 2,
             softWrap = true,
@@ -563,7 +563,7 @@ private fun ConfiguracoesVitalidadeDialog(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            AppText("Penalidade ${box.penalidade}", color = MaterialTheme.colorScheme.onSurface)
+                            AppText("Penalidade ${box.penalidade}", color = visual.onSurface)
                             InkButton(label = "Remover", onClick = { viewModel.removeExtraHealthBox(box.id) }, size = InkButtonSize.Small, variant = InkButtonVariant.Danger)
                         }
                     }
@@ -581,7 +581,7 @@ private fun ConfiguracoesVitalidadeDialog(
                         AppText(
                             nivel,
                             modifier = Modifier.fillMaxWidth().padding(10.dp),
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = visual.onSurface
                         )
                     }
                 }
