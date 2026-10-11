@@ -279,17 +279,11 @@ val ExaltedSubtleGoldBorderBrush: Brush get() = Brush.linearGradient(
 // cor, local por local). Usa a fórmula de contraste relativo (WCAG), a
 // mesma base usada por ferramentas de acessibilidade de contraste.
 //
-// Nenhuma cor de fonte do app pode ser preta, e a fonte nunca pode ser da
-// mesma cor do botão em que está escrita. Por isso as únicas duas opções
-// candidatas são ExaltedGold (a cor da área ativa — dourado no Solar,
-// rubi no Sangue de Dragão, prata no Lunar) e ExaltedOnSurface (a cor
-// neutra dos menus/barra de rolagem). Em vez de decidir qual delas usar
-// por um limiar fixo de luminância do fundo (o que já se mostrou frágil:
-// bastou uma cor de área ficar um pouco mais escura pra cair do lado
-// errado do limiar e ficar parecida demais com a outra opção do mesmo
-// tom), calcula o contraste real contra as duas e escolhe a que de fato
-// contrasta melhor com o fundo recebido — continua correto qualquer que
-// seja o tom exato calibrado pra cada paleta.
+// O contraste automático compara um neutro claro com um neutro escuro.
+// Usar a própria cor temática como candidato de texto era estruturalmente
+// inseguro: num fundo dourado/prateado claro, ouro/prata continuavam quase
+// invisíveis. O neutro escuro só é escolhido quando oferece contraste real
+// superior, preservando legibilidade em estados selecionados e superfícies claras.
 private fun luminanciaRelativa(cor: Color): Float {
     fun canalLinear(c: Float): Float =
         if (c <= 0.03928f) c / 12.92f else Math.pow(((c + 0.055f) / 1.055f).toDouble(), 2.4).toFloat()
@@ -305,9 +299,15 @@ private fun razaoDeContraste(a: Color, b: Color): Float {
 }
 
 fun corTextoContraste(fundo: Color): Color {
-    return if (razaoDeContraste(fundo, ExaltedOnSurface) >= razaoDeContraste(fundo, ExaltedGold)) {
-        ExaltedOnSurface
+    // Contraste funcional precisa comparar um candidato claro e um escuro.
+    // A implementação anterior comparava branco com a própria cor de acento
+    // (ouro/rubi/prata); em fundos claros, especialmente Solar/Lunar, ambos
+    // podiam ter contraste muito baixo e o rótulo parecia desaparecer.
+    val claro = ExaltedOnSurface
+    val escuro = ExaltedBlack
+    return if (razaoDeContraste(fundo, claro) >= razaoDeContraste(fundo, escuro)) {
+        claro
     } else {
-        ExaltedGold
+        escuro
     }
 }
