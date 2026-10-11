@@ -68,7 +68,7 @@ internal fun SummaryAttributesSection(sheet: CharacterSheet) {
                                     text = "$attribute $rating",
                                     modifier = Modifier.weight(1f),
                                     style = if (compactPhone) MaterialTheme.typography.labelMedium else MaterialTheme.typography.bodyLarge,
-                                    color = ExaltedOnSurface,
+                                    color = visual.onSurface,
                                     maxFontSize = if (compactPhone) 12.sp else 16.sp,
                                     minFontSize = 8.sp,
                                     textAlign = androidx.compose.ui.text.style.TextAlign.Start
