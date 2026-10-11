@@ -40,8 +40,6 @@ import com.example.model.NpcEncontro
 import com.example.model.ArmorStatsTable
 import com.example.model.WeaponStatsTable
 import com.example.ui.theme.ExaltVisualTemplate
-import com.example.ui.theme.ExaltedGold
-import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.visualTemplateParaExaltado
 
 // Extraído de EncounterNpcCard.kt (refatoração de organização — pedido
@@ -180,7 +178,9 @@ internal fun NpcCardCarregarDialog(
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "Fechar", onClick = onDismiss, visualTemplate = visualTemplate)
         },
-        containerColor = visualTemplate.surfaceVariant
+        containerColor = visualTemplate.surfaceVariant,
+        titleContentColor = visualTemplate.accentBright,
+        textContentColor = visualTemplate.onSurface
     )
 }
 
@@ -604,7 +604,7 @@ private fun NpcMeritDetailsDialog(
 )
 
                 Spacer(modifier = Modifier.height(10.dp))
-                AppText("Graduação:", fontWeight = FontWeight.Bold, color = ExaltedGold,
+                AppText("Graduação:", fontWeight = FontWeight.Bold, color = visualTemplate.accentBright,
                     forceStroke = true
 )
                 AppText(
@@ -616,7 +616,7 @@ private fun NpcMeritDetailsDialog(
                 val preRequisitos = definicao?.preRequisitos.orEmpty()
                 if (preRequisitos.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(10.dp))
-                    AppText("Pré-requisitos:", fontWeight = FontWeight.Bold, color = ExaltedGold,
+                    AppText("Pré-requisitos:", fontWeight = FontWeight.Bold, color = visualTemplate.accentBright,
                     forceStroke = true
 )
                     preRequisitos.forEach { requisito ->
@@ -629,7 +629,7 @@ private fun NpcMeritDetailsDialog(
                 val custos = definicao?.custosPermitidos.orEmpty()
                 if (custos.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(10.dp))
-                    AppText("Custo:", fontWeight = FontWeight.Bold, color = ExaltedGold,
+                    AppText("Custo:", fontWeight = FontWeight.Bold, color = visualTemplate.accentBright,
                     forceStroke = true
 )
                     AppText(
