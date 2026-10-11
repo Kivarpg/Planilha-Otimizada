@@ -50,9 +50,6 @@ import com.example.ui.components.SkillSearchModal
 import com.example.search.SkillFilter
 import com.example.search.SkillSearchEngine
 import com.example.ui.theme.ExaltedDangerCore
-import com.example.ui.theme.visual.surfaceVariant
-import com.example.ui.theme.visual.accentBright
-import com.example.ui.theme.visual.muted
 import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 
