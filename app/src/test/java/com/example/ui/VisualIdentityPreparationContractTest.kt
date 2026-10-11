@@ -58,6 +58,18 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `combat attributes and anima controls follow active exalt palette`() {
+        val combat = File("src/main/java/com/example/ui/tabs/CombatTab.kt").readText()
+        val attributes = File("src/main/java/com/example/ui/tabs/AttributesTab.kt").readText()
+        val personal = File("src/main/java/com/example/ui/tabs/PersonalDataTab.kt").readText()
+        assertTrue(combat.contains("color = ExaltedAccentBright.copy(alpha = 0.12f)"))
+        assertTrue(combat.contains("if (nivel <= sheet.essencia) ExaltedAccentBright"))
+        assertTrue(attributes.contains("ExaltedAccentBright.copy(alpha = 0.25f) else ExaltedDarkSurface"))
+        assertTrue(attributes.contains("if (favoritoInfo.ehCasta) ExaltedAccentBright else ExaltedOutline"))
+        assertTrue(personal.contains("cursorColor=ExaltedAccentBright,focusedTextColor"))
+    }
+
+    @Test
     fun `type palette covers remaining sorcery merits and equipment controls`() {
         val sorcery = File("src/main/java/com/example/ui/tabs/FeiticosTab.kt").readText()
         val merits = File("src/main/java/com/example/ui/tabs/MeritsTab.kt").readText()
