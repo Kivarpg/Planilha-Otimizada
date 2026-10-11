@@ -256,7 +256,7 @@ fun MeritsTab(
             title = {
                 AppText(
                     m.nome,
-                    color = ExaltedAmber,
+                    color = ExaltedAccentBright,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
@@ -284,7 +284,7 @@ fun MeritsTab(
             title = {
                 AppText(
                     "Editar Mérito",
-                    color = ExaltedAmber,
+                    color = ExaltedAccentBright,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
