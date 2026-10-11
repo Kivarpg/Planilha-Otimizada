@@ -252,11 +252,12 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
-    fun `troop and npc labels use their active exalt palette`() {
+    fun `troop and npc labels use their scoped exalt palette`() {
         val troops = File("src/main/java/com/example/ui/tabs/BattleGroupsTab.kt").readText()
         val npcs = File("src/main/java/com/example/ui/tabs/NPCsTab.kt").readText()
-        assertTrue(troops.contains("cursorColor = ExaltedAccentBright"))
-        assertTrue(troops.contains("AppText(\"Tipo de tropa\", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)"))
+        assertTrue(troops.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(troops.contains("val coresCampoTexto = exaltedTextFieldColors()"))
+        assertTrue(troops.contains("AppText(\"Tipo de tropa\", style = MaterialTheme.typography.labelMedium, color = visual.accentBright)"))
         assertTrue(npcs.contains("LocalExaltedVisualTemplate.current"))
         assertTrue(npcs.contains("AppText(\"Lealdade\", style = MaterialTheme.typography.labelMedium, color = visual.accentBright)"))
         assertFalse(troops.contains("ExaltedGold"))
@@ -400,6 +401,27 @@ class VisualIdentityPreparationContractTest {
         assertTrue(tab.contains("BoxNames.PersonalData.NAME, Modifier.weight(1f)"))
         assertTrue(tab.contains("BoxNames.PersonalData.PLAYER, Modifier.weight(1f)"))
         assertTrue(tab.contains("BoxNames.PersonalData.CONCEPT, Modifier.weight(1f)"))
+    }
+
+    @Test
+    fun `tabs twelve through fifteen consume scoped identity without replacing functional canvases`() {
+        val conflict = File("src/main/java/com/example/iniciativas/IniciativasTab.kt").readText()
+        val conflictComponents = File("src/main/java/com/example/iniciativas/IniciativasTabComponents.kt").readText()
+        val connections = File("src/main/java/com/example/iniciativas/IniciativasConnectionsCanvas.kt").readText()
+        val troops = File("src/main/java/com/example/ui/tabs/BattleGroupsTab.kt").readText()
+        val map = File("src/main/java/com/example/ui/tabs/MapTab.kt").readText()
+        val translator = File("src/main/java/com/example/oldrealm/TranslatorTab.kt").readText()
+
+        listOf(conflict, conflictComponents, connections, troops, map, translator).forEach { source ->
+            assertTrue(source.contains("LocalExaltedVisualTemplate"))
+        }
+        assertTrue(conflict.contains("colors = exaltedTextFieldColors()"))
+        assertTrue(troops.contains("val coresCampoTexto = exaltedTextFieldColors()"))
+        assertTrue(map.contains("val mapAccent = if (gold == ExaltedAccentBright) visual.accentBright else gold"))
+        assertTrue(translator.contains("val resolvedGold = if (gold == com.example.ui.theme.ExaltedAccentBright) visual.accentBright else gold"))
+        assertTrue(connections.contains("Canvas(modifier)"))
+        assertTrue(map.contains("androidx.compose.foundation.Canvas"))
+        assertTrue(translator.contains("drawWithContent"))
     }
 
     @Test
