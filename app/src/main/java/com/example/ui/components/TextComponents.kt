@@ -286,7 +286,9 @@ fun SectionHeader(title: String, modifier: Modifier = Modifier) {
             maxFontSize = 18.sp,
             minFontSize = 11.sp,
             letterSpacing = 1.35.sp,
-            color = ExaltedOnSurface,
+            // Títulos das seções usam o metal claro da identidade ativa;
+            // o texto de conteúdo permanece neutro para legibilidade.
+            color = ExaltedAccentBright,
             textAlign = TextAlign.Start,
             modifier = Modifier.weight(1f, fill = true)
         )
