@@ -145,7 +145,28 @@ internal fun SheetTabsBar(
                 }
             }
         }
-        if (showsProgressStrip) {
+        if (showsProgressStrip && selectedTabIndex == 3 && (compact || enlargedText)) {
+            // Em telas estreitas, dois saldos lado a lado truncavam o texto.
+            // Mantemos os mesmos valores e apenas distribuimos em duas linhas.
+            Column(
+                Modifier.fillMaxWidth().background(ExaltedDarkSurface.copy(alpha = .72f))
+                    .padding(horizontal = 12.dp, vertical = 5.dp),
+                verticalArrangement = Arrangement.spacedBy(3.dp)
+            ) {
+                AppText(
+                    text = if (sheet.planilhaConcluida) "Experiência Restante: ${sheet.experienciaDisponivel()}" else "Pontos de Bônus: $pbExibido / 15",
+                    style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Black),
+                    color = if (!sheet.planilhaConcluida && pbEmAlerta) ExaltedAlertaTexto else ExaltedAccentBright,
+                    maxLines = 2, softWrap = true
+                )
+                AppText(
+                    text = "Pontos de Habilidade: $pontosHabilidadeRestantes / $totalPontosHabilidade",
+                    style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                    color = ExaltedAccentBright,
+                    maxLines = 2, softWrap = true
+                )
+            }
+        } else if (showsProgressStrip) {
             Row(
                 Modifier.fillMaxWidth().height(if (enlargedText) 34.dp else 25.dp).background(ExaltedDarkSurface.copy(alpha = .72f)),
                 verticalAlignment = Alignment.CenterVertically
