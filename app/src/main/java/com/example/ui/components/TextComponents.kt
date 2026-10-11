@@ -280,7 +280,7 @@ fun SectionHeader(title: String, modifier: Modifier = Modifier) {
                 ExaltedDarkSurfaceVariant.copy(alpha = .70f)
             )))
             .border(width = 1.dp, brush = Brush.horizontalGradient(listOf(ExaltedStructuralMetalShine.copy(alpha=.72f), ExaltedAccentBright.copy(alpha=.65f), ExaltedDivider.copy(alpha=.48f), Color.Transparent)), shape = RectangleShape)
-            .padding(horizontal = 14.dp, vertical = 12.dp),
+            .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // O antigo marcador temático à esquerda (incluindo o pequeno
