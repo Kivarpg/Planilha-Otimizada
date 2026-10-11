@@ -162,3 +162,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - O seletor de prioridade dos grupos Fisicos, Sociais e Mentais agora separa o rotulo dos tres botoes e distribui 1º, 2º e 3º em larguras iguais.
 - Preservados os nomes, as prioridades e a chamada setGroupPriority(groupName, prio), sem mudancas de regras.
 - Acrescentado teste estatico de regressao. Compilacao e validacao visual pendentes.
+
+## Preparacao Exalted.855 — Abas Meritos e Equipamentos
+- Aba Meritos: o total de pontos recebe cor do acento ativo, alinhamento central, largura disponivel e ate tres linhas, sem alterar calculos ou limites.
+- Aba Equipamentos: o resumo de Motes Comitados recebe o mesmo tratamento de legibilidade e cor de acento ativa, sem mudar o calculo.
+- Teste estatico de regressao adicionado. Compilacao e avaliacao visual ainda pendentes.
+- Estas alteracoes nao representam remodelacao artistica completa das duas abas.
