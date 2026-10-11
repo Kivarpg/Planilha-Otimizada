@@ -43,6 +43,7 @@ import com.example.ui.components.feedbackClickable
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -335,6 +336,18 @@ fun InkButton(
         modifier = modifier
             .then(if (fillMaxWidth) Modifier.fillMaxWidth().height(height) else Modifier.widthIn(min = 48.dp, max = width).height(height))
             .graphicsLayer { scaleX = scale; scaleY = scale }
+            // Fundo de segurança: o controle continua visível mesmo quando
+            // a pincelada SVG é parcialmente recortada em layouts compactos.
+            .background(
+                Brush.horizontalGradient(
+                    listOf(
+                        if (enabled) resolvedGradient.start else InkColors.disabledGray,
+                        if (enabled) resolvedGradient.mid else InkColors.disabledGray,
+                        if (enabled) resolvedGradient.end else InkColors.disabledGray
+                    )
+                ),
+                androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
+            )
             .feedbackClickable(
                 interactionSource = interactionSource,
                 indication = null, // o próprio scale + gradiente já dá o feedback; ripple padrão ficaria estranho por cima da pincelada
