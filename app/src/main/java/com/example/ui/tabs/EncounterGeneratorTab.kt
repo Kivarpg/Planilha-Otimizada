@@ -586,9 +586,8 @@ fun EncounterGeneratorTab(
                                                 )
                                             }
                         
-                                            // A imagem 0000.png substitui visualmente o antigo botão
-                                            // "Gerar NPC", mantendo exatamente o mesmo callback e
-                                            // o mesmo estado de habilitação durante a geração.
+                                            // Controle Gerar NPC com texto e moldura visíveis;
+                                            // preserva o callback e o estado de habilitação.
                                             Box(
                                                 modifier = Modifier
                                                     .size(64.dp)
