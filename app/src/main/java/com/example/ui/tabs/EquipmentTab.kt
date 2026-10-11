@@ -124,7 +124,7 @@ fun EquipmentTab(
                 unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
                 focusedLabelColor = com.example.ui.theme.ExaltedAccentBright,
                 unfocusedLabelColor = ExaltedMuted,
-                cursorColor = ExaltedGold,
+                cursorColor = com.example.ui.theme.ExaltedAccentBright,
                 focusedTextColor = ExaltedOnSurface,
                 unfocusedTextColor = ExaltedOnSurface,
                 focusedContainerColor = com.example.ui.theme.ExaltedDarkSurface,
@@ -191,7 +191,7 @@ internal fun MoteSourceDialog(
                         RadioButton(
                             selected = modo == chave,
                             onClick = null,
-                            colors = RadioButtonDefaults.colors(selectedColor = ExaltedAmber)
+                            colors = RadioButtonDefaults.colors(selectedColor = com.example.ui.theme.ExaltedAccentBright)
                         )
                         AppText(rotulo, color = MaterialTheme.colorScheme.onSurface)
                     }
@@ -282,15 +282,15 @@ internal fun CategoryChipGroup(options: List<String>, selected: String, onSelect
                 modifier = Modifier
                     .widthIn(min = 92.dp)
                     .padding(vertical = 2.dp),
-                color = if (isSelected) ExaltedAmber.copy(alpha = 0.22f) else ExaltedDarkSurfaceVariant,
+                color = if (isSelected) com.example.ui.theme.ExaltedAccentBright.copy(alpha = 0.22f) else ExaltedDarkSurfaceVariant,
                 shape = MaterialTheme.shapes.small,
-                border = androidx.compose.foundation.BorderStroke(1.dp, if (isSelected) ExaltedGold else ExaltedOutline),
+                border = androidx.compose.foundation.BorderStroke(1.dp, if (isSelected) com.example.ui.theme.ExaltedAccentBright else ExaltedOutline),
                 onClick = { onSelect(option) }
             ) {
                 AutoSizeText(
                     text = option,
                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                    color = if (isSelected) ExaltedGold else MaterialTheme.colorScheme.onSurface,
+                    color = if (isSelected) com.example.ui.theme.ExaltedAccentBright else MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
                     maxFontSize = MaterialTheme.typography.labelMedium.fontSize,
                     minFontSize = 8.sp,
