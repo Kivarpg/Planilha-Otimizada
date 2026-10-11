@@ -120,7 +120,12 @@ fun GildedCard(
             // O degradê do fundo é responsabilidade da cor da superfície do Card.
             val outer = 1.35.dp.toPx()
             val inner = 5.dp.toPx()
-            val flourish = 18.dp.toPx()
+            val flourish = when (motif) {
+                ExaltedVisualMotif.SOLAR -> 22.dp.toPx()
+                ExaltedVisualMotif.DRAGON_BLOODED -> 18.dp.toPx()
+                ExaltedVisualMotif.LUNAR -> 15.dp.toPx()
+                null -> 18.dp.toPx()
+            }
             // Filetes superior/inferior em degradê metálico.
             drawLine(Brush.horizontalGradient(listOf(Color.Transparent, deep, accent, deep, Color.Transparent)), Offset(8.dp.toPx(),2.dp.toPx()), Offset(size.width-8.dp.toPx(),2.dp.toPx()), outer)
             drawLine(Brush.horizontalGradient(listOf(Color.Transparent, deep.copy(.45f), accent.copy(.48f), deep.copy(.45f), Color.Transparent)), Offset(12.dp.toPx(),size.height-2.dp.toPx()), Offset(size.width-12.dp.toPx(),size.height-2.dp.toPx()), 1.dp.toPx())
