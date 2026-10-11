@@ -23,7 +23,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Icon
@@ -49,9 +48,7 @@ import com.example.ui.components.SectionHeader
 import com.example.ui.components.GildedCard
 import com.example.ui.components.GildedDialogButton
 import com.example.ui.components.GildedDialogTextButton
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 
 // VISUAL IDENTITY 314: remodelação específica desta aba; somente apresentação, sem novos campos.
@@ -61,6 +58,7 @@ fun MeritsTab(
     viewModel: SheetViewModel,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     var meritMenu by remember { mutableStateOf<Merito?>(null) }
     var meritToEdit by remember { mutableStateOf<Merito?>(null) }
     val ratingStyle by viewModel.ratingStyle.collectAsState()
@@ -94,7 +92,7 @@ fun MeritsTab(
                     text = "Total de Pontos de Mérito: $totalMeritPoints / $orcamentoMeritos",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     textAlign = TextAlign.Center,
                     maxLines = 3,
                     softWrap = true,
@@ -111,7 +109,7 @@ fun MeritsTab(
                     AppText(
                         text = "Pontos Restantes: $freeMeritsRemaining",
                         style = MaterialTheme.typography.bodySmall,
-                        color = ExaltedAccentBright
+                        color = visual.accentBright
                     )
                 }
             }
@@ -122,7 +120,7 @@ fun MeritsTab(
                 text = "Além disso: 5 pontos de Méritos Adicionais para distribuir entre Apoio, " +
                     "Comando, Contatos, Seguidores, Influência, Idioma, Recursos e Vassalos.",
                 style = MaterialTheme.typography.bodySmall,
-                color = ExaltedMuted,
+                color = visual.muted,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
@@ -131,8 +129,7 @@ fun MeritsTab(
         var showSelecaoDialog by remember { mutableStateOf(false) }
 
         GildedCard(
-            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(6),
-            colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(6)
         ) {
             Column(
                 modifier = Modifier
@@ -178,7 +175,7 @@ fun MeritsTab(
                                     Icon(
                                         imageVector = Icons.Outlined.Star,
                                         contentDescription = null,
-                                        tint = ExaltedAccentBright,
+                                        tint = visual.accentBright,
                                         modifier = Modifier.size(16.dp)
                                     )
                                 }
@@ -189,14 +186,14 @@ fun MeritsTab(
                                         fontWeight = FontWeight.Bold,
                                         maxFontSize = MaterialTheme.typography.titleMedium.fontSize,
                                         minFontSize = 14.sp,
-                                        color = ExaltedAccentBright
+                                        color = visual.accentBright
                                     )
                                     if (m.detalhe.isNotBlank() && m.origemAutomatica != "Idioma") {
                                         AppText(
                                             text = "– ${m.detalhe}",
                                             style = MaterialTheme.typography.bodySmall,
                                             fontSize = 11.sp,
-                                            color = ExaltedMuted,
+                                            color = visual.muted,
                                             maxLines = 2,
                                             overflow = TextOverflow.Ellipsis
                                         )
@@ -205,7 +202,7 @@ fun MeritsTab(
                                             text = "(${m.detalhe})",
                                             style = MaterialTheme.typography.bodySmall,
                                             fontSize = 11.sp,
-                                            color = ExaltedMuted,
+                                            color = visual.muted,
                                             maxLines = 1,
                                             overflow = TextOverflow.Ellipsis
                                         )
@@ -233,7 +230,7 @@ fun MeritsTab(
                     Surface(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(8.dp),
-                        color = ExaltedDarkSurfaceVariant
+                        color = visual.surfaceVariant
                     ) { cardContent() }
                 } else {
                     LongPressCard(
@@ -253,7 +250,7 @@ fun MeritsTab(
             title = {
                 AppText(
                     m.nome,
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
@@ -268,7 +265,9 @@ fun MeritsTab(
                 }
             },
             confirmButton = {},
-            containerColor = ExaltedDarkSurfaceVariant
+            containerColor = visual.surfaceVariant,
+            titleContentColor = visual.onSurface,
+            textContentColor = visual.onSurface
         )
     }
 
@@ -281,7 +280,7 @@ fun MeritsTab(
             title = {
                 AppText(
                     "Editar Mérito",
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
@@ -307,7 +306,9 @@ fun MeritsTab(
             confirmButton = {
                 GildedDialogTextButton(text = "Cancelar", onClick = { meritToEdit = null })
             },
-            containerColor = ExaltedDarkSurfaceVariant
+            containerColor = visual.surfaceVariant,
+            titleContentColor = visual.onSurface,
+            textContentColor = visual.onSurface
         )
     }
 }
