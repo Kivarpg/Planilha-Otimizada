@@ -85,10 +85,21 @@ class EncounterRecentUiRegressionContractTest {
             ?: card.indexOf("val feiticosDisponiveis", start)
         val section = card.substring(start, end)
         assertTrue(section.contains("color = visualTemplate.accentBright"))
+        assertTrue(section.contains(".background(visualTemplate.surfaceVariant)"))
+        assertTrue(section.contains(".border(2.dp, visualTemplate.accentBright"))
         assertTrue(section.contains("forEachIndexed { indice, grupo ->"))
         assertTrue(section.contains("val nomeExibicao = \"\${indice + 1}. \${formatGroupedEncounterCharmName(grupo)}\""))
         assertTrue(section.contains("color = visualTemplate.onSurface"))
         assertTrue(!section.contains("val nomeExibicao = \"• "))
+    }
+
+
+    @Test fun `npc generation control remains explicit and readable in both header layouts`() {
+        val occurrences = Regex("label = \\"Gerar NPC\\"").findAll(generator).count()
+        assertTrue(occurrences >= 2)
+        assertTrue(generator.contains("customWidth = 136.dp"))
+        assertTrue(generator.contains("customHeight = 64.dp"))
+        assertTrue(!generator.contains("ícone 0000.png dispara"))
     }
 
 
