@@ -59,6 +59,20 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `sheet settings and lifecycle dialogs use the selected Exalt palette`() {
+        val settings = File("src/main/java/com/example/ui/SheetScreenDialogs.kt").readText()
+        val lifecycle = File("src/main/java/com/example/ui/SheetLifecycleDialogs.kt").readText()
+        for (source in listOf(settings, lifecycle)) {
+            assertTrue(source.contains("ExaltedAccentBright"))
+            assertFalse(source.contains("ExaltedAmber"))
+            assertFalse(source.contains("ExaltedGold"))
+            assertTrue(source.contains("TextAlign.Center"))
+        }
+        assertTrue(settings.contains("InteractionFeedback.setHapticEnabled"))
+        assertTrue(lifecycle.contains("viewModel.loadSheet(s)"))
+    }
+
+    @Test
     fun `shared dialogs and counters stay responsive and type aware`() {
         val dialogs = File("src/main/java/com/example/ui/components/DialogComponents.kt").readText()
         val counters = File("src/main/java/com/example/ui/components/CounterControls.kt").readText()
