@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -231,24 +232,26 @@ private fun AttributeGroupCard(
             Spacer(modifier = Modifier.height(5.dp))
 
             // Seletor de prioridade
-            FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                maxItemsInEachRow = 4
-            ) {
+            // Prioridade em linha propria: evita que o rotulo comprima
+            // os tres botoes nas menores larguras de tela.
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 AppText(
                     text = priorityLabel,
                     style = MaterialTheme.typography.bodySmall,
-                    color = ExaltedMuted,
-                    modifier = Modifier.align(Alignment.CenterVertically)
+                    color = ExaltedMuted
                 )
-                listOf("1º", "2º", "3º").forEach { prio ->
-                    PriorityBadge(
-                        text = prio,
-                        isSelected = currentPriority == prio,
-                        onClick = { viewModel.setGroupPriority(groupName, prio) }
-                    )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    listOf("1º", "2º", "3º").forEach { prio ->
+                        PriorityBadge(
+                            text = prio,
+                            isSelected = currentPriority == prio,
+                            onClick = { viewModel.setGroupPriority(groupName, prio) },
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
                 }
             }
 
