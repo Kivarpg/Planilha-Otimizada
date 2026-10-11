@@ -538,7 +538,7 @@ fun EncounterGeneratorTab(
                                         modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
                                         color = if (gerando) ExaltedMuted else ExaltedOnSurface,
                                         style = MaterialTheme.typography.labelMedium,
-                                        fontWeight = FontWeight.Bold,
+                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                         textAlign = TextAlign.Center,
                                         maxLines = 2
                                     )
@@ -618,7 +618,7 @@ fun EncounterGeneratorTab(
                                         modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
                                         color = if (gerando) ExaltedMuted else ExaltedOnSurface,
                                         style = MaterialTheme.typography.labelMedium,
-                                        fontWeight = FontWeight.Bold,
+                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                         textAlign = TextAlign.Center,
                                         maxLines = 2
                                     )
