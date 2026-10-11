@@ -240,25 +240,9 @@ fun GildedCard(
             drawLine(deep.copy(alpha = .62f), Offset(size.width - inset - notch, size.height - inset), Offset(size.width - inset, size.height - inset - notch), .9.dp.toPx())
             val cx=size.width/2f
             drawCircle(accent.copy(.30f), 2.6.dp.toPx(), Offset(cx,2.5.dp.toPx()))
-            // Assinatura ornamental do Exaltado no próprio componente, não só no fundo da aba.
-            when (motif) {
-                ExaltedVisualMotif.SOLAR -> {
-                    val cy=9.dp.toPx(); val r=3.2.dp.toPx()
-                    drawCircle(accent.copy(.55f),r,Offset(cx,cy),style=androidx.compose.ui.graphics.drawscope.Stroke(.8.dp.toPx()))
-                    drawLine(accent.copy(.45f),Offset(cx-9.dp.toPx(),cy),Offset(cx-r*1.5f,cy),.7.dp.toPx())
-                    drawLine(accent.copy(.45f),Offset(cx+r*1.5f,cy),Offset(cx+9.dp.toPx(),cy),.7.dp.toPx())
-                }
-                ExaltedVisualMotif.DRAGON_BLOODED -> {
-                    // Rubi/metal e cantos definem a linhagem; sem zigue-zague decorativo.
-                    val cy=8.dp.toPx(); val r=2.8.dp.toPx()
-                    val mark=androidx.compose.ui.graphics.Path().apply { moveTo(cx,cy-r); lineTo(cx+r,cy); lineTo(cx,cy+r); lineTo(cx-r,cy); close() }
-                    drawPath(mark, accent.copy(.52f), style=androidx.compose.ui.graphics.drawscope.Stroke(.8.dp.toPx()))
-                }
-                ExaltedVisualMotif.LUNAR -> {
-                    drawArc(accent.copy(.62f),205f,130f,false,Offset(cx-7.dp.toPx(),2.dp.toPx()),androidx.compose.ui.geometry.Size(14.dp.toPx(),10.dp.toPx()),style=androidx.compose.ui.graphics.drawscope.Stroke(.8.dp.toPx()))
-                }
-                null -> Unit // Template de NPC: a moldura usa apenas a paleta do NPC, sem o símbolo da ficha ativa.
-            }
+            // A paleta e as cantoneiras identificam o Tipo de Exaltado.
+            // Sem símbolos repetidos no topo de cada cartão.
+
         },
         colors = CardDefaults.cardColors(containerColor = surface.copy(alpha=.98f)),
         border = border ?: BorderStroke(1.25.dp, Brush.linearGradient(listOf(deep.copy(alpha=.82f),accent.copy(alpha=.86f),deep.copy(alpha=.82f)))),
