@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.example.model.*
 import com.example.ui.components.*
 import com.example.ui.theme.*
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 
 @Composable
@@ -28,9 +29,9 @@ internal fun CharmAbilityAndAcquiredSection(
     onShowDetail: (Encanto) -> Unit,
     onLongPress: (Encanto) -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
 GildedCard(
-    modifier = Modifier.fillMaxWidth(),
-    colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+    modifier = Modifier.fillMaxWidth()
 ) {
     Column(
         modifier = Modifier.fillMaxWidth().padding(14.dp),
@@ -101,7 +102,7 @@ if (sheet.charms.isEmpty()) {
     AppText(
         "Nenhum Encanto adquirido.",
         style = MaterialTheme.typography.bodySmall,
-        color = ExaltedMuted,
+        color = visual.muted,
         modifier = Modifier.padding(14.dp)
     )
 } else {
@@ -132,12 +133,12 @@ if (sheet.charms.isEmpty()) {
                     onToggleGaveta(nomeGaveta)
                 }
         ) {
-            AppText(if (expandida) "▾" else "▸", color = ExaltedGold, modifier = Modifier.padding(end = 6.dp))
+            AppText(if (expandida) "▾" else "▸", color = visual.accentBright, modifier = Modifier.padding(end = 6.dp))
             AppText(
                 "$nomeGaveta (${itensDaGaveta.size})",
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
-                color = ExaltedAccentBright
+                color = visual.accentBright
             )
         }
         if (expandida) {
