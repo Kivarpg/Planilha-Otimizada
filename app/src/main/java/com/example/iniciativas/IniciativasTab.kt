@@ -32,7 +32,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import com.example.ui.components.AppText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -51,11 +50,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ui.components.GildedDialogButton
 import com.example.ui.components.SectionHeader
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedAmber
-import com.example.ui.theme.ExaltedGold
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedOnSurface
+import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.components.exaltedTextFieldColors
 import com.example.ui.theme.ExaltedTextStroke
 
 private val GutterWidth = 28.dp
@@ -123,6 +119,7 @@ fun IniciativasTab(
     historico: List<HistoricoCombateEntry> = emptyList(),
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val state by controller.state.collectAsState()
     val ordenados = controller.participantesOrdenados()
     val elegiveis = controller.idsElegiveis()
@@ -154,7 +151,7 @@ fun IniciativasTab(
             horizontalArrangement = Arrangement.Center,
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            AppText("Rodada ${state.rodada}", fontWeight = FontWeight.Bold, color = ExaltedGold)
+            AppText("Rodada ${state.rodada}", fontWeight = FontWeight.Bold, color = visual.accentBright)
             Spacer(Modifier.width(12.dp))
             InkButton(
                 label = "Término",
@@ -167,7 +164,7 @@ fun IniciativasTab(
             InkButton(
                 onClick = { mostrarHistorico = true },
                 modifier = Modifier.size(48.dp)) {
-                Icon(Icons.Default.History, "Log de combate", tint = ExaltedGold, modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.History, "Log de combate", tint = visual.accentBright, modifier = Modifier.size(18.dp))
             }
         }
         Spacer(Modifier.height(8.dp))
@@ -177,7 +174,7 @@ fun IniciativasTab(
             Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
                 AppText(
                     "Nenhum combatente cadastrado",
-                    color = ExaltedMuted,
+                    color = visual.muted,
                     textAlign = TextAlign.Center
                 )
             }
@@ -264,7 +261,7 @@ fun IniciativasTab(
                     if (temDeclaracao) "Pressione [Ataque] para travar o alvo"
                     else "Toque no alvo e pressione [Ataque]",
                     style = MaterialTheme.typography.labelMedium,
-                    color = ExaltedMuted,
+                    color = visual.muted,
                     textAlign = TextAlign.Center
                 )
                 Spacer(Modifier.height(6.dp))
@@ -309,7 +306,7 @@ fun IniciativasTab(
                 AppText(
                     "Escolha o vencedor da Colisão",
                     style = MaterialTheme.typography.labelMedium,
-                    color = ExaltedAmber,
+                    color = visual.accent,
                     textAlign = TextAlign.Center
                 )
                 Spacer(Modifier.height(6.dp))
@@ -332,7 +329,7 @@ fun IniciativasTab(
                 AppText(
                     "Escolha o tipo de ataque",
                     style = MaterialTheme.typography.labelMedium,
-                    color = ExaltedAmber,
+                    color = visual.accent,
                     textAlign = TextAlign.Center
                 )
                 Spacer(Modifier.height(6.dp))
@@ -355,7 +352,7 @@ fun IniciativasTab(
                 AppText(
                     "Resultado do ataque",
                     style = MaterialTheme.typography.labelMedium,
-                    color = ExaltedAmber,
+                    color = visual.accent,
                     textAlign = TextAlign.Center
                 )
                 Spacer(Modifier.height(6.dp))
@@ -411,7 +408,7 @@ fun IniciativasTab(
                     else ->
                         "Fulminante falhou: sem transferência"
                 }
-                AppText(dica, style = MaterialTheme.typography.labelMedium, color = ExaltedMuted, textAlign = TextAlign.Center)
+                AppText(dica, style = MaterialTheme.typography.labelMedium, color = visual.muted, textAlign = TextAlign.Center)
                 Spacer(Modifier.height(6.dp))
                 GildedDialogButton(
                     text = "Próximo",
@@ -425,7 +422,7 @@ fun IniciativasTab(
                 AppText(
                     "Ajuste a transferência deste alvo e confirme Sucesso ou Falha",
                     style = MaterialTheme.typography.labelMedium,
-                    color = ExaltedMuted,
+                    color = visual.muted,
                     textAlign = TextAlign.Center
                 )
                 Spacer(Modifier.height(6.dp))
@@ -465,7 +462,7 @@ fun IniciativasTab(
             InkButton(
                 onClick = { mostrarCadastro = true },
                 modifier = Modifier.size(40.dp)) {
-                Icon(Icons.Default.Add, "Adicionar combatente", tint = ExaltedGold)
+                Icon(Icons.Default.Add, "Adicionar combatente", tint = visual.accentBright)
             }
         }
     }
@@ -524,18 +521,14 @@ fun IniciativasTab(
             AlertDialog(
                 onDismissRequest = { editarNomeDe = null },
                 title = {
-                    AppText("Editar nome", color = ExaltedAccentBright, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+                    AppText("Editar nome", color = visual.accentBright, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
                 },
                 text = {
                     OutlinedTextField(
                         value = texto,
                         onValueChange = { texto = it.take(40) },
                         singleLine = true,
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = ExaltedAccentBright,
-                            focusedTextColor = ExaltedOnSurface,
-                            unfocusedTextColor = ExaltedOnSurface
-                        )
+                        colors = exaltedTextFieldColors()
                     )
                 },
                 dismissButton = {
@@ -554,7 +547,7 @@ fun IniciativasTab(
                 title = {
                     AppText(
                         "Editar iniciativa — ${p.nome}",
-                        color = ExaltedAccentBright,
+                        color = visual.accentBright,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -568,20 +561,20 @@ fun IniciativasTab(
                         InkButton(onClick = { valor -= 1 },
     modifier = Modifier
 ) {
-                            Icon(Icons.Default.Remove, null, tint = ExaltedAmber)
+                            Icon(Icons.Default.Remove, null, tint = visual.accent)
                         }
                         AppText(
                             valor.toString(),
                             style = MaterialTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Bold,
-                            color = ExaltedAccentBright,
+                            color = visual.accentBright,
                             modifier = Modifier.width(64.dp),
                             textAlign = TextAlign.Center
                         )
                         InkButton(onClick = { valor += 1 },
     modifier = Modifier
 ) {
-                            Icon(Icons.Default.Add, null, tint = ExaltedAmber)
+                            Icon(Icons.Default.Add, null, tint = visual.accent)
                         }
                     }
                 },
@@ -604,7 +597,7 @@ fun IniciativasTab(
             text = {
                 AppText(
                     mensagem,
-                    color = ExaltedOnSurface,
+                    color = visual.onSurface,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
