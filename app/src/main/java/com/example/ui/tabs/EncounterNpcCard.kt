@@ -56,10 +56,6 @@ import com.example.model.CharacterSheet
 import com.example.ui.components.GildedCard
 import com.example.ui.theme.visualTemplateParaExaltado
 import com.example.ui.theme.LocalExaltedVisualTemplate
-import com.example.ui.theme.visual.accent
-import com.example.ui.theme.visual.accentBright
-import com.example.ui.theme.visual.muted
-import com.example.ui.theme.visual.onSurface
 
 
 internal val NPC_ATTRIBUTE_GROUPS = listOf(
