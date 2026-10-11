@@ -68,6 +68,7 @@ import com.example.oldrealm.highrealm.HighRealmGlyphCanvas
 import com.example.oldrealm.highrealm.HighRealmTranslator
 import com.example.oldrealm.TranslatorEngine.WritingSystem
 import com.example.ui.components.SectionHeader
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -81,6 +82,10 @@ fun TranslatorTab(
     gold: Color = com.example.ui.theme.ExaltedAccentBright,
     onOriginalInputChanged: ((String) -> Unit)? = null
 ) {
+    val visual = LocalExaltedVisualTemplate.current
+    val resolvedBackground = if (background == Color(0xFF050505)) visual.surface else background
+    val resolvedGold = if (gold == com.example.ui.theme.ExaltedAccentBright) visual.accentBright else gold
+
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -139,7 +144,7 @@ fun TranslatorTab(
 
     Box(modifier = modifier.fillMaxSize()) {
     Column(
-        modifier = Modifier.fillMaxSize().exaltedTabIdentity(15).exaltedContentStage(15).background(background.copy(alpha = 0.78f)).padding(horizontal = 20.dp, vertical = 18.dp)
+        modifier = Modifier.fillMaxSize().exaltedTabIdentity(15).exaltedContentStage(15).background(resolvedBackground.copy(alpha = 0.78f)).padding(horizontal = 20.dp, vertical = 18.dp)
     ) {
         // APPROVED VISUAL CUSTOMIZATION
         // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
@@ -172,7 +177,7 @@ fun TranslatorTab(
             // Copia a área de resultado traduzido como imagem e inicia o
             // download automaticamente, sem nenhuma ação adicional do usuário.
             if (isCapturing) {
-                CircularProgressIndicator(modifier = Modifier.width(20.dp).height(20.dp), color = gold, strokeWidth = 2.dp)
+                CircularProgressIndicator(modifier = Modifier.width(20.dp).height(20.dp), color = resolvedGold, strokeWidth = 2.dp)
             } else {
                 InkButton(
                     onClick = {
@@ -188,7 +193,7 @@ fun TranslatorTab(
                 ,
     modifier = Modifier.feedbackOnPress(enabled = true)
 ) {
-                    Icon(Icons.Outlined.PhotoCamera, contentDescription = "Copiar como imagem", tint = gold)
+                    Icon(Icons.Outlined.PhotoCamera, contentDescription = "Copiar como imagem", tint = resolvedGold)
                 }
             }
         }
@@ -212,14 +217,14 @@ fun TranslatorTab(
             maxLines = 8,
             label = { AppText("Digite", style = MaterialTheme.typography.bodyMedium) },
             colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = gold,
-                unfocusedBorderColor = gold.copy(alpha = 0.45f),
-                focusedLabelColor = gold,
-                cursorColor = gold,
-                focusedTextColor = Color(0xFFECE6D8),
-                unfocusedTextColor = Color(0xFFECE6D8),
-                focusedContainerColor = Color(0xFF0F1113),
-                unfocusedContainerColor = Color(0xFF0F1113)
+                focusedBorderColor = resolvedGold,
+                unfocusedBorderColor = resolvedGold.copy(alpha = 0.45f),
+                focusedLabelColor = resolvedGold,
+                cursorColor = resolvedGold,
+                focusedTextColor = visual.onSurface,
+                unfocusedTextColor = visual.onSurface,
+                focusedContainerColor = visual.surface,
+                unfocusedContainerColor = visual.surface
             ),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Default,
@@ -248,8 +253,8 @@ fun TranslatorTab(
                 }
         ) {
             when (val current = result) {
-                is TranslatorEngine.Result.OldRealm -> OldRealmResult(current.value, gold)
-                is TranslatorEngine.Result.HighRealm -> HighRealmResult(current.value, gold)
+                is TranslatorEngine.Result.OldRealm -> OldRealmResult(current.value, resolvedGold)
+                is TranslatorEngine.Result.HighRealm -> HighRealmResult(current.value, resolvedGold)
                 null -> Unit
             }
         }
