@@ -143,7 +143,12 @@ fun GildedCard(
             }
             // Arquitetura ornamental visível: faixa superior de metal e lâminas
             // verticais nas bordas, sem desenhar sobre a área de leitura.
-            val rail = 3.dp.toPx()
+            val rail = when (motif) {
+                ExaltedVisualMotif.SOLAR -> 3.5.dp.toPx()
+                ExaltedVisualMotif.DRAGON_BLOODED -> 4.dp.toPx()
+                ExaltedVisualMotif.LUNAR -> 2.dp.toPx()
+                null -> 3.dp.toPx()
+            }
             drawRect(
                 brush = Brush.horizontalGradient(listOf(deep.copy(alpha = .72f), accent.copy(alpha = .36f), deep.copy(alpha = .72f))),
                 topLeft = Offset(0f, 0f),
