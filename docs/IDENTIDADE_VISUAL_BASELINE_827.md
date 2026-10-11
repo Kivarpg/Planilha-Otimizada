@@ -227,3 +227,8 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - CounterControls.kt: linha do contador sincronizado ocupa largura disponivel e centraliza elementos com espacamento menor, reduzindo risco de estouro em telas compactas.
 - DialogComponents.kt: dialogos compartilhados de exclusao e validacao passam a usar ExaltedAccentBright nos acentos, preservando vermelho semantico de exclusao e rolagem de mensagens longas.
 - Contratos de teste estatico acrescentados. Revisao visual em dispositivo e compilacao ainda pendentes; esta rodada nao equivale a auditoria integral das 15 abas.
+
+## Preparacao Exalted.868 — Dialogos de configuracao e planilhas
+- SheetScreenDialogs.kt: substituidos acentos globais Solar (`ExaltedGold`/`ExaltedAmber`) pela cor do Tipo de Exaltado ativo em titulos, secoes e alertas. Fluxos de configuracao, vibracao e som preservados.
+- SheetLifecycleDialogs.kt: titulo da lista de planilhas, nome ativo e marcador 'Ativa' seguem a paleta ativa. Fluxos de carregar/excluir planilhas preservados.
+- Teste estatico cobre ausencia de acentos legados e preservacao de chamadas centrais. Ainda exige compilacao e revisao visual real.
