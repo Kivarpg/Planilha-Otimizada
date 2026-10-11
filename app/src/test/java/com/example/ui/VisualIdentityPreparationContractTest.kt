@@ -58,6 +58,16 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `merits and equipment totals wrap with active palette`() {
+        val merits = File("src/main/java/com/example/ui/tabs/MeritsTab.kt").readText()
+        val equipment = File("src/main/java/com/example/ui/tabs/EquipmentTab.kt").readText()
+        assertTrue(merits.contains("text = \"Total de Pontos de Mérito:"))
+        assertTrue(merits.contains("color = ExaltedAccentBright,\n                    textAlign = TextAlign.Center,\n                    maxLines = 3"))
+        assertTrue(equipment.contains("text = \"Motes Comitados:"))
+        assertTrue(equipment.contains("color = com.example.ui.theme.ExaltedAccentBright,\n                    textAlign = TextAlign.Center,\n                    maxLines = 3"))
+    }
+
+    @Test
     fun `attribute priorities retain three equal width controls`() {
         val tab = File("src/main/java/com/example/ui/tabs/AttributesTab.kt").readText()
         assertTrue(tab.contains("listOf(\"1º\", \"2º\", \"3º\").forEach"))
