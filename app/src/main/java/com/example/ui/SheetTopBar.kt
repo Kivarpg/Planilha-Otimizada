@@ -59,7 +59,7 @@ internal fun SheetTopBar(
     // O mesmo cabeçalho preserva conteúdo e ações; apenas redistribui espaço.
     val fontScale = LocalDensity.current.fontScale
     val enlargedHeaderText = fontScale > 1.20f
-    val headerHeight = if (enlargedHeaderText) 144.dp else 132.dp
+    val headerHeight = if (enlargedHeaderText) 156.dp else 132.dp
 
     // APPROVED VISUAL CUSTOMIZATION
     // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
