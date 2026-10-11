@@ -188,3 +188,8 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Dados pessoais: cursor do campo de descricao da Anima acompanha o acento ativo.
 - Testes de contrato estaticos adicionados; ainda sem compilacao nem validacao em dispositivo.
 - As alteracoes visam coerencia visual, nao substituem auditoria completa das 15 abas.
+
+## Preparacao Exalted.859 — Vitalidade e total de Atributos
+- Combate: cursor, rotulos de vitalidade, bordas das caixas extras e titulos do dialogo de configuracao usam a cor ativa; cores semanticas de dano permanecem preservadas.
+- Atributos: rotulo Total acompanha a cor ativa do tipo.
+- Teste de contrato estatico adicionado. Compilacao e validacao visual em dispositivo pendentes.
