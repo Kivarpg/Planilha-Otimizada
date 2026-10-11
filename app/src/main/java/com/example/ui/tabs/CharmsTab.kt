@@ -50,9 +50,10 @@ import com.example.ui.components.SkillSearchModal
 import com.example.search.SkillFilter
 import com.example.search.SkillSearchEngine
 import com.example.ui.theme.ExaltedDangerCore
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
+import com.example.ui.theme.visual.surfaceVariant
+import com.example.ui.theme.visual.accentBright
+import com.example.ui.theme.visual.muted
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 
 @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
@@ -63,6 +64,7 @@ fun CharmsTab(
     viewModel: SheetViewModel,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     var selectedAbility by remember { mutableStateOf<String?>(null) }
     var catalogDetail by remember { mutableStateOf<EncantoSolarDefinition?>(null) }
     var feiticoDetail by remember { mutableStateOf<FeiticoDefinition?>(null) }
@@ -160,7 +162,7 @@ fun CharmsTab(
                 AppText(
                     "Nenhum Encanto encontrado.\nTente remover um filtro ou alterar os termos da busca.",
                     style = MaterialTheme.typography.bodySmall,
-                    color = ExaltedMuted,
+                    color = visual.muted,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth().padding(top = 4.dp, bottom = 8.dp)
                 )
@@ -286,7 +288,7 @@ fun CharmsTab(
             icon = {
                 Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = ExaltedDangerCore)
             },
-            title = { AppText("Remover Encanto", color = ExaltedAccentBright, maxLines = 2, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
+            title = { AppText("Remover Encanto", color = visual.accentBright, maxLines = 2, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
             text = { AppText("Deseja remover \"${charm.nome}\"?") },
             dismissButton = {
                 com.example.ui.components.GildedDialogButton(
@@ -301,7 +303,9 @@ fun CharmsTab(
             confirmButton = {
                 com.example.ui.components.GildedDialogTextButton(text = "Cancelar", onClick = { charmToDelete = null })
             },
-            containerColor = ExaltedDarkSurfaceVariant
+            containerColor = visual.surfaceVariant,
+            titleContentColor = visual.onSurface,
+            textContentColor = visual.onSurface
         )
     }
 }
