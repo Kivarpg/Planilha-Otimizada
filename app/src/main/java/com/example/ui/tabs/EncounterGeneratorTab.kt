@@ -395,8 +395,8 @@ fun EncounterGeneratorTab(
         )
     }
 
-    // Geração completa: o ícone 0000.png dispara a mesma ação que o antigo
-    // botão "Gerar NPC", preservando todas as regras de geração existentes.
+    // Geração completa: o InkButton visível "Gerar NPC" dispara esta ação,
+    // preservando todas as regras de geração existentes.
     fun gerarNpc(aposGerar: (com.example.model.NpcEncontro) -> Unit) {
         if (npcsGerados.size >= MAX_NPCS_ENCONTRO) {
             onMensagemLimiteChange("Limite de $MAX_NPCS_ENCONTRO NPCs atingido — feche uma das abas antes de gerar outro.")
@@ -516,7 +516,7 @@ fun EncounterGeneratorTab(
                                     onClick = gerarNpcDaInterface,
                                     enabled = !gerando,
                                     size = InkButtonSize.Small,
-                                    customWidth = 120.dp,
+                                    customWidth = 136.dp,
                                     customHeight = 64.dp
                                 )
                             }
