@@ -44,6 +44,7 @@ fun LunarCasteEmblemButton(
     enabled: Boolean = true,
     iconSize: Dp = Dimens.CasteAspectIconSize
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val emblemRes = when (caste) {
         LunarCasta.FullMoon -> R.drawable.caste_lua_cheia
         LunarCasta.ChangingMoon -> R.drawable.caste_lua_minguante
@@ -67,18 +68,18 @@ fun LunarCasteEmblemButton(
             .background(
                 Brush.verticalGradient(
                     listOf(
-                        ExaltedDarkSurface,
-                        if (isSelected) ExaltedAccentBright.copy(alpha = 0.10f) else ExaltedDarkBackground,
-                        ExaltedDarkSurface
+                        visual.surface,
+                        if (isSelected) visual.accentBright.copy(alpha = 0.10f) else visual.surface,
+                        visual.surface
                     )
                 )
             )
             .border(
                 width = if (isSelected) 2.5.dp else 1.5.dp,
                 brush = if (isSelected) Brush.linearGradient(
-                    listOf(ExaltedStructuralMetalDeep, ExaltedAccentBright, ExaltedStructuralMetalShine, ExaltedAccentBright, ExaltedStructuralMetalDeep)
+                    listOf(visual.metalDeep, visual.accentBright, visual.metalShine, visual.accentBright, visual.metalDeep)
                 ) else Brush.linearGradient(
-                    listOf(ExaltedOutline, ExaltedStructuralMetal, ExaltedOutline)
+                    listOf(visual.outline, visual.metalDeep, visual.outline)
                 ),
                 shape = MaterialTheme.shapes.medium
             )
@@ -86,18 +87,20 @@ fun LunarCasteEmblemButton(
             .padding(vertical = 12.dp, horizontal = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box(contentAlignment = Alignment.Center) {
-            // Halo sutil de prata quando selecionado
-            androidx.compose.foundation.Canvas(modifier = Modifier.size(iconSize + 12.dp)) {
-                drawCircle(
-                    brush = Brush.radialGradient(
+        Box(
+            modifier = Modifier
+                .size(iconSize + 12.dp)
+                .background(
+                    Brush.radialGradient(
                         listOf(
-                            ExaltedAccentBright.copy(alpha = if (isSelected) 0.28f else 0.10f),
+                            visual.accentBright.copy(alpha = if (isSelected) 0.28f else 0.10f),
                             Color.Transparent
                         )
-                    )
-                )
-            }
+                    ),
+                    shape = CircleShape
+                ),
+            contentAlignment = Alignment.Center
+        ) {
             androidx.compose.foundation.Image(
                 painter = painterResource(emblemRes),
                 contentDescription = caste.displayName,
@@ -111,7 +114,7 @@ fun LunarCasteEmblemButton(
         AppText(
             text = caste.displayName,
             style = MaterialTheme.typography.labelMedium.copy(fontSize = 11.sp),
-            color = ExaltedAccentBright,
+            color = visual.accentBright,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
             textAlign = TextAlign.Center,
             maxLines = 1,
