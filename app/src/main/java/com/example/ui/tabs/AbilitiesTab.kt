@@ -107,7 +107,9 @@ fun AbilitiesTab(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun AbilitySubTabSelector(sheet: CharacterSheet, selected: Int, onSelected: (Int) -> Unit) {
-    FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp), maxItemsInEachRow = 2) {
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val columns = if (maxWidth < 390.dp) 1 else 2
+        FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp), maxItemsInEachRow = columns) {
         val ehLunar = sheet.tipoPersonagem.isLunar()
         val labelsComIndice = if (ehLunar) {
             // Lunar não tem Habilidade de Casta nem Habilidade Favorecida
@@ -125,5 +127,6 @@ private fun AbilitySubTabSelector(sheet: CharacterSheet, selected: Int, onSelect
             val active = selected == i
             InkButton(label = label, onClick = { onSelected(i) }, modifier = Modifier.weight(1f), size = InkButtonSize.Small, fillMaxWidth = true, variant = if (active) InkButtonVariant.Primary else InkButtonVariant.Secondary)
         }
+    }
     }
 }
