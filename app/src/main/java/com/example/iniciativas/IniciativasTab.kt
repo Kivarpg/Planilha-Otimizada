@@ -142,17 +142,17 @@ fun IniciativasTab(
     val temDeclaracao = state.declaracoes.isNotEmpty() || state.temDeclaracaoMulti()
 
     Column(
-        modifier = modifier.fillMaxSize().exaltedTabIdentity(12).exaltedContentStage(12).padding(10.dp),
+        modifier = modifier.fillMaxSize().exaltedTabIdentity(12).exaltedContentStage(12).padding(horizontal = 16.dp, vertical = 14.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // APPROVED VISUAL CUSTOMIZATION — SectionHeader / chrome permanente
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(20.dp))
 
         // Permanente: rodada + Término + Log
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
-            verticalArrangement = Arrangement.spacedBy(6.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             AppText("Rodada ${state.rodada}", fontWeight = FontWeight.Bold, color = ExaltedGold)
             Spacer(Modifier.width(12.dp))
