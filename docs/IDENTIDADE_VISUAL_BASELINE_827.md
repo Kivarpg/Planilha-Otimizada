@@ -237,3 +237,8 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - SheetTopBar.kt: botoes Configuracoes e Opcoes passam a seguir ExaltedAccentBright em vez do dourado Solar fixo. Os callbacks, alvos de 48dp e largura reservada de 96/104dp permanecem intactos.
 - Contrato estatico confirma as duas cores e a largura dos controles.
 - Mudanca ainda nao compilada; a compilacao Exalted.868 estava em andamento durante a preparacao. Nao inferir auditoria visual de dispositivo a partir de testes estaticos.
+
+## Preparacao Exalted.869 — Faixa de navegacao e acessibilidade
+- SheetTabsBar.kt: saldo de pontos da faixa horizontal passa a usar ExaltedAccentBright, eliminando dourado Solar fixo; alertas de poucos pontos permanecem com ExaltedAlertaTexto.
+- SheetTopBar.kt: altura com fontScale ampliado passa de 144dp para 156dp, preservando duas linhas de Casta/Aspecto e estado da planilha.
+- Teste estatico verifica faixa, ausencia de dourado fixo e altura. Ainda falta verificacao visual em dispositivo real e build Exalted.869.
