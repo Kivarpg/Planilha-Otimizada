@@ -60,7 +60,7 @@ fun AbilitiesTab(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         GildedCard(modifier = Modifier.fillMaxWidth().exaltedSectionPanel(4)) {
-            Box(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 10.dp)) {
+            Box(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 14.dp)) {
                 AbilitySubTabSelector(sheet, subTabIndex, onSubTabChange)
             }
         }
