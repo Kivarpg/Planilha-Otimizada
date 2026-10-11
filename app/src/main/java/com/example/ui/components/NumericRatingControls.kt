@@ -268,12 +268,8 @@ fun ErgonomicNumericSelector(
                                 val dotSize = if (enlargedDots) baseDotSize + 8.dp else baseDotSize
                                 val isFilled = i <= value
                                 val isFinalDot = i == maxVal
-                                val fillColor = when {
-                                    isFinalDot && isFilled -> ExaltedAccentBright
-                                    enlargedDots -> ExaltedAccentBright
-                                    else -> ExaltedAccentBright
-                                }
-                                val glowColor = if (isFinalDot) ExaltedAccentBright else ExaltedAccentBright
+                                val fillColor = ExaltedAccentBright
+                                val glowColor = ExaltedAccentBright
                                 val borderWidth = if (enlargedDots || isFinalDot) 2.dp else 1.dp
                                 Box(
                                     modifier = Modifier
