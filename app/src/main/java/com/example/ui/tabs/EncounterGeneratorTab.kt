@@ -467,7 +467,7 @@ fun EncounterGeneratorTab(
             modifier = Modifier.fillMaxWidth().exaltedSectionPanel(11),
             colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
         ) {
-            Column(modifier = Modifier.fillMaxWidth().padding(12.dp)) {
+            Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 18.dp)) {
                 // Campo de Nome com floating label nativo do Compose (o
                 // próprio parâmetro "label" já sobe pro topo ao focar/
                 // digitar — não precisa de nada manual) — pedido explícito
