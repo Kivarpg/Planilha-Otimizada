@@ -60,11 +60,11 @@ fun AbilitiesTab(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         GildedCard(modifier = Modifier.fillMaxWidth().exaltedSectionPanel(4)) {
-            Box(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 14.dp)) {
+            Box(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 18.dp)) {
                 AbilitySubTabSelector(sheet, subTabIndex, onSubTabChange)
             }
         }
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(18.dp))
         AbilityGridSection(
             habilidades = habilidadesFiltradas,
             martialArts = martialArtsFiltradas,
@@ -85,7 +85,7 @@ fun AbilitiesTab(
                 else -> true
             }
         )
-        Spacer(Modifier.height(20.dp))
+        Spacer(Modifier.height(26.dp))
         SpecializationsSection(sheet)
         Spacer(Modifier.height(5.dp))
     }
@@ -113,7 +113,7 @@ fun AbilitiesTab(
 private fun AbilitySubTabSelector(sheet: CharacterSheet, selected: Int, onSelected: (Int) -> Unit) {
     BoxWithConstraints(Modifier.fillMaxWidth()) {
         val columns = if (maxWidth < 390.dp) 1 else 2
-        FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp), maxItemsInEachRow = columns) {
+        FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp), maxItemsInEachRow = columns) {
         val ehLunar = sheet.tipoPersonagem.isLunar()
         val labelsComIndice = if (ehLunar) {
             // Lunar não tem Habilidade de Casta nem Habilidade Favorecida
