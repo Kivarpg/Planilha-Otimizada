@@ -419,7 +419,7 @@ fun InkButton(
         // Small controls frequently share a narrow Row on phones. Reserve
         // less horizontal padding for those labels while keeping the larger
         // button sizes comfortably inset from the painted brush edge.
-        val labelHorizontalPadding = if (size == InkButtonSize.Small) 4.dp else 8.dp
+        val labelHorizontalPadding = if (size == InkButtonSize.Small || customWidth != null) 4.dp else 8.dp
         val textModifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = labelHorizontalPadding, vertical = 2.dp)
@@ -431,7 +431,7 @@ fun InkButton(
             mutableStateOf(baseFontSize)
         }
         val textStyle = androidx.compose.ui.text.TextStyle(
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = FontWeight.Bold,
             fontSize = fittedFontSize,
             lineHeight = fittedFontSize * 1.08f,
             textAlign = androidx.compose.ui.text.style.TextAlign.Center,
@@ -456,8 +456,8 @@ fun InkButton(
                 overflow = TextOverflow.Clip,
                 softWrap = true,
                 onTextLayout = { result ->
-                    if (result.hasVisualOverflow && fittedFontSize.value > 8f) {
-                        fittedFontSize = (fittedFontSize.value - 1f).coerceAtLeast(8f).sp
+                    if (result.hasVisualOverflow && fittedFontSize.value > 10f) {
+                        fittedFontSize = (fittedFontSize.value - 1f).coerceAtLeast(10f).sp
                     }
                 },
                 modifier = textModifier,
