@@ -64,7 +64,7 @@ private fun PriorityBadge(
     Box(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
-            .background(if (isSelected) ExaltedAmber.copy(alpha = 0.25f) else ExaltedDarkSurface)
+            .background(if (isSelected) ExaltedAccentBright.copy(alpha = 0.25f) else ExaltedDarkSurface)
             .border(
                 1.dp,
                 if (isSelected) ExaltedAccentBright else ExaltedOutline.copy(alpha = 0.5f),
@@ -112,7 +112,7 @@ private fun AttributeRow(
                     .padding(end = 4.dp)
                     .size(18.dp)
                     .background(if (favoritoInfo.ehCasta) ExaltedAccentBright else Color.Transparent)
-                    .border(1.5.dp, if (favoritoInfo.ehCasta) ExaltedGold else ExaltedOutline)
+                    .border(1.5.dp, if (favoritoInfo.ehCasta) ExaltedAccentBright else ExaltedOutline)
                     .feedbackClickable(enabled = false) {},
                 contentAlignment = Alignment.Center
             ) {
@@ -210,7 +210,7 @@ private fun AttributeGroupCard(
                     modifier = Modifier
                         .clip(MaterialTheme.shapes.extraLarge)
                         .background(ExaltedDarkSurface)
-                        .border(1.dp, ExaltedGold.copy(alpha = 0.7f), MaterialTheme.shapes.extraLarge)
+                        .border(1.dp, ExaltedAccentBright.copy(alpha = 0.7f), MaterialTheme.shapes.extraLarge)
                         .padding(horizontal = 14.dp, vertical = 8.dp),
                     contentAlignment = Alignment.Center
                 ) {
