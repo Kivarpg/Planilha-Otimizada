@@ -83,11 +83,11 @@ fun EquipmentTab(
 
         WeaponSection(sheet = sheet, viewModel = viewModel)
 
-        Spacer(modifier = Modifier.height(7.dp))
+        Spacer(modifier = Modifier.height(22.dp))
 
         ArmorSection(sheet = sheet, viewModel = viewModel)
 
-        Spacer(modifier = Modifier.height(7.dp))
+        Spacer(modifier = Modifier.height(22.dp))
 
         SectionHeader(title = "Comitamento")
         GildedCard(
@@ -108,14 +108,14 @@ fun EquipmentTab(
             }
         }
 
-        Spacer(modifier = Modifier.height(7.dp))
+        Spacer(modifier = Modifier.height(22.dp))
 
         SectionHeader(title = "Pertences")
         OutlinedTextField(
             value = sheet.pertences,
             onValueChange = com.example.ui.components.rememberTypingFeedback { viewModel.updatePertences(it.take(1000)) },
             label = { AppText("") },
-            modifier = Modifier.fillMaxWidth().height(120.dp),
+            modifier = Modifier.fillMaxWidth().height(160.dp),
             textStyle = androidx.compose.material3.LocalTextStyle.current.copy(textAlign = TextAlign.Justify),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = com.example.ui.theme.ExaltedAccentBright,
