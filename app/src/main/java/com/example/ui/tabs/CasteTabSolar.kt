@@ -262,7 +262,7 @@ internal fun SolarCasteTabContent(
                         },
                         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = visual.accentBright,
-                            unfocusedBorderColor = com.example.ui.theme.visual.outline.copy(alpha = 0.55f),
+                            unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
                             focusedLabelColor = visual.accentBright,
                             unfocusedLabelColor = visual.muted,
                             cursorColor = visual.accent,
@@ -313,7 +313,7 @@ internal fun SolarCasteTabContent(
                     modifier = Modifier.fillMaxWidth(),
                     colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = visual.accentBright,
-                        unfocusedBorderColor = com.example.ui.theme.visual.outline.copy(alpha = 0.55f),
+                        unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
                         focusedLabelColor = visual.accentBright,
                         unfocusedLabelColor = visual.muted,
                         cursorColor = visual.accent,
