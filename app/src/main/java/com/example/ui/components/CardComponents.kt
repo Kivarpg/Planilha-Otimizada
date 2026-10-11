@@ -229,9 +229,10 @@ fun GildedCard(
                 null -> accent.copy(alpha = .48f)
             }
             val engravingWidth = when (motif) {
-                ExaltedVisualMotif.DRAGON_BLOODED -> 1.2.dp.toPx()
+                ExaltedVisualMotif.SOLAR -> 1.4.dp.toPx()
+                ExaltedVisualMotif.DRAGON_BLOODED -> 1.7.dp.toPx()
                 ExaltedVisualMotif.LUNAR -> .75.dp.toPx()
-                else -> .9.dp.toPx()
+                null -> .9.dp.toPx()
             }
             drawLine(engraving, Offset(inset, inset + notch), Offset(inset + notch, inset), engravingWidth)
             drawLine(engraving, Offset(size.width - inset - notch, inset), Offset(size.width - inset, inset + notch), engravingWidth)
