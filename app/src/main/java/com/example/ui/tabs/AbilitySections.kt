@@ -19,10 +19,11 @@ internal fun AbilityGridSection(
     ratingStyle: RatingStyle, onSpecializationDelete: (Especializacao)->Unit, onMartialArtDelete: (HabilidadeCustomizada)->Unit,
     onAddMartialArt: ()->Unit, allowMartialArt: Boolean
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val specializationsByAbility = remember(sheet.specializations) {
         sheet.specializations.groupBy { it.habilidade }
     }
-    Box(Modifier.fillMaxWidth().background(ExaltedDarkSurface, MaterialTheme.shapes.medium).border(1.dp, ExaltedAccentBright, MaterialTheme.shapes.medium).padding(8.dp)) {
+    Box(Modifier.fillMaxWidth().background(visual.surface, MaterialTheme.shapes.medium).border(1.dp, visual.accentBright, MaterialTheme.shapes.medium).padding(8.dp)) {
         androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxWidth()) {
             if (maxWidth >= 620.dp) {
                 val metade=(habilidades.size+1)/2
@@ -48,13 +49,14 @@ internal fun AbilityGridSection(
 @Composable
 @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 internal fun SpecializationsSection(sheet: CharacterSheet) {
+    val visual = LocalExaltedVisualTemplate.current
     val martialArtNames = remember(sheet.martialArts) { sheet.martialArts.mapTo(HashSet(sheet.martialArts.size)) { it.nome } }
     SectionHeader(title="Especialidades")
-    if (sheet.specializations.isEmpty()) AppText("Nenhuma especialidade cadastrada. Toque e segure em uma habilidade para adicionar.", style=MaterialTheme.typography.bodySmall, color=ExaltedMuted, textAlign=androidx.compose.ui.text.style.TextAlign.Center, modifier=Modifier.padding(bottom=8.dp))
-    else GildedCard(Modifier.fillMaxWidth(), colors=CardDefaults.cardColors(containerColor=ExaltedDarkSurfaceVariant)) {
+    if (sheet.specializations.isEmpty()) AppText("Nenhuma especialidade cadastrada. Toque e segure em uma habilidade para adicionar.", style=MaterialTheme.typography.bodySmall, color=visual.muted, textAlign=androidx.compose.ui.text.style.TextAlign.Center, modifier=Modifier.padding(bottom=8.dp))
+    else GildedCard(Modifier.fillMaxWidth(), ) {
         androidx.compose.foundation.layout.FlowRow(Modifier.fillMaxWidth().padding(14.dp), horizontalArrangement=Arrangement.spacedBy(8.dp), verticalArrangement=Arrangement.spacedBy(8.dp)) {
-            sheet.specializations.forEach { spec -> Surface(color=ExaltedDarkSurface, shape=MaterialTheme.shapes.small, border=BorderStroke(1.dp,ExaltedAmber.copy(alpha=.5f))) {
-                AppText(if(spec.habilidade in martialArtNames) "Artes Marciais – ${spec.habilidade} – ${spec.nome}" else "${spec.habilidade} – ${spec.nome}", style=MaterialTheme.typography.bodySmall, color=ExaltedAccentBright, textAlign=androidx.compose.ui.text.style.TextAlign.Center, softWrap=true, maxLines=2, overflow=androidx.compose.ui.text.style.TextOverflow.Ellipsis, modifier=Modifier.padding(horizontal=8.dp,vertical=5.dp))
+            sheet.specializations.forEach { spec -> Surface(color=visual.surface, shape=MaterialTheme.shapes.small, border=BorderStroke(1.dp, visual.outline.copy(alpha=.5f))) {
+                AppText(if(spec.habilidade in martialArtNames) "Artes Marciais – ${spec.habilidade} – ${spec.nome}" else "${spec.habilidade} – ${spec.nome}", style=MaterialTheme.typography.bodySmall, color=visual.accentBright, textAlign=androidx.compose.ui.text.style.TextAlign.Center, softWrap=true, maxLines=2, overflow=androidx.compose.ui.text.style.TextOverflow.Ellipsis, modifier=Modifier.padding(horizontal=8.dp,vertical=5.dp))
             }}
         }
     }
@@ -72,6 +74,7 @@ internal fun MartialArtDialog(
     onBlocked: () -> Unit,
     onCreated: () -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     if (!show) return
     val estilosDisponiveis = remember(sheet.tipoPersonagem, sheet.martialArts) {
         val jaCadastrados = sheet.martialArts.mapTo(HashSet()) { it.nome.trim().lowercase() }
@@ -83,7 +86,7 @@ internal fun MartialArtDialog(
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = {
-            AppText("Adicionar Arte Marcial", color = ExaltedAccentBright, textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true)
+            AppText("Adicionar Arte Marcial", color = visual.accentBright, textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true)
         },
         text = {
             Column(
@@ -95,7 +98,7 @@ internal fun MartialArtDialog(
                 AppText(
                     "Selecione um estilo de Arte Marcial cadastrado na Aba 8 (Encantos). A habilidade começa com o contador zerado; ao colocar pontos de 1 a 5, o personagem passa a cumprir os pré-requisitos dos Encantos daquele estilo.",
                     style = MaterialTheme.typography.labelSmall,
-                    color = ExaltedMuted,
+                    color = visual.muted,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -103,7 +106,7 @@ internal fun MartialArtDialog(
                     AppText(
                         "Não há estilos disponíveis para cadastrar (todos já foram adicionados ou o catálogo está vazio para este tipo de personagem).",
                         style = MaterialTheme.typography.labelSmall,
-                        color = ExaltedMuted,
+                        color = visual.muted,
                         textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                         modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)
                     )
@@ -118,11 +121,11 @@ internal fun MartialArtDialog(
                         estilosDisponiveis.forEach { nomeEstilo ->
                             val selecionado = draftName == nomeEstilo
                             Surface(
-                                color = if (selecionado) ExaltedAccentBright.copy(alpha = 0.22f) else ExaltedDarkSurface,
+                                color = if (selecionado) visual.accentBright.copy(alpha = 0.22f) else visual.surface,
                                 shape = MaterialTheme.shapes.small,
                                 border = BorderStroke(
                                     1.dp,
-                                    if (selecionado) ExaltedAccentBright else ExaltedOutline.copy(alpha = 0.45f)
+                                    if (selecionado) visual.accentBright else visual.outline.copy(alpha = 0.45f)
                                 ),
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -131,7 +134,7 @@ internal fun MartialArtDialog(
                                 AppText(
                                     nomeEstilo,
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = if (selecionado) ExaltedAccentBright else ExaltedOnSurface,
+                                    color = if (selecionado) visual.accentBright else visual.onSurface,
                                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp)
                                 )
                             }
@@ -161,6 +164,8 @@ internal fun MartialArtDialog(
             )
         },
         confirmButton = { GildedDialogTextButton(text = "Cancelar", onClick = onDismiss) },
-        containerColor = ExaltedDarkSurface
+        containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
