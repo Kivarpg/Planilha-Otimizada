@@ -1,6 +1,5 @@
 package com.example.ui.tabs
 
-import com.example.ui.theme.ExaltedOnSurface
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -69,11 +68,6 @@ import com.example.ui.theme.ExaltedDanoAgravado
 import com.example.ui.theme.ExaltedDanoContundente
 import com.example.ui.theme.ExaltedDanoLetal
 import com.example.ui.theme.ExaltedDarkBackground
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedOutline
 import com.example.ui.theme.corTextoContraste
 import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
