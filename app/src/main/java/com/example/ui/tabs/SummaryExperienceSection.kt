@@ -24,9 +24,9 @@ internal fun SummaryExperienceSection(sheet: CharacterSheet, bpInfo: BpBreakdown
     // nada nesta seção; o card de "Gasto dos pontos de experiência" (depois
     // da planilha concluída) continua igual.
     if (sheet.planilhaConcluida) {
-        GildedCard(Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = visual.surfaceVariant)) {
+        GildedCard(Modifier.fillMaxWidth()) {
             Column(Modifier.fillMaxWidth().padding(14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                AppText("Gasto dos pontos de experiência", style=MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp), fontWeight=FontWeight.Bold, color=ExaltedAmber, textAlign=TextAlign.Center)
+                AppText("Gasto dos pontos de experiência", style=MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp), fontWeight=FontWeight.Bold, color=visual.accentBright, textAlign=TextAlign.Center)
                 Spacer(Modifier.height(6.dp))
                 if(sheet.historicoExperiencia.isEmpty()) AppText("Nenhum ponto de Experiência gasto ainda.", style=MaterialTheme.typography.bodySmall, color=visual.muted)
                 else sheet.historicoExperiencia.forEach { gasto ->
@@ -35,10 +35,10 @@ internal fun SummaryExperienceSection(sheet: CharacterSheet, bpInfo: BpBreakdown
                         AppText("${gasto.custo} XP", style=MaterialTheme.typography.bodySmall, fontWeight=FontWeight.SemiBold, color=visual.accent)
                     }
                 }
-                HorizontalDivider(Modifier.padding(vertical=5.dp), color=ExaltedAmber)
+                HorizontalDivider(Modifier.padding(vertical=5.dp), color=visual.accentBright)
                 AppText("Total Gasto: ${sheet.experienciaGastaTotal} / ${sheet.experienciaCalculada()} Experiência", fontWeight=FontWeight.Bold, color=visual.accentBright)
                 Spacer(Modifier.height(4.dp))
-                AppText("Saldo Restante: ${sheet.experienciaDisponivel()} Experiência", fontWeight=FontWeight.Bold, color=if(sheet.experienciaDisponivel()>=0) ExaltedAmber else MaterialTheme.colorScheme.error)
+                AppText("Saldo Restante: ${sheet.experienciaDisponivel()} Experiência", fontWeight=FontWeight.Bold, color=if(sheet.experienciaDisponivel()>=0) visual.accentBright else MaterialTheme.colorScheme.error)
             }
         }
     }
