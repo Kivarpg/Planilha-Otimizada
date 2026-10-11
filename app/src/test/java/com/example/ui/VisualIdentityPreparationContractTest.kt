@@ -23,16 +23,18 @@ class VisualIdentityPreparationContractTest {
     private val commonDialogs = File("src/main/java/com/example/ui/components/DialogComponents.kt").readText()
 
     @Test
-    fun `neutral panels use bounded dark-metal styling without decorative symbols`() {
+    fun `neutral panels use scoped bounded styling without decorative drawing`() {
+        assertTrue(identity.contains("LocalExaltedVisualTemplate.current"))
         assertTrue(identity.contains("Brush.verticalGradient("))
-        assertTrue(identity.contains("backgroundColor.copy(alpha = 0.98f)"))
+        assertTrue(identity.contains("background.copy(alpha = 0.98f)"))
         assertTrue(identity.contains("brush = Brush.linearGradient("))
-        assertTrue(identity.contains("ExaltedStructuralMetalDeep.copy(alpha = 0.94f)"))
-        assertTrue(identity.contains("ExaltedStructuralMetalShine.copy(alpha = 0.90f)"))
-        assertTrue(identity.contains("ExaltedAccentBright.copy(alpha = 0.92f)"))
+        assertTrue(identity.contains("visual.metalDeep.copy(alpha = 0.92f)"))
+        assertTrue(identity.contains("visual.metalShine.copy(alpha = 0.82f)"))
+        assertTrue(identity.contains("visual.accentBright.copy(alpha = 0.88f)"))
         assertTrue(identity.contains("RoundedCornerShape(10.dp)"))
-        assertTrue(!identity.contains("drawArc("))
-        assertTrue(!identity.contains("drawPath("))
+        assertFalse(identity.contains("drawBehind"))
+        assertFalse(identity.contains("drawArc("))
+        assertFalse(identity.contains("drawPath("))
     }
 
     @Test
@@ -52,10 +54,12 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
-    fun `sheet header avoids full-height decorative side rails`() {
+    fun `sheet header uses safe geometry and keeps only the real exalt emblem`() {
         val header = File("src/main/java/com/example/ui/SheetTopBar.kt").readText()
-        assertTrue(!header.contains("Offset(7.dp.toPx(), 0f), Offset(7.dp.toPx(), size.height)"))
-        assertTrue(!header.contains("Offset(12.dp.toPx(), 0f), Offset(12.dp.toPx(), size.height)"))
+        assertFalse(header.contains("drawBehind"))
+        assertFalse(header.contains("drawArc("))
+        assertFalse(header.contains("drawPath("))
+        assertTrue(header.contains("LocalExaltedVisualTemplate.current"))
         assertTrue(header.contains("R.drawable.tab_icon_dragao"))
         assertTrue(header.contains("R.drawable.tab_icon_lua"))
         assertTrue(header.contains("R.drawable.tab_icon_sol"))
@@ -85,21 +89,24 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
-    fun `navigation progress strip uses active palette and accessible header height`() {
+    fun `navigation progress strip uses scoped palette and accessible header height`() {
         val tabs = File("src/main/java/com/example/ui/SheetTabsBar.kt").readText()
         val header = File("src/main/java/com/example/ui/SheetTopBar.kt").readText()
-        assertFalse(tabs.contains("ExaltedGold"))
-        assertTrue(tabs.contains("ExaltedAccentBright"))
+        assertTrue(tabs.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(tabs.contains("visual.accentBright"))
+        assertFalse(tabs.contains("drawBehind"))
+        assertFalse(tabs.contains("drawPath("))
+        assertFalse(tabs.contains("Modifier.width(7.dp).fillMaxHeight()"))
         assertTrue(tabs.contains("maxLines = 2, softWrap = true"))
         assertTrue(header.contains("val headerHeight = if (enlargedHeaderText) 156.dp else 132.dp"))
     }
 
     @Test
-    fun `header action icons follow selected Exalt palette`() {
+    fun `header action icons follow scoped Exalt palette`() {
         val header = File("src/main/java/com/example/ui/SheetTopBar.kt").readText()
-        assertTrue(header.contains("Icon(Icons.Outlined.Settings, \"Configurações\", tint = ExaltedAccentBright"))
-        assertTrue(header.contains("Icon(Icons.Outlined.MoreVert, \"Opções\", tint = ExaltedAccentBright"))
-        assertFalse(header.contains("tint = ExaltedGold"))
+        assertTrue(header.contains("Icon(Icons.Outlined.Settings, \"Configurações\", tint = visual.accentBright"))
+        assertTrue(header.contains("Icon(Icons.Outlined.MoreVert, \"Opções\", tint = visual.accentBright"))
+        assertTrue(header.contains("LocalExaltedVisualTemplate.current"))
         assertTrue(header.contains("val actionsWidth = if (compactHeader) 96.dp else 104.dp"))
     }
 
@@ -124,6 +131,7 @@ class VisualIdentityPreparationContractTest {
         assertFalse(dialogs.contains("ExaltedAmber"))
         assertTrue(dialogs.contains("ExaltedAccentBright"))
         assertTrue(dialogs.contains("verticalScroll(rememberScrollState())"))
+        assertTrue(counters.contains("LocalExaltedVisualTemplate.current"))
         assertTrue(counters.contains("modifier = Modifier.fillMaxWidth(),"))
         assertTrue(counters.contains("Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)"))
     }
@@ -264,27 +272,28 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
-    fun `vitality settings and attribute totals retain type-specific accents`() {
+    fun `vitality settings and attribute totals retain scoped type accents`() {
         val combat = File("src/main/java/com/example/ui/tabs/CombatTab.kt").readText()
         val attributes = File("src/main/java/com/example/ui/tabs/AttributesTab.kt").readText()
-        assertTrue(combat.contains("cursorColor = ExaltedAccentBright"))
-        assertTrue(combat.contains("if (ehExtra) ExaltedAccentBright"))
-        assertTrue(combat.contains("AppText(\"Caixas extras atuais\", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)"))
-        assertTrue(combat.contains("AppText(\"Adicionar novo nível\", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)"))
-        assertTrue(attributes.contains("text = \"Total\",\n                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.6.sp),\n                            color = ExaltedAccentBright"))
+        assertTrue(combat.contains("cursorColor = visual.accentBright"))
+        assertTrue(combat.contains("if (ehExtra) visual.accentBright"))
+        assertTrue(combat.contains("AppText(\"Caixas extras atuais\", style = MaterialTheme.typography.labelMedium, color = visual.accentBright)"))
+        assertTrue(combat.contains("AppText(\"Adicionar novo nível\", style = MaterialTheme.typography.labelMedium, color = visual.accentBright)"))
+        assertTrue(attributes.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(attributes.contains("color = visual.accentBright"))
     }
 
     @Test
-    fun `combat attributes and anima controls follow active exalt palette`() {
+    fun `combat attributes and anima controls follow scoped exalt palette`() {
         val combat = File("src/main/java/com/example/ui/tabs/CombatTab.kt").readText()
         val attributes = File("src/main/java/com/example/ui/tabs/AttributesTab.kt").readText()
         val personal = File("src/main/java/com/example/ui/tabs/PersonalDataTab.kt").readText()
-        assertTrue(combat.contains("color = ExaltedAccentBright.copy(alpha = 0.12f)"))
-        assertTrue(combat.contains("if (ativo) ExaltedAccentBright else ExaltedOutline"))
+        assertTrue(combat.contains("color = visual.accentBright.copy(alpha = 0.12f)"))
+        assertTrue(combat.contains("if (ativo) visual.accentBright else visual.outline"))
         assertTrue(combat.contains("corTextoContraste(essenciaGradientColor(nivel))"))
-        assertTrue(attributes.contains("ExaltedAccentBright.copy(alpha = 0.46f) else ExaltedDarkSurfaceVariant"))
-        assertTrue(attributes.contains("if (favoritoInfo.ehCasta) ExaltedAccentBright else ExaltedOutline"))
-        assertTrue(personal.contains("cursorColor=ExaltedAccentBright,focusedTextColor"))
+        assertTrue(attributes.contains("visual.accentBright.copy(alpha = 0.46f) else visual.surfaceVariant"))
+        assertTrue(attributes.contains("if (favoritoInfo.ehCasta) visual.accentBright else visual.outline"))
+        assertTrue(personal.contains("colors = exaltedTextFieldColors()"))
     }
 
     @Test
@@ -317,6 +326,25 @@ class VisualIdentityPreparationContractTest {
         assertTrue(merits.contains("color = ExaltedAccentBright,\n                    textAlign = TextAlign.Center,\n                    maxLines = 3"))
         assertTrue(equipment.contains("text = \"Motes Comitados:"))
         assertTrue(equipment.contains("color = com.example.ui.theme.ExaltedAccentBright,\n                    textAlign = TextAlign.Center,\n                    maxLines = 3"))
+    }
+
+    @Test
+    fun `first five tabs are wired to the safe visual foundation`() {
+        val personal = File("src/main/java/com/example/ui/tabs/PersonalDataTab.kt").readText()
+        val aspect = File("src/main/java/com/example/ui/tabs/AspectoTab.kt").readText()
+        val solar = File("src/main/java/com/example/ui/tabs/CasteTabSolar.kt").readText()
+        val lunar = File("src/main/java/com/example/ui/tabs/CasteTabLunar.kt").readText()
+        val attributes = File("src/main/java/com/example/ui/tabs/AttributesTab.kt").readText()
+        val abilities = File("src/main/java/com/example/ui/tabs/AbilitiesTab.kt").readText()
+        val combat = File("src/main/java/com/example/ui/tabs/CombatTab.kt").readText()
+
+        assertTrue(personal.contains("colors = exaltedTextFieldColors()"))
+        assertTrue(aspect.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(solar.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(lunar.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(attributes.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(abilities.contains("exaltedTabIdentity(4).exaltedContentStage(4)"))
+        assertTrue(combat.contains("LocalExaltedVisualTemplate.current"))
     }
 
     @Test
@@ -382,10 +410,14 @@ class VisualIdentityPreparationContractTest {
         assertTrue(host.contains("holder.SaveableStateProvider(selectedTabIndex)"))
     }
     @Test
-    fun `identity surface remains neutral until visual pilot is approved`() {
-        assertTrue(identity.contains("fun Modifier.exaltedTabIdentity(chapter: Int = 0): Modifier = this"))
-        assertTrue(identity.contains("fun Modifier.exaltedContentStage(chapter: Int): Modifier = this"))
-        assertTrue(identity.contains("fun Modifier.exaltedExistingPanel(): Modifier = exaltedSectionPanel()"))
+    fun `identity surface is scoped and keeps safe primitives only`() {
+        assertTrue(identity.contains("@Composable\nfun Modifier.exaltedTabIdentity"))
+        assertTrue(identity.contains("@Composable\nfun Modifier.exaltedContentStage"))
+        assertTrue(identity.contains("@Composable\nfun Modifier.exaltedExistingPanel"))
+        assertTrue(identity.contains("LocalExaltedVisualTemplate.current"))
+        assertFalse(identity.contains("Canvas("))
+        assertFalse(identity.contains("drawBehind"))
+        assertFalse(identity.contains("drawWithContent"))
     }
 
     @Test
