@@ -35,11 +35,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import com.example.ui.components.AppText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -67,12 +65,9 @@ import com.example.ui.components.InkButton
 import com.example.ui.components.InkButtonSize
 import com.example.ui.components.InkButtonVariant
 import com.example.ui.components.SectionHeader
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
 import com.example.ui.theme.ExaltedStructuralMetalDeep
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedOnSurface
+import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.components.exaltedTextFieldColors
 import com.example.ui.theme.visualTemplateParaExaltado
 import com.example.viewmodel.SheetViewModel
 
@@ -122,6 +117,7 @@ fun EncounterGeneratorTab(
     onMensagemLimiteChange: (String?) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val npcsGerados by viewModel.npcsEncontro.collectAsState()
     val gerando by viewModel.gerandoNpcEncontro.collectAsState()
     val erroGeracao by viewModel.erroNpcEncontro.collectAsState()
@@ -224,8 +220,8 @@ fun EncounterGeneratorTab(
             text = {
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth().heightIn(max = dialogListHeight)
-                        .background(ExaltedDarkSurface.copy(alpha = .72f))
-                        .border(1.dp, ExaltedStructuralMetalDeep.copy(alpha = .52f))
+                        .background(visual.surface.copy(alpha = .72f))
+                        .border(1.dp, visual.metalDeep.copy(alpha = .52f))
                         .padding(horizontal = 6.dp, vertical = 4.dp)
                 ) {
                     item {
@@ -264,9 +260,9 @@ fun EncounterGeneratorTab(
                 }
             },
             confirmButton = { InkButton(label = "Fechar", onClick = { campoCustomizacao = null }, size = InkButtonSize.Small, variant = InkButtonVariant.Secondary) },
-            containerColor = ExaltedDarkSurface,
-            titleContentColor = ExaltedOnSurface,
-            textContentColor = ExaltedOnSurface
+            containerColor = visual.surface,
+            titleContentColor = visual.onSurface,
+            textContentColor = visual.onSurface
         )
     }
 
@@ -465,8 +461,7 @@ fun EncounterGeneratorTab(
         Spacer(modifier = Modifier.height(10.dp))
 
         GildedCard(
-            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(11),
-            colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(11)
         ) {
             Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 18.dp)) {
                 // Campo de Nome com floating label nativo do Compose (o
@@ -487,15 +482,7 @@ fun EncounterGeneratorTab(
                                 label = { AppText("Nome") },
                                 modifier = Modifier.fillMaxWidth(),
                                 singleLine = true,
-                                colors = OutlinedTextFieldDefaults.colors(
-                                    focusedBorderColor = ExaltedAccentBright,
-                                    unfocusedBorderColor = com.example.ui.theme.ExaltedOutline.copy(alpha = 0.55f),
-                                    focusedLabelColor = ExaltedAccentBright,
-                                    unfocusedLabelColor = ExaltedMuted,
-                                    cursorColor = ExaltedAccentBright,
-                                    focusedTextColor = ExaltedOnSurface,
-                                    unfocusedTextColor = ExaltedOnSurface
-                                )
+                                colors = exaltedTextFieldColors()
                             )
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
@@ -508,15 +495,15 @@ fun EncounterGeneratorTab(
                                         checked = enviarParaConflito,
                                         onCheckedChange = { enviarParaConflito = it },
                                         colors = androidx.compose.material3.CheckboxDefaults.colors(
-                                            checkedColor = ExaltedAccentBright,
-                                            uncheckedColor = ExaltedMuted
+                                            checkedColor = visual.accentBright,
+                                            uncheckedColor = visual.muted
                                         ))
-                                    AppText("Conflito", style = MaterialTheme.typography.bodySmall, color = if (enviarParaConflito) ExaltedAccentBright else ExaltedMuted)
+                                    AppText("Conflito", style = MaterialTheme.typography.bodySmall, color = if (enviarParaConflito) visual.accentBright else visual.muted)
                                 }
                                 Box(
                                     modifier = Modifier.widthIn(min = 104.dp).height(64.dp)
-                                        .background(ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
-                                        .border(1.dp, ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
+                                        .background(visual.accentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
+                                        .border(1.dp, visual.accentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
                                         .feedbackClickable(
                                         enabled = !gerando, role = Role.Button,
                                         onClick = {
@@ -536,7 +523,7 @@ fun EncounterGeneratorTab(
                                     AppText(
                                         text = "Gerar NPC",
                                         modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
-                                        color = ExaltedDarkSurface,
+                                        color = visual.surface,
                                         style = MaterialTheme.typography.titleSmall,
                                         fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                         textAlign = TextAlign.Center,
@@ -556,15 +543,7 @@ fun EncounterGeneratorTab(
                                                 label = { AppText("Nome") },
                                                 modifier = Modifier.weight(1f),
                                                 singleLine = true,
-                                                colors = OutlinedTextFieldDefaults.colors(
-                                                    focusedBorderColor = ExaltedAccentBright,
-                                                    unfocusedBorderColor = com.example.ui.theme.ExaltedOutline.copy(alpha = 0.55f),
-                                                    focusedLabelColor = ExaltedAccentBright,
-                                                    unfocusedLabelColor = ExaltedMuted,
-                                                    cursorColor = ExaltedAccentBright,
-                                                    focusedTextColor = ExaltedOnSurface,
-                                                    unfocusedTextColor = ExaltedOnSurface
-                                                )
+                                                colors = exaltedTextFieldColors()
                                             )
                         
                                             // O checkbox permanece com exatamente o mesmo estado e callback;
@@ -579,13 +558,13 @@ fun EncounterGeneratorTab(
                                                     checked = enviarParaConflito,
                                                     onCheckedChange = { enviarParaConflito = it },
                                                     colors = androidx.compose.material3.CheckboxDefaults.colors(
-                                                        checkedColor = ExaltedAccentBright,
-                                                        uncheckedColor = ExaltedMuted
+                                                        checkedColor = visual.accentBright,
+                                                        uncheckedColor = visual.muted
                                                     ))
                                                 AppText(
                                                     "Conflito",
                                                     style = MaterialTheme.typography.bodySmall,
-                                                    color = if (enviarParaConflito) ExaltedAccentBright else ExaltedMuted
+                                                    color = if (enviarParaConflito) visual.accentBright else visual.muted
                                                 )
                                             }
                         
@@ -594,8 +573,8 @@ fun EncounterGeneratorTab(
                                             Box(
                                                 modifier = Modifier
                                                     .widthIn(min = 104.dp).height(64.dp)
-                                                    .background(ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
-                                                    .border(1.dp, ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
+                                                    .background(visual.accentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
+                                                    .border(1.dp, visual.accentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
                                                     .feedbackClickable(
                                                         enabled = !gerando,
                                                         role = Role.Button,
@@ -616,7 +595,7 @@ fun EncounterGeneratorTab(
                                                 AppText(
                                         text = "Gerar NPC",
                                         modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
-                                        color = ExaltedDarkSurface,
+                                        color = visual.surface,
                                         style = MaterialTheme.typography.titleSmall,
                                         fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                         textAlign = TextAlign.Center,
@@ -634,7 +613,7 @@ fun EncounterGeneratorTab(
                 Column(
                     modifier = Modifier.fillMaxWidth().exaltedSectionPanel(1).padding(12.dp)
                 ) {
-                    AppText("1. Personagem", style = MaterialTheme.typography.titleMedium, color = ExaltedAccentBright)
+                    AppText("1. Personagem", style = MaterialTheme.typography.titleMedium, color = visual.accentBright)
                     Spacer(modifier = Modifier.height(8.dp))
 
                 // Tipo de Exaltado — botões sempre visíveis, lado a lado
@@ -704,7 +683,7 @@ fun EncounterGeneratorTab(
                 Column(
                     modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2).padding(12.dp)
                 ) {
-                    AppText("2. Gênero", style = MaterialTheme.typography.titleMedium, color = ExaltedAccentBright)
+                    AppText("2. Gênero", style = MaterialTheme.typography.titleMedium, color = visual.accentBright)
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -729,7 +708,7 @@ fun EncounterGeneratorTab(
                 Column(
                     modifier = Modifier.fillMaxWidth().exaltedSectionPanel(3).padding(12.dp)
                 ) {
-                AppText("3. Arquétipo", style = MaterialTheme.typography.titleMedium, color = ExaltedAccentBright)
+                AppText("3. Arquétipo", style = MaterialTheme.typography.titleMedium, color = visual.accentBright)
                 Spacer(modifier = Modifier.height(8.dp))
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -774,7 +753,7 @@ fun EncounterGeneratorTab(
                     Column(
                         modifier = Modifier.fillMaxWidth().exaltedSectionPanel(4).padding(12.dp)
                     ) {
-                    AppText("4. Origem", style = MaterialTheme.typography.titleMedium, color = ExaltedAccentBright)
+                    AppText("4. Origem", style = MaterialTheme.typography.titleMedium, color = visual.accentBright)
                     Spacer(modifier = Modifier.height(8.dp))
                     BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
                         val compactOriginButtons = maxWidth < 600.dp
@@ -872,11 +851,11 @@ fun EncounterGeneratorTab(
                     ) {
                         androidx.compose.material3.CircularProgressIndicator(
                             modifier = Modifier.size(18.dp),
-                            color = ExaltedAccentBright,
+                            color = visual.accentBright,
                             strokeWidth = 2.dp
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        AppText("Gerando NPC…", style = MaterialTheme.typography.bodySmall, color = ExaltedMuted)
+                        AppText("Gerando NPC…", style = MaterialTheme.typography.bodySmall, color = visual.muted)
                     }
                 }
             }
@@ -895,7 +874,7 @@ fun EncounterGeneratorTab(
             AppText(
                 "Nenhum NPC gerado ainda.",
                 style = MaterialTheme.typography.bodySmall,
-                color = ExaltedMuted,
+                color = visual.muted,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
