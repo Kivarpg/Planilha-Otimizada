@@ -146,7 +146,7 @@ fun IniciativasTab(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // APPROVED VISUAL CUSTOMIZATION — SectionHeader / chrome permanente
-        Spacer(Modifier.height(10.dp))
+        Spacer(Modifier.height(16.dp))
 
         // Permanente: rodada + Término + Log
         FlowRow(
