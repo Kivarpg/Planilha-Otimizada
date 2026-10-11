@@ -138,7 +138,7 @@ fun CharmsTab(
         modifier = modifier
             .fillMaxSize()
             .exaltedTabIdentity(8).exaltedContentStage(8)
-            .padding(14.dp)
+            .padding(horizontal = 18.dp, vertical = 16.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
