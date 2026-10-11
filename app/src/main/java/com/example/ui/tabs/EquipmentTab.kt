@@ -281,7 +281,7 @@ internal fun CategoryChipGroup(options: List<String>, selected: String, onSelect
                 AutoSizeText(
                     text = option,
                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                    color = if (isSelected) visual.accentBright else MaterialTheme.colorScheme.onSurface,
+                    color = if (isSelected) corTextoContraste(visual.accent) else visual.onSurface,
                     textAlign = TextAlign.Center,
                     maxFontSize = MaterialTheme.typography.labelMedium.fontSize,
                     minFontSize = 8.sp,
