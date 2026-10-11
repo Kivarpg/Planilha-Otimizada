@@ -35,9 +35,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.ui.theme.visual.accentBright
-import com.example.ui.theme.visual.surface
-import com.example.ui.theme.visual.onSurface
 import com.example.ui.theme.ExaltVisualTemplate
 import com.example.ui.theme.ExaltedDangerCore
 import com.example.ui.theme.ExaltedMetalGoldDeep
