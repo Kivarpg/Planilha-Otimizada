@@ -40,19 +40,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ui.theme.visual.surface
 import com.example.ui.theme.ExaltedBlack
 import com.example.R
 import com.example.model.Casta
-import com.example.ui.theme.visual.accentBright
-import com.example.ui.theme.visual.surface
-import com.example.ui.theme.visual.surfaceVariant
-import com.example.ui.theme.visual.accentBright
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.visual.metalShine
-import com.example.ui.theme.visual.metalDeep
-import com.example.ui.theme.visual.metalShine
-import com.example.ui.theme.visual.outline
 import com.example.ui.theme.corTextoContraste
 import com.example.ui.theme.LocalExaltedVisualTemplate
 
@@ -219,7 +209,7 @@ fun ErgonomicMultiWordButton(
                     modifier = Modifier
                         .size(5.dp)
                         .clip(androidx.compose.foundation.shape.CircleShape)
-                        .background(if (enabled) visual.accentBright else ExaltedMuted)
+                        .background(if (enabled) visual.accentBright else visual.muted)
                 )
                 Spacer(modifier = Modifier.width(9.dp))
             }
