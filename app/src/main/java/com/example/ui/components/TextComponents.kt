@@ -65,12 +65,10 @@ import com.example.ui.theme.ExaltedMuted
 import com.example.ui.theme.ExaltedOnSurface
 import com.example.ui.theme.ExaltedOutline
 import com.example.ui.theme.ExaltedDivider
-import com.example.ui.theme.ExaltedTextFill
 import com.example.ui.theme.ExaltedTextStroke
 import com.example.ui.theme.ExaltedStructuralMetalShine
-import com.example.ui.theme.ExaltedActiveMotif
-import com.example.ui.theme.ExaltedVisualMotif
 import com.example.ui.theme.Dimens
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 // Extraído dos 12 arquivos que já copiavam este mesmo bloco de cores toda
 // vez que um campo de texto novo era criado ao longo da sessão (refatoração
@@ -79,23 +77,28 @@ import com.example.ui.theme.Dimens
 // bloco inline evita que uma futura mudança de paleta precise ser feita
 // em uma dúzia de lugares diferentes.
 @Composable
-fun exaltedTextFieldColors() = OutlinedTextFieldDefaults.colors(
-    focusedBorderColor = ExaltedAccentBright,
-    unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
-    focusedLabelColor = ExaltedAccentBright,
-    unfocusedLabelColor = ExaltedMuted,
-    cursorColor = ExaltedAccentBright,
-    selectionColors = androidx.compose.foundation.text.selection.TextSelectionColors(handleColor = ExaltedAccentBright, backgroundColor = ExaltedAccentBright.copy(alpha = 0.38f)),
-    focusedTextColor = ExaltedOnSurface,
-    unfocusedTextColor = ExaltedOnSurface,
-    focusedContainerColor = ExaltedDarkSurface,
-    unfocusedContainerColor = ExaltedDarkSurfaceVariant,
-    focusedPlaceholderColor = ExaltedMuted,
-    unfocusedPlaceholderColor = ExaltedMuted,
-    disabledContainerColor = ExaltedDarkSurfaceVariant,
-    errorContainerColor = ExaltedDarkSurfaceVariant
-)
-
+fun exaltedTextFieldColors(): androidx.compose.material3.TextFieldColors {
+    val visual = LocalExaltedVisualTemplate.current
+    return OutlinedTextFieldDefaults.colors(
+        focusedBorderColor = visual.accentBright,
+        unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
+        focusedLabelColor = visual.accentBright,
+        unfocusedLabelColor = visual.muted,
+        cursorColor = visual.accentBright,
+        selectionColors = androidx.compose.foundation.text.selection.TextSelectionColors(
+            handleColor = visual.accentBright,
+            backgroundColor = visual.accentBright.copy(alpha = 0.38f)
+        ),
+        focusedTextColor = visual.onSurface,
+        unfocusedTextColor = visual.onSurface,
+        focusedContainerColor = visual.surface,
+        unfocusedContainerColor = visual.surfaceVariant,
+        focusedPlaceholderColor = visual.muted,
+        unfocusedPlaceholderColor = visual.muted,
+        disabledContainerColor = visual.surfaceVariant,
+        errorContainerColor = visual.surfaceVariant
+    )
+}
 // SKIN: cabeçalho de seção compartilhado por todas as abas. Tamanho do título,
 // largura do flourish e do divisor ficam em Dimens.kt (SectionTitleMaxSize/
 // MinSize, SectionFlourishWidth/Height, SectionDividerWidthFraction).
@@ -120,7 +123,8 @@ fun AppText(
     onTextLayout: (androidx.compose.ui.text.TextLayoutResult) -> Unit = {},
     forceStroke: Boolean = false
 ) {
-    val resolvedColor = if (color != Color.Unspecified) color else if (style.color != Color.Unspecified) style.color else ExaltedOnSurface
+    val visual = LocalExaltedVisualTemplate.current
+    val resolvedColor = if (color != Color.Unspecified) color else if (style.color != Color.Unspecified) style.color else visual.onSurface
     val resolvedStyle = style.copy(
         color = resolvedColor,
         fontSize = if (fontSize != TextUnit.Unspecified) fontSize else style.fontSize,
@@ -150,8 +154,10 @@ fun AppText(
     minLines: Int = 1,
     onTextLayout: (androidx.compose.ui.text.TextLayoutResult) -> Unit = {}
 ) {
+    val visual = LocalExaltedVisualTemplate.current
+    val resolvedColor = if (color != Color.Unspecified) color else if (style.color != Color.Unspecified) style.color else visual.onSurface
     val effectiveStyle = style.copy(
-        color = if (color != Color.Unspecified) color else ExaltedTextFill,
+        color = resolvedColor,
         fontSize = if (fontSize != TextUnit.Unspecified) fontSize else style.fontSize,
         fontWeight = fontWeight ?: style.fontWeight,
         fontFamily = fontFamily ?: style.fontFamily,
@@ -174,46 +180,45 @@ fun AppText(
 
 @Composable
 fun SectionHeader(title: String, modifier: Modifier = Modifier) {
-    // APPROVED VISUAL CUSTOMIZATION
-    // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
-    // IDENTIDADE VISUAL v4 — marcador editorial aberto.
-    // A seção não recebe uma caixa nem uma mini-moldura; ela funciona como
-    // título de capítulo sobre o conteúdo.
+    val visual = LocalExaltedVisualTemplate.current
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(Brush.horizontalGradient(listOf(
-                ExaltedStructuralMetalShine.copy(alpha = if (ExaltedActiveMotif == ExaltedVisualMotif.LUNAR) .13f else .075f),
-                ExaltedDarkSurfaceVariant.copy(alpha = .82f),
-                ExaltedAccentBright.copy(alpha = when (ExaltedActiveMotif) {
-                    ExaltedVisualMotif.SOLAR -> .22f
-                    ExaltedVisualMotif.DRAGON_BLOODED -> .18f
-                    ExaltedVisualMotif.LUNAR -> .14f
-                }),
-                ExaltedDarkSurfaceVariant.copy(alpha = .70f)
-            )))
-            .border(width = 1.dp, brush = Brush.horizontalGradient(listOf(ExaltedStructuralMetalShine.copy(alpha=.72f), ExaltedAccentBright.copy(alpha=.65f), ExaltedDivider.copy(alpha=.48f), Color.Transparent)), shape = RectangleShape)
-            .padding(start = when (ExaltedActiveMotif) {
-                ExaltedVisualMotif.SOLAR -> 8.dp
-                ExaltedVisualMotif.DRAGON_BLOODED -> 5.dp
-                ExaltedVisualMotif.LUNAR -> 3.dp
-            })
-            .background(Brush.horizontalGradient(listOf(
-                ExaltedAccentBright.copy(alpha = when (ExaltedActiveMotif) {
-                    ExaltedVisualMotif.SOLAR -> .42f
-                    ExaltedVisualMotif.DRAGON_BLOODED -> .36f
-                    ExaltedVisualMotif.LUNAR -> .27f
-                }),
-                ExaltedDarkSurfaceVariant.copy(alpha = .92f),
-                ExaltedDarkSurfaceVariant.copy(alpha = .74f)
-            )))
+            .background(
+                Brush.horizontalGradient(
+                    listOf(
+                        visual.metalShine.copy(alpha = .11f),
+                        visual.surfaceVariant.copy(alpha = .84f),
+                        visual.accentBright.copy(alpha = .18f),
+                        visual.surfaceVariant.copy(alpha = .72f)
+                    )
+                )
+            )
+            .border(
+                width = 1.dp,
+                brush = Brush.horizontalGradient(
+                    listOf(
+                        visual.metalShine.copy(alpha = .72f),
+                        visual.accentBright.copy(alpha = .65f),
+                        visual.divider.copy(alpha = .48f),
+                        Color.Transparent
+                    )
+                ),
+                shape = RectangleShape
+            )
+            .padding(start = 8.dp)
+            .background(
+                Brush.horizontalGradient(
+                    listOf(
+                        visual.accentBright.copy(alpha = .34f),
+                        visual.surfaceVariant.copy(alpha = .92f),
+                        visual.surfaceVariant.copy(alpha = .74f)
+                    )
+                )
+            )
             .padding(horizontal = 18.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // O antigo marcador temático à esquerda (incluindo o pequeno
-        // zigue-zague vermelho do Sangue de Dragão) foi removido por pedido
-        // explícito. Mantemos todo o restante do SectionHeader intacto.
-
         AutoSizeText(
             text = title,
             style = MaterialTheme.typography.titleLarge,
@@ -221,13 +226,10 @@ fun SectionHeader(title: String, modifier: Modifier = Modifier) {
             maxFontSize = 20.sp,
             minFontSize = 14.sp,
             letterSpacing = 0.7.sp,
-            // Títulos das seções usam o metal claro da identidade ativa;
-            // o texto de conteúdo permanece neutro para legibilidade.
-            color = ExaltedAccentBright,
+            color = visual.accentBright,
             textAlign = TextAlign.Start,
             modifier = Modifier.weight(1f, fill = true)
         )
-
     }
 }
 
@@ -285,7 +287,7 @@ fun AutoSizeText(
 fun AutoSizeAppText(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = ExaltedOnSurface,
+    color: Color = Color.Unspecified,
     fontWeight: FontWeight = FontWeight.Normal,
     letterSpacing: TextUnit = 0.sp,
     maxFontSize: TextUnit = 16.sp,
@@ -293,10 +295,11 @@ fun AutoSizeAppText(
     textAlign: TextAlign = TextAlign.Start,
     style: TextStyle = MaterialTheme.typography.bodyMedium
 ) {
+    val resolvedColor = if (color != Color.Unspecified) color else LocalExaltedVisualTemplate.current.onSurface
     AutoSizeText(
         text = text,
         modifier = modifier,
-        color = color,
+        color = resolvedColor,
         fontWeight = fontWeight,
         letterSpacing = letterSpacing,
         maxFontSize = maxFontSize,
@@ -310,14 +313,15 @@ fun AutoSizeAppText(
 fun JustifiedBodyAppText(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = ExaltedOnSurface,
+    color: Color = Color.Unspecified,
     style: TextStyle = MaterialTheme.typography.bodyMedium,
     forceStroke: Boolean = false
 ) {
+    val resolvedColor = if (color != Color.Unspecified) color else LocalExaltedVisualTemplate.current.onSurface
     AppText(
         text = text,
         modifier = modifier.fillMaxWidth(),
-        color = color,
+        color = resolvedColor,
         style = style.copy(textAlign = TextAlign.Justify),
         textAlign = TextAlign.Justify,
         forceStroke = forceStroke
