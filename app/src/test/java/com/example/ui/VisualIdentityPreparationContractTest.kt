@@ -59,6 +59,15 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `encounter NPC tab removal has a readable accessible touch target`() {
+        val encounter = File("src/main/java/com/example/ui/tabs/EncounterGeneratorTab.kt").readText()
+        assertTrue(encounter.contains(".size(40.dp)"))
+        assertTrue(encounter.contains("contentDescription = \"Remover NPC"))
+        assertTrue(encounter.contains("viewModel.removeNpcEncontro(npc.id)"))
+        assertTrue(encounter.contains("onAbaSelecionadaChange(null)"))
+    }
+
+    @Test
     fun `navigation progress strip uses active palette and accessible header height`() {
         val tabs = File("src/main/java/com/example/ui/SheetTabsBar.kt").readText()
         val header = File("src/main/java/com/example/ui/SheetTopBar.kt").readText()
