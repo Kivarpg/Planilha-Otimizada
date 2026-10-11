@@ -95,7 +95,7 @@ fun EquipmentTab(
             colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant),
             border = androidx.compose.foundation.BorderStroke(1.dp, com.example.ui.theme.ExaltedAccentBright.copy(alpha = 0.65f))
         ) {
-            Column(modifier = Modifier.fillMaxWidth().padding(14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 18.dp, vertical = 20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 AppText(
                     text = "Motes Comitados: ${sheet.comitamentoTotalCalculado()} / ${sheet.limiteComitamentoCalculado()}",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
