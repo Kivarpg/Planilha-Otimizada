@@ -46,11 +46,6 @@ import com.example.model.BattleGroupCustomStats
 import com.example.model.BattleGroupDrill
 import com.example.ui.components.GildedCard
 import com.example.ui.components.SectionHeader
-import com.example.ui.theme.visual.surface
-import com.example.ui.theme.visual.accentBright
-import com.example.ui.theme.visual.muted
-import com.example.ui.theme.visual.onSurface
-import com.example.ui.theme.visual.outline
 import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.ui.components.exaltedTextFieldColors
 import com.example.viewmodel.SheetViewModel
