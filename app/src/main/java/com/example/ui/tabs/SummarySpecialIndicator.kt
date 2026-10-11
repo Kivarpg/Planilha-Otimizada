@@ -7,8 +7,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedOnSurface
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 // APPROVED VISUAL CUSTOMIZATION
 // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
@@ -17,13 +16,14 @@ import com.example.ui.theme.ExaltedOnSurface
 // a moldura para preservar o alinhamento da coluna.
 @Composable
 internal fun SummarySpecialIndicator(marked: Boolean, compact: Boolean = false) {
+    val visual = LocalExaltedVisualTemplate.current
     Box(
         modifier = Modifier
             .size(if (compact) 11.dp else 14.dp)
-            .then(if (marked) Modifier.background(ExaltedAccentBright) else Modifier)
+            .then(if (marked) Modifier.background(visual.accentBright) else Modifier)
             .border(
                 1.dp,
-                if (marked) ExaltedAccentBright else ExaltedOnSurface
+                if (marked) visual.accentBright else visual.onSurface
             )
     )
 }
