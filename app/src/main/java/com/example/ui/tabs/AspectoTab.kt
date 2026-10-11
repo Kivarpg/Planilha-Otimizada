@@ -64,7 +64,7 @@ fun AspectoTab(
         modifier = modifier
             .fillMaxSize()
             .exaltedTabIdentity(2).exaltedContentStage(2)
-            .padding(horizontal = 14.dp, vertical = 12.dp)
+            .padding(horizontal = 18.dp, vertical = 16.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
