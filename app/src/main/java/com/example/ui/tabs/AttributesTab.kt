@@ -42,6 +42,7 @@ import com.example.model.isLunar
 import com.example.ui.components.GildedCard
 import com.example.ui.components.SectionHeader
 import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.theme.corTextoContraste
 import com.example.viewmodel.SheetViewModel
 
 // VISUAL IDENTITY 314: remodelação específica desta aba; somente apresentação, sem novos campos.
@@ -56,7 +57,7 @@ private fun PriorityBadge(
     Box(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
-            .background(if (isSelected) visual.accentBright.copy(alpha = 0.46f) else visual.surfaceVariant)
+            .background(if (isSelected) visual.accent else visual.surfaceVariant)
             .border(
                 1.dp,
                 if (isSelected) visual.accentBright else visual.outline.copy(alpha = 0.72f),
@@ -72,7 +73,7 @@ private fun PriorityBadge(
                 fontSize = 12.sp,
                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium
             ),
-            color = if (isSelected) visual.accentBright else visual.muted,
+            color = if (isSelected) corTextoContraste(visual.accent) else visual.muted,
             maxLines = 1
         )
     }
