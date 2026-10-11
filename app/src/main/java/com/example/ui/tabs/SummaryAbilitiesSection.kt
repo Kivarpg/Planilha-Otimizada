@@ -30,7 +30,7 @@ internal fun SummaryAbilitiesSection(sheet: CharacterSheet) {
             AppText(
                 "3. Habilidades",
                 style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp),
-                color = ExaltedAmber,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(6.dp))
