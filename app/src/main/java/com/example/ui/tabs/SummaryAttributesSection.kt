@@ -32,7 +32,7 @@ internal fun SummaryAttributesSection(sheet: CharacterSheet) {
             AppText(
                 "2. Atributos",
                 style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp),
-                color = ExaltedAmber,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(6.dp))
