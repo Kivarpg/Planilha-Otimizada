@@ -115,14 +115,14 @@ private fun ValorCalculadoCard(label: String, valor: Int, modifier: Modifier = M
             )
             Spacer(modifier = Modifier.height(6.dp))
             Surface(
-                color = ExaltedAmber.copy(alpha = 0.12f),
+                color = ExaltedAccentBright.copy(alpha = 0.12f),
                 shape = MaterialTheme.shapes.small,
-                border = androidx.compose.foundation.BorderStroke(1.dp, ExaltedAmber.copy(alpha = 0.5f))
+                border = androidx.compose.foundation.BorderStroke(1.dp, ExaltedAccentBright.copy(alpha = 0.5f))
             ) {
                 AppText(
                     text = "$valor",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = ExaltedAmber,
+                    color = ExaltedAccentBright,
                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 4.dp)
                 )
             }
@@ -172,7 +172,7 @@ fun CombatTab(
                                 .size(26.dp)
                                 .clip(CircleShape)
                                 .background(if (nivel <= sheet.essencia) essenciaGradientColor(nivel) else ExaltedDarkBackground.copy(alpha = 0.85f))
-                                .border(1.dp, if (nivel <= sheet.essencia) ExaltedGold else ExaltedAmber.copy(alpha = 0.45f), CircleShape)
+                                .border(1.dp, if (nivel <= sheet.essencia) ExaltedAccentBright else ExaltedOutline.copy(alpha = 0.45f), CircleShape)
                         )
                     }
                 }
@@ -184,7 +184,7 @@ fun CombatTab(
                 AppText(
                     text = "Motes",
                     style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                    color = ExaltedAmber,
+                    color = ExaltedAccentBright,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
