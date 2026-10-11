@@ -35,10 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.ui.theme.ExaltedDangerCore
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.ui.theme.ExaltedOnSurface
 import com.example.viewmodel.SheetViewModel
 import kotlinx.coroutines.Dispatchers
@@ -87,6 +84,7 @@ fun CodeExportResultDialog(
     snackbarHostState: androidx.compose.material3.SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     if (codigo == null) return
     val qrBitmap = remember(codigo) {
         if (codigo.isNotEmpty() && codigo.length <= LIMITE_CARACTERES_PARA_QR) gerarBitmapQrCode(codigo) else null
@@ -99,7 +97,7 @@ fun CodeExportResultDialog(
         title = {
             AppText(
                 "Código de Compartilhamento",
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 maxLines = 2,
@@ -131,7 +129,7 @@ fun CodeExportResultDialog(
                         .fillMaxWidth()
                         .heightIn(max = 120.dp)
                         .verticalScroll(rememberScrollState())
-                        .background(ExaltedDarkSurfaceVariant)
+                        .background(visual.surfaceVariant)
                         .padding(10.dp)
                 ) {
                     AppText(codigo, style = MaterialTheme.typography.bodySmall, color = ExaltedOnSurface)
@@ -139,7 +137,7 @@ fun CodeExportResultDialog(
                 AppText(
                     text = "${codigo.length} caracteres",
                     style = MaterialTheme.typography.labelSmall,
-                    color = ExaltedMuted
+                    color = visual.muted
                 )
             }
         },
@@ -155,7 +153,7 @@ fun CodeExportResultDialog(
         confirmButton = {
             com.example.ui.components.GildedDialogTextButton(text = "Fechar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurface
+        containerColor = visual.surface
     )
 }
 
@@ -170,6 +168,7 @@ fun CodeImportDialog(
     snackbarHostState: androidx.compose.material3.SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     if (!show) return
     var codeImportText by remember { mutableStateOf("") }
     var codeImportError by remember { mutableStateOf<String?>(null) }
@@ -180,7 +179,7 @@ fun CodeImportDialog(
         onDismissRequest = { if (!codeImportLoading) onDismiss() },
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
-        title = { AppText("Carregar por Código", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
+        title = { AppText("Carregar por Código", color = visual.accentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
         text = {
             Column(
                 modifier = Modifier.fillMaxWidth().heightIn(max = importContentHeight).verticalScroll(rememberScrollState()),
@@ -205,7 +204,7 @@ fun CodeImportDialog(
                     AppText(
                         text = "${codeImportText.length} / ${com.example.data.ShareCodeCodec.TAMANHO_MAXIMO_CODIGO}",
                         style = MaterialTheme.typography.labelSmall,
-                        color = if (codeImportText.length > com.example.data.ShareCodeCodec.TAMANHO_MAXIMO_CODIGO) ExaltedDangerCore else ExaltedMuted,
+                        color = if (codeImportText.length > com.example.data.ShareCodeCodec.TAMANHO_MAXIMO_CODIGO) ExaltedDangerCore else visual.muted,
                         modifier = Modifier.weight(1f),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -225,7 +224,7 @@ fun CodeImportDialog(
                 }
                 if (codeImportLoading) {
                     Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator(color = ExaltedAccentBright, modifier = Modifier.size(28.dp))
+                        CircularProgressIndicator(color = visual.accentBright, modifier = Modifier.size(28.dp))
                     }
                 }
             }
@@ -263,6 +262,6 @@ fun CodeImportDialog(
                 onClick = { if (!codeImportLoading) onDismiss() }
             )
         },
-        containerColor = ExaltedDarkSurface
+        containerColor = visual.surface
     )
 }
