@@ -216,3 +216,8 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Cabecalho: titulo de Casta/Aspecto e indicador de validade nao competem mais na mesma linha; agora usam linhas independentes com quebra de texto e limite de duas linhas.
 - Contador sincronizado compartilhado: substituidas cores legadas ExaltedAmber por ExaltedAccentBright em botoes, valor e contorno, preservando limites e callbacks.
 - Testes de contrato estatico acrescentados; compilacao e verificacao visual Android ainda pendentes.
+
+## Preparacao Exalted.866 — Seletores numericos compartilhados
+- NumericRatingControls.kt: removidas referencias legadas ExaltedAmber/ExaltedGold/ExaltedAmberVariant dos seletores numericos, dos pontos e do contorno de GildedStepButton. A cor agora acompanha ExaltedAccentBright (Solar, Sangue de Dragao ou Lunar).
+- Mantidos os callbacks de incremento/decremento, os limites min/max, a disposicao dos botoes e as dimensoes; nenhum calculo de personagem foi alterado.
+- Adicionado teste de contrato estatico. Compilacao e inspecao visual no Android pendentes.
