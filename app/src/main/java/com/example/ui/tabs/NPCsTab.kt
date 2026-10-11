@@ -104,7 +104,7 @@ fun NPCsTab(
             .fillMaxSize()
             .exaltedTabIdentity(10).exaltedContentStage(10)
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp, vertical = 14.dp)
+            .padding(horizontal = 18.dp, vertical = 16.dp)
     ) {
         // APPROVED VISUAL CUSTOMIZATION
         // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
