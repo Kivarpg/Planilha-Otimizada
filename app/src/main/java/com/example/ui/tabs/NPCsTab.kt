@@ -151,7 +151,7 @@ fun NPCsTab(
             AppText(msg, color = ExaltedDangerCore, style = MaterialTheme.typography.bodySmall)
         }
 
-        Spacer(modifier = Modifier.height(14.dp))
+        Spacer(modifier = Modifier.height(22.dp))
 
         // Campo dinâmico: abre o popup de cadastro ao ser tocado.
         InkButton(
@@ -162,7 +162,7 @@ fun NPCsTab(
             fillMaxWidth = true
         )
 
-        Spacer(modifier = Modifier.height(18.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         if (npcs.isEmpty()) {
             AppText(
@@ -199,7 +199,7 @@ fun NPCsTab(
             val itensDaGaveta = npcsPorGaveta[lealdade].orEmpty()
             if (itensDaGaveta.isNotEmpty()) {
                 SectionHeader(title = rotuloGaveta(lealdade))
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 itensDaGaveta.forEach { npc ->
                     LongPressCard(
                         onLongClick = { npcParaExcluir = npc },
