@@ -188,7 +188,8 @@ internal fun LinguaDialog(show:Boolean,sheet:CharacterSheet,onDismiss:()->Unit,v
                             },
                             label = { AppText("Nome do idioma") },
                             singleLine = true,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = exaltedTextFieldColors()
                         )
                     }
                 }
@@ -246,7 +247,8 @@ internal fun LinguaDialog(show:Boolean,sheet:CharacterSheet,onDismiss:()->Unit,v
                             onValueChange = com.example.ui.components.rememberTypingFeedback { textoCustomNova = it.take(40) },
                             label = { AppText("Nome do idioma") },
                             singleLine = true,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = exaltedTextFieldColors()
                         )
                         com.example.ui.components.GildedDialogButton(
                             text = "Confirmar",
@@ -267,7 +269,9 @@ internal fun LinguaDialog(show:Boolean,sheet:CharacterSheet,onDismiss:()->Unit,v
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "Fechar", onClick = { onDismiss() })
         },
-        containerColor = visual.surfaceVariant
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 
 }
