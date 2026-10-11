@@ -114,7 +114,7 @@ fun MeritsTab(
                     AppText(
                         text = "Pontos Restantes: $freeMeritsRemaining",
                         style = MaterialTheme.typography.bodySmall,
-                        color = ExaltedGold
+                        color = ExaltedAccentBright
                     )
                 }
             }
