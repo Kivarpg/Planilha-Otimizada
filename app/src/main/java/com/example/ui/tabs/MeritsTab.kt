@@ -28,7 +28,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import com.example.ui.components.AppText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -78,12 +77,11 @@ fun MeritsTab(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Surface(
-            color = ExaltedDarkSurfaceVariant,
-            shape = RoundedCornerShape(8.dp),
+        GildedCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 12.dp)
+                .exaltedSectionPanel(6)
         ) {
             Column(
                 modifier = Modifier
