@@ -69,6 +69,7 @@ fun AspectoTab(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SectionHeader(title = "Aspecto selecionado")
+        Spacer(modifier = Modifier.height(12.dp))
 
         if (aspectoAtual == null) {
             AppText(
