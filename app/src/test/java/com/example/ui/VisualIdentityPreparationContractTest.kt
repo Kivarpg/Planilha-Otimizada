@@ -58,6 +58,15 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `encounter header inputs follow active exalt palette in both layouts`() {
+        val encounter = File("src/main/java/com/example/ui/tabs/EncounterGeneratorTab.kt").readText()
+        assertTrue(encounter.split("cursorColor = ExaltedAccentBright,").size >= 3)
+        assertTrue(encounter.split("checkedColor = ExaltedAccentBright,").size >= 3)
+        assertFalse(encounter.contains("cursorColor = ExaltedGold,"))
+        assertFalse(encounter.contains("checkedColor = ExaltedAmber,"))
+    }
+
+    @Test
     fun `vitality settings and attribute totals retain type-specific accents`() {
         val combat = File("src/main/java/com/example/ui/tabs/CombatTab.kt").readText()
         val attributes = File("src/main/java/com/example/ui/tabs/AttributesTab.kt").readText()
