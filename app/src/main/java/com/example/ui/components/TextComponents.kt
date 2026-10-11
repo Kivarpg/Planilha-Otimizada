@@ -282,9 +282,9 @@ fun SectionHeader(title: String, modifier: Modifier = Modifier) {
             text = title,
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Black,
-            maxFontSize = 18.sp,
+            maxFontSize = 19.sp,
             minFontSize = 13.sp,
-            letterSpacing = 1.0.sp,
+            letterSpacing = 1.1.sp,
             // Títulos das seções usam o metal claro da identidade ativa;
             // o texto de conteúdo permanece neutro para legibilidade.
             color = ExaltedAccentBright,
