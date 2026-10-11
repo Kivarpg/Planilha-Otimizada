@@ -1,6 +1,7 @@
 package com.example.ui.theme
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.setValue
 
 import com.example.model.isDragonBlooded
@@ -67,6 +68,7 @@ val ExaltedStructuralMetalDeep: Color get() = activeBlueprintPalette.metalDeep
 val ExaltedStructuralMetal: Color get() = activeBlueprintPalette.metalCore
 val ExaltedStructuralMetalShine: Color get() = activeBlueprintPalette.metalShine
 
+@Immutable
 data class ExaltVisualTemplate(
     val accent: Color,
     val accentBright: Color,
@@ -82,14 +84,11 @@ data class ExaltVisualTemplate(
     val divider: Color
 )
 
-fun visualTemplateParaExaltado(tipo: com.example.model.TipoExaltadoEncontro): ExaltVisualTemplate {
-    // A Aba 11 usa exatamente a mesma fonte de verdade visual do restante do app.
-    // Isso evita uma segunda paleta manual que fazia NPCs parecerem pertencer a
-    // uma skin diferente da ficha ativa.
-    val palette = when (tipo) {
-        com.example.model.TipoExaltadoEncontro.SANGUE_DE_DRAGAO -> ExaltedVisualBlueprints.SangueDeDragao.palette
-        com.example.model.TipoExaltadoEncontro.LUNAR -> ExaltedVisualBlueprints.Lunar.palette
-        else -> ExaltedVisualBlueprints.Solar.palette
+fun visualTemplatePorMotif(motif: ExaltedVisualMotif): ExaltVisualTemplate {
+    val palette = when (motif) {
+        ExaltedVisualMotif.SOLAR -> ExaltedVisualBlueprints.Solar.palette
+        ExaltedVisualMotif.DRAGON_BLOODED -> ExaltedVisualBlueprints.SangueDeDragao.palette
+        ExaltedVisualMotif.LUNAR -> ExaltedVisualBlueprints.Lunar.palette
     }
     return ExaltVisualTemplate(
         accent = palette.primary,
@@ -105,6 +104,17 @@ fun visualTemplateParaExaltado(tipo: com.example.model.TipoExaltadoEncontro): Ex
         outline = palette.outline,
         divider = palette.divider
     )
+}
+
+fun visualTemplateParaExaltado(tipo: com.example.model.TipoExaltadoEncontro): ExaltVisualTemplate {
+    // NPCs usam a mesma fonte de verdade visual do restante do app, mas com
+    // escopo próprio: a identidade do NPC não depende do tipo da ficha aberta.
+    val motif = when (tipo) {
+        com.example.model.TipoExaltadoEncontro.SANGUE_DE_DRAGAO -> ExaltedVisualMotif.DRAGON_BLOODED
+        com.example.model.TipoExaltadoEncontro.LUNAR -> ExaltedVisualMotif.LUNAR
+        else -> ExaltedVisualMotif.SOLAR
+    }
+    return visualTemplatePorMotif(motif)
 }
 
 // --- Ouros (metálico + solar) — degradê de bronze profundo a brilho quente.
