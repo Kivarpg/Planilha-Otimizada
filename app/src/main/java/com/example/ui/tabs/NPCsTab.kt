@@ -49,11 +49,10 @@ import com.example.ui.components.ConfirmDeleteDialog
 import com.example.ui.components.InkButton
 import com.example.ui.components.LongPressCard
 import com.example.ui.components.SectionHeader
-import com.example.ui.theme.ExaltedAmber
+import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedDangerCore
 import com.example.ui.theme.ExaltedSuccess
 import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import com.example.ui.theme.ExaltedOnSurface
 import com.example.viewmodel.SheetViewModel
@@ -254,7 +253,7 @@ fun NPCsTab(
                         modifier = Modifier.fillMaxWidth()
                     )
                     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        AppText("Lealdade", style = MaterialTheme.typography.labelMedium, color = ExaltedAmber)
+                        AppText("Lealdade", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)
                         FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp), maxItemsInEachRow = 2, modifier = Modifier.fillMaxWidth()) {
                             ORDEM_LEALDADES.forEach { opcao ->
                                 val corLealdade = corPorLealdade(opcao)
