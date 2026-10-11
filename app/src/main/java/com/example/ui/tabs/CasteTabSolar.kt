@@ -43,6 +43,7 @@ import com.example.ui.theme.ExaltedAmber
 import com.example.ui.theme.ExaltedDarkBackground
 import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.theme.corTextoContraste
 import com.example.ui.theme.ExaltedLimiteClaro
 import com.example.ui.theme.ExaltedLimiteEscuro
 import com.example.ui.theme.ExaltedOnSurface
@@ -256,23 +257,11 @@ internal fun SolarCasteTabContent(
                                 androidx.compose.material3.Icon(
                                     imageVector = if (expandedVirtude) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
                                     contentDescription = "Selecionar Falha de Virtude",
-                                    tint = com.example.ui.theme.ExaltedAmber
+                                    tint = visual.accentBright
                                 )
                             }
                         },
-                        colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = visual.accentBright,
-                            unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
-                            focusedLabelColor = visual.accentBright,
-                            unfocusedLabelColor = visual.muted,
-                            cursorColor = visual.accent,
-                            focusedTextColor = com.example.ui.theme.ExaltedOnSurface,
-                            unfocusedTextColor = com.example.ui.theme.ExaltedOnSurface,
-                            focusedContainerColor = visual.surface,
-                            unfocusedContainerColor = visual.surface,
-                            focusedPlaceholderColor = visual.muted,
-                            unfocusedPlaceholderColor = visual.muted
-                        ),
+                        colors = exaltedTextFieldColors(),
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(
@@ -293,7 +282,7 @@ internal fun SolarCasteTabContent(
                                     AppText(
                                         text = falha,
                                         fontWeight = if (sheet.falhaVirtude == falha) androidx.compose.ui.text.font.FontWeight.Bold else androidx.compose.ui.text.font.FontWeight.Normal,
-                                        color = if (sheet.falhaVirtude == falha) com.example.ui.theme.ExaltedAmber else MaterialTheme.colorScheme.onSurface
+                                        color = if (sheet.falhaVirtude == falha) visual.accentBright else visual.onSurface
                                     )
                                 },
                                 onClick = {
@@ -311,19 +300,7 @@ internal fun SolarCasteTabContent(
                     onValueChange = { viewModel.updateLimiteGatilho(it) },
                     label = { AppText("Gatilho do Limite") },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = visual.accentBright,
-                        unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
-                        focusedLabelColor = visual.accentBright,
-                        unfocusedLabelColor = visual.muted,
-                        cursorColor = visual.accent,
-                        focusedTextColor = com.example.ui.theme.ExaltedOnSurface,
-                        unfocusedTextColor = com.example.ui.theme.ExaltedOnSurface,
-                        focusedContainerColor = visual.surface,
-                        unfocusedContainerColor = visual.surface,
-                        focusedPlaceholderColor = visual.muted,
-                        unfocusedPlaceholderColor = visual.muted
-                    )
+                    colors = exaltedTextFieldColors()
                 )
                 Spacer(modifier = Modifier.height(5.dp))
 
@@ -354,11 +331,11 @@ internal fun SolarCasteTabContent(
                                 color = if (level <= sheet.limiteContador) {
                                     limiteGradientColor(level)
                                 } else {
-                                    com.example.ui.theme.ExaltedDarkBackground.copy(alpha = 0.85f)
+                                    visual.surface.copy(alpha = 0.85f)
                                 },
                                 border = androidx.compose.foundation.BorderStroke(
                                     1.dp,
-                                    if (level <= sheet.limiteContador) visual.accent else com.example.ui.theme.ExaltedAmber.copy(alpha = 0.45f)
+                                    if (level <= sheet.limiteContador) visual.accent else visual.outline.copy(alpha = 0.45f)
                                 ),
                                 onClick = { viewModel.updateLimiteContador(level) }
                             ) {
@@ -368,7 +345,7 @@ internal fun SolarCasteTabContent(
                                         fontFamily = com.example.ui.theme.ExaltedSymbolFont,
                                         fontSize = 9.sp,
                                         fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                                        color = if (level <= sheet.limiteContador) limiteTextColor(level) else visual.accentBright,
+                                        color = if (level <= sheet.limiteContador) corTextoContraste(limiteGradientColor(level)) else visual.onSurface,
                                         maxLines = 1,
                                         softWrap = false
                                     )
@@ -392,10 +369,4 @@ private fun limiteGradientColor(level: Int): androidx.compose.ui.graphics.Color 
     return androidx.compose.ui.graphics.lerp(claro, escuro, t)
 }
 
-// Cor do número sobre a caixa preenchida: como o degradê vai de claro a
-// escuro, o texto precisa trocar de preto (metade clara) para um tom claro
-// (metade escura) para se manter legível em qualquer nível.
-private fun limiteTextColor(level: Int): androidx.compose.ui.graphics.Color {
-    val t = (level - 1) / 9f
-    return if (t <= 0.5f) com.example.ui.theme.ExaltedMetalGoldDeep else com.example.ui.theme.ExaltedMetalGoldFlash
-}
+
