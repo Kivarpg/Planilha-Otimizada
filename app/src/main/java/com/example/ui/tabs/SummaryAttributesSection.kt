@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.*
 import com.example.model.*
 import com.example.ui.components.*
 import com.example.ui.theme.*
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 // APPROVED VISUAL CUSTOMIZATION
 // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
@@ -19,9 +20,9 @@ import com.example.ui.theme.*
 // visual e não modifica atributos nem suas regras de criação.
 @Composable
 internal fun SummaryAttributesSection(sheet: CharacterSheet) {
+    val visual = LocalExaltedVisualTemplate.current
     GildedCard(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier
