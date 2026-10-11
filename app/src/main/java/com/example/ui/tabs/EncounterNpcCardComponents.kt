@@ -35,9 +35,6 @@ import androidx.compose.ui.window.Popup
 import com.example.model.ArquetipoEncontro
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
 import com.example.ui.theme.ExaltVisualTemplate
-import com.example.ui.theme.ExaltedGold
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedOnSurface
 import com.example.ui.theme.LocalExaltedVisualTemplate
 
 internal fun corZebrada(indice: Int, visualTemplate: ExaltVisualTemplate? = null): Color =
