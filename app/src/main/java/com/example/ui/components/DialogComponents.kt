@@ -35,14 +35,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedOnSurface
+import com.example.ui.theme.visual.accentBright
+import com.example.ui.theme.visual.surface
+import com.example.ui.theme.visual.onSurface
 import com.example.ui.theme.ExaltVisualTemplate
 import com.example.ui.theme.ExaltedDangerCore
 import com.example.ui.theme.ExaltedMetalGoldDeep
 import com.example.ui.theme.ExaltedMetalGoldFlash
 import com.example.ui.theme.ExaltedMetalGoldShine
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 @Composable
 fun ConfirmDeleteDialog(
@@ -51,6 +52,7 @@ fun ConfirmDeleteDialog(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.then(gildedDialogBorder()),
@@ -66,7 +68,7 @@ fun ConfirmDeleteDialog(
             AppText(
                 forceStroke = true,
                 text = "Confirmar exclusão",
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -89,9 +91,9 @@ fun ConfirmDeleteDialog(
         confirmButton = {
             GildedDialogTextButton(text = "Cancelar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurface,
-        titleContentColor = ExaltedOnSurface,
-        textContentColor = ExaltedOnSurface,
+        containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface,
     )
 }
 
@@ -167,6 +169,7 @@ fun SaveValidationModal(
     onConfirmIncompleteSave: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     // Keep long validation reports scrollable while preserving footer actions.
     val reportHeightLimit = (LocalConfiguration.current.screenHeightDp * 0.45f).coerceAtMost(420f).dp
     AlertDialog(
@@ -177,14 +180,14 @@ fun SaveValidationModal(
             Icon(
                 imageVector = Icons.Outlined.Warning,
                 contentDescription = null,
-                tint = ExaltedAccentBright
+                tint = visual.accentBright
             )
         },
         title = {
             AppText(
                 forceStroke = true,
                 text = "Planilha incompleta",
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -206,7 +209,7 @@ fun SaveValidationModal(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.Top
                     ) {
-                        AppText(text = "• ", color = ExaltedAccentBright, fontWeight = FontWeight.Bold)
+                        AppText(text = "• ", color = visual.accentBright, fontWeight = FontWeight.Bold)
                         AppText(text = err, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurface)
                     }
                 }
@@ -218,9 +221,9 @@ fun SaveValidationModal(
         confirmButton = {
             GildedDialogTextButton(text = "Cancelar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurface,
-        titleContentColor = ExaltedOnSurface,
-        textContentColor = ExaltedOnSurface,
+        containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface,
     )
 }
 
