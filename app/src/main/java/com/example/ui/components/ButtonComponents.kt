@@ -13,7 +13,6 @@ import com.example.ui.components.feedbackClickable
 // pode ter lógica própria — confira o corpo da função antes de mexer.
 // ============================================================================
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -26,7 +25,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import com.example.ui.components.AppText
@@ -34,7 +32,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -43,25 +40,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ui.theme.ExaltedDarkBackground
+import com.example.ui.theme.visual.surface
 import com.example.ui.theme.ExaltedBlack
 import com.example.R
 import com.example.model.Casta
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedGoldBright
+import com.example.ui.theme.visual.accentBright
+import com.example.ui.theme.visual.surface
+import com.example.ui.theme.visual.surfaceVariant
+import com.example.ui.theme.visual.accentBright
 import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedMetalGoldCore
-import com.example.ui.theme.ExaltedMetalGoldDeep
-import com.example.ui.theme.ExaltedMetalGoldShine
-import com.example.ui.theme.ExaltedStructuralMetal
-import com.example.ui.theme.ExaltedStructuralMetalDeep
-import com.example.ui.theme.ExaltedStructuralMetalShine
-import com.example.ui.theme.ExaltedOutline
+import com.example.ui.theme.visual.metalShine
+import com.example.ui.theme.visual.metalDeep
+import com.example.ui.theme.visual.metalShine
+import com.example.ui.theme.visual.outline
 import com.example.ui.theme.corTextoContraste
-import com.example.ui.theme.ExaltedActiveMotif
-import com.example.ui.theme.ExaltedVisualMotif
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 // SKIN: moldura/gradiente/cores do emblema de Casta são editáveis à vontade
 // (Color.kt). A ARTE em si (R.drawable.caste_*) é INTOCÁVEL — só redimensionar,
@@ -75,6 +68,7 @@ fun CasteEmblemButton(
     enabled: Boolean = true,
     iconSize: Dp = com.example.ui.theme.Dimens.CasteAspectIconSize
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val emblem = when (caste) {
         Casta.Dawn -> R.drawable.caste_dawn
         Casta.Zenith -> R.drawable.caste_zenith
@@ -91,18 +85,18 @@ fun CasteEmblemButton(
             .background(
                 Brush.verticalGradient(
                     listOf(
-                        ExaltedDarkSurface,
-                        if (isSelected) ExaltedAccentBright.copy(alpha = 0.20f) else ExaltedDarkBackground,
-                        ExaltedDarkSurface
+                        visual.surface,
+                        if (isSelected) visual.accentBright.copy(alpha = 0.20f) else visual.surface,
+                        visual.surface
                     )
                 )
             )
             .border(
                 width = if (isSelected) 2.dp else 1.dp,
                 brush = if (isSelected) Brush.linearGradient(
-                    listOf(ExaltedStructuralMetalDeep, ExaltedStructuralMetalShine, ExaltedAccentBright, ExaltedStructuralMetalShine, ExaltedStructuralMetalDeep)
+                    listOf(visual.metalDeep, visual.metalShine, visual.accentBright, visual.metalShine, visual.metalDeep)
                 ) else Brush.linearGradient(
-                    listOf(ExaltedOutline, ExaltedStructuralMetal, ExaltedOutline)
+                    listOf(visual.outline, visual.metalShine, visual.outline)
                 ),
                 shape = MaterialTheme.shapes.medium
             )
@@ -114,17 +108,20 @@ fun CasteEmblemButton(
         // — só a moldura de exibição usa Crop pra garantir tamanho visual
         // uniforme entre os 5 emblemas (pedido explícito do usuário).
         Box(contentAlignment = Alignment.Center) {
-            androidx.compose.foundation.Canvas(modifier = Modifier.size(iconSize + 12.dp)) {
-                drawCircle(
-                    brush = Brush.radialGradient(
-                        listOf(
-                            ExaltedGoldBright.copy(alpha = if (isSelected) 0.28f else 0.10f),
-                            Color.Transparent
+            Box(
+                modifier = Modifier
+                    .size(iconSize + 12.dp)
+                    .background(
+                        Brush.radialGradient(
+                            listOf(
+                                visual.accentBright.copy(alpha = if (isSelected) 0.28f else 0.10f),
+                                Color.Transparent
+                            )
                         ),
-                        radius = this.size.minDimension / 2f
-                    )
-                )
-            }
+                        shape = androidx.compose.foundation.shape.CircleShape
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
             Image(
                 painter = painterResource(id = emblem),
                 contentDescription = caste.displayName,
@@ -136,6 +133,7 @@ fun CasteEmblemButton(
                 // caixa, mesmo a caixa em si tendo o tamanho igual.
                 contentScale = androidx.compose.ui.layout.ContentScale.Crop
             )
+            }
         }
         Spacer(modifier = Modifier.height(7.dp))
         AppText(
@@ -144,7 +142,7 @@ fun CasteEmblemButton(
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 0.8.sp
             ),
-            color = ExaltedAccentBright,
+            color = visual.accentBright,
             textAlign = TextAlign.Center,
             maxLines = 2,
             softWrap = true,
@@ -168,16 +166,12 @@ fun ErgonomicMultiWordButton(
     mostrarIndicador: Boolean = false,
     matchCharmPaletteWhenUnselected: Boolean = false
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val cleanLines = text.trim().split("\n").map { it.trim() }.filter { it.isNotEmpty() }
 
-    // Passo 6/12 — crítica da Sentinela A: a seleção não pode depender
-    // somente de cor/glow. A mesma função preserva conteúdo e callback, mas
-    // a silhueta responde ao Tipo ativo: régia/axial, facetada, ou lunar suave.
-    val sentinelShape = when (ExaltedActiveMotif) {
-        ExaltedVisualMotif.SOLAR -> RoundedCornerShape(4.dp)
-        ExaltedVisualMotif.DRAGON_BLOODED -> CutCornerShape(7.dp)
-        ExaltedVisualMotif.LUNAR -> RoundedCornerShape(14.dp)
-    }
+    // Geometria única e previsível. A identidade muda por tokens, não por
+    // transforms/desenho manual que possam interferir em constraints.
+    val sentinelShape = RoundedCornerShape(8.dp)
     Box(
         modifier = modifier
             .defaultMinSize(minWidth = 72.dp, minHeight = 58.dp)
@@ -185,9 +179,9 @@ fun ErgonomicMultiWordButton(
             .background(
                 Brush.horizontalGradient(
                     listOf(
-                        if (isSelected) ExaltedAccentBright.copy(alpha = 0.96f) else if (matchCharmPaletteWhenUnselected) ExaltedBlack else ExaltedDarkSurfaceVariant,
-                        if (isSelected) ExaltedAccentBright.copy(alpha = 0.92f) else if (matchCharmPaletteWhenUnselected) ExaltedBlack else ExaltedDarkSurface,
-                        if (isSelected) ExaltedAccentBright.copy(alpha = 0.96f) else if (matchCharmPaletteWhenUnselected) ExaltedBlack else ExaltedDarkSurfaceVariant
+                        if (isSelected) visual.accentBright.copy(alpha = 0.96f) else if (matchCharmPaletteWhenUnselected) ExaltedBlack else visual.surfaceVariant,
+                        if (isSelected) visual.accentBright.copy(alpha = 0.92f) else if (matchCharmPaletteWhenUnselected) ExaltedBlack else visual.surface,
+                        if (isSelected) visual.accentBright.copy(alpha = 0.96f) else if (matchCharmPaletteWhenUnselected) ExaltedBlack else visual.surfaceVariant
                     )
                 )
             )
@@ -196,28 +190,15 @@ fun ErgonomicMultiWordButton(
                 brush = Brush.horizontalGradient(
                     if (!isSelected && matchCharmPaletteWhenUnselected) {
                         listOf(
-                            ExaltedStructuralMetal.copy(alpha = 0.45f),
-                            ExaltedStructuralMetal.copy(alpha = 0.45f)
+                            visual.metalShine.copy(alpha = 0.45f),
+                            visual.metalShine.copy(alpha = 0.45f)
                         )
                     } else {
-                        listOf(ExaltedStructuralMetalDeep, ExaltedAccentBright, ExaltedStructuralMetalShine, ExaltedAccentBright, ExaltedStructuralMetalDeep)
+                        listOf(visual.metalDeep, visual.accentBright, visual.metalShine, visual.accentBright, visual.metalDeep)
                     }
                 ),
                 shape = sentinelShape
             )
-            .drawBehind {
-                val a = ExaltedAccentBright.copy(alpha = if (isSelected) .75f else .34f)
-                when (ExaltedActiveMotif) {
-                    ExaltedVisualMotif.SOLAR -> {
-                        drawLine(a, androidx.compose.ui.geometry.Offset(size.width*.40f, 2f), androidx.compose.ui.geometry.Offset(size.width*.60f, 2f), 1.4f)
-                        drawCircle(a.copy(alpha=.45f), 2.2.dp.toPx(), androidx.compose.ui.geometry.Offset(size.width*.5f, 2.5.dp.toPx()), style = androidx.compose.ui.graphics.drawscope.Stroke(.9f))
-                    }
-                    ExaltedVisualMotif.DRAGON_BLOODED -> Unit // Sem zigue-zague ornamental sobre o botão.
-                    ExaltedVisualMotif.LUNAR -> {
-                        drawArc(a, 205f, 130f, false, topLeft = androidx.compose.ui.geometry.Offset(size.width*.44f, -3.dp.toPx()), size = androidx.compose.ui.geometry.Size(size.width*.12f, 10.dp.toPx()), style = androidx.compose.ui.graphics.drawscope.Stroke(1.1f))
-                    }
-                }
-            }
             .feedbackClickable(enabled = enabled, onClick = onClick)
             .padding(horizontal = 12.dp, vertical = 8.dp),
         contentAlignment = Alignment.Center
@@ -238,12 +219,12 @@ fun ErgonomicMultiWordButton(
                     modifier = Modifier
                         .size(5.dp)
                         .clip(androidx.compose.foundation.shape.CircleShape)
-                        .background(if (enabled) ExaltedAccentBright else ExaltedMuted)
+                        .background(if (enabled) visual.accentBright else ExaltedMuted)
                 )
                 Spacer(modifier = Modifier.width(9.dp))
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                val corDeFundo = if (isSelected) ExaltedAccentBright else if (matchCharmPaletteWhenUnselected) ExaltedBlack else ExaltedDarkSurfaceVariant
+                val corDeFundo = if (isSelected) visual.accentBright else if (matchCharmPaletteWhenUnselected) ExaltedBlack else visual.surfaceVariant
                 cleanLines.forEach { line ->
                     AutoSizeText(
                         text = line,
