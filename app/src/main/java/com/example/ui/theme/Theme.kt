@@ -29,15 +29,15 @@ fun ExaltedTheme(
     // dourado do Solar, o valor inicial).
     val exaltedDarkColorScheme = darkColorScheme(
         primary = ExaltedAmber,
-        onPrimary = ExaltedOnPrimary,
+        onPrimary = corTextoContraste(ExaltedAmber),
         primaryContainer = ExaltedDarkSurfaceVariant,
         onPrimaryContainer = ExaltedGold,
         secondary = ExaltedAmberVariant,
-        onSecondary = ExaltedOnPrimary,
+        onSecondary = corTextoContraste(ExaltedAmberVariant),
         secondaryContainer = ExaltedDarkSurfaceVariant,
         onSecondaryContainer = ExaltedGold,
         tertiary = ExaltedGold,
-        onTertiary = ExaltedOnPrimary,
+        onTertiary = corTextoContraste(ExaltedGold),
         background = ExaltedDarkBackground,
         onBackground = ExaltedOnBackground,
         surface = ExaltedDarkSurface,
