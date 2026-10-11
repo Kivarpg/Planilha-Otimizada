@@ -22,6 +22,7 @@ import com.example.viewmodel.SheetViewModel
 
 @Composable
 internal fun AspectSelectionSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
+    val visual = LocalExaltedVisualTemplate.current
     if (!sheet.tipoPersonagem.isDragonBlooded()) return
     SectionHeader(title = BoxNames.PersonalData.ASPECT)
     val aspectoAtual = Aspecto.entries.firstOrNull { it.displayName == sheet.aspecto }
@@ -36,11 +37,11 @@ internal fun AspectSelectionSection(sheet: CharacterSheet, viewModel: SheetViewM
     }
     Spacer(Modifier.height(5.dp))
     aspectoAtual?.let { aspecto ->
-        GildedCard(Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)) {
+        GildedCard(Modifier.fillMaxWidth()) {
             Column(Modifier.fillMaxWidth().padding(14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                AppText(BoxNames.PersonalData.ASPECT_ABILITY, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = ExaltedGold, textAlign = TextAlign.Center)
+                AppText(BoxNames.PersonalData.ASPECT_ABILITY, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = visual.accentBright, textAlign = TextAlign.Center)
                 Spacer(Modifier.height(5.dp))
-                AppText(aspecto.allowedAbilities().joinToString("  •  "), style = MaterialTheme.typography.bodySmall, color = ExaltedOnSurface, textAlign = TextAlign.Center)
+                AppText(aspecto.allowedAbilities().joinToString("  •  "), style = MaterialTheme.typography.bodySmall, color = visual.onSurface, textAlign = TextAlign.Center)
             }
         }
     }
@@ -48,6 +49,7 @@ internal fun AspectSelectionSection(sheet: CharacterSheet, viewModel: SheetViewM
 
 @Composable
 private fun ItemAspecto(aspecto: Aspecto, aspectoAtual: Aspecto?, viewModel: SheetViewModel, modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     val selecionado = aspecto == aspectoAtual
     val imagem = when (aspecto) {
         Aspecto.Ar -> com.example.R.drawable.aspecto_ar
@@ -69,18 +71,18 @@ private fun ItemAspecto(aspecto: Aspecto, aspectoAtual: Aspecto?, viewModel: She
             .background(
                 Brush.verticalGradient(
                     listOf(
-                        ExaltedDarkSurface,
-                        if (selecionado) ExaltedAccentBright.copy(alpha = 0.10f) else ExaltedDarkBackground,
-                        ExaltedDarkSurface
+                        visual.surface,
+                        if (selecionado) visual.accentBright.copy(alpha = 0.10f) else visual.surface,
+                        visual.surface
                     )
                 )
             )
             .border(
                 width = if (selecionado) 2.5.dp else 1.5.dp,
                 brush = if (selecionado) Brush.linearGradient(
-                    listOf(ExaltedStructuralMetalDeep, ExaltedAccentBright, ExaltedStructuralMetalShine, ExaltedAccentBright, ExaltedStructuralMetalDeep)
+                    listOf(visual.metalDeep, visual.accentBright, visual.metalShine, visual.accentBright, visual.metalDeep)
                 ) else Brush.linearGradient(
-                    listOf(ExaltedOutline, ExaltedStructuralMetal, ExaltedOutline)
+                    listOf(visual.outline, visual.metalDeep, visual.outline)
                 ),
                 shape = MaterialTheme.shapes.medium
             )
@@ -98,7 +100,7 @@ private fun ItemAspecto(aspecto: Aspecto, aspectoAtual: Aspecto?, viewModel: She
         AppText(
             aspecto.displayName,
             style = MaterialTheme.typography.labelMedium,
-            color = ExaltedAccentBright,
+            color = visual.accentBright,
             fontWeight = if (selecionado) FontWeight.Bold else FontWeight.Normal,
             textAlign = TextAlign.Center,
             maxLines = 1,
@@ -110,6 +112,7 @@ private fun ItemAspecto(aspecto: Aspecto, aspectoAtual: Aspecto?, viewModel: She
 
 @Composable
 internal fun CasteSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
+    val visual = LocalExaltedVisualTemplate.current
     if (sheet.tipoPersonagem.isDragonBlooded()) return
     if (sheet.tipoPersonagem.isLunar()) {
         LunarCasteSection(sheet, viewModel)
@@ -126,11 +129,11 @@ internal fun CasteSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
         }
     }
     Spacer(Modifier.height(5.dp))
-    if (!sheet.castaEscolhida) AppText("Toque num símbolo de Casta acima para ver suas habilidades.", style=MaterialTheme.typography.bodyMedium, color=ExaltedMuted, textAlign=TextAlign.Center)
-    else GildedCard(Modifier.fillMaxWidth(), colors=CardDefaults.cardColors(containerColor=ExaltedDarkSurfaceVariant)) {
+    if (!sheet.castaEscolhida) AppText("Toque num símbolo de Casta acima para ver suas habilidades.", style=MaterialTheme.typography.bodyMedium, color=visual.muted, textAlign=TextAlign.Center)
+    else GildedCard(Modifier.fillMaxWidth()) {
         Column(Modifier.fillMaxWidth().padding(14.dp), horizontalAlignment=Alignment.CenterHorizontally) {
-            AppText("Habilidades de ${sheet.casta.displayName}", style=MaterialTheme.typography.titleSmall, fontWeight=FontWeight.Bold, color=ExaltedGold, textAlign=TextAlign.Center)
-            Spacer(Modifier.height(5.dp)); AppText(sheet.casta.allowedAbilities().joinToString("  •  "), style=MaterialTheme.typography.bodySmall, color=ExaltedOnSurface, textAlign=TextAlign.Center)
+            AppText("Habilidades de ${sheet.casta.displayName}", style=MaterialTheme.typography.titleSmall, fontWeight=FontWeight.Bold, color=visual.accentBright, textAlign=TextAlign.Center)
+            Spacer(Modifier.height(5.dp)); AppText(sheet.casta.allowedAbilities().joinToString("  •  "), style=MaterialTheme.typography.bodySmall, color=visual.onSurface, textAlign=TextAlign.Center)
         }
     }
 }
@@ -144,6 +147,7 @@ internal fun CasteSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
  */
 @Composable
 internal fun LunarCasteSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
+    val visual = LocalExaltedVisualTemplate.current
     SectionHeader(title = BoxNames.PersonalData.CASTE)
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
@@ -160,18 +164,18 @@ internal fun LunarCasteSection(sheet: CharacterSheet, viewModel: SheetViewModel)
     }
     Spacer(Modifier.height(5.dp))
     if (!sheet.lunarCastaEscolhida) {
-        AppText("Toque num símbolo de Casta acima para ver seus atributos de casta.", style=MaterialTheme.typography.bodyMedium, color=ExaltedMuted, textAlign=TextAlign.Center)
+        AppText("Toque num símbolo de Casta acima para ver seus atributos de casta.", style=MaterialTheme.typography.bodyMedium, color=visual.muted, textAlign=TextAlign.Center)
     } else {
         val atributos = sheet.lunarCasta.poolAtributosCasta()
-        GildedCard(Modifier.fillMaxWidth(), colors=CardDefaults.cardColors(containerColor=ExaltedDarkSurfaceVariant)) {
+        GildedCard(Modifier.fillMaxWidth()) {
             Column(Modifier.fillMaxWidth().padding(14.dp), horizontalAlignment=Alignment.CenterHorizontally) {
                 AppText(
                     "Atributos disponíveis para ${sheet.lunarCasta.displayName} (escolha 2 na Casta)",
-                    style=MaterialTheme.typography.titleSmall, fontWeight=FontWeight.Bold, color=ExaltedGold, textAlign=TextAlign.Center
+                    style=MaterialTheme.typography.titleSmall, fontWeight=FontWeight.Bold, color=visual.accentBright, textAlign=TextAlign.Center
                 )
                 if (atributos.isNotEmpty()) {
                     Spacer(Modifier.height(5.dp))
-                    AppText(atributos.joinToString(", "), style=MaterialTheme.typography.bodySmall, color=ExaltedOnSurface, textAlign=TextAlign.Center)
+                    AppText(atributos.joinToString(", "), style=MaterialTheme.typography.bodySmall, color=visual.onSurface, textAlign=TextAlign.Center)
                 }
             }
         }
@@ -180,11 +184,12 @@ internal fun LunarCasteSection(sheet: CharacterSheet, viewModel: SheetViewModel)
 
 @Composable
 internal fun LanguageSection(sheet: CharacterSheet, onOpen: () -> Unit) {
+    val visual = LocalExaltedVisualTemplate.current
     SectionHeader(title=BoxNames.PersonalData.LANGUAGE)
-    GildedCard(Modifier.fillMaxWidth(), colors=CardDefaults.cardColors(containerColor=ExaltedDarkSurfaceVariant)) {
+    GildedCard(Modifier.fillMaxWidth()) {
         Column(Modifier.fillMaxWidth().padding(14.dp), horizontalAlignment=Alignment.CenterHorizontally) {
             val resumoLinguas=buildString { append(sheet.linguaNativa?.let{"Idioma nativo: $it"} ?: "Idioma nativo: não definido"); if(sheet.linguasAdicionais.isNotEmpty()){append("  •  Adicionais: ");append(sheet.linguasAdicionais.joinToString(", "))} }
-            AppText(resumoLinguas,style=MaterialTheme.typography.bodySmall,color=ExaltedOnSurface,textAlign=TextAlign.Center,modifier=Modifier.padding(bottom=8.dp))
+            AppText(resumoLinguas,style=MaterialTheme.typography.bodySmall,color=visual.onSurface,textAlign=TextAlign.Center,modifier=Modifier.padding(bottom=8.dp))
             InkButton(label=BoxNames.PersonalData.LANGUAGE, selected=true, onClick=onOpen, modifier=Modifier.fillMaxWidth(), fillMaxWidth=true, brushIndex=0)
         }
     }
@@ -192,8 +197,9 @@ internal fun LanguageSection(sheet: CharacterSheet, onOpen: () -> Unit) {
 
 @Composable
 internal fun IntimaciesSection(sheet: CharacterSheet, onOpenAdd: () -> Unit, onDelete: (Intimidade) -> Unit) {
+    val visual = LocalExaltedVisualTemplate.current
     SectionHeader(title=BoxNames.PersonalData.INTIMACIES)
-    GildedCard(Modifier.fillMaxWidth(), colors=CardDefaults.cardColors(containerColor=ExaltedDarkSurfaceVariant)) {
+    GildedCard(Modifier.fillMaxWidth()) {
         Column(Modifier.fillMaxWidth().padding(14.dp),horizontalAlignment=Alignment.CenterHorizontally) {
             InkButton(label="Intimidade", selected=true, onClick=onOpenAdd, modifier=Modifier.fillMaxWidth(), fillMaxWidth=true, brushIndex=1)
         }
@@ -203,8 +209,8 @@ internal fun IntimaciesSection(sheet: CharacterSheet, onOpenAdd: () -> Unit, onD
         LongPressCard(onLongClick={onDelete(intm)},modifier=Modifier.fillMaxWidth()) {
             Row(Modifier.fillMaxWidth().padding(14.dp),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.SpaceBetween) {
                 Row(Modifier.weight(1f),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(10.dp)) {
-                    MedallionIcon(size=34.dp){Icon(Icons.Outlined.FavoriteBorder,contentDescription=null,tint=ExaltedAccentBright,modifier=Modifier.size(17.dp))}
-                    Column(Modifier.weight(1f)) { AppText(intm.nome,style=MaterialTheme.typography.titleMedium,fontWeight=FontWeight.Bold,color=MaterialTheme.colorScheme.onSurface); Spacer(Modifier.height(4.dp)); Row { Surface(color=ExaltedAmber.copy(alpha=.2f),shape=RoundedCornerShape(4.dp)){AppText(intm.tipo,style=MaterialTheme.typography.labelSmall,color=ExaltedAmber,modifier=Modifier.padding(horizontal=6.dp,vertical=2.dp))}; Spacer(Modifier.width(8.dp)); Surface(color=ExaltedGold.copy(alpha=.2f),shape=RoundedCornerShape(4.dp)){AppText(intm.intensidade,style=MaterialTheme.typography.labelSmall,color=ExaltedGold,modifier=Modifier.padding(horizontal=6.dp,vertical=2.dp))} } }
+                    MedallionIcon(size=34.dp){Icon(Icons.Outlined.FavoriteBorder,contentDescription=null,tint=visual.accentBright,modifier=Modifier.size(17.dp))}
+                    Column(Modifier.weight(1f)) { AppText(intm.nome,style=MaterialTheme.typography.titleMedium,fontWeight=FontWeight.Bold,color=visual.onSurface); Spacer(Modifier.height(4.dp)); Row { Surface(color=visual.accent.copy(alpha=.2f),shape=RoundedCornerShape(4.dp)){AppText(intm.tipo,style=MaterialTheme.typography.labelSmall,color=visual.accent,modifier=Modifier.padding(horizontal=6.dp,vertical=2.dp))}; Spacer(Modifier.width(8.dp)); Surface(color=visual.accentBright.copy(alpha=.2f),shape=RoundedCornerShape(4.dp)){AppText(intm.intensidade,style=MaterialTheme.typography.labelSmall,color=visual.accentBright,modifier=Modifier.padding(horizontal=6.dp,vertical=2.dp))} } }
                 }
             }
         }
