@@ -12,13 +12,14 @@ import androidx.compose.ui.unit.*
 import com.example.model.*
 import com.example.ui.components.*
 import com.example.ui.theme.*
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 @Composable
 internal fun SummaryPersonalDataSection(sheet: CharacterSheet) {
+    val visual = LocalExaltedVisualTemplate.current
 // Personal Data & Caste
 GildedCard(
-    modifier = Modifier.fillMaxWidth(),
-    colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+    modifier = Modifier.fillMaxWidth()
 ) {
     Column(
         modifier = Modifier
