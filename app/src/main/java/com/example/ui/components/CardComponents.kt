@@ -109,6 +109,7 @@ fun GildedCard(
     val accent = visual?.accentBright ?: ExaltedAccentBright
     val deep = visual?.metalDeep ?: ExaltedStructuralMetalDeep
     val surface = visual?.surfaceVariant ?: ExaltedDarkSurfaceVariant
+    val motif = if (visualTemplate == null) ExaltedActiveMotif else null
     Card(
         modifier = modifier.drawBehind {
             // 315: placa de obsidiana com duas leituras de metal, em vez da caixa plana da 314.
@@ -132,7 +133,7 @@ fun GildedCard(
             val cx=size.width/2f
             drawCircle(accent.copy(.30f), 2.6.dp.toPx(), Offset(cx,2.5.dp.toPx()))
             // Assinatura ornamental do Exaltado no próprio componente, não só no fundo da aba.
-            when (ExaltedActiveMotif) {
+            when (motif) {
                 ExaltedVisualMotif.SOLAR -> {
                     val cy=9.dp.toPx(); val r=3.2.dp.toPx()
                     drawCircle(accent.copy(.55f),r,Offset(cx,cy),style=androidx.compose.ui.graphics.drawscope.Stroke(.8.dp.toPx()))
@@ -148,6 +149,7 @@ fun GildedCard(
                 ExaltedVisualMotif.LUNAR -> {
                     drawArc(accent.copy(.62f),205f,130f,false,Offset(cx-7.dp.toPx(),2.dp.toPx()),androidx.compose.ui.geometry.Size(14.dp.toPx(),10.dp.toPx()),style=androidx.compose.ui.graphics.drawscope.Stroke(.8.dp.toPx()))
                 }
+                null -> Unit // Template de NPC: a moldura usa apenas a paleta do NPC, sem o símbolo da ficha ativa.
             }
         },
         colors = CardDefaults.cardColors(containerColor = surface.copy(alpha=.94f)),
