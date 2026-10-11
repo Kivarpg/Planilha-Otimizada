@@ -10,10 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedDarkBackground
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedOnSurface
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 /**
  * Componentes decorativos neutralizados.
@@ -37,15 +34,16 @@ fun MedallionIcon(
 
 @Composable
 fun PriorityShieldBadge(number: Int, modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     Box(
         modifier = modifier
             .size(26.dp)
-            .background(ExaltedDarkSurface),
+            .background(visual.surface),
         contentAlignment = Alignment.Center
     ) {
         AppText(
             number.toString(),
-            color = ExaltedOnSurface,
+            color = visual.onSurface,
             fontWeight = FontWeight.Bold,
             fontSize = 12.sp
         )
@@ -54,7 +52,8 @@ fun PriorityShieldBadge(number: Int, modifier: Modifier = Modifier) {
 
 @Composable
 fun Starfield(modifier: Modifier = Modifier, starCount: Int = 140) {
-    Box(modifier = modifier.background(ExaltedDarkBackground))
+    val visual = LocalExaltedVisualTemplate.current
+    Box(modifier = modifier.background(visual.surface))
 }
 
 @Composable
@@ -63,7 +62,8 @@ fun OnyxTexturedBackground(
     scrimAlpha: Float = 0.64f,
     content: @Composable () -> Unit
 ) {
-    Box(modifier = modifier.background(ExaltedDarkBackground)) {
+    val visual = LocalExaltedVisualTemplate.current
+    Box(modifier = modifier.background(visual.surface)) {
         content()
     }
 }
@@ -72,9 +72,10 @@ fun Modifier.gildedFrame(): Modifier = this
 
 @Composable
 fun OrnateFlourish(modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     Box(
         modifier = modifier.background(
-            ExaltedAccentBright.copy(alpha = 0.10f),
+            visual.accentBright.copy(alpha = 0.10f),
             MaterialTheme.shapes.extraSmall
         )
     )
