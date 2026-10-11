@@ -47,6 +47,7 @@ import com.example.search.NumericMatchMode
 import com.example.search.SkillFilter
 import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
+import com.example.ui.theme.ExaltedOnSurface
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import kotlinx.coroutines.delay
@@ -323,7 +324,9 @@ fun SkillSearchModal(
                 com.example.ui.components.GildedDialogTextButton(text = "Cancelar", onClick = onDismiss)
             }
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = ExaltedDarkSurfaceVariant,
+        titleContentColor = ExaltedOnSurface,
+        textContentColor = ExaltedOnSurface,
     )
 }
 
