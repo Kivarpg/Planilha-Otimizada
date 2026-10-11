@@ -225,7 +225,7 @@ fun InkButton(
     ) {
         // A geometria primária do botão é o Box com gradiente/borda acima.
         // O antigo Canvas/SVG foi removido deste caminho principal porque sua
-        // cadeia clipRect/translate/scale já havia causado interferência entre
+        // a antiga cadeia de recorte e transformações já havia causado interferência entre
         // controles estreitos. A decoração não participa mais de constraints,
         // hit-testing ou posicionamento do rótulo.
 
