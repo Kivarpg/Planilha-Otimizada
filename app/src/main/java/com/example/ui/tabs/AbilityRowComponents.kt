@@ -72,9 +72,9 @@ internal fun AbilityCompactRow(
     specializationSegments: List<String>? = null,
     onLongPress: (() -> Unit)? = null
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     GildedCard(
-        modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+        modifier = modifier.fillMaxWidth()
     ) {
         Row(
             modifier = Modifier
@@ -89,7 +89,7 @@ internal fun AbilityCompactRow(
                     Icon(
                         imageVector = martialArtIcon,
                         contentDescription = null,
-                        tint = ExaltedAccentBright,
+                        tint = visual.accentBright,
                         modifier = Modifier.size(21.dp)
                     )
                 } else if (abilityIconRes != null) {
@@ -114,7 +114,7 @@ internal fun AbilityCompactRow(
                 AppText(
                     text = name,
                     style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold, letterSpacing = 0.4.sp),
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = visual.onSurface,
                     textAlign = TextAlign.Start,
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 2,
@@ -140,7 +140,7 @@ internal fun AbilityCompactRow(
                             AppText(
                                 text = segmento,
                                 style = MaterialTheme.typography.labelSmall.copy(fontStyle = androidx.compose.ui.text.font.FontStyle.Italic),
-                                color = ExaltedMuted,
+                                color = visual.muted,
                                 textAlign = TextAlign.Start,
                                 modifier = Modifier.fillMaxWidth(),
                                 maxLines = 2,
@@ -153,7 +153,7 @@ internal fun AbilityCompactRow(
                     AppText(
                         text = specializationText,
                         style = MaterialTheme.typography.labelSmall.copy(fontStyle = androidx.compose.ui.text.font.FontStyle.Italic),
-                        color = ExaltedMuted,
+                        color = visual.muted,
                         textAlign = TextAlign.Start,
                         modifier = Modifier.fillMaxWidth(),
                         maxLines = 2,
