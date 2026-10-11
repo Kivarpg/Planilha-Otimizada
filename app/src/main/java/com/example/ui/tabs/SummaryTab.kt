@@ -26,7 +26,7 @@ fun SummaryTab(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ExperienceCounterSection(sheet, viewModel)
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(18.dp))
         SummaryPersonalDataSection(sheet)
         Spacer(modifier = Modifier.height(12.dp))
         SummaryAttributesSection(sheet)
