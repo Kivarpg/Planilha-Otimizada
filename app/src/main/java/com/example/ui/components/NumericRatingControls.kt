@@ -38,11 +38,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.model.Casta
-import com.example.ui.theme.ExaltedAmber
-import com.example.ui.theme.ExaltedAmberVariant
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
 import com.example.ui.theme.ExaltedDivider
-import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import com.example.ui.theme.ExaltedMetalGoldCore
@@ -65,7 +62,7 @@ fun GildedStepButton(
     val corPreenchimento = if (enabled) com.example.ui.theme.ExaltedStepperNeutral else ExaltedMuted.copy(alpha = 0.25f)
     val symbolColor = if (enabled) Color.White else ExaltedMuted.copy(alpha = 0.55f)
     val borderBrush = if (enabled) {
-        Brush.linearGradient(listOf(ExaltedAccentBright, ExaltedAmberVariant, ExaltedAccentBright))
+        Brush.linearGradient(listOf(ExaltedAccentBright, ExaltedAccentBright, ExaltedAccentBright))
     } else {
         Brush.linearGradient(listOf(ExaltedDivider, ExaltedDivider, ExaltedDivider))
     }
@@ -109,7 +106,7 @@ fun ErgonomicNumericSelector(
     onValueChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
     badgeText: String? = null,
-    badgeColor: Color = ExaltedAmber,
+    badgeColor: Color = ExaltedAccentBright,
     enlargedDots: Boolean = false,
     invertButtons: Boolean = false,
     buttonsOnSameSide: Boolean = false,
@@ -273,10 +270,10 @@ fun ErgonomicNumericSelector(
                                 val isFinalDot = i == maxVal
                                 val fillColor = when {
                                     isFinalDot && isFilled -> ExaltedAccentBright
-                                    enlargedDots -> ExaltedGold
-                                    else -> ExaltedAmber
+                                    enlargedDots -> ExaltedAccentBright
+                                    else -> ExaltedAccentBright
                                 }
-                                val glowColor = if (isFinalDot) ExaltedAccentBright else ExaltedGold
+                                val glowColor = if (isFinalDot) ExaltedAccentBright else ExaltedAccentBright
                                 val borderWidth = if (enlargedDots || isFinalDot) 2.dp else 1.dp
                                 Box(
                                     modifier = Modifier
@@ -300,11 +297,11 @@ fun ErgonomicNumericSelector(
                         }
                     } else {
                         Surface(
-                            color = ExaltedAmber.copy(alpha = 0.12f),
+                            color = ExaltedAccentBright.copy(alpha = 0.12f),
                             shape = MaterialTheme.shapes.small,
                             border = BorderStroke(
                                 1.dp,
-                                ExaltedAmber.copy(alpha = 0.5f)
+                                ExaltedAccentBright.copy(alpha = 0.5f)
                             ),
                             modifier = Modifier.padding(horizontal = if (compact) 2.dp else 8.dp)
                         ) {
@@ -314,7 +311,7 @@ fun ErgonomicNumericSelector(
                                     fontWeight = FontWeight.Bold,
                                     fontSize = markerFontSize ?: MaterialTheme.typography.titleMedium.fontSize
                                 ),
-                                color = ExaltedAmber,
+                                color = ExaltedAccentBright,
                                 forceStroke = true,
                                 modifier = Modifier.padding(horizontal = if (compact) 6.dp else 12.dp, vertical = if (compact) 2.dp else 4.dp)
                             )
