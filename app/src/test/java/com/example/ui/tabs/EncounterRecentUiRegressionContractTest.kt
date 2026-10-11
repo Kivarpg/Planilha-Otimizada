@@ -95,7 +95,7 @@ class EncounterRecentUiRegressionContractTest {
 
 
     @Test fun `npc generation control remains explicit and readable in both header layouts`() {
-        val occurrences = Regex("""label = "Gerar NPC"""").findAll(generator).count()
+        val occurrences = generator.split("label = \"Gerar NPC\"").size - 1
         assertTrue(occurrences >= 2)
         assertTrue(generator.contains("customWidth = 136.dp"))
         assertTrue(generator.contains("customHeight = 64.dp"))
