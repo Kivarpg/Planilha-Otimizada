@@ -101,8 +101,11 @@ fun EquipmentTab(
                 AppText(
                     text = "Motes Comitados: ${sheet.comitamentoTotalCalculado()} / ${sheet.limiteComitamentoCalculado()}",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = ExaltedAmber,
-                    textAlign = TextAlign.Center
+                    color = com.example.ui.theme.ExaltedAccentBright,
+                    textAlign = TextAlign.Center,
+                    maxLines = 3,
+                    softWrap = true,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
