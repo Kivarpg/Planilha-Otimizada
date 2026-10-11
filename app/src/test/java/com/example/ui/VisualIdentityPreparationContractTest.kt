@@ -59,6 +59,20 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `shared search and text controls do not force Solar accent`() {
+        val search = File("src/main/java/com/example/ui/components/SearchComponents.kt").readText()
+        val textControls = File("src/main/java/com/example/ui/components/TextComponents.kt").readText()
+        val combatTrack = File("src/main/java/com/example/ui/components/CombatTrackControls.kt").readText()
+        listOf(search, textControls, combatTrack).forEach { source ->
+            assertFalse(source.contains("ExaltedGold"))
+            assertFalse(source.contains("ExaltedAmber"))
+            assertTrue(source.contains("ExaltedAccentBright"))
+        }
+        assertTrue(combatTrack.contains("visualTemplate?.accent ?: ExaltedAccentBright"))
+        assertTrue(combatTrack.contains("visualTemplate?.metalShine ?: ExaltedAccentBright"))
+    }
+
+    @Test
     fun `encounter NPC tab removal has a readable accessible touch target`() {
         val encounter = File("src/main/java/com/example/ui/tabs/EncounterGeneratorTab.kt").readText()
         assertTrue(encounter.contains(".size(40.dp)"))
