@@ -47,6 +47,7 @@ import com.example.ui.components.SectionHeader
 import com.example.ui.components.dialogShape
 import com.example.ui.components.gildedDialogBorder
 import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.theme.corTextoContraste
 import com.example.ui.components.exaltedTextFieldColors
 import com.example.viewmodel.SheetViewModel
 
@@ -163,7 +164,7 @@ internal fun MoteSourceDialog(
         },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                AppText("Custo: $custoTotal motes de Essência", color = MaterialTheme.colorScheme.onSurface)
+                AppText("Custo: $custoTotal motes de Essência", color = visual.onSurface)
                 listOf("Pessoais" to "Motes Pessoais", "Periféricos" to "Motes Periféricos", "Mistos" to "Motes Mistos").forEach { (chave, rotulo) ->
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -176,7 +177,7 @@ internal fun MoteSourceDialog(
                             onClick = null,
                             colors = RadioButtonDefaults.colors(selectedColor = visual.accentBright)
                         )
-                        AppText(rotulo, color = MaterialTheme.colorScheme.onSurface)
+                        AppText(rotulo, color = visual.onSurface)
                     }
                 }
                 if (modo == "Mistos") {
@@ -188,14 +189,16 @@ internal fun MoteSourceDialog(
                                     onValueChange = com.example.ui.components.rememberTypingFeedback { mistoPessoaisTexto = it.filter { ch -> ch.isDigit() } },
                                     label = { AppText("Pessoais") },
                                     singleLine = true,
-                                    modifier = Modifier.fillMaxWidth()
+                                    modifier = Modifier.fillMaxWidth(),
+                                    colors = exaltedTextFieldColors()
                                 )
                                 OutlinedTextField(
                                     value = mistoPerifericosTexto,
                                     onValueChange = com.example.ui.components.rememberTypingFeedback { mistoPerifericosTexto = it.filter { ch -> ch.isDigit() } },
                                     label = { AppText("Periféricos") },
                                     singleLine = true,
-                                    modifier = Modifier.fillMaxWidth()
+                                    modifier = Modifier.fillMaxWidth(),
+                                    colors = exaltedTextFieldColors()
                                 )
                             }
                         } else {
@@ -205,14 +208,16 @@ internal fun MoteSourceDialog(
                                     onValueChange = com.example.ui.components.rememberTypingFeedback { mistoPessoaisTexto = it.filter { ch -> ch.isDigit() } },
                                     label = { AppText("Pessoais") },
                                     singleLine = true,
-                                    modifier = Modifier.weight(1f)
+                                    modifier = Modifier.weight(1f),
+                                    colors = exaltedTextFieldColors()
                                 )
                                 OutlinedTextField(
                                     value = mistoPerifericosTexto,
                                     onValueChange = com.example.ui.components.rememberTypingFeedback { mistoPerifericosTexto = it.filter { ch -> ch.isDigit() } },
                                     label = { AppText("Periféricos") },
                                     singleLine = true,
-                                    modifier = Modifier.weight(1f)
+                                    modifier = Modifier.weight(1f),
+                                    colors = exaltedTextFieldColors()
                                 )
                             }
                         }
@@ -268,7 +273,7 @@ internal fun CategoryChipGroup(options: List<String>, selected: String, onSelect
                 modifier = Modifier
                     .widthIn(min = 92.dp)
                     .padding(vertical = 2.dp),
-                color = if (isSelected) visual.accentBright.copy(alpha = 0.22f) else visual.surfaceVariant,
+                color = if (isSelected) visual.accent else visual.surfaceVariant,
                 shape = MaterialTheme.shapes.small,
                 border = androidx.compose.foundation.BorderStroke(1.dp, if (isSelected) visual.accentBright else visual.outline),
                 onClick = { onSelect(option) }
