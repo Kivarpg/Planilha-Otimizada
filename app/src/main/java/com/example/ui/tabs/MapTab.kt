@@ -626,7 +626,7 @@ private fun TravelScaleBar(
             AppText(
                 text = "${formatKm(representedKm)} km",
                 color = ExaltedOnSurface,
-                fontSize = 10.sp,
+                fontSize = 13.sp,
                 maxLines = 1
             )
         }
