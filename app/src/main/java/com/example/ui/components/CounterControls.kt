@@ -61,8 +61,9 @@ fun SyncedCounterColumn(
         )
         Spacer(modifier = Modifier.height(6.dp))
         Row(
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(16.dp)
+            horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
         ) {
             InkButton(
                 onClick = { if (value - step >= minVal) onValueChange(value - step) },
