@@ -25,8 +25,12 @@ fun PersonalDataTab(sheet: CharacterSheet, viewModel: SheetViewModel, modifier: 
     var newIntimidadeTipo by remember { mutableStateOf("Laço") }
     var newIntimidadeIntensidade by remember { mutableStateOf("Menor") }
     Column(modifier.fillMaxSize().exaltedTabIdentity(1).exaltedContentStage(1).padding(horizontal=14.dp,vertical=12.dp).verticalScroll(rememberScrollState()), horizontalAlignment=Alignment.CenterHorizontally) {
-        PersonalIdentitySection(sheet,viewModel)
-        Spacer(Modifier.height(7.dp))
+        GildedCard(modifier = Modifier.fillMaxWidth().exaltedSectionPanel(1)) {
+            Column(Modifier.fillMaxWidth().padding(12.dp)) {
+                PersonalIdentitySection(sheet,viewModel)
+            }
+        }
+        Spacer(Modifier.height(12.dp))
         AspectSelectionSection(sheet,viewModel)
         CasteSection(sheet,viewModel)
         Spacer(Modifier.height(18.dp))
