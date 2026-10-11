@@ -34,7 +34,7 @@ fun Modifier.exaltedSectionPanel(
     .background(
         Brush.verticalGradient(
             listOf(
-                ExaltedStructuralMetalDeep.copy(alpha = 0.32f),
+                ExaltedStructuralMetalDeep.copy(alpha = 0.56f),
                 backgroundColor,
                 backgroundColor.copy(alpha = 0.98f),
                 ExaltedDarkSurface
@@ -42,16 +42,16 @@ fun Modifier.exaltedSectionPanel(
         )
     )
     .border(
-        width = 1.dp,
+        width = 1.5.dp,
         brush = Brush.linearGradient(
             listOf(
                 ExaltedStructuralMetalDeep.copy(alpha = 0.94f),
-                ExaltedAccentBright.copy(alpha = 0.78f),
-                ExaltedStructuralMetalShine.copy(alpha = 0.74f),
+                ExaltedAccentBright.copy(alpha = 0.92f),
+                ExaltedStructuralMetalShine.copy(alpha = 0.90f),
                 ExaltedStructuralMetalDeep.copy(alpha = 0.94f)
             )
         ),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(10.dp)
     )
 
 fun Modifier.exaltedControlBand(
