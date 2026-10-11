@@ -27,7 +27,6 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import com.example.ui.components.AppText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
@@ -38,24 +37,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedAmber
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedGold
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedOnSurface
+import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.components.exaltedTextFieldColors
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Composable
 internal fun DialogHistoricoCombates(historico: List<HistoricoCombateEntry>, onDismiss: () -> Unit) {
+    val visual = LocalExaltedVisualTemplate.current
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { AppText("Histórico de combates", color = ExaltedAccentBright, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()) },
+        title = { AppText("Histórico de combates", color = visual.accentBright, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()) },
         text = {
             if (historico.isEmpty()) {
-                AppText("Nenhum combate encerrado ainda.", color = ExaltedMuted)
+                AppText("Nenhum combate encerrado ainda.", color = visual.muted)
             } else {
                 Column(
                     modifier = Modifier
@@ -72,25 +68,25 @@ internal fun DialogHistoricoCombates(historico: List<HistoricoCombateEntry>, onD
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(ExaltedDarkSurfaceVariant, RoundedCornerShape(8.dp))
+                                .background(visual.surfaceVariant, RoundedCornerShape(8.dp))
                                 .padding(10.dp)
                         ) {
                             AppText(
                                 "Combate ${indice + 1} — $dataFormatada",
                                 style = MaterialTheme.typography.labelMedium,
-                                color = ExaltedAmber
+                                color = visual.accent
                             )
                             AppText(
                                 "${registro.rodadasTotais} rodada(s) · ${registro.turnStatus.name} / ${registro.combatStatus.name}",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = ExaltedMuted
+                                color = visual.muted
                             )
                             Spacer(Modifier.height(4.dp))
                             registro.participantes.forEach { p ->
                                 AppText(
                                     "${p.nome} — Iniciativa final: ${p.iniciativaFinal}",
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = ExaltedOnSurface
+                                    color = visual.onSurface
                                 )
                             }
                             // CORREÇÃO — mostrava só o último turno
@@ -108,7 +104,7 @@ internal fun DialogHistoricoCombates(historico: List<HistoricoCombateEntry>, onD
                                 AppText(
                                     "Turnos:",
                                     style = MaterialTheme.typography.labelMedium,
-                                    color = ExaltedGold
+                                    color = visual.accentBright
                                 )
                                 turnosComConteudo.forEach { log ->
                                     val cabecalho = buildString {
@@ -124,7 +120,7 @@ internal fun DialogHistoricoCombates(historico: List<HistoricoCombateEntry>, onD
                                     AppText(
                                         cabecalho,
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = if (log.tipoAtaque == TipoAtaque.DECISIVO) ExaltedAmber else ExaltedOnSurface
+                                        color = if (log.tipoAtaque == TipoAtaque.DECISIVO) visual.accent else visual.onSurface
                                     )
                                     log.iniciativaPerdidaPorId.forEach { (id, pontos) ->
                                         val nome = registro.participantes
@@ -136,7 +132,7 @@ internal fun DialogHistoricoCombates(historico: List<HistoricoCombateEntry>, onD
                                         AppText(
                                             "  $nome perdeu $pontos ponto(s) de Iniciativa",
                                             style = MaterialTheme.typography.bodySmall,
-                                            color = ExaltedMuted
+                                            color = visual.muted
                                         )
                                     }
                                     val detalhes = buildList {
@@ -147,7 +143,7 @@ internal fun DialogHistoricoCombates(historico: List<HistoricoCombateEntry>, onD
                                         AppText(
                                             "  ${detalhes.joinToString(" · ")}",
                                             style = MaterialTheme.typography.bodySmall,
-                                            color = ExaltedMuted
+                                            color = visual.muted
                                         )
                                     }
                                 }
@@ -157,7 +153,7 @@ internal fun DialogHistoricoCombates(historico: List<HistoricoCombateEntry>, onD
                                 AppText(
                                     "Atordoamento de Iniciativa: ${registro.eventosCrash.joinToString(", ")}",
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = ExaltedMuted
+                                    color = visual.muted
                                 )
                             }
                         }
@@ -173,11 +169,12 @@ internal fun DialogHistoricoCombates(historico: List<HistoricoCombateEntry>, onD
 
 @Composable
 internal fun DialogAdicionar(onDismiss: () -> Unit, onConfirm: (String, Int) -> Unit) {
+    val visual = LocalExaltedVisualTemplate.current
     var nome by remember { mutableStateOf("") }
     var iniciativa by remember { mutableIntStateOf(3) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { AppText("Adicionar combatente", color = ExaltedAccentBright, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()) },
+        title = { AppText("Adicionar combatente", color = visual.accentBright, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()) },
         text = {
             Column {
                 OutlinedTextField(
@@ -185,15 +182,11 @@ internal fun DialogAdicionar(onDismiss: () -> Unit, onConfirm: (String, Int) -> 
                     onValueChange = { nome = it.take(40) },
                     label = { AppText("Nome") },
                     singleLine = true,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = ExaltedAccentBright,
-                        focusedTextColor = ExaltedOnSurface,
-                        unfocusedTextColor = ExaltedOnSurface
-                    ),
+                    colors = exaltedTextFieldColors(),
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(Modifier.height(12.dp))
-                AppText("Iniciativa", style = MaterialTheme.typography.labelMedium, color = ExaltedAmber)
+                AppText("Iniciativa", style = MaterialTheme.typography.labelMedium, color = visual.accent)
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
@@ -201,19 +194,19 @@ internal fun DialogAdicionar(onDismiss: () -> Unit, onConfirm: (String, Int) -> 
                 ) {
                     InkButton(onClick = { iniciativa = (iniciativa - 1).coerceAtLeast(-20) }
 ) {
-                        Icon(Icons.Default.Remove, null, tint = ExaltedAmber)
+                        Icon(Icons.Default.Remove, null, tint = visual.accent)
                     }
                     AppText(
                         iniciativa.toString(),
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        color = ExaltedAccentBright,
+                        color = visual.accentBright,
                         modifier = Modifier.width(48.dp),
                         textAlign = TextAlign.Center
                     )
                     InkButton(onClick = { iniciativa = (iniciativa + 1).coerceAtMost(99) }
 ) {
-                        Icon(Icons.Default.Add, null, tint = ExaltedAmber)
+                        Icon(Icons.Default.Add, null, tint = visual.accent)
                     }
                 }
             }
@@ -238,12 +231,13 @@ internal fun DialogConfirmarTermino(
     onCancelar: () -> Unit,
     onConfirmar: () -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     AlertDialog(
         onDismissRequest = onCancelar,
         title = {
             AppText(
                 "Deseja realmente terminar o combate?",
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -252,14 +246,14 @@ internal fun DialogConfirmarTermino(
             Column {
                 AppText(
                     "O estado atual será salvo no log.",
-                    color = ExaltedOnSurface,
+                    color = visual.onSurface,
                     style = MaterialTheme.typography.bodyMedium
                 )
                 if (resolucaoPendente) {
                     Spacer(Modifier.height(8.dp))
                     AppText(
                         "Há resolução pendente: o turno será registrado como INCOMPLETO.",
-                        color = ExaltedAmber,
+                        color = visual.accent,
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
