@@ -48,7 +48,6 @@ import com.example.ui.components.dialogShape
 import com.example.ui.components.gildedDialogBorder
 import com.example.ui.theme.ExaltedDangerCore
 import com.example.ui.theme.LocalExaltedVisualTemplate
-import com.example.ui.theme.ExaltedOnSurface
 import com.example.viewmodel.SheetViewModel
 
 // Extraído de EquipmentTab.kt (2026-09, refatoração estrutural). Concern
@@ -377,11 +376,11 @@ private fun CatalogoArmaduraDetalhesDialog(
         },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
-                AppText("Tipo: $tipo", color = ExaltedOnSurface)
-                AppText("Peso: $peso", color = ExaltedOnSurface)
-                AppText("Absorção: ${stats.absorcao}", color = ExaltedOnSurface, modifier = Modifier.padding(top = 6.dp))
-                AppText("Dureza: ${stats.dureza}", color = ExaltedOnSurface)
-                AppText("Penalidade: ${stats.penalidadeMobilidade}", color = ExaltedOnSurface)
+                AppText("Tipo: $tipo", color = visual.onSurface)
+                AppText("Peso: $peso", color = visual.onSurface)
+                AppText("Absorção: ${stats.absorcao}", color = visual.onSurface, modifier = Modifier.padding(top = 6.dp))
+                AppText("Dureza: ${stats.dureza}", color = visual.onSurface)
+                AppText("Penalidade: ${stats.penalidadeMobilidade}", color = visual.onSurface)
                 AppText("Comitamento: ${stats.comitamento}", color = visual.accentBright)
                 custoMerito?.let {
                     AppText("Mérito: ${"•".repeat(it)} ($it)", color = visual.accentBright, modifier = Modifier.padding(top = 6.dp))
@@ -391,7 +390,7 @@ private fun CatalogoArmaduraDetalhesDialog(
                 }
                 AppText(
                     "Características: ${if (marcadores.isEmpty()) "Nenhuma" else marcadores.joinToString(", ")}",
-                    color = ExaltedOnSurface,
+                    color = visual.onSurface,
                     modifier = Modifier.padding(top = 6.dp)
                 )
             }
