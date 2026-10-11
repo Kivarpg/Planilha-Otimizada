@@ -596,7 +596,9 @@ private fun ConfiguracoesVitalidadeDialog(
         confirmButton = {
             InkButton(label = "Fechar", onClick = onDismiss, size = InkButtonSize.Small, variant = InkButtonVariant.Secondary)
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = ExaltedDarkSurfaceVariant,
+        titleContentColor = ExaltedOnSurface,
+        textContentColor = ExaltedOnSurface
     )
 }
 
