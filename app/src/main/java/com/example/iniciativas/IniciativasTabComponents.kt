@@ -42,11 +42,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ui.theme.ExaltedAmber
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedGold
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
+import com.example.ui.theme.visual.accent
+import com.example.ui.theme.visual.surfaceVariant
+import com.example.ui.theme.visual.accentBright
+import com.example.ui.theme.visual.accentBright
+import com.example.ui.theme.visual.muted
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.ui.theme.ExaltedTextFill
 import com.example.ui.theme.ExaltedTextStroke
 
@@ -81,6 +82,7 @@ internal fun ParticipanteCard(
     onLongPress: () -> Unit,
     onPosition: (Offset, androidx.compose.ui.geometry.Size) -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     // APPROVED VISUAL CUSTOMIZATION
     // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
     // Aba 12 — contornos da caixa:
@@ -251,7 +253,7 @@ internal fun ParticipanteCard(
                     (iniciativaExibida ?: participante.iniciativa).toString(),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
-                    color = if (iniciativaExibida != null && iniciativaExibida != participante.iniciativa) ExaltedAmber else CorNome
+                    color = if (iniciativaExibida != null && iniciativaExibida != participante.iniciativa) visual.accent else CorNome
                 )
             }
         }
@@ -331,8 +333,9 @@ internal fun SeletorVencedorClash(
     participanteB: ParticipanteIniciativa,
     onSelecionar: (String) -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     Surface(
-        color = ExaltedDarkSurfaceVariant,
+        color = visual.surfaceVariant,
         shape = RoundedCornerShape(10.dp),
         border = BorderStroke(1.dp, CorClash.copy(alpha = 0.75f)),
         modifier = Modifier.fillMaxWidth()
@@ -345,7 +348,7 @@ internal fun SeletorVencedorClash(
                 "Selecione o Vencedor",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = ExaltedAccentBright
+                color = visual.accentBright
             )
             Spacer(Modifier.height(8.dp))
             Row(
@@ -377,10 +380,11 @@ internal fun CaixaIniciativaPerdedor(
     onMenos: () -> Unit,
     bloqueado: Boolean = false
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     Surface(
-        color = ExaltedDarkSurfaceVariant,
+        color = visual.surfaceVariant,
         shape = RoundedCornerShape(10.dp),
-        border = BorderStroke(1.dp, ExaltedGold.copy(alpha = if (ativo) 0.7f else 0.25f)),
+        border = BorderStroke(1.dp, visual.accentBright.copy(alpha = if (ativo) 0.7f else 0.25f)),
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(
@@ -391,38 +395,38 @@ internal fun CaixaIniciativaPerdedor(
                 nomePerdedor?.let { it } ?: "Perdedor",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                fillColor = if (ativo) ExaltedTextFill else ExaltedMuted,
+                fillColor = if (ativo) ExaltedTextFill else visual.muted,
                 modifier = Modifier.fillMaxWidth()
             )
             AppText(
                 "Iniciativa (temporária até Próximo)",
                 style = MaterialTheme.typography.labelSmall,
-                color = ExaltedMuted
+                color = visual.muted
             )
             Spacer(Modifier.height(6.dp))
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
                 // [−] remove iniciativa do perdedor (= transferir +1 ao vencedor)
                 InkButton(onClick = onMais, enabled = ativo && !bloqueado, modifier = (Modifier.size(48.dp)).feedbackOnPress(enabled = ativo && !bloqueado)) {
-                    Icon(Icons.Default.Remove, "−", tint = if (ativo) ExaltedAmber else ExaltedMuted)
+                    Icon(Icons.Default.Remove, "−", tint = if (ativo) visual.accent else visual.muted)
                 }
                 AppText(
                     (valorIniciativa ?: 0).toString(),
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
-                    color = if (ativo) ExaltedAccentBright else ExaltedMuted,
+                    color = if (ativo) visual.accentBright else visual.muted,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.width(64.dp)
                 )
                 // [+] devolve iniciativa ao perdedor (= transferir −1)
                 InkButton(onClick = onMenos, enabled = ativo && !bloqueado && quantidadeTransferida > 0, modifier = (Modifier.size(48.dp)).feedbackOnPress(enabled = ativo && !bloqueado && quantidadeTransferida > 0)) {
-                    Icon(Icons.Default.Add, "+", tint = if (ativo) ExaltedAmber else ExaltedMuted)
+                    Icon(Icons.Default.Add, "+", tint = if (ativo) visual.accent else visual.muted)
                 }
             }
             if (bloqueado && ativo) {
                 AppText(
                     "Battle Group não reduz iniciativa de outro Battle Group. +1 ao atacante em Próximo.",
                     style = MaterialTheme.typography.labelSmall,
-                    color = ExaltedGold,
+                    color = visual.accentBright,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -431,11 +435,11 @@ internal fun CaixaIniciativaPerdedor(
                 AppText(
                     "Transferido: $quantidadeTransferida",
                     style = MaterialTheme.typography.labelSmall,
-                    color = ExaltedGold
+                    color = visual.accentBright
                 )
             }
             if (dica != null) {
-                AppText(dica, style = MaterialTheme.typography.labelSmall, color = ExaltedMuted)
+                AppText(dica, style = MaterialTheme.typography.labelSmall, color = visual.muted)
             }
         }
     }
