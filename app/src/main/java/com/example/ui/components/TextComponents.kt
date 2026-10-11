@@ -269,10 +269,9 @@ fun SectionHeader(title: String, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(Brush.horizontalGradient(listOf(ExaltedStructuralMetalShine.copy(alpha=.075f), ExaltedDarkSurfaceVariant.copy(alpha=.82f), ExaltedAccentBright.copy(alpha=.045f), Color.Transparent)))
-            .border(width = 1.dp, brush = Brush.horizontalGradient(listOf(ExaltedStructuralMetalShine.copy(alpha=.72f), ExaltedAccentBright.copy(alpha=.38f), ExaltedDivider.copy(alpha=.48f), Color.Transparent)), shape = RectangleShape)
-            .padding(horizontal = 10.dp, vertical = 10.dp)
-            .padding(top = 2.dp, bottom = 2.dp),
+            .background(Brush.horizontalGradient(listOf(ExaltedStructuralMetalShine.copy(alpha=.075f), ExaltedDarkSurfaceVariant.copy(alpha=.82f), ExaltedAccentBright.copy(alpha=.10f), ExaltedDarkSurfaceVariant.copy(alpha=.70f))))
+            .border(width = 1.dp, brush = Brush.horizontalGradient(listOf(ExaltedStructuralMetalShine.copy(alpha=.72f), ExaltedAccentBright.copy(alpha=.65f), ExaltedDivider.copy(alpha=.48f), Color.Transparent)), shape = RectangleShape)
+            .padding(horizontal = 14.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // O antigo marcador temático à esquerda (incluindo o pequeno
