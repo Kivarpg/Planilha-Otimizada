@@ -47,10 +47,8 @@ import com.example.model.CharacterSheet
 import com.example.search.SkillSearchEngine
 import com.example.search.toSearchableSkill
 import com.example.ui.components.EncantoQuadroBox
-import com.example.ui.theme.ExaltedAmber
 import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import com.example.viewmodel.SheetViewModel
