@@ -58,6 +58,15 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `attribute priorities retain three equal width controls`() {
+        val tab = File("src/main/java/com/example/ui/tabs/AttributesTab.kt").readText()
+        assertTrue(tab.contains("listOf(\"1º\", \"2º\", \"3º\").forEach"))
+        assertTrue(tab.contains("viewModel.setGroupPriority(groupName, prio)"))
+        assertTrue(tab.contains("modifier = Modifier.weight(1f)"))
+        assertTrue(tab.contains("text = priorityLabel"))
+    }
+
+    @Test
     fun `ability filter remains type specific on narrow screens`() {
         val tab = File("src/main/java/com/example/ui/tabs/AbilitiesTab.kt").readText()
         assertTrue(tab.contains("val columns = if (maxWidth < 390.dp) 1 else 2"))
