@@ -513,7 +513,10 @@ fun EncounterGeneratorTab(
                                     AppText("Conflito", style = MaterialTheme.typography.bodySmall, color = if (enviarParaConflito) ExaltedAccentBright else ExaltedMuted)
                                 }
                                 Box(
-                                    modifier = Modifier.size(64.dp).feedbackClickable(
+                                    modifier = Modifier.size(64.dp)
+                                        .background(ExaltedDarkSurface, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
+                                        .border(1.dp, ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
+                                        .feedbackClickable(
                                         enabled = !gerando, role = Role.Button,
                                         onClick = {
                                             gerarNpc(aposGerar = { gerado ->
@@ -589,6 +592,8 @@ fun EncounterGeneratorTab(
                                             Box(
                                                 modifier = Modifier
                                                     .size(64.dp)
+                                                    .background(ExaltedDarkSurface, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
+                                                    .border(1.dp, ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
                                                     .feedbackClickable(
                                                         enabled = !gerando,
                                                         role = Role.Button,
