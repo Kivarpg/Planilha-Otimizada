@@ -8,8 +8,6 @@ import androidx.compose.foundation.shape.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
-import androidx.compose.ui.draw.*
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import com.example.model.*
@@ -62,16 +60,9 @@ GildedCard(
                     color = visual.accentBright,
                     letterSpacing = 0.8.sp,
                     modifier = Modifier
-                        .padding(bottom = 2.dp)
-                        .drawBehind {
-                            val y = size.height - 1.dp.toPx()
-                            drawLine(
-                                color = visual.accentBright,
-                                start = Offset(0f, y),
-                                end = Offset(size.width, y),
-                                strokeWidth = 1.5.dp.toPx()
-                            )
-                        }
+                        .fillMaxWidth()
+                        .background(visual.accentBright.copy(alpha = 0.08f))
+                        .padding(horizontal = 4.dp, vertical = 3.dp)
                 )
                 val encantosAgrupados = groupAccumulatedCharms(itensDaGaveta)
                 encantosAgrupados.forEach { grupo ->
@@ -81,7 +72,7 @@ GildedCard(
                         "${numeroEncanto++}. $nomeExibicao",
                         style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
                         fontWeight = FontWeight.SemiBold,
-                        color = ExaltedOnSurface,
+                        color = visual.onSurface,
                         modifier = Modifier
                             .pointerInput(c.id, c.nome) {
                                 detectTapGestures(onLongPress = { encantoEmDetalhes = c })
