@@ -58,6 +58,17 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `vitality settings and attribute totals retain type-specific accents`() {
+        val combat = File("src/main/java/com/example/ui/tabs/CombatTab.kt").readText()
+        val attributes = File("src/main/java/com/example/ui/tabs/AttributesTab.kt").readText()
+        assertTrue(combat.contains("cursorColor = ExaltedAccentBright"))
+        assertTrue(combat.contains("if (ehExtra) ExaltedAccentBright"))
+        assertTrue(combat.contains("AppText(\"Caixas extras atuais\", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)"))
+        assertTrue(combat.contains("AppText(\"Adicionar novo nível\", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)"))
+        assertTrue(attributes.contains("text = \"Total\",\n                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.6.sp),\n                            color = ExaltedAccentBright"))
+    }
+
+    @Test
     fun `combat attributes and anima controls follow active exalt palette`() {
         val combat = File("src/main/java/com/example/ui/tabs/CombatTab.kt").readText()
         val attributes = File("src/main/java/com/example/ui/tabs/AttributesTab.kt").readText()
