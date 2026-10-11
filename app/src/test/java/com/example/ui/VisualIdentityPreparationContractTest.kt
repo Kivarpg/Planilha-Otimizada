@@ -191,9 +191,20 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
-    fun `numeric selectors respect active exalt palette`() {
+    fun `shared selection buttons avoid manual canvas ornaments`() {
+        val buttons = File("src/main/java/com/example/ui/components/ButtonComponents.kt").readText()
+        assertTrue(buttons.contains("LocalExaltedVisualTemplate.current"))
+        assertFalse(buttons.contains("drawBehind"))
+        assertFalse(buttons.contains("Canvas("))
+        assertFalse(buttons.contains("ExaltedActiveMotif"))
+        assertTrue(buttons.contains("corTextoContraste(corDeFundo)"))
+    }
+
+    @Test
+    fun `numeric selectors consume scoped visual tokens`() {
         val source = File("src/main/java/com/example/ui/components/NumericRatingControls.kt").readText()
-        assertTrue(source.contains("ExaltedAccentBright"))
+        assertTrue(source.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(source.contains("corTextoContraste(corPreenchimento)"))
         assertFalse(source.contains("ExaltedAmber"))
         assertFalse(source.contains("ExaltedGold"))
         assertTrue(source.contains("val decrementButton: @Composable (Dp) -> Unit"))
@@ -209,10 +220,12 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
-    fun `shared counter follows active exalt color`() {
+    fun `shared counter follows scoped exalt identity`() {
         val counter = File("src/main/java/com/example/ui/components/CounterControls.kt").readText()
-        assertTrue(counter.contains("ExaltedAccentBright"))
-        assertFalse(counter.contains("ExaltedAmber"))
+        assertTrue(counter.contains("LocalExaltedVisualTemplate.current"))
+        assertTrue(counter.contains("visual.accentBright"))
+        assertTrue(counter.contains("corTextoContraste(corPreenchimento)"))
+        assertFalse(counter.contains("drawBehind"))
     }
 
     @Test
