@@ -1043,21 +1043,26 @@ fun NpcEncontroCard(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 3.dp)
+                        .padding(vertical = 4.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(visualTemplate.surfaceVariant)
+                        .border(1.dp, visualTemplate.accentBright.copy(alpha = 0.55f), RoundedCornerShape(8.dp))
                         .feedbackClickable { feiticosExpandidos = !feiticosExpandidos }
+                        .padding(horizontal = 10.dp, vertical = 8.dp)
                 ) {
                     AppText(
                         if (feiticosExpandidos) "▾" else "▸",
-                        color = visualTemplate.gold,
-                        modifier = Modifier.padding(end = 6.dp),
+                        color = visualTemplate.accentBright,
+                        modifier = Modifier.padding(end = 8.dp),
                         forceStroke = true
                     )
-                    AppText(
-                        "Feitiços (${npc.feiticos.size})",
-                        style = MaterialTheme.typography.bodyLarge,
+                    EncounterCardTitle(
+                        text = "Feitiços (${npc.feiticos.size})",
+                        style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp),
                         fontWeight = FontWeight.Bold,
-                        color = visualTemplate.onSurface,
-                        forceStroke = true
+                        color = visualTemplate.accentBright,
+                        modifier = Modifier.weight(1f),
+                        textAlign = TextAlign.Start
                     )
                 }
                 if (feiticosExpandidos) {
