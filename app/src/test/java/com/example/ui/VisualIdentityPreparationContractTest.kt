@@ -59,6 +59,17 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `shared dialogs and counters stay responsive and type aware`() {
+        val dialogs = File("src/main/java/com/example/ui/components/DialogComponents.kt").readText()
+        val counters = File("src/main/java/com/example/ui/components/CounterControls.kt").readText()
+        assertFalse(dialogs.contains("ExaltedAmber"))
+        assertTrue(dialogs.contains("ExaltedAccentBright"))
+        assertTrue(dialogs.contains("verticalScroll(rememberScrollState())"))
+        assertTrue(counters.contains("modifier = Modifier.fillMaxWidth(),"))
+        assertTrue(counters.contains("Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)"))
+    }
+
+    @Test
     fun `numeric selectors respect active exalt palette`() {
         val source = File("src/main/java/com/example/ui/components/NumericRatingControls.kt").readText()
         assertTrue(source.contains("ExaltedAccentBright"))
