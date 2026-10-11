@@ -169,7 +169,7 @@ fun ErgonomicNumericSelector(
                             fontWeight = FontWeight.SemiBold,
                             fontSize = labelFontSize ?: MaterialTheme.typography.bodyMedium.fontSize
                         ),
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = visual.onSurface,
                         textAlign = if (centerLabel) TextAlign.Center else TextAlign.Start,
                         modifier = Modifier.weight(1f),
                         maxLines = 2,
@@ -204,7 +204,7 @@ fun ErgonomicNumericSelector(
                         fontWeight = FontWeight.SemiBold,
                         fontSize = labelFontSize ?: MaterialTheme.typography.bodyMedium.fontSize
                     ),
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = visual.onSurface,
                     textAlign = if (centerLabel) TextAlign.Center else TextAlign.Start,
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 2,
