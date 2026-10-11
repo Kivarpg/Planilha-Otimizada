@@ -73,7 +73,7 @@ internal fun SummaryAbilitiesSection(sheet: CharacterSheet) {
                                     text = "$ability $rating",
                                     modifier = Modifier.weight(1f),
                                     style = if (compactPhone) MaterialTheme.typography.labelMedium else MaterialTheme.typography.bodyLarge,
-                                    color = ExaltedOnSurface,
+                                    color = visual.onSurface,
                                     fontWeight = FontWeight.SemiBold,
                                     maxFontSize = if (compactPhone) 12.sp else 16.sp,
                                     minFontSize = 8.sp,
