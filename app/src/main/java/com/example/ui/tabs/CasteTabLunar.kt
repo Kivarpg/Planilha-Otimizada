@@ -50,6 +50,7 @@ import com.example.ui.theme.ExaltedBlack
 import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.theme.corTextoContraste
 import com.example.ui.theme.ExaltedMuted
 import com.example.ui.theme.ExaltedOnSurface
 import com.example.ui.theme.ExaltedOutline
@@ -143,34 +144,14 @@ internal fun LunarCasteTabContent(
                 onValueChange = { viewModel.updateLunarFormaEspiritual(it) },
                 label = { AppText("Forma Espiritual") },
                 modifier = Modifier.weight(1f),
-                colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = visual.accentBright,
-                    unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
-                    focusedLabelColor = visual.accentBright,
-                    unfocusedLabelColor = visual.muted,
-                    cursorColor = visual.accent,
-                    focusedTextColor = ExaltedOnSurface,
-                    unfocusedTextColor = ExaltedOnSurface,
-                    focusedContainerColor = visual.surface,
-                    unfocusedContainerColor = visual.surface
-                )
+                colors = exaltedTextFieldColors()
             )
             androidx.compose.material3.OutlinedTextField(
                 value = sheet.lunarSinal,
                 onValueChange = { viewModel.updateLunarSinal(it) },
                 label = { AppText("Sinal") },
                 modifier = Modifier.weight(1f),
-                colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = visual.accentBright,
-                    unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
-                    focusedLabelColor = visual.accentBright,
-                    unfocusedLabelColor = visual.muted,
-                    cursorColor = visual.accent,
-                    focusedTextColor = ExaltedOnSurface,
-                    unfocusedTextColor = ExaltedOnSurface,
-                    focusedContainerColor = visual.surface,
-                    unfocusedContainerColor = visual.surface
-                )
+                colors = exaltedTextFieldColors()
             )
         }
 
@@ -262,23 +243,11 @@ internal fun LunarCasteTabContent(
                                 androidx.compose.material3.Icon(
                                     imageVector = if (expandedVirtudeLunar) Icons.Default.ArrowDropUp else Icons.Default.ArrowDropDown,
                                     contentDescription = "Selecionar Falha de Virtude",
-                                    tint = ExaltedAmber
+                                    tint = visual.accentBright
                                 )
                             }
                         },
-                        colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = visual.accentBright,
-                            unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
-                            focusedLabelColor = visual.accentBright,
-                            unfocusedLabelColor = visual.muted,
-                            cursorColor = visual.accent,
-                            focusedTextColor = ExaltedOnSurface,
-                            unfocusedTextColor = ExaltedOnSurface,
-                            focusedContainerColor = visual.surface,
-                            unfocusedContainerColor = visual.surface,
-                            focusedPlaceholderColor = visual.muted,
-                            unfocusedPlaceholderColor = visual.muted
-                        ),
+                        colors = exaltedTextFieldColors(),
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(
@@ -297,7 +266,7 @@ internal fun LunarCasteTabContent(
                                     AppText(
                                         text = falha,
                                         fontWeight = if (sheet.falhaVirtude == falha) FontWeight.Bold else FontWeight.Normal,
-                                        color = if (sheet.falhaVirtude == falha) ExaltedAmber else MaterialTheme.colorScheme.onSurface
+                                        color = if (sheet.falhaVirtude == falha) visual.accentBright else visual.onSurface
                                     )
                                 },
                                 onClick = {
@@ -315,19 +284,7 @@ internal fun LunarCasteTabContent(
                     onValueChange = { viewModel.updateLimiteGatilho(it) },
                     label = { AppText("Gatilho do Limite") },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = visual.accentBright,
-                        unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
-                        focusedLabelColor = visual.accentBright,
-                        unfocusedLabelColor = visual.muted,
-                        cursorColor = visual.accent,
-                        focusedTextColor = ExaltedOnSurface,
-                        unfocusedTextColor = ExaltedOnSurface,
-                        focusedContainerColor = visual.surface,
-                        unfocusedContainerColor = visual.surface,
-                        focusedPlaceholderColor = visual.muted,
-                        unfocusedPlaceholderColor = visual.muted
-                    )
+                    colors = exaltedTextFieldColors()
                 )
                 Spacer(modifier = Modifier.height(5.dp))
 
@@ -351,7 +308,7 @@ internal fun LunarCasteTabContent(
                                 shape = androidx.compose.foundation.shape.RoundedCornerShape(50),
                                 // Prateado em vez de dourado — pedido
                                 // explícito do usuário.
-                                color = if (level <= sheet.limiteContador) limiteGradientColorLunar(level) else ExaltedDarkBackground.copy(alpha = 0.85f),
+                                color = if (level <= sheet.limiteContador) limiteGradientColorLunar(level, visual.metalShine, visual.metalDeep) else visual.surface.copy(alpha = 0.85f),
                                 border = androidx.compose.foundation.BorderStroke(
                                     1.dp,
                                     if (level <= sheet.limiteContador) visual.accentBright else visual.muted.copy(alpha = 0.45f)
@@ -364,7 +321,7 @@ internal fun LunarCasteTabContent(
                                         fontFamily = com.example.ui.theme.ExaltedSymbolFont,
                                         fontSize = 9.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = if (level <= sheet.limiteContador) limiteTextColorLunar(level) else visual.accentBright,
+                                        color = if (level <= sheet.limiteContador) corTextoContraste(limiteGradientColorLunar(level, visual.metalShine, visual.metalDeep)) else visual.accentBright,
                                         modifier = Modifier.padding(2.dp)
                                     )
                                 }
@@ -377,17 +334,12 @@ internal fun LunarCasteTabContent(
     }
 }
 
-private fun limiteGradientColorLunar(level: Int): androidx.compose.ui.graphics.Color {
-    val claro = com.example.ui.theme.ExaltedStructuralMetalShine
-    val escuro = com.example.ui.theme.ExaltedStructuralMetalDeep
+private fun limiteGradientColorLunar(
+    level: Int,
+    claro: androidx.compose.ui.graphics.Color,
+    escuro: androidx.compose.ui.graphics.Color
+): androidx.compose.ui.graphics.Color {
     val linear = ((level - 1) / 9f).coerceIn(0f, 1f)
-    // Mesma curva de contraste do Solar: início luminoso e queda visual
-    // mais marcada nos níveis altos, preservando a paleta prateada Lunar.
     val t = linear * linear * (3f - 2f * linear)
     return androidx.compose.ui.graphics.lerp(claro, escuro, t)
-}
-
-private fun limiteTextColorLunar(level: Int): androidx.compose.ui.graphics.Color {
-    val t = (level - 1) / 9f
-    return if (t <= 0.5f) com.example.ui.theme.ExaltedStructuralMetalDeep else com.example.ui.theme.ExaltedStructuralMetalShine
 }
