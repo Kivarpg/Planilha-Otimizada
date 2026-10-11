@@ -206,7 +206,7 @@ class VisualIdentityPreparationContractTest {
         val personal = File("src/main/java/com/example/ui/tabs/PersonalDataTab.kt").readText()
         assertTrue(combat.contains("color = ExaltedAccentBright.copy(alpha = 0.12f)"))
         assertTrue(combat.contains("if (nivel <= sheet.essencia) ExaltedAccentBright"))
-        assertTrue(attributes.contains("ExaltedAccentBright.copy(alpha = 0.25f) else ExaltedDarkSurface"))
+        assertTrue(attributes.contains("ExaltedAccentBright.copy(alpha = 0.34f) else ExaltedDarkSurfaceVariant"))
         assertTrue(attributes.contains("if (favoritoInfo.ehCasta) ExaltedAccentBright else ExaltedOutline"))
         assertTrue(personal.contains("cursorColor=ExaltedAccentBright,focusedTextColor"))
     }
