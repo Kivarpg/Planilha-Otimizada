@@ -59,6 +59,16 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `numeric selectors respect active exalt palette`() {
+        val source = File("src/main/java/com/example/ui/components/NumericRatingControls.kt").readText()
+        assertTrue(source.contains("ExaltedAccentBright"))
+        assertFalse(source.contains("ExaltedAmber"))
+        assertFalse(source.contains("ExaltedGold"))
+        assertTrue(source.contains("val decrementButton: @Composable (Dp) -> Unit"))
+        assertTrue(source.contains("val incrementButton: @Composable (Dp) -> Unit"))
+    }
+
+    @Test
     fun `header status and caste remain in separate text rows`() {
         val header = File("src/main/java/com/example/ui/SheetTopBar.kt").readText()
         assertTrue(header.contains("O estado da planilha nao deve disputar uma unica linha"))
