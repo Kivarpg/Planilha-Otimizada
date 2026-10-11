@@ -373,6 +373,20 @@ fun InkButton(
                         drawPath(path = path, brush = brush)
                     }
                 }
+                // Filetes discretos de metal acompanham a pincelada sem criar
+                // uma caixa retangular nem invadir os botões adjacentes.
+                if (enabled) {
+                    val metal = visualTemplate?.metalShine ?: ExaltedAccentBright
+                    val inset = 9.dp.toPx().coerceAtMost(this.size.width / 5f)
+                    drawLine(
+                        brush = Brush.horizontalGradient(
+                            listOf(Color.Transparent, metal.copy(alpha = 0.48f), Color.Transparent)
+                        ),
+                        start = Offset(inset, 3.dp.toPx()),
+                        end = Offset(this.size.width - inset, 3.dp.toPx()),
+                        strokeWidth = 1.dp.toPx()
+                    )
+                }
             }
         }
         // APPROVED VISUAL CUSTOMIZATION
