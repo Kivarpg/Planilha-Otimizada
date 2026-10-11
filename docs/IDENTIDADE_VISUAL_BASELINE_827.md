@@ -168,3 +168,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Aba Equipamentos: o resumo de Motes Comitados recebe o mesmo tratamento de legibilidade e cor de acento ativa, sem mudar o calculo.
 - Teste estatico de regressao adicionado. Compilacao e avaliacao visual ainda pendentes.
 - Estas alteracoes nao representam remodelacao artistica completa das duas abas.
+
+## Preparacao Exalted.856 — Feiticos e dialogo de Comitamento
+- Feiticos: titulo dos circulos desbloqueados, borda dos itens e cores dos checkboxes usam ExaltedAccentBright, preservando bloqueio, busca, selecao e calculos.
+- Equipamentos: titulo do dialogo Comitar usa a cor de acento do Tipo de Exaltado ativo.
+- Testes estaticos de regressao incluidos; nenhuma compilacao disparada.
+- Inspecao visual em dispositivo e verificacao dos emblemas orientais continuam pendentes.
