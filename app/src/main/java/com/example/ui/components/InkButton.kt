@@ -416,9 +416,13 @@ fun InkButton(
         // compactos e cortava rótulos como "Automático". Mantemos uma margem segura e
         // reduzimos a fonte somente quando o layout realmente informa overflow.
         var measuredTextWidthPx by remember { mutableStateOf(0) }
+        // Small controls frequently share a narrow Row on phones. Reserve
+        // less horizontal padding for those labels while keeping the larger
+        // button sizes comfortably inset from the painted brush edge.
+        val labelHorizontalPadding = if (size == InkButtonSize.Small) 4.dp else 8.dp
         val textModifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 2.dp)
+            .padding(horizontal = labelHorizontalPadding, vertical = 2.dp)
             .onSizeChanged { measuredTextWidthPx = it.width }
         val baseFontSize = size.fontSize
         // Reset the fit when the measured width changes (e.g. a weighted Row
