@@ -33,6 +33,7 @@ internal fun AtributoLunarCharmsPopup(
     onDismiss: () -> Unit,
     onShowDetail: (EncantoSolarDefinition) -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val subdivisoes = remember(atributo) { com.example.data.LunarCharmHierarchy.subdivisoesDe(atributo) }
     val adquiridoPorNome = remember(sheet.charms) {
         buildMap<String, Encanto> {
@@ -50,7 +51,7 @@ internal fun AtributoLunarCharmsPopup(
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = {
-            AppText(atributo, color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true)
+            AppText(atributo, color = visual.accentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true)
         },
         text = {
             Column(
@@ -69,7 +70,7 @@ internal fun AtributoLunarCharmsPopup(
                         AppText(
                             "Nenhum Encanto cadastrado para este Atributo.",
                             style = MaterialTheme.typography.bodySmall,
-                            color = ExaltedMuted,
+                            color = visual.muted,
                             textAlign = TextAlign.Center
                         )
                     } else {
@@ -97,12 +98,12 @@ internal fun AtributoLunarCharmsPopup(
                                 .padding(vertical = 4.dp)
                                 .feedbackClickable { subdivisaoExpandida = if (expandida) null else subdivisao }
                         ) {
-                            AppText(if (expandida) "▾" else "▸", color = ExaltedStructuralMetalShine, modifier = Modifier.padding(end = 6.dp))
+                            AppText(if (expandida) "▾" else "▸", color = visual.metalShine, modifier = Modifier.padding(end = 6.dp))
                             AppText(
                                 subdivisao,
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.Bold,
-                                color = ExaltedAccentBright
+                                color = visual.accentBright
                             )
                         }
                         if (expandida) {
@@ -113,7 +114,7 @@ internal fun AtributoLunarCharmsPopup(
                                 AppText(
                                     "Nenhum Encanto cadastrado nesta subdivisão.",
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = ExaltedMuted,
+                                    color = visual.muted,
                                     textAlign = TextAlign.Center,
                                     modifier = Modifier.padding(start = 12.dp, bottom = 6.dp)
                                 )
@@ -145,7 +146,9 @@ internal fun AtributoLunarCharmsPopup(
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "Fechar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
 
@@ -157,6 +160,7 @@ internal fun HabilidadeCharmsPopup(
     onDismiss: () -> Unit,
     onShowDetail: (EncantoSolarDefinition) -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val itens = remember(sheet, habilidade) { viewModel.encantosDaHabilidadeComElegibilidade(habilidade) }
     val adquiridoPorNome = remember(sheet.charms) {
         buildMap<String, Encanto> {
@@ -170,14 +174,14 @@ internal fun HabilidadeCharmsPopup(
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = {
-            AppText(habilidade, color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true)
+            AppText(habilidade, color = visual.accentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true)
         },
         text = {
             if (itens.isEmpty()) {
                 AppText(
                     "Nenhum Encanto cadastrado para esta habilidade.",
                     style = MaterialTheme.typography.bodySmall,
-                    color = ExaltedMuted,
+                    color = visual.muted,
                     textAlign = TextAlign.Center
                 )
             } else {
@@ -207,7 +211,9 @@ internal fun HabilidadeCharmsPopup(
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "Fechar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
 
@@ -220,12 +226,13 @@ internal fun CharmEligibilityRow(
     onIncrement: () -> Unit = { onToggle(true) },
     onDecrement: () -> Unit = { onToggle(false) }
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val def = item.definicao
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        color = if (item.elegivel) ExaltedDarkSurface else ExaltedDarkSurface.copy(alpha = 0.5f),
+        color = if (item.elegivel) visual.surface else visual.surface.copy(alpha = 0.5f),
         shape = MaterialTheme.shapes.small,
-        border = BorderStroke(1.dp, if (item.elegivel) ExaltedStructuralMetal.copy(alpha = 0.52f) else ExaltedMuted.copy(alpha = 0.3f))
+        border = BorderStroke(1.dp, if (item.elegivel) visual.metalDeep.copy(alpha = 0.52f) else visual.muted.copy(alpha = 0.3f))
     ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 6.dp, vertical = 4.dp),
@@ -239,11 +246,11 @@ internal fun CharmEligibilityRow(
                         onClick = onDecrement,
                         enabled = podeDiminuir,
                         modifier = Modifier.size(40.dp)) {
-                        AppText("−", color = if (podeDiminuir) ExaltedStructuralMetalShine else ExaltedMuted, fontWeight = FontWeight.Bold)
+                        AppText("−", color = if (podeDiminuir) visual.metalShine else visual.muted, fontWeight = FontWeight.Bold)
                     }
                     AppText(
                         text = "${item.quantidade}/${item.maximo}",
-                        color = if (item.quantidade > 0) ExaltedAccentBright else ExaltedMuted,
+                        color = if (item.quantidade > 0) visual.accentBright else visual.muted,
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(horizontal = 2.dp)
@@ -252,38 +259,38 @@ internal fun CharmEligibilityRow(
                         onClick = onIncrement,
                         enabled = podeAumentar,
                         modifier = Modifier.size(40.dp)) {
-                        AppText("+", color = if (podeAumentar) ExaltedStructuralMetalShine else ExaltedMuted, fontWeight = FontWeight.Bold)
+                        AppText("+", color = if (podeAumentar) visual.metalShine else visual.muted, fontWeight = FontWeight.Bold)
                     }
                 }
             } else if (item.elegivel) {
                 Checkbox(
                     checked = item.jaAdquirido,
                     onCheckedChange = onToggle,
-                    colors = CheckboxDefaults.colors(checkedColor = ExaltedAccentBright, uncheckedColor = ExaltedStructuralMetal)
+                    colors = CheckboxDefaults.colors(checkedColor = visual.accentBright, uncheckedColor = visual.metalDeep)
                 ,
     modifier = Modifier.feedbackOnPress(enabled = true)
 )
             } else {
                 Box(modifier = Modifier.size(40.dp), contentAlignment = Alignment.Center) {
-                    Icon(Icons.Outlined.Lock, contentDescription = "Requisitos não atendidos", tint = ExaltedMuted, modifier = Modifier.size(18.dp))
+                    Icon(Icons.Outlined.Lock, contentDescription = "Requisitos não atendidos", tint = visual.muted, modifier = Modifier.size(18.dp))
                 }
             }
             Column(modifier = Modifier.weight(1f)) {
                 AppText(
                     text = def.nome,
-                    color = if (item.elegivel) MaterialTheme.colorScheme.onSurface else ExaltedMuted,
+                    color = if (item.elegivel) MaterialTheme.colorScheme.onSurface else visual.muted,
                     fontWeight = if (item.jaAdquirido) FontWeight.Bold else FontWeight.Normal
                 )
                 if (mostrarHabilidade) {
                     AppText(
                         text = def.habilidade,
                         style = MaterialTheme.typography.labelSmall,
-                        color = ExaltedMuted
+                        color = visual.muted
                     )
                 }
             }
             InkButton(onClick = onShowDetail, modifier = Modifier.size(40.dp)) {
-                Icon(Icons.Outlined.Info, contentDescription = "Ver detalhes", tint = ExaltedStructuralMetalShine, modifier = Modifier.size(18.dp))
+                Icon(Icons.Outlined.Info, contentDescription = "Ver detalhes", tint = visual.metalShine, modifier = Modifier.size(18.dp))
             }
         }
     }
@@ -298,6 +305,7 @@ internal fun CharmAbilityButton(
     onLongPress: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     Surface(
         modifier = modifier.feedbackCombinedClickable(
             enabled = enabled,
@@ -309,13 +317,13 @@ internal fun CharmAbilityButton(
         // sem clarear o painel a ponto de se confundir com o backdrop.
         color = when {
             !enabled -> ExaltedBlack.copy(alpha = 0.72f)
-            selected -> ExaltedDarkSurface
+            selected -> visual.surface
             else -> ExaltedBlack
         },
         shape = MaterialTheme.shapes.small,
         border = BorderStroke(
             width = if (selected) 2.dp else 1.dp,
-            color = if (selected) ExaltedAccentBright else ExaltedStructuralMetal.copy(alpha = 0.45f)
+            color = if (selected) visual.accentBright else visual.metalDeep.copy(alpha = 0.45f)
         )
     ) {
         Box(
@@ -327,7 +335,7 @@ internal fun CharmAbilityButton(
             // não shadow, e mantém autoajuste para nomes longos.
             AutoSizeText(
                 text = text,
-                color = if (!enabled) ExaltedMuted else if (selected) ExaltedAccentBright else ExaltedStructuralMetalShine,
+                color = if (!enabled) visual.muted else if (selected) visual.accentBright else visual.metalShine,
                 fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
                 style = MaterialTheme.typography.titleSmall,
                 maxFontSize = 13.sp,
@@ -350,6 +358,7 @@ internal fun AcquiredCharmCard(
     isPinned: Boolean = false,
     onTogglePin: () -> Unit = {}
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -358,16 +367,16 @@ internal fun AcquiredCharmCard(
                 onClick = onClick,
                 onLongClick = onLongPress,
             ),
-        color = ExaltedDarkSurfaceVariant,
+        color = visual.surfaceVariant,
         shape = MaterialTheme.shapes.small,
-        border = BorderStroke(1.dp, if (isPinned) ExaltedAccentBright else ExaltedStructuralMetal.copy(alpha = 0.55f))
+        border = BorderStroke(1.dp, if (isPinned) visual.accentBright else visual.metalDeep.copy(alpha = 0.55f))
     ) {
         Row(Modifier.fillMaxWidth().padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 AppText(
                     "${charm.nome}${if (quantity > 1) " (x$quantity)" else ""} (${charm.nomeIngles.ifBlank { "—" }})",
                     fontWeight = FontWeight.Bold,
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color.Black.copy(alpha = 0.58f), MaterialTheme.shapes.extraSmall)
@@ -377,7 +386,7 @@ internal fun AcquiredCharmCard(
                     if (charm.circulo.isNotBlank()) "Feitiço — Círculo ${charm.circulo}"
                     else "Mins: " + charm.mins.ifBlank { "${charm.habilidadeVinculada} ${charm.minHabilidade}, Essência ${charm.minEssencia}" },
                     style = MaterialTheme.typography.bodySmall,
-                    color = ExaltedMuted
+                    color = visual.muted
                 )
             }
             // Coração: fixa o Encanto no início da gaveta (até 5 por gaveta).
@@ -390,7 +399,7 @@ internal fun AcquiredCharmCard(
                     role = Role.Checkbox
                     stateDescription = if (isPinned) "Fixado no topo da gaveta" else "Não fixado"
                 })) {
-                val corCoracao = if (isPinned) ExaltedDangerCore else ExaltedMuted
+                val corCoracao = if (isPinned) ExaltedDangerCore else visual.muted
                 androidx.compose.foundation.Canvas(modifier = Modifier.size(18.dp)) {
                     val w = size.width
                     val h = size.height
