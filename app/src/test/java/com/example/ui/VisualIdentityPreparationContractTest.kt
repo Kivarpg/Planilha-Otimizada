@@ -160,6 +160,37 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `shared visual primitives consume one scoped identity source`() {
+        val context = File("src/main/java/com/example/ui/theme/VisualContext.kt").readText()
+        val theme = File("src/main/java/com/example/ui/theme/Theme.kt").readText()
+        val colors = File("src/main/java/com/example/ui/theme/Color.kt").readText()
+        val ink = File("src/main/java/com/example/ui/components/InkButton.kt").readText()
+        val cards = File("src/main/java/com/example/ui/components/CardComponents.kt").readText()
+        val text = File("src/main/java/com/example/ui/components/TextComponents.kt").readText()
+
+        assertTrue(context.contains("LocalExaltedVisualTemplate"))
+        assertTrue(context.contains("CompositionLocalProvider"))
+        assertTrue(theme.contains("LocalExaltedVisualTemplate provides activeVisualTemplate"))
+        assertTrue(colors.contains("fun visualTemplatePorMotif"))
+        assertTrue(ink.contains("visualTemplate ?: LocalExaltedVisualTemplate.current"))
+        assertTrue(cards.contains("visualTemplate ?: LocalExaltedVisualTemplate.current"))
+        assertTrue(cards.contains("ProvideExaltedVisualTemplate(visual)"))
+        assertTrue(text.contains("LocalExaltedVisualTemplate.current"))
+        assertFalse(text.contains("ExaltedActiveMotif"))
+    }
+
+    @Test
+    fun `ink button rendering path remains free of canvas svg and clipping`() {
+        val ink = File("src/main/java/com/example/ui/components/InkButton.kt").readText()
+        assertFalse(ink.contains("Canvas("))
+        assertFalse(ink.contains("PathParser"))
+        assertFalse(ink.contains("clipRect"))
+        assertFalse(ink.contains("drawPath("))
+        assertTrue(ink.contains("contentAlignment = Alignment.Center"))
+        assertTrue(ink.contains("resolvedVisual.onSurface"))
+    }
+
+    @Test
     fun `numeric selectors respect active exalt palette`() {
         val source = File("src/main/java/com/example/ui/components/NumericRatingControls.kt").readText()
         assertTrue(source.contains("ExaltedAccentBright"))
