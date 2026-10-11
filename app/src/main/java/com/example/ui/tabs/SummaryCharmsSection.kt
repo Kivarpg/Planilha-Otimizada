@@ -15,14 +15,15 @@ import androidx.compose.ui.unit.*
 import com.example.model.*
 import com.example.ui.components.*
 import com.example.ui.theme.*
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 @Composable
 internal fun SummaryCharmsSection(sheet: CharacterSheet, viewModel: com.example.viewmodel.SheetViewModel) {
+    val visual = LocalExaltedVisualTemplate.current
 var encantoEmDetalhes by remember { mutableStateOf<Encanto?>(null) }
 // Charms & Spells Readonly
 GildedCard(
-    modifier = Modifier.fillMaxWidth(),
-    colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+    modifier = Modifier.fillMaxWidth()
 ) {
     Column(
         modifier = Modifier
@@ -33,7 +34,7 @@ GildedCard(
         Spacer(modifier = Modifier.height(6.dp))
 
         if (sheet.charms.isEmpty()) {
-            AppText("Nenhum encanto, feitiço ou necromancia cadastrado.", style = MaterialTheme.typography.bodySmall, color = ExaltedMuted)
+            AppText("Nenhum encanto, feitiço ou necromancia cadastrado.", style = MaterialTheme.typography.bodySmall, color = visual.muted)
         } else {
             // Agrupado por Habilidade (Encantos comuns) ou por
             // categoria (Feitiçaria/Necromancia sempre em seção
@@ -58,14 +59,14 @@ GildedCard(
                     nomeGaveta,
                     style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp),
                     fontWeight = FontWeight.Bold,
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     letterSpacing = 0.8.sp,
                     modifier = Modifier
                         .padding(bottom = 2.dp)
                         .drawBehind {
                             val y = size.height - 1.dp.toPx()
                             drawLine(
-                                color = ExaltedAccentBright,
+                                color = visual.accentBright,
                                 start = Offset(0f, y),
                                 end = Offset(size.width, y),
                                 strokeWidth = 1.5.dp.toPx()
