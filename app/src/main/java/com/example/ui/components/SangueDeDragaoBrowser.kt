@@ -28,11 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.style.TextAlign
 import com.example.data.EncantoSangueDeDragaoDefinition
 import com.example.model.ExaltedConstants
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedGold
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedOnSurface
+import com.example.ui.theme.ExaltedVisualMotif
+import com.example.ui.theme.ProvideExaltedVisualTemplate
+import com.example.ui.theme.visualTemplatePorMotif
 
 // Navegação somente-consulta dos Encantos de Sangue de Dragão — pensada
 // pra buscar/ler encantos sem precisar ter uma planilha desse Tipo de
@@ -42,6 +40,8 @@ import com.example.ui.theme.ExaltedOnSurface
 // de Dragão (SheetScreen.kt).
 @Composable
 fun SangueDeDragaoBrowserDialog(show: Boolean, onDismiss: () -> Unit, definitions: List<EncantoSangueDeDragaoDefinition>, modifier: Modifier = Modifier) {
+    val visual = visualTemplatePorMotif(ExaltedVisualMotif.DRAGON_BLOODED)
+
     if (!show) return
 
     var habilidadeExpandida by remember { mutableStateOf<String?>(null) }
@@ -65,11 +65,12 @@ fun SangueDeDragaoBrowserDialog(show: Boolean, onDismiss: () -> Unit, definition
     }
     val gruposOrdenados = remember(porHabilidade) { porHabilidade.entries.toList() }
 
+    ProvideExaltedVisualTemplate(visual) {
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.then(gildedDialogBorder()),
         shape = dialogShape,
-        title = { AppText("Encantos — Sangue de Dragão", color = ExaltedAccentBright, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
+        title = { AppText("Encantos — Sangue de Dragão", color = visual.accentBright, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
         text = {
             LazyColumn(modifier = Modifier.fillMaxWidth().height(420.dp)) {
                 items(gruposOrdenados) { (habilidade, encantosDaHabilidade) ->
@@ -80,12 +81,12 @@ fun SangueDeDragaoBrowserDialog(show: Boolean, onDismiss: () -> Unit, definition
                             .padding(vertical = 4.dp)
                             .feedbackClickable { habilidadeExpandida = if (expandida) null else habilidade },
                     ) {
-                        AppText(if (expandida) "▾" else "▸", color = ExaltedGold, modifier = Modifier.padding(end = 6.dp))
+                        AppText(if (expandida) "▾" else "▸", color = visual.accentBright, modifier = Modifier.padding(end = 6.dp))
                         AppText(
                             "$habilidade (${encantosDaHabilidade.size})",
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold,
-                            color = ExaltedAccentBright
+                            color = visual.accentBright
                         )
                     }
                     if (expandida) {
@@ -93,7 +94,7 @@ fun SangueDeDragaoBrowserDialog(show: Boolean, onDismiss: () -> Unit, definition
                             AppText(
                                 "• ${def.nome} (Essência ${def.minEssencia})",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = ExaltedOnSurface,
+                                color = visual.onSurface,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(start = 18.dp, top = 2.dp, bottom = 2.dp)
@@ -107,7 +108,9 @@ fun SangueDeDragaoBrowserDialog(show: Boolean, onDismiss: () -> Unit, definition
         confirmButton = {
             GildedDialogButton(text = "Fechar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurface
+        containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 
     val def = encantoSelecionado
@@ -129,7 +132,7 @@ fun SangueDeDragaoBrowserDialog(show: Boolean, onDismiss: () -> Unit, definition
                     CampoNegritoSDD("Duração", def.duracao)
                     CampoNegritoSDD("Pré-requisitos", def.preRequisitos)
                     Spacer(Modifier.height(6.dp))
-                    JustifiedBodyAppText(def.descricao, color = ExaltedOnSurface)
+                    JustifiedBodyAppText(def.descricao, color = visual.onSurface)
                     def.quadros.forEach { quadro ->
                         Spacer(Modifier.height(8.dp))
                         EncantoQuadroBox(quadro)
@@ -139,9 +142,12 @@ fun SangueDeDragaoBrowserDialog(show: Boolean, onDismiss: () -> Unit, definition
             confirmButton = {
                 GildedDialogButton(text = "Fechar", onClick = { encantoSelecionado = null })
             },
-            containerColor = ExaltedDarkSurfaceVariant
+            containerColor = visual.surfaceVariant,
+            titleContentColor = visual.onSurface,
+            textContentColor = visual.onSurface
         )
-    }
+    }    }
+
 }
 
 /** Campo "Rótulo: valor" com o rótulo em negrito — mesma correção aplicada
@@ -149,6 +155,7 @@ fun SangueDeDragaoBrowserDialog(show: Boolean, onDismiss: () -> Unit, definition
  * documentos de referência do usuário. */
 @Composable
 private fun CampoNegritoSDD(rotulo: String, valor: String) {
+    val visual = com.example.ui.theme.LocalExaltedVisualTemplate.current
     AppText(
         androidx.compose.ui.text.buildAnnotatedString {
             withStyle(androidx.compose.ui.text.SpanStyle(fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)) {
@@ -156,6 +163,6 @@ private fun CampoNegritoSDD(rotulo: String, valor: String) {
             }
             append(valor)
         },
-        color = ExaltedOnSurface
+        color = visual.onSurface
     )
 }
