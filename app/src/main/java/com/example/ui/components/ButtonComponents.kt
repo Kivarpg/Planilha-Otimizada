@@ -92,13 +92,13 @@ fun CasteEmblemButton(
                 Brush.verticalGradient(
                     listOf(
                         ExaltedDarkSurface,
-                        if (isSelected) ExaltedAccentBright.copy(alpha = 0.10f) else ExaltedDarkBackground,
+                        if (isSelected) ExaltedAccentBright.copy(alpha = 0.20f) else ExaltedDarkBackground,
                         ExaltedDarkSurface
                     )
                 )
             )
             .border(
-                width = if (isSelected) 2.5.dp else 1.5.dp,
+                width = if (isSelected) 2.dp else 1.dp,
                 brush = if (isSelected) Brush.linearGradient(
                     listOf(ExaltedStructuralMetalDeep, ExaltedStructuralMetalShine, ExaltedAccentBright, ExaltedStructuralMetalShine, ExaltedStructuralMetalDeep)
                 ) else Brush.linearGradient(
