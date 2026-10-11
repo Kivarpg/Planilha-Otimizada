@@ -174,3 +174,10 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Equipamentos: titulo do dialogo Comitar usa a cor de acento do Tipo de Exaltado ativo.
 - Testes estaticos de regressao incluidos; nenhuma compilacao disparada.
 - Inspecao visual em dispositivo e verificacao dos emblemas orientais continuam pendentes.
+
+## Preparacao Exalted.857 — Controles de paleta em tres abas
+- Feiticos: icone de detalhes agora usa a cor ativa do tipo.
+- Meritos: indicador de pontos restantes e titulos dos dialogos de meritos usam a cor ativa.
+- Equipamentos: cursor de Pertences, radio selecionado no dialogo de Comitamento e estados selecionados do seletor de motes usam a cor ativa.
+- Verificacoes estaticas de regressao adicionadas. A compilacao e os testes no dispositivo ainda nao ocorreram.
+- Escopo: consistencia de cores; nao declarar remodelacao completa das abas.
