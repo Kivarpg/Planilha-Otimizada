@@ -49,12 +49,9 @@ import com.example.ui.components.ConfirmDeleteDialog
 import com.example.ui.components.InkButton
 import com.example.ui.components.LongPressCard
 import com.example.ui.components.SectionHeader
-import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedDangerCore
 import com.example.ui.theme.ExaltedSuccess
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedOnSurface
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -84,6 +81,7 @@ fun NPCsTab(
     viewModel: SheetViewModel,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val npcs by viewModel.npcs.collectAsState()
     val scope = rememberCoroutineScope()
     val clipboardManager = LocalClipboardManager.current
@@ -116,7 +114,7 @@ fun NPCsTab(
                 modifier = Modifier.align(Alignment.CenterEnd)
             ) {
                 InkButton(onClick = { showShareMenu = true }) {
-                    Icon(imageVector = Icons.Outlined.Share, contentDescription = "Compartilhar NPCs", tint = ExaltedAccentBright)
+                    Icon(imageVector = Icons.Outlined.Share, contentDescription = "Compartilhar NPCs", tint = visual.accentBright)
                 }
                 DropdownMenu(expanded = showShareMenu, onDismissRequest = { showShareMenu = false }) {
                     DropdownMenuItem(
@@ -168,7 +166,7 @@ fun NPCsTab(
             AppText(
                 text = "Nenhum NPC cadastrado ainda.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = ExaltedMuted,
+                color = visual.muted,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp)
             )
@@ -211,16 +209,16 @@ fun NPCsTab(
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                AppText(npc.nome, color = ExaltedAccentBright, fontWeight = FontWeight.Bold)
+                                AppText(npc.nome, color = visual.accentBright, fontWeight = FontWeight.Bold)
                                 if (npc.tipo.isNotBlank()) {
-                                    AppText(npc.tipo, color = ExaltedMuted, style = MaterialTheme.typography.labelSmall)
+                                    AppText(npc.tipo, color = visual.muted, style = MaterialTheme.typography.labelSmall)
                                 }
                             }
                             if (npc.descricao.isNotBlank()) {
                                 Spacer(modifier = Modifier.height(4.dp))
                                 com.example.ui.components.JustifiedBodyAppText(
                                     npc.descricao,
-                                    color = ExaltedOnSurface,
+                                    color = visual.onSurface,
                                     style = MaterialTheme.typography.bodySmall
                                 )
                             }
@@ -242,7 +240,7 @@ fun NPCsTab(
             onDismissRequest = { showCadastroDialog = false },
             modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
             shape = com.example.ui.components.dialogShape,
-            title = { AppText("Cadastrar NPC", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
+            title = { AppText("Cadastrar NPC", color = visual.accentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     OutlinedTextField(
@@ -253,7 +251,7 @@ fun NPCsTab(
                         modifier = Modifier.fillMaxWidth()
                     )
                     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        AppText("Lealdade", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)
+                        AppText("Lealdade", style = MaterialTheme.typography.labelMedium, color = visual.accentBright)
                         FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp), maxItemsInEachRow = 2, modifier = Modifier.fillMaxWidth()) {
                             ORDEM_LEALDADES.forEach { opcao ->
                                 val corLealdade = corPorLealdade(opcao)
@@ -290,8 +288,10 @@ fun NPCsTab(
             confirmButton = {
                 com.example.ui.components.GildedDialogTextButton(text = "Cancelar", onClick = { showCadastroDialog = false })
             },
-            containerColor = ExaltedDarkSurface
-        )
+            containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
+    )
     }
 
     npcParaExcluir?.let { npc ->
@@ -310,7 +310,7 @@ fun NPCsTab(
             onDismissRequest = { showExportResultDialog = null },
             modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
             shape = com.example.ui.components.dialogShape,
-            title = { AppText("Código de NPCs", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
+            title = { AppText("Código de NPCs", color = visual.accentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     AppText(
@@ -325,7 +325,7 @@ fun NPCsTab(
                             .verticalScroll(rememberScrollState())
                             .padding(10.dp)
                     ) {
-                        AppText(codigo, style = MaterialTheme.typography.bodySmall, color = ExaltedOnSurface)
+                        AppText(codigo, style = MaterialTheme.typography.bodySmall, color = visual.onSurface)
                     }
                 }
             },
@@ -340,8 +340,10 @@ fun NPCsTab(
                     }
                 )
             },
-            containerColor = ExaltedDarkSurface
-        )
+            containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
+    )
     }
 
     if (showImportDialog) {
@@ -349,7 +351,7 @@ fun NPCsTab(
             onDismissRequest = { if (!importLoading) showImportDialog = false },
             modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
             shape = com.example.ui.components.dialogShape,
-            title = { AppText("Importar Código de NPCs", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
+            title = { AppText("Importar Código de NPCs", color = visual.accentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedTextField(
@@ -367,7 +369,7 @@ fun NPCsTab(
                     importError?.let { erro -> AppText(erro, color = ExaltedDangerCore, style = MaterialTheme.typography.bodySmall) }
                     if (importLoading) {
                         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                            CircularProgressIndicator(color = ExaltedAccentBright, modifier = Modifier.height(28.dp))
+                            CircularProgressIndicator(color = visual.accentBright, modifier = Modifier.height(28.dp))
                         }
                     }
                 }
@@ -399,7 +401,9 @@ fun NPCsTab(
                     }
                 )
             },
-            containerColor = ExaltedDarkSurface
-        )
+            containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
+    )
     }
 }
