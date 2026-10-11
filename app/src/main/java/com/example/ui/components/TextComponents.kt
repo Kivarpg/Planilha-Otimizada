@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material.icons.Icons
@@ -117,7 +118,13 @@ fun AppText(
     forceStroke: Boolean = false
 ) {
     val visual = LocalExaltedVisualTemplate.current
-    val resolvedColor = if (color != Color.Unspecified) color else if (style.color != Color.Unspecified) style.color else visual.onSurface
+    val inheritedContentColor = LocalContentColor.current
+    val resolvedColor = when {
+        color != Color.Unspecified -> color
+        style.color != Color.Unspecified -> style.color
+        inheritedContentColor != Color.Unspecified -> inheritedContentColor
+        else -> visual.onSurface
+    }
     val resolvedStyle = style.copy(
         color = resolvedColor,
         fontSize = if (fontSize != TextUnit.Unspecified) fontSize else style.fontSize,
@@ -148,7 +155,13 @@ fun AppText(
     onTextLayout: (androidx.compose.ui.text.TextLayoutResult) -> Unit = {}
 ) {
     val visual = LocalExaltedVisualTemplate.current
-    val resolvedColor = if (color != Color.Unspecified) color else if (style.color != Color.Unspecified) style.color else visual.onSurface
+    val inheritedContentColor = LocalContentColor.current
+    val resolvedColor = when {
+        color != Color.Unspecified -> color
+        style.color != Color.Unspecified -> style.color
+        inheritedContentColor != Color.Unspecified -> inheritedContentColor
+        else -> visual.onSurface
+    }
     val effectiveStyle = style.copy(
         color = resolvedColor,
         fontSize = if (fontSize != TextUnit.Unspecified) fontSize else style.fontSize,
