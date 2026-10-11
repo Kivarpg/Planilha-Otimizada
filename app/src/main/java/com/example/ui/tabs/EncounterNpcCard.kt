@@ -55,10 +55,11 @@ import com.example.model.NpcEncontro
 import com.example.model.CharacterSheet
 import com.example.ui.components.GildedCard
 import com.example.ui.theme.visualTemplateParaExaltado
-import com.example.ui.theme.ExaltedAmber
-import com.example.ui.theme.ExaltedGold
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedOnSurface
+import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.theme.visual.accent
+import com.example.ui.theme.visual.accentBright
+import com.example.ui.theme.visual.muted
+import com.example.ui.theme.visual.onSurface
 
 
 internal val NPC_ATTRIBUTE_GROUPS = listOf(
@@ -216,18 +217,19 @@ internal fun buildEquipamentoDetalhesAba7(npc: NpcEncontro): String = buildStrin
 private fun EquipamentoDetalhesAba7(
     npc: NpcEncontro
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val arma = npc.arma
     val armadura = npc.armadura
 
     arma?.let {
-        AppText("ARMA", color = ExaltedGold, fontWeight = FontWeight.Bold)
-        AppText("Nome: ${it.nome}", color = ExaltedOnSurface)
-        AppText("Habilidade: ${npc.habilidadePrincipal.ifBlank { "—" }}", color = ExaltedOnSurface)
-        AppText("Tipo: ${it.tipo}", color = ExaltedOnSurface)
-        AppText("Peso: ${it.peso}", color = ExaltedOnSurface)
+        AppText("ARMA", color = visual.accentBright, fontWeight = FontWeight.Bold)
+        AppText("Nome: ${it.nome}", color = visual.onSurface)
+        AppText("Habilidade: ${npc.habilidadePrincipal.ifBlank { "—" }}", color = visual.onSurface)
+        AppText("Tipo: ${it.tipo}", color = visual.onSurface)
+        AppText("Peso: ${it.peso}", color = visual.onSurface)
         AppText(
             "Estatísticas de combate",
-            color = ExaltedAmber,
+            color = visual.accent,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 8.dp)
         )
@@ -240,11 +242,11 @@ private fun EquipamentoDetalhesAba7(
             com.example.model.WeaponStatsTable.corpoACorpo(it.tipo, it.peso)
         } else null
 
-        AppText("Precisão: ${if (ehDistancia) "—" else it.precisao}", color = ExaltedOnSurface)
-        AppText("Dano: ${if (ehDistancia) statsDistancia!!.first else it.dano}", color = ExaltedOnSurface)
-        AppText("Dano Mínimo: ${if (ehDistancia) statsDistancia!!.second else statsCorpo!!.danoMinimo}", color = ExaltedOnSurface)
-        AppText("Defesa: ${if (ehDistancia) "—" else it.defesa}", color = ExaltedOnSurface)
-        AppText("Cometimento: ${com.example.model.WeaponStatsTable.comitamento(it.tipo)} motes", color = ExaltedOnSurface)
+        AppText("Precisão: ${if (ehDistancia) "—" else it.precisao}", color = visual.onSurface)
+        AppText("Dano: ${if (ehDistancia) statsDistancia!!.first else it.dano}", color = visual.onSurface)
+        AppText("Dano Mínimo: ${if (ehDistancia) statsDistancia!!.second else statsCorpo!!.danoMinimo}", color = visual.onSurface)
+        AppText("Defesa: ${if (ehDistancia) "—" else it.defesa}", color = visual.onSurface)
+        AppText("Cometimento: ${com.example.model.WeaponStatsTable.comitamento(it.tipo)} motes", color = visual.onSurface)
 
         if (ehDistancia) {
             val distancias = if (npc.habilidadePrincipal == "Arremesso") {
@@ -256,14 +258,14 @@ private fun EquipamentoDetalhesAba7(
                 "Distância: " + distancias.joinToString(" | ") { (nome, valor) ->
                     "$nome ${if (valor >= 0) "+" else ""}$valor"
                 },
-                color = ExaltedOnSurface,
+                color = visual.onSurface,
                 modifier = Modifier.padding(top = 2.dp)
             )
         }
         if (it.etiquetas.isNotEmpty()) {
             AppText(
                 "Etiquetas: ${it.etiquetas.joinToString(", ")}",
-                color = ExaltedMuted,
+                color = visual.muted,
                 modifier = Modifier.padding(top = 2.dp)
             )
         }
@@ -274,32 +276,32 @@ private fun EquipamentoDetalhesAba7(
     }
 
     armadura?.let {
-        AppText("ARMADURA", color = ExaltedGold, fontWeight = FontWeight.Bold)
-        AppText("Nome: ${it.nome}", color = ExaltedOnSurface)
-        AppText("Tipo: ${it.tipo}", color = ExaltedOnSurface)
-        AppText("Peso: ${it.peso}", color = ExaltedOnSurface)
+        AppText("ARMADURA", color = visual.accentBright, fontWeight = FontWeight.Bold)
+        AppText("Nome: ${it.nome}", color = visual.onSurface)
+        AppText("Tipo: ${it.tipo}", color = visual.onSurface)
+        AppText("Peso: ${it.peso}", color = visual.onSurface)
         AppText(
             "Estatísticas de defesa",
-            color = ExaltedAmber,
+            color = visual.accent,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(top = 8.dp)
         )
         val stats = com.example.model.ArmorStatsTable.stats(it.tipo, it.peso)
-        AppText("Absorção: ${stats.absorcao}", color = ExaltedOnSurface)
-        AppText("Dureza: ${stats.dureza}", color = ExaltedOnSurface)
-        AppText("Penalidade: ${stats.penalidadeMobilidade}", color = ExaltedOnSurface)
-        AppText("Cometimento: ${stats.comitamento} motes", color = ExaltedOnSurface)
+        AppText("Absorção: ${stats.absorcao}", color = visual.onSurface)
+        AppText("Dureza: ${stats.dureza}", color = visual.onSurface)
+        AppText("Penalidade: ${stats.penalidadeMobilidade}", color = visual.onSurface)
+        AppText("Cometimento: ${stats.comitamento} motes", color = visual.onSurface)
         if (it.marcadores.isNotEmpty()) {
             AppText(
                 "Características: ${it.marcadores.joinToString(", ")}",
-                color = ExaltedMuted,
+                color = visual.muted,
                 modifier = Modifier.padding(top = 2.dp)
             )
         }
     }
 
     if (arma == null && armadura == null) {
-        AppText("Nenhum equipamento sorteado para este NPC.", color = ExaltedOnSurface)
+        AppText("Nenhum equipamento sorteado para este NPC.", color = visual.onSurface)
     }
 }
 
@@ -996,7 +998,7 @@ fun NpcEncontroCard(
                             nomeExibicao,
                             style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
                             fontWeight = FontWeight.SemiBold,
-                            color = ExaltedOnSurface,
+                            color = visualTemplate.onSurface,
                             modifier = Modifier
                                 .padding(start = 18.dp, bottom = 2.dp)
                                 .pointerInput(npc.id, c.nome) {
@@ -1070,7 +1072,7 @@ fun NpcEncontroCard(
                         AppText(
                             "Nenhum Feitiço selecionado.",
                             style = MaterialTheme.typography.bodyLarge,
-                            color = ExaltedMuted,
+                            color = visualTemplate.muted,
                             modifier = Modifier.padding(start = 18.dp, bottom = 3.dp),
                             forceStroke = true
                         )
@@ -1133,7 +1135,7 @@ fun NpcEncontroCard(
                                 )
                                 Spacer(modifier = Modifier.height(8.dp))
                                 feiticosDisponiveis.groupBy { it.circulo }.forEach { (circulo, defs) ->
-                                    AppText("Círculo $circulo", fontWeight = FontWeight.Bold, color = ExaltedGold, forceStroke = true)
+                                    AppText("Círculo $circulo", fontWeight = FontWeight.Bold, color = visualTemplate.accentBright, forceStroke = true)
                                     defs.forEach { def ->
                                         val marcado = npc.feiticoInicialNome?.let {
                                             com.example.data.EncantosSolaresCatalog.sameName(it, def.nome)
@@ -1154,7 +1156,10 @@ fun NpcEncontroCard(
                         },
                         confirmButton = {
                             InkButton(visualTemplate = visualTemplate, label = "Fechar", onClick = { gerenciarFeiticos = false }, size = InkButtonSize.Small, variant = InkButtonVariant.Secondary)
-                        }
+                        },
+                        containerColor = visualTemplate.surfaceVariant,
+                        titleContentColor = visualTemplate.onSurface,
+                        textContentColor = visualTemplate.onSurface
                     )
                 }
             }
