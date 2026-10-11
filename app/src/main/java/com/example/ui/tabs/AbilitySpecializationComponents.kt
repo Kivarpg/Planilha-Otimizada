@@ -36,6 +36,7 @@ internal fun AbilityCompactRowForName(
     onMartialArtDelete: ((HabilidadeCustomizada) -> Unit)? = null,
     specializationsByAbility: Map<String, List<Especializacao>>
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val rating = martialArt?.valor ?: (sheet.abilities[abName] ?: 0)
     val isCaste = martialArt == null && sheet.casteAbilities.contains(abName)
     val isFavored = martialArt == null && sheet.favoredAbilities.contains(abName)
@@ -48,11 +49,11 @@ internal fun AbilityCompactRowForName(
         else -> null
     }
     val badgeColor = when {
-        martialArt != null -> ExaltedAccentBright
-        isSuperna -> ExaltedAccentBright
-        isCaste -> ExaltedAmber
+        martialArt != null -> visual.accentBright
+        isSuperna -> visual.accentBright
+        isCaste -> visual.accent
         isFavored -> ExaltedFavorecidaLaranja
-        else -> ExaltedMuted
+        else -> visual.muted
     }
     val martialArtIcon = if (martialArt != null) com.example.ui.components.AbilityMartialArt else null
     val abilityIconRes = if (martialArt == null) abilityRealIconRes(index) else null
@@ -105,7 +106,7 @@ internal fun AbilityCompactRowForName(
                 title = {
                     AppText(
                         "Arte Marcial — $abName",
-                        color = ExaltedAccentBright,
+                        color = visual.accentBright,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -122,7 +123,7 @@ internal fun AbilityCompactRowForName(
                                     AppText(
                                         text = spec.nome,
                                         style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onSurface,
+                                        color = visual.onSurface,
                                         modifier = Modifier.weight(1f)
                                     )
                                     com.example.ui.components.GildedDialogTextButton(text = "Remover", onClick = { onSpecializationDelete(spec) }, isDanger = true)
@@ -135,19 +136,7 @@ internal fun AbilityCompactRowForName(
                             label = { AppText("Nova especialidade") },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth(),
-                            colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = ExaltedAccentBright,
-                            unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
-                            focusedLabelColor = ExaltedAccentBright,
-                            unfocusedLabelColor = ExaltedMuted,
-                            cursorColor = ExaltedGold,
-                            focusedTextColor = ExaltedOnSurface,
-                            unfocusedTextColor = ExaltedOnSurface,
-                            focusedContainerColor = ExaltedDarkSurface,
-                            unfocusedContainerColor = ExaltedDarkSurface,
-                            focusedPlaceholderColor = ExaltedMuted,
-                            unfocusedPlaceholderColor = ExaltedMuted
-                        )
+                            colors = exaltedTextFieldColors()
                         )
                     }
                 },
@@ -179,7 +168,9 @@ internal fun AbilityCompactRowForName(
                         com.example.ui.components.GildedDialogTextButton(text = "Cancelar", onClick = { showSpecDialog = false })
                     }
                 },
-                containerColor = ExaltedDarkSurface
+                containerColor = visual.surface,
+                titleContentColor = visual.onSurface,
+                textContentColor = visual.onSurface
             )
         } else {
             AlertDialog(
@@ -189,7 +180,7 @@ internal fun AbilityCompactRowForName(
                 title = {
                     AppText(
                         "Especialidades — $abName",
-                        color = ExaltedAccentBright,
+                        color = visual.accentBright,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -206,7 +197,7 @@ internal fun AbilityCompactRowForName(
                                     AppText(
                                         text = spec.nome,
                                         style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onSurface,
+                                        color = visual.onSurface,
                                         modifier = Modifier.weight(1f)
                                     )
                                     com.example.ui.components.GildedDialogTextButton(text = "Remover", onClick = { onSpecializationDelete(spec) }, isDanger = true)
@@ -219,19 +210,7 @@ internal fun AbilityCompactRowForName(
                             label = { AppText("Nova especialidade") },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth(),
-                            colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = ExaltedAccentBright,
-                            unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
-                            focusedLabelColor = ExaltedAccentBright,
-                            unfocusedLabelColor = ExaltedMuted,
-                            cursorColor = ExaltedGold,
-                            focusedTextColor = ExaltedOnSurface,
-                            unfocusedTextColor = ExaltedOnSurface,
-                            focusedContainerColor = ExaltedDarkSurface,
-                            unfocusedContainerColor = ExaltedDarkSurface,
-                            focusedPlaceholderColor = ExaltedMuted,
-                            unfocusedPlaceholderColor = ExaltedMuted
-                        )
+                            colors = exaltedTextFieldColors()
                         )
                     }
                 },
@@ -252,7 +231,7 @@ internal fun AbilityCompactRowForName(
                 confirmButton = {
                     com.example.ui.components.GildedDialogTextButton(text = "Fechar", onClick = { showSpecDialog = false })
                 },
-                containerColor = ExaltedDarkSurface
+                containerColor = visual.surface
             )
         }
     }
