@@ -155,7 +155,7 @@ fun BattleGroupsTab(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
         unfocusedContainerColor = ExaltedDarkSurface
     )
 
-    Column(modifier.fillMaxSize().exaltedTabIdentity(13).exaltedContentStage(13).verticalScroll(rememberScrollState()).padding(12.dp)) {
+    Column(modifier.fillMaxSize().exaltedTabIdentity(13).exaltedContentStage(13).verticalScroll(rememberScrollState()).padding(horizontal = 18.dp, vertical = 16.dp)) {
         GildedCard(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
             Column(Modifier.padding(12.dp)) {
                 OutlinedTextField(name, { name = it }, label = { AppText("Nome") }, modifier = Modifier.fillMaxWidth(), colors = coresCampoTexto)
