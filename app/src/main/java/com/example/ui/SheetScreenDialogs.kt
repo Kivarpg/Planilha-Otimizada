@@ -32,11 +32,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.example.ui.components.InteractionFeedback
-import com.example.ui.theme.ExaltedAmber
 import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedDangerCore
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedGold
+import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import com.example.viewmodel.SheetViewModel
@@ -91,7 +90,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                 AppText(
                     "Estilo de avaliação (Atributos, Habilidades e Méritos)",
                     style = MaterialTheme.typography.labelMedium,
-                    color = ExaltedGold
+                    color = ExaltedAccentBright
                 )
                 listOf(
                     com.example.model.RatingStyle.DIAMOND to "Modo Clássico (trilha de círculos ●●○○○)",
@@ -118,7 +117,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                 AppText(
                     "Idioma",
                     style = MaterialTheme.typography.labelMedium,
-                    color = ExaltedGold,
+                    color = ExaltedAccentBright,
                     modifier = Modifier.padding(top = 4.dp)
                 )
                 Row(
@@ -153,7 +152,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                 AppText(
                     "Feedback de interação",
                     style = MaterialTheme.typography.labelMedium,
-                    color = ExaltedGold,
+                    color = ExaltedAccentBright,
                     modifier = Modifier.padding(top = 4.dp)
                 )
                 Row(
@@ -245,7 +244,7 @@ fun ReversionConfirmDialog(viewModel: SheetViewModel, modifier: Modifier = Modif
             AppText(
                 forceStroke = true,
                 text = "Desmarcar \"Planilha concluída\"?",
-                color = ExaltedAmber,
+                color = ExaltedAccentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -282,13 +281,13 @@ fun CommitmentErrorDialog(viewModel: SheetViewModel, modifier: Modifier = Modifi
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         icon = {
-            Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = ExaltedAmber)
+            Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = ExaltedAccentBright)
         },
         title = {
             AppText(
                 forceStroke = true,
                 text = "Aviso",
-                color = ExaltedAmber,
+                color = ExaltedAccentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -322,13 +321,13 @@ fun PendingMeritBreakDialog(viewModel: SheetViewModel, modifier: Modifier = Modi
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         icon = {
-            Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = ExaltedAmber)
+            Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = ExaltedAccentBright)
         },
         title = {
             AppText(
                 forceStroke = true,
                 text = "Isso vai remover um Mérito",
-                color = ExaltedAmber,
+                color = ExaltedAccentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
