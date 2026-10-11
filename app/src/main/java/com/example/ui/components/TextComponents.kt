@@ -88,12 +88,12 @@ fun exaltedTextFieldColors() = OutlinedTextFieldDefaults.colors(
     selectionColors = androidx.compose.foundation.text.selection.TextSelectionColors(handleColor = ExaltedAccentBright, backgroundColor = ExaltedAccentBright.copy(alpha = 0.38f)),
     focusedTextColor = ExaltedOnSurface,
     unfocusedTextColor = ExaltedOnSurface,
-    focusedContainerColor = Color(0xFF101014),
-    unfocusedContainerColor = Color(0xFF17171B),
+    focusedContainerColor = ExaltedDarkSurface,
+    unfocusedContainerColor = ExaltedDarkSurfaceVariant,
     focusedPlaceholderColor = ExaltedMuted,
     unfocusedPlaceholderColor = ExaltedMuted,
-    disabledContainerColor = Color(0xFF17171B),
-    errorContainerColor = Color(0xFF17171B)
+    disabledContainerColor = ExaltedDarkSurfaceVariant,
+    errorContainerColor = ExaltedDarkSurfaceVariant
 )
 
 // SKIN: cabeçalho de seção compartilhado por todas as abas. Tamanho do título,
