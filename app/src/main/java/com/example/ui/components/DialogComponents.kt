@@ -35,7 +35,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.ui.theme.ExaltedAmber
+import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltVisualTemplate
 import com.example.ui.theme.ExaltedDangerCore
@@ -65,7 +65,7 @@ fun ConfirmDeleteDialog(
             AppText(
                 forceStroke = true,
                 text = "Confirmar exclusão",
-                color = ExaltedAmber,
+                color = ExaltedAccentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -174,14 +174,14 @@ fun SaveValidationModal(
             Icon(
                 imageVector = Icons.Outlined.Warning,
                 contentDescription = null,
-                tint = ExaltedAmber
+                tint = ExaltedAccentBright
             )
         },
         title = {
             AppText(
                 forceStroke = true,
                 text = "Planilha incompleta",
-                color = ExaltedAmber,
+                color = ExaltedAccentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -203,7 +203,7 @@ fun SaveValidationModal(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.Top
                     ) {
-                        AppText(text = "• ", color = ExaltedAmber, fontWeight = FontWeight.Bold)
+                        AppText(text = "• ", color = ExaltedAccentBright, fontWeight = FontWeight.Bold)
                         AppText(text = err, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurface)
                     }
                 }
