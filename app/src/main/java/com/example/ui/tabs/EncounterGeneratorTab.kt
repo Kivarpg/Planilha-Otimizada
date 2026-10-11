@@ -451,6 +451,18 @@ fun EncounterGeneratorTab(
         }
     }
 
+    val gerarNpcDaInterface: () -> Unit = {
+        gerarNpc(aposGerar = { gerado ->
+            if (!equipamentoAutomatico) {
+                npcEquipamentoPendente = gerado
+                armaSelecionadaManual = null
+                armaduraSelecionadaManual = null
+                mostrarCatalogoArmas = true
+            }
+            if (enviarParaConflito) viewModel.juntarNpcEncontroABatalha(gerado.id)
+        })
+    }
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -500,36 +512,14 @@ fun EncounterGeneratorTab(
                                         ))
                                     AppText("Conflito", style = MaterialTheme.typography.bodySmall, color = if (enviarParaConflito) visual.accentBright else visual.muted)
                                 }
-                                Box(
-                                    modifier = Modifier.widthIn(min = 104.dp).height(64.dp)
-                                        .background(visual.accentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
-                                        .border(1.dp, visual.accentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
-                                        .feedbackClickable(
-                                        enabled = !gerando, role = Role.Button,
-                                        onClick = {
-                                            gerarNpc(aposGerar = { gerado ->
-                                                if (!equipamentoAutomatico) {
-                                                    npcEquipamentoPendente = gerado
-                                                    armaSelecionadaManual = null
-                                                    armaduraSelecionadaManual = null
-                                                    mostrarCatalogoArmas = true
-                                                }
-                                                if (enviarParaConflito) viewModel.juntarNpcEncontroABatalha(gerado.id)
-                                            })
-                                        }
-                                    ),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    AppText(
-                                        text = "Gerar NPC",
-                                        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
-                                        color = visual.surface,
-                                        style = MaterialTheme.typography.titleSmall,
-                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                                        textAlign = TextAlign.Center,
-                                        maxLines = 2
-                                    )
-                                }
+                                InkButton(
+                                    label = "Gerar NPC",
+                                    onClick = gerarNpcDaInterface,
+                                    enabled = !gerando,
+                                    size = InkButtonSize.Small,
+                                    customWidth = 120.dp,
+                                    customHeight = 64.dp
+                                )
                             }
                         }
                     } else {
@@ -568,40 +558,14 @@ fun EncounterGeneratorTab(
                                                 )
                                             }
                         
-                                            // Controle Gerar NPC com texto e moldura visíveis;
-                                            // preserva o callback e o estado de habilitação.
-                                            Box(
-                                                modifier = Modifier
-                                                    .widthIn(min = 104.dp).height(64.dp)
-                                                    .background(visual.accentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
-                                                    .border(1.dp, visual.accentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
-                                                    .feedbackClickable(
-                                                        enabled = !gerando,
-                                                        role = Role.Button,
-                                                        onClick = {
-                                                            gerarNpc(aposGerar = { gerado ->
-                                                                if (!equipamentoAutomatico) {
-                                                                    npcEquipamentoPendente = gerado
-                                                                    armaSelecionadaManual = null
-                                                                    armaduraSelecionadaManual = null
-                                                                    mostrarCatalogoArmas = true
-                                                                }
-                                                                if (enviarParaConflito) viewModel.juntarNpcEncontroABatalha(gerado.id)
-                                                            })
-                                                        }
-                                                    ),
-                                                contentAlignment = Alignment.Center
-                                            ) {
-                                                AppText(
-                                        text = "Gerar NPC",
-                                        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
-                                        color = visual.surface,
-                                        style = MaterialTheme.typography.titleSmall,
-                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                                        textAlign = TextAlign.Center,
-                                        maxLines = 2
-                                    )
-                                            }
+                                            InkButton(
+                                                label = "Gerar NPC",
+                                                onClick = gerarNpcDaInterface,
+                                                enabled = !gerando,
+                                                size = InkButtonSize.Small,
+                                                customWidth = 120.dp,
+                                                customHeight = 64.dp
+                                            )
                                         }
                         
                     }
