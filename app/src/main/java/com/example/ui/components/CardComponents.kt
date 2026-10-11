@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -111,9 +112,11 @@ fun GildedCard(
     val surface = visual?.surfaceVariant ?: ExaltedDarkSurfaceVariant
     val motif = if (visualTemplate == null) ExaltedActiveMotif else null
     Card(
-        modifier = modifier.drawBehind {
+        modifier = modifier.drawWithContent {
             // 315: placa de obsidiana com duas leituras de metal, em vez da caixa plana da 314.
-            drawRect(Brush.verticalGradient(listOf(accent.copy(alpha=.11f), Color.Transparent, deep.copy(alpha=.10f))))
+            drawContent()
+            // O desenho ornamental fica sobre a placa, sem cobrir o conteúdo com preenchimento.
+            // O degradê do fundo é responsabilidade da cor da superfície do Card.
             val outer = 1.35.dp.toPx()
             val inner = 5.dp.toPx()
             val flourish = 18.dp.toPx()
