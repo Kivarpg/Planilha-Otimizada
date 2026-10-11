@@ -4,8 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.example.ui.components.feedbackClickable
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -20,16 +20,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.model.RatingStyle
-import com.example.ui.theme.ExaltedAmber
-import com.example.ui.theme.ExaltedAmberVariant
-import com.example.ui.theme.ExaltedAccentBright
+import com.example.ui.theme.visual.accentBright
+import com.example.ui.theme.visual.outline
+import com.example.ui.theme.visual.accentBright
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 @Composable
 fun RatingControl(
@@ -41,6 +41,7 @@ fun RatingControl(
     minValue: Int = 0,
     stepperSize: Dp = 40.dp
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     when (style) {
         RatingStyle.STEPPER -> {
             val raioAnel = stepperSize.coerceIn(18.dp, 27.dp)
@@ -57,7 +58,7 @@ fun RatingControl(
                 )
                 AppText(
                     text = "$value",
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                     modifier = Modifier.width(20.dp),
@@ -95,15 +96,16 @@ fun RatingControl(
 
 @Composable
 fun RatingDisplay(value: Int, maxValue: Int, style: RatingStyle, modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     when (style) {
         RatingStyle.STEPPER -> {
             Box(
                 modifier = modifier
                     .clip(MaterialTheme.shapes.small)
-                    .background(ExaltedAmber.copy(alpha = 0.2f))
+                    .background(visual.accentBright.copy(alpha = 0.2f))
                     .padding(horizontal = 10.dp, vertical = 5.dp)
             ) {
-                AppText("Nível $value", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = ExaltedAmber)
+                AppText("Nível $value", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = visual.accentBright)
             }
         }
         RatingStyle.DIAMOND -> {
@@ -119,19 +121,22 @@ fun RatingDisplay(value: Int, maxValue: Int, style: RatingStyle, modifier: Modif
 
 @Composable
 private fun DiamondPip(filled: Boolean, onClick: () -> Unit, size: Dp = 15.dp, enabled: Boolean = true, modifier: Modifier = Modifier) {
-    Canvas(
+    val visual = LocalExaltedVisualTemplate.current
+    Box(
         modifier = modifier
             .size(size)
+            .clip(androidx.compose.foundation.shape.CircleShape)
+            .background(if (filled) visual.accentBright else Color.Transparent)
+            .then(
+                if (filled) Modifier
+                else Modifier.border(
+                    1.4.dp,
+                    visual.outline.copy(alpha = 0.6f),
+                    androidx.compose.foundation.shape.CircleShape
+                )
+            )
             .feedbackClickable(enabled = enabled, onClick = onClick)
-    ) {
-        val r = this.size.minDimension / 2f
-        val centro = androidx.compose.ui.geometry.Offset(this.size.width / 2f, this.size.height / 2f)
-        if (filled) {
-            drawCircle(color = ExaltedAccentBright, radius = r, center = centro)
-        } else {
-            drawCircle(color = ExaltedAmberVariant.copy(alpha = 0.6f), radius = r, center = centro, style = Stroke(width = 1.4f))
-        }
-    }
+    )
 }
 
 /** Botão +/- da skin. A área de toque é preservada, mas o elemento visual
