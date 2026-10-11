@@ -28,7 +28,7 @@ GildedCard(
             .fillMaxWidth()
             .padding(14.dp)
     ) {
-        AppText("5. Trilha de vitalidade", style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp), color = ExaltedAmber, fontWeight = FontWeight.Bold)
+        AppText("5. Trilha de vitalidade", style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp), color = visual.accentBright, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(10.dp))
 
         // Caixas interativas — mesma função do ViewModel usada na
