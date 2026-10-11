@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import com.example.ui.components.AppText
 import androidx.compose.runtime.Composable
@@ -36,10 +35,7 @@ import com.example.model.ExaltedConstants
 import com.example.ui.components.ErgonomicMultiWordButton
 import com.example.ui.components.GildedCard
 import com.example.ui.components.SectionHeader
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedBlack
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 
 // Aba 2 do template Sangue de Dragão — reformulada (pedido explícito do
@@ -58,6 +54,7 @@ fun AspectoTab(
     viewModel: SheetViewModel,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val aspectoAtual = Aspecto.entries.firstOrNull { it.displayName == sheet.aspecto }
 
     Column(
@@ -75,7 +72,7 @@ fun AspectoTab(
             AppText(
                 "Aspecto não selecionado",
                 style = MaterialTheme.typography.bodyMedium,
-                color = ExaltedMuted,
+                color = visual.muted,
                 textAlign = TextAlign.Center
             )
             return@Column
@@ -101,7 +98,7 @@ fun AspectoTab(
             text = aspectoAtual.displayName,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
-            color = ExaltedAccentBright,
+            color = visual.accentBright,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
@@ -123,8 +120,7 @@ fun AspectoTab(
         SectionHeader(title = "Habilidades Favorecidas (${sheet.favoredAbilities.size}/5)")
 
         GildedCard(
-            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2),
-            colors = CardDefaults.cardColors(containerColor = ExaltedBlack)
+            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2)
         ) {
             FlowRow(
                 modifier = Modifier
