@@ -242,3 +242,9 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - SheetTabsBar.kt: saldo de pontos da faixa horizontal passa a usar ExaltedAccentBright, eliminando dourado Solar fixo; alertas de poucos pontos permanecem com ExaltedAlertaTexto.
 - SheetTopBar.kt: altura com fontScale ampliado passa de 144dp para 156dp, preservando duas linhas de Casta/Aspecto e estado da planilha.
 - Teste estatico verifica faixa, ausencia de dourado fixo e altura. Ainda falta verificacao visual em dispositivo real e build Exalted.869.
+
+## Preparacao Exalted.870 — Varredura estatica das 15 abas
+- Foram lidos os 15 arquivos *Tab.kt (Abilities, Aspecto, Attributes, BattleGroups, Caste, Charms, Combat, EncounterGenerator, Equipment, Feiticos, Map, Merits, NPCs, PersonalData, Summary). Neles nao ha referencias literais a ExaltedGold/ExaltedAmber nem a IntrinsicSize; isto nao valida os componentes auxiliares ou a interface em execucao.
+- Aba Encontros: alvo de toque de remover NPC na faixa de abas passou de 18dp a 40dp e ganhou descricao semantica por NPC. A faixa permanece horizontalmente rolavel e a logica de remocao nao foi alterada.
+- Teste de contrato verifica alvo, descricao e callbacks de remocao/limpeza de selecao.
+- Pendencias: compilar a versao 870, auditar os arquivos auxiliares e realizar testes de layout e toque em Android, incluindo fontScale elevado, pop-ups, mapa em tela cheia e as 15 abas individualmente.
