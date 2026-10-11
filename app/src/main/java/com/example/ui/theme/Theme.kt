@@ -27,28 +27,28 @@ fun ExaltedTheme(
     // paleta por template (Solar/Sangue de Dragão/Lunar) nunca refletia
     // em nada que lesse MaterialTheme.colorScheme (ficava sempre no
     // dourado do Solar, o valor inicial).
+    val activeVisualTemplate = visualTemplatePorMotif(ExaltedActiveMotif)
     val exaltedDarkColorScheme = darkColorScheme(
-        primary = ExaltedAmber,
-        onPrimary = corTextoContraste(ExaltedAmber),
-        primaryContainer = ExaltedDarkSurfaceVariant,
-        onPrimaryContainer = ExaltedGold,
-        secondary = ExaltedAmberVariant,
-        onSecondary = corTextoContraste(ExaltedAmberVariant),
-        secondaryContainer = ExaltedDarkSurfaceVariant,
-        onSecondaryContainer = ExaltedGold,
-        tertiary = ExaltedGold,
-        onTertiary = corTextoContraste(ExaltedGold),
+        primary = activeVisualTemplate.accent,
+        onPrimary = corTextoContraste(activeVisualTemplate.accent),
+        primaryContainer = activeVisualTemplate.surfaceVariant,
+        onPrimaryContainer = activeVisualTemplate.onSurface,
+        secondary = activeVisualTemplate.metalShine,
+        onSecondary = corTextoContraste(activeVisualTemplate.metalShine),
+        secondaryContainer = activeVisualTemplate.surfaceVariant,
+        onSecondaryContainer = activeVisualTemplate.onSurface,
+        tertiary = activeVisualTemplate.accentBright,
+        onTertiary = corTextoContraste(activeVisualTemplate.accentBright),
         background = ExaltedDarkBackground,
-        onBackground = ExaltedOnBackground,
-        surface = ExaltedDarkSurface,
-        onSurface = ExaltedOnSurface,
-        surfaceVariant = ExaltedDarkSurfaceVariant,
-        onSurfaceVariant = ExaltedOnSurface,
-        outline = ExaltedOutline,
-        outlineVariant = ExaltedDivider,
+        onBackground = activeVisualTemplate.onSurface,
+        surface = activeVisualTemplate.surface,
+        onSurface = activeVisualTemplate.onSurface,
+        surfaceVariant = activeVisualTemplate.surfaceVariant,
+        onSurfaceVariant = activeVisualTemplate.onSurface,
+        outline = activeVisualTemplate.outline,
+        outlineVariant = activeVisualTemplate.divider,
         error = ExaltedError
     )
-    val activeVisualTemplate = visualTemplatePorMotif(ExaltedActiveMotif)
     CompositionLocalProvider(LocalExaltedVisualTemplate provides activeVisualTemplate) {
         MaterialTheme(
             colorScheme = exaltedDarkColorScheme,
