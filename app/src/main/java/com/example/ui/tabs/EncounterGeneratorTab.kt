@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -513,7 +514,7 @@ fun EncounterGeneratorTab(
                                     AppText("Conflito", style = MaterialTheme.typography.bodySmall, color = if (enviarParaConflito) ExaltedAccentBright else ExaltedMuted)
                                 }
                                 Box(
-                                    modifier = Modifier.width(96.dp).height(64.dp)
+                                    modifier = Modifier.widthIn(min = 104.dp).height(64.dp)
                                         .background(ExaltedDarkSurface, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
                                         .border(1.dp, ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
                                         .feedbackClickable(
@@ -590,7 +591,7 @@ fun EncounterGeneratorTab(
                                             // preserva o callback e o estado de habilitação.
                                             Box(
                                                 modifier = Modifier
-                                                    .width(96.dp).height(64.dp)
+                                                    .widthIn(min = 104.dp).height(64.dp)
                                                     .background(ExaltedDarkSurface, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
                                                     .border(1.dp, ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))
                                                     .feedbackClickable(
