@@ -30,7 +30,6 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import com.example.ui.components.AppText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -47,17 +46,20 @@ import com.example.model.BattleGroupCustomStats
 import com.example.model.BattleGroupDrill
 import com.example.ui.components.GildedCard
 import com.example.ui.components.SectionHeader
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedOnSurface
-import com.example.ui.theme.ExaltedOutline
+import com.example.ui.theme.visual.surface
+import com.example.ui.theme.visual.accentBright
+import com.example.ui.theme.visual.muted
+import com.example.ui.theme.visual.onSurface
+import com.example.ui.theme.visual.outline
+import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.components.exaltedTextFieldColors
 import com.example.viewmodel.SheetViewModel
 
 /** Battle Group management UI. */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BattleGroupsTab(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     val groups by viewModel.battleGroups.collectAsState()
     var editingId by remember { mutableStateOf<String?>(null) }
     var selectedType by remember { mutableStateOf<String?>(battleGroupTroopTypes.firstOrNull()?.name) }
@@ -144,30 +146,20 @@ fun BattleGroupsTab(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
         clearEditor()
     }
 
-    val coresCampoTexto = OutlinedTextFieldDefaults.colors(
-        focusedBorderColor = ExaltedAccentBright,
-        unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
-        focusedLabelColor = ExaltedAccentBright,
-        unfocusedLabelColor = ExaltedMuted,
-        cursorColor = ExaltedAccentBright,
-        focusedTextColor = ExaltedOnSurface,
-        unfocusedTextColor = ExaltedOnSurface,
-        focusedContainerColor = ExaltedDarkSurface,
-        unfocusedContainerColor = ExaltedDarkSurface
-    )
+    val coresCampoTexto = exaltedTextFieldColors()
 
     Column(modifier.fillMaxSize().exaltedTabIdentity(13).exaltedContentStage(13).verticalScroll(rememberScrollState()).padding(horizontal = 18.dp, vertical = 20.dp)) {
         GildedCard(modifier = Modifier.fillMaxWidth().padding(vertical = 14.dp).exaltedSectionPanel(13)) {
             Column(Modifier.padding(12.dp)) {
                 OutlinedTextField(name, { name = it }, label = { AppText("Nome") }, modifier = Modifier.fillMaxWidth(), colors = coresCampoTexto)
                 Spacer(Modifier.height(8.dp))
-                AppText("Tipo de tropa", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)
+                AppText("Tipo de tropa", style = MaterialTheme.typography.labelMedium, color = visual.accentBright)
                 InkButton(label = selectedType ?: "Custom Army", onClick = { menuOpen = true }, modifier = Modifier.fillMaxWidth(), size = InkButtonSize.Small, fillMaxWidth = true)
                 DropdownMenu(menuOpen, { menuOpen = false }) {
                     battleGroupTroopTypes.forEach { type ->
-                        DropdownMenuItem({ AppText(type.name, color = ExaltedOnSurface) }, { selectedType = type.name; menuOpen = false })
+                        DropdownMenuItem({ AppText(type.name, color = visual.onSurface) }, { selectedType = type.name; menuOpen = false })
                     }
-                    DropdownMenuItem({ AppText("Custom Army", color = ExaltedOnSurface) }, { selectedType = null; menuOpen = false })
+                    DropdownMenuItem({ AppText("Custom Army", color = visual.onSurface) }, { selectedType = null; menuOpen = false })
                 }
                 Spacer(Modifier.height(6.dp))
                 SelectorRow("Tamanho", size, 1..5) { size = it }
@@ -175,11 +167,11 @@ fun BattleGroupsTab(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
                 SelectorRow("Potência", might, 0..3) { might = it }
                 if (selectedType == null) {
                     Spacer(Modifier.height(8.dp))
-                    AppText("Custom Army — entrada manual", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)
+                    AppText("Custom Army — entrada manual", style = MaterialTheme.typography.labelMedium, color = visual.accentBright)
                     IntField("Join Battle", customJoin, coresCampoTexto) { customJoin = it }
                     val attack = customAttacks.firstOrNull() ?: BattleGroupCustomAttack("Ataque", 0, 0, null)
                     Spacer(Modifier.height(6.dp))
-                    AppText("Ataque", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)
+                    AppText("Ataque", style = MaterialTheme.typography.labelMedium, color = visual.accentBright)
                     OutlinedTextField(
                         attack.name,
                         { value -> customAttacks = listOf(attack.copy(name = value)) },
@@ -197,7 +189,7 @@ fun BattleGroupsTab(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
                     IntField("Resolve", customResolve, coresCampoTexto) { customResolve = it }
                     OutlinedTextField(customResist, { customResist = it }, label = { AppText("Resist") }, modifier = Modifier.fillMaxWidth(), colors = coresCampoTexto)
                     IntField("Rout Difficulty", customRout, coresCampoTexto) { customRout = it }
-                    Row(verticalAlignment = Alignment.CenterVertically) { Checkbox(customPerfectMorale, { customPerfectMorale = it }, modifier = Modifier.feedbackOnPress()); AppText("Perfect Morale", color = ExaltedOnSurface) }
+                    Row(verticalAlignment = Alignment.CenterVertically) { Checkbox(customPerfectMorale, { customPerfectMorale = it }, modifier = Modifier.feedbackOnPress()); AppText("Perfect Morale", color = visual.onSurface) }
                 }
                 Spacer(Modifier.height(8.dp))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -212,18 +204,18 @@ fun BattleGroupsTab(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
             val derived = BattleGroupRules.derive(group, troop)
             GildedCard(modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp).exaltedSectionPanel(13)) {
                 Column(Modifier.padding(12.dp)) {
-                    AppText(group.name, style = MaterialTheme.typography.titleMedium, color = ExaltedAccentBright)
-                    AppText(group.troopTypeName ?: "Custom Army", style = MaterialTheme.typography.bodySmall, color = ExaltedMuted)
+                    AppText(group.name, style = MaterialTheme.typography.titleMedium, color = visual.accentBright)
+                    AppText(group.troopTypeName ?: "Custom Army", style = MaterialTheme.typography.bodySmall, color = visual.muted)
                     derived?.let { stats ->
                         Spacer(Modifier.height(4.dp))
                         AppText(
                             "Join Battle: ${stats.joinBattle}   Defense: ${stats.defense}   Soak: ${stats.soak}",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = ExaltedOnSurface
+                            color = visual.onSurface
                         )
                         val magnitudeAtual = group.currentMagnitude ?: stats.magnitude
                         Column {
-                            AppText("Magnitude: $magnitudeAtual", color = ExaltedOnSurface)
+                            AppText("Magnitude: $magnitudeAtual", color = visual.onSurface)
                             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                             InkButton(label = "−", onClick = { viewModel.ajustarMagnitudeBattleGroup(group.id, -1, stats.magnitude) }, size = InkButtonSize.Small, variant = InkButtonVariant.Secondary)
                             Spacer(Modifier.width(6.dp))
@@ -238,7 +230,7 @@ fun BattleGroupsTab(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
                             AppText(
                                 "${attack.name}: Attack ${attack.attack} / Raw Damage ${attack.rawDamage}" + (attack.minimumDice?.let { " / Minimum Dice $it" } ?: ""),
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = ExaltedOnSurface
+                                color = visual.onSurface
                             )
                         }
                         Spacer(Modifier.height(6.dp))
@@ -273,8 +265,9 @@ private fun drillLabel(drill: BattleGroupDrill): String = when (drill) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun SelectorRow(label: String, value: Int, range: IntRange, displayValue: String = value.toString(), onChange: (Int) -> Unit) {
+    val visual = LocalExaltedVisualTemplate.current
     Column(Modifier.fillMaxWidth()) {
-        AppText("$label: $displayValue", style = MaterialTheme.typography.bodyMedium, color = ExaltedOnSurface)
+        AppText("$label: $displayValue", style = MaterialTheme.typography.bodyMedium, color = visual.onSurface)
         FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             InkButton(label = "−", enabled = value > range.first, onClick = { onChange(value - 1) }, size = InkButtonSize.Small, variant = InkButtonVariant.Secondary)
             InkButton(label = "+", enabled = value < range.last, onClick = { onChange(value + 1) }, size = InkButtonSize.Small, variant = InkButtonVariant.Secondary)
