@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.example.ui.components.exaltedContentStage
 import com.example.ui.components.exaltedTabIdentity
+import com.example.ui.components.exaltedControlBand
 import com.example.ui.components.InkButtonSize
 import com.example.ui.components.InkButton
 
@@ -143,16 +144,16 @@ fun CharmsTab(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+        Row(modifier = Modifier.fillMaxWidth().exaltedControlBand().padding(vertical = 10.dp, horizontal = 12.dp), horizontalArrangement = Arrangement.End) {
             SearchButton(activeCount = encantosFilter.activeCount, onClick = { showEncantosSearch = true })
         }
-        Spacer(Modifier.height(18.dp))
+        Spacer(Modifier.height(24.dp))
 
         if (!encantosFilter.isEmpty) {
             ActiveFilterChips(
                 filter = encantosFilter,
                 onRemove = { encantosFilter = it },
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 14.dp)
             )
             SectionHeader(title = "RESULTADOS DA BUSCA (${encantosResultados.size})")
             if (encantosResultados.isEmpty()) {
@@ -165,7 +166,7 @@ fun CharmsTab(
                 )
                 InkButton(label = "Limpar filtros", onClick = { encantosFilter = SkillFilter() }, modifier = Modifier.fillMaxWidth(), fillMaxWidth = true, size = InkButtonSize.Small)
             } else {
-                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     encantosResultados.forEach { skill ->
                         val def = viewModel.encantoDefinitionPorIdParaTipo(skill.id, sheet.tipoPersonagem)
                         if (def != null) {
