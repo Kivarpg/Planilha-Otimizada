@@ -57,7 +57,7 @@ fun Modifier.exaltedSectionPanel(
 fun Modifier.exaltedControlBand(
     surfaceColor: Color = ExaltedDarkSurface,
     accentColor: Color = ExaltedAccentBright,
-    accentAlpha: Float = 0.035f
+    accentAlpha: Float = 0.085f
 ): Modifier = this.background(
     Brush.horizontalGradient(
         listOf(
