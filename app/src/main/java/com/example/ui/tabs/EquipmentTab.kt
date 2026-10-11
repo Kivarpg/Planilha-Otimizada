@@ -23,10 +23,8 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Surface
@@ -48,10 +46,8 @@ import com.example.ui.components.GildedDialogTextButton
 import com.example.ui.components.SectionHeader
 import com.example.ui.components.dialogShape
 import com.example.ui.components.gildedDialogBorder
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedOnSurface
-import com.example.ui.theme.ExaltedOutline
+import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.components.exaltedTextFieldColors
 import com.example.viewmodel.SheetViewModel
 
 // Refatorado (2026-09, refatoração estrutural): as seções de Arma e
@@ -70,6 +66,7 @@ fun EquipmentTab(
     viewModel: SheetViewModel,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -92,14 +89,13 @@ fun EquipmentTab(
         SectionHeader(title = "Comitamento")
         GildedCard(
             modifier = Modifier.fillMaxWidth().exaltedSectionPanel(7),
-            colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant),
-            border = androidx.compose.foundation.BorderStroke(1.dp, com.example.ui.theme.ExaltedAccentBright.copy(alpha = 0.65f))
+            border = androidx.compose.foundation.BorderStroke(1.dp, visual.accentBright.copy(alpha = 0.65f))
         ) {
             Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 18.dp, vertical = 20.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 AppText(
                     text = "Motes Comitados: ${sheet.comitamentoTotalCalculado()} / ${sheet.limiteComitamentoCalculado()}",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = com.example.ui.theme.ExaltedAccentBright,
+                    color = visual.accentBright,
                     textAlign = TextAlign.Center,
                     maxLines = 3,
                     softWrap = true,
@@ -117,19 +113,7 @@ fun EquipmentTab(
             label = { AppText("") },
             modifier = Modifier.fillMaxWidth().height(160.dp),
             textStyle = androidx.compose.material3.LocalTextStyle.current.copy(textAlign = TextAlign.Justify),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = com.example.ui.theme.ExaltedAccentBright,
-                unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
-                focusedLabelColor = com.example.ui.theme.ExaltedAccentBright,
-                unfocusedLabelColor = ExaltedMuted,
-                cursorColor = com.example.ui.theme.ExaltedAccentBright,
-                focusedTextColor = ExaltedOnSurface,
-                unfocusedTextColor = ExaltedOnSurface,
-                focusedContainerColor = com.example.ui.theme.ExaltedDarkSurface,
-                unfocusedContainerColor = com.example.ui.theme.ExaltedDarkSurface,
-                focusedPlaceholderColor = ExaltedMuted,
-                unfocusedPlaceholderColor = ExaltedMuted
-            )
+            colors = exaltedTextFieldColors()
         )
     }
 }
@@ -146,6 +130,7 @@ internal fun MoteSourceDialog(
     onConfirm: (pessoais: Int, perifericos: Int) -> Unit,
     onDismiss: () -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     var modo by remember { mutableStateOf("Pessoais") }
     var mistoPessoaisTexto by remember { mutableStateOf("0") }
     var mistoPerifericosTexto by remember { mutableStateOf("0") }
@@ -170,7 +155,7 @@ internal fun MoteSourceDialog(
         title = {
             AppText(
                 "Comitar $itemName",
-                color = com.example.ui.theme.ExaltedAccentBright,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -189,7 +174,7 @@ internal fun MoteSourceDialog(
                         RadioButton(
                             selected = modo == chave,
                             onClick = null,
-                            colors = RadioButtonDefaults.colors(selectedColor = com.example.ui.theme.ExaltedAccentBright)
+                            colors = RadioButtonDefaults.colors(selectedColor = visual.accentBright)
                         )
                         AppText(rotulo, color = MaterialTheme.colorScheme.onSurface)
                     }
@@ -259,7 +244,9 @@ internal fun MoteSourceDialog(
         confirmButton = {
             GildedDialogTextButton(text = "Cancelar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
 
@@ -269,6 +256,7 @@ internal fun MoteSourceDialog(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun CategoryChipGroup(options: List<String>, selected: String, onSelect: (String) -> Unit) {
+    val visual = LocalExaltedVisualTemplate.current
     FlowRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -280,15 +268,15 @@ internal fun CategoryChipGroup(options: List<String>, selected: String, onSelect
                 modifier = Modifier
                     .widthIn(min = 92.dp)
                     .padding(vertical = 2.dp),
-                color = if (isSelected) com.example.ui.theme.ExaltedAccentBright.copy(alpha = 0.22f) else ExaltedDarkSurfaceVariant,
+                color = if (isSelected) visual.accentBright.copy(alpha = 0.22f) else visual.surfaceVariant,
                 shape = MaterialTheme.shapes.small,
-                border = androidx.compose.foundation.BorderStroke(1.dp, if (isSelected) com.example.ui.theme.ExaltedAccentBright else ExaltedOutline),
+                border = androidx.compose.foundation.BorderStroke(1.dp, if (isSelected) visual.accentBright else visual.outline),
                 onClick = { onSelect(option) }
             ) {
                 AutoSizeText(
                     text = option,
                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                    color = if (isSelected) com.example.ui.theme.ExaltedAccentBright else MaterialTheme.colorScheme.onSurface,
+                    color = if (isSelected) visual.accentBright else MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
                     maxFontSize = MaterialTheme.typography.labelMedium.fontSize,
                     minFontSize = 8.sp,
