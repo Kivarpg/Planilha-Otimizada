@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import com.example.ui.components.ConfirmDeleteDialog
 import com.example.ui.components.LongPressCard
 import com.example.ui.theme.ExaltedDarkSurface
+import com.example.ui.theme.ExaltedOnSurface
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import com.example.viewmodel.SheetViewModel
@@ -230,7 +231,9 @@ fun SheetsListDialog(
         confirmButton = {
             com.example.ui.components.GildedDialogTextButton(text = "Fechar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurface
+        containerColor = ExaltedDarkSurface,
+        titleContentColor = ExaltedOnSurface,
+        textContentColor = ExaltedOnSurface,
     )
 }
 
@@ -304,7 +307,9 @@ fun BackupListDialog(
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "Fechar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurface
+        containerColor = ExaltedDarkSurface,
+        titleContentColor = ExaltedOnSurface,
+        textContentColor = ExaltedOnSurface,
     )
 }
 
@@ -367,7 +372,9 @@ fun NovoConfirmDialog(show: Boolean, onDismiss: () -> Unit, onProceed: (salvarAn
                 )
             }
         },
-        containerColor = ExaltedDarkSurface
+        containerColor = ExaltedDarkSurface,
+        titleContentColor = ExaltedOnSurface,
+        textContentColor = ExaltedOnSurface,
     )
 }
 
@@ -433,6 +440,8 @@ fun EscolhaTemplateNovaPlanilhaDialog(show: Boolean, onDismiss: () -> Unit, onEs
                 }
             }
         },
-        containerColor = ExaltedDarkSurface
+        containerColor = ExaltedDarkSurface,
+        titleContentColor = ExaltedOnSurface,
+        textContentColor = ExaltedOnSurface,
     )
 }
