@@ -142,6 +142,24 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `visual diagnostics keep build traceability and twelve preview cases`() {
+        val gradle = File("../build.gradle.kts").readText()
+        val settingsDialogs = File("src/main/java/com/example/ui/SheetScreenDialogs.kt").readText()
+        val preview = File("src/debug/java/com/example/ui/debug/VisualDiagnosticsPreview.kt").readText()
+
+        assertTrue(gradle.contains("buildConfigField(\"String\", \"BUILD_COMMIT\""))
+        assertTrue(settingsDialogs.contains("BuildConfig.VERSION_NAME"))
+        assertTrue(settingsDialogs.contains("BuildConfig.BUILD_COMMIT"))
+        assertEquals(12, Regex("""@Preview\\(""").findAll(preview).count())
+        assertTrue(preview.contains("TipoExaltadoEncontro.SOLAR"))
+        assertTrue(preview.contains("TipoExaltadoEncontro.SANGUE_DE_DRAGAO"))
+        assertTrue(preview.contains("TipoExaltadoEncontro.LUNAR"))
+        assertTrue(preview.contains("widthDp = 320"))
+        assertTrue(preview.contains("widthDp = 411"))
+        assertTrue(preview.contains("fontScale = 1.5f"))
+    }
+
+    @Test
     fun `numeric selectors respect active exalt palette`() {
         val source = File("src/main/java/com/example/ui/components/NumericRatingControls.kt").readText()
         assertTrue(source.contains("ExaltedAccentBright"))
