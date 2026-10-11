@@ -59,6 +59,15 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `header action icons follow selected Exalt palette`() {
+        val header = File("src/main/java/com/example/ui/SheetTopBar.kt").readText()
+        assertTrue(header.contains("Icon(Icons.Outlined.Settings, \"Configurações\", tint = ExaltedAccentBright"))
+        assertTrue(header.contains("Icon(Icons.Outlined.MoreVert, \"Opções\", tint = ExaltedAccentBright"))
+        assertFalse(header.contains("tint = ExaltedGold"))
+        assertTrue(header.contains("val actionsWidth = if (compactHeader) 96.dp else 104.dp"))
+    }
+
+    @Test
     fun `sheet settings and lifecycle dialogs use the selected Exalt palette`() {
         val settings = File("src/main/java/com/example/ui/SheetScreenDialogs.kt").readText()
         val lifecycle = File("src/main/java/com/example/ui/SheetLifecycleDialogs.kt").readText()
