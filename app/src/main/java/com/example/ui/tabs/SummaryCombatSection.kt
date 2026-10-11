@@ -59,7 +59,7 @@ GildedCard(
                     AppText(
                         "• $nomeExibido — Ini: ${w.iniciativa} | Dec: ${w.decisivo} | Defesa: ${w.defesa} | Dano: ${w.dano} | Dano Mín: ${w.danoMinimo.ifBlank { "-" }} | Comitamento: $comitamentoReal",
                         style = MaterialTheme.typography.bodySmall,
-                        color = ExaltedOnSurface
+                        color = visual.onSurface
                     )
                 }
             }
@@ -69,7 +69,7 @@ GildedCard(
                 AppText(
                     "• ${armaduraEquipada.nome} — Absorção: ${armaduraEquipada.absorcao} | Dureza: ${armaduraEquipada.dureza} | Penalidade: ${armaduraEquipada.penalidadeMobilidade} | Comitamento: ${com.example.model.ArmorStatsTable.stats(armaduraEquipada.tipoArmadura, armaduraEquipada.categoriaPeso).comitamento}",
                     style = MaterialTheme.typography.bodySmall,
-                    color = ExaltedOnSurface
+                    color = visual.onSurface
                 )
             }
         }
