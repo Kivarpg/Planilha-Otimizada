@@ -3,6 +3,7 @@ package com.example.ui.theme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 
 // SKIN: NÃO reconstruímos LocalDensity/fontScale aqui de propósito. O
 // Android 14+ usa uma curva NÃO-LINEAR de escala de fonte pra
@@ -47,10 +48,13 @@ fun ExaltedTheme(
         outlineVariant = ExaltedDivider,
         error = ExaltedError
     )
-    MaterialTheme(
-        colorScheme = exaltedDarkColorScheme,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
+    val activeVisualTemplate = visualTemplatePorMotif(ExaltedActiveMotif)
+    CompositionLocalProvider(LocalExaltedVisualTemplate provides activeVisualTemplate) {
+        MaterialTheme(
+            colorScheme = exaltedDarkColorScheme,
+            typography = Typography,
+            shapes = Shapes,
+            content = content
+        )
+    }
 }
