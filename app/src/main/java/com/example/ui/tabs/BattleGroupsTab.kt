@@ -47,7 +47,6 @@ import com.example.model.BattleGroupDrill
 import com.example.ui.components.GildedCard
 import com.example.ui.components.SectionHeader
 import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import com.example.ui.theme.ExaltedOnSurface
@@ -149,7 +148,7 @@ fun BattleGroupsTab(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
         unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
         focusedLabelColor = ExaltedAccentBright,
         unfocusedLabelColor = ExaltedMuted,
-        cursorColor = ExaltedGold,
+        cursorColor = ExaltedAccentBright,
         focusedTextColor = ExaltedOnSurface,
         unfocusedTextColor = ExaltedOnSurface,
         focusedContainerColor = ExaltedDarkSurface,
@@ -161,7 +160,7 @@ fun BattleGroupsTab(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
             Column(Modifier.padding(12.dp)) {
                 OutlinedTextField(name, { name = it }, label = { AppText("Nome") }, modifier = Modifier.fillMaxWidth(), colors = coresCampoTexto)
                 Spacer(Modifier.height(8.dp))
-                AppText("Tipo de tropa", style = MaterialTheme.typography.labelMedium, color = ExaltedGold)
+                AppText("Tipo de tropa", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)
                 InkButton(label = selectedType ?: "Custom Army", onClick = { menuOpen = true }, modifier = Modifier.fillMaxWidth(), size = InkButtonSize.Small, fillMaxWidth = true)
                 DropdownMenu(menuOpen, { menuOpen = false }) {
                     battleGroupTroopTypes.forEach { type ->
@@ -175,11 +174,11 @@ fun BattleGroupsTab(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
                 SelectorRow("Potência", might, 0..3) { might = it }
                 if (selectedType == null) {
                     Spacer(Modifier.height(8.dp))
-                    AppText("Custom Army — entrada manual", style = MaterialTheme.typography.labelMedium, color = ExaltedGold)
+                    AppText("Custom Army — entrada manual", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)
                     IntField("Join Battle", customJoin, coresCampoTexto) { customJoin = it }
                     val attack = customAttacks.firstOrNull() ?: BattleGroupCustomAttack("Ataque", 0, 0, null)
                     Spacer(Modifier.height(6.dp))
-                    AppText("Ataque", style = MaterialTheme.typography.labelMedium, color = ExaltedGold)
+                    AppText("Ataque", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)
                     OutlinedTextField(
                         attack.name,
                         { value -> customAttacks = listOf(attack.copy(name = value)) },
