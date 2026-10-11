@@ -8,43 +8,19 @@ import androidx.compose.runtime.setValue
 import com.example.ui.components.feedbackClickable
 
 /*
- * Botão "pincelada de tinta" — implementação Jetpack Compose.
+ * InkButton — primitivo estrutural seguro.
  *
- * Isto é a tradução direta, em Compose, do protótipo HTML/CSS/SVG que foi
- * aprovado (mesmo path 'd', mesmos stops de gradiente, mesmos tamanhos e
- * cores). O documento HTML original serve só de referência visual — este
- * arquivo é o que de fato entra no projeto.
- *
- * Como funciona:
- *  - Cada pincelada é um path de SVG (string 'd'), igual ao usado no HTML.
- *    Em vez de converter as coordenadas na mão, usamos o PathParser do
- *    próprio Compose (androidx.compose.ui.graphics.vector.PathParser), que
- *    entende a mesma sintaxe de path do SVG/Vector Drawable — então dá pra
- *    colar o 'd' do design direto, sem risco de erro de tradução manual.
- *  - O botão desenha esse path num Canvas, escalado pro tamanho do botão,
- *    preenchido com um gradiente horizontal (Brush.horizontalGradient) que
- *    imita a tinta ficando mais clara/seca da esquerda pra direita.
- *  - O texto é um Text comum, centralizado por cima — sem trade-off de
- *    acessibilidade (leitor de tela lê o texto normalmente).
- *  - Feedback de toque: escala levemente pra baixo quando pressionado
- *    (equivalente ao :active do CSS). Compose para toque não tem ":hover"
- *    de mouse por padrão — se o app precisar de hover (ex.: uso com
- *    teclado/mouse em tablet ou Chromebook), dá pra ligar via
- *    Modifier.hoverable() e observar collectIsHoveredAsState(); deixei o
- *    gancho comentado mais abaixo pra não obrigar essa dependência.
- *
- * Requer: androidx.compose.ui:ui-graphics (PathParser já vem nela).
- * Testado apenas por leitura/revisão de API — este ambiente não tem Gradle
- * com acesso à rede pra compilar de verdade, então revisem antes de
- * mergear (nomes de API foram conferidos contra a documentação oficial do
- * Compose, mas sempre vale um build local).
+ * A geometria funcional é um Box simples com gradiente, borda, texto e
+ * feedback de toque. SVG/Path/Canvas não participam mais do layout nem da
+ * pintura principal; a decoração nunca pode recortar, cobrir ou reposicionar
+ * o conteúdo clicável. A identidade visual vem do contexto composicional,
+ * com override explícito para blocos independentes como NPCs da Aba 11.
  */
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
@@ -62,15 +38,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Fill
-import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.vector.PathParser
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -87,57 +59,10 @@ import com.example.ui.theme.ExaltedMetalGoldShine
 import com.example.ui.theme.ExaltedOnSurface
 import com.example.ui.theme.corTextoContraste
 import com.example.ui.theme.ExaltVisualTemplate
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 // ---------------------------------------------------------------------
-// 1. Dados da pincelada — mesmos 3 paths do SVG (viewBox 0 0 340 100),
-//    colados sem alteração.
-// ---------------------------------------------------------------------
-
-private const val VIEWBOX_W = 340f
-private const val VIEWBOX_H = 100f
-
-private object InkBrushPaths {
-    const val A = "M8,52 C6,48 10,46 8,42 C14,38 10,34 18,32 C24,28 30,32 36,27 " +
-        "C44,24 50,29 58,25 C66,22 74,26 84,23 C94,20 104,25 116,22 C128,19 140,24 154,21 " +
-        "C168,19 182,23 196,20 C210,18 224,22 238,20 C250,18 262,21 272,19 C280,21 288,17 294,20 " +
-        "C300,17 306,21 303,25 C309,28 305,32 310,35 C306,39 311,43 307,47 C312,51 307,55 311,58 " +
-        "C307,62 312,65 307,68 C310,72 304,74 300,71 C296,76 289,73 285,77 C275,74 268,79 258,76 " +
-        "C246,80 234,75 222,78 C208,80 194,76 180,79 C166,81 152,77 138,80 C124,82 110,78 96,81 " +
-        "C82,83 68,79 56,81 C46,83 38,78 30,80 C24,76 17,79 14,74 C10,76 6,71 9,67 " +
-        "C4,64 8,60 5,56 C9,54 6,50 8,52 Z"
-
-    const val B = "M9,48 C7,44 11,41 8,37 C15,34 11,30 19,28 C26,25 32,29 39,25 " +
-        "C48,22 55,27 63,23 C72,21 81,25 92,22 C103,19 114,24 127,21 C140,19 153,23 167,20 " +
-        "C181,18 195,22 209,19 C221,18 233,21 244,19 C253,21 261,18 268,20 C275,17 282,21 288,18 " +
-        "C294,21 300,25 297,29 C302,32 299,37 303,41 C299,45 303,49 300,53 C304,57 300,61 303,65 " +
-        "C299,68 302,72 297,74 C300,78 294,80 290,76 C286,80 279,76 275,80 C266,76 258,81 249,77 " +
-        "C238,81 226,76 214,79 C200,81 186,77 172,80 C158,82 144,77 130,80 C116,82 102,78 88,80 " +
-        "C76,82 65,78 55,80 C48,82 40,78 34,80 C29,76 22,79 19,74 C14,76 9,72 12,67 " +
-        "C7,64 10,60 7,56 C11,54 8,50 9,48 Z"
-
-    const val C = "M7,55 C5,51 9,47 7,43 C13,40 9,36 17,33 C25,30 31,34 39,30 " +
-        "C48,27 56,31 65,27 C75,24 85,28 97,25 C109,22 121,27 135,24 C149,21 163,25 178,22 " +
-        "C193,20 208,24 222,21 C234,19 246,22 256,20 C264,22 272,19 279,21 C286,18 293,22 289,26 " +
-        "C296,29 292,33 296,37 C292,41 296,45 292,49 C297,53 292,58 296,62 C291,65 295,69 290,72 " +
-        "C293,76 287,78 283,74 C279,78 272,74 268,78 C258,75 249,80 239,76 C227,80 214,75 201,78 " +
-        "C186,80 171,75 156,78 C141,80 126,76 111,79 C97,81 84,77 71,79 C60,81 50,77 41,79 " +
-        "C35,75 28,78 24,73 C19,76 13,71 16,66 C11,63 14,58 11,54 C15,53 11,56 7,55 Z"
-
-    /** Traço fino pra variante Ghost (viewBox 0 0 320 20). */
-    const val UNDERLINE = "M0,10 C4,4 10,2 20,3 C60,5 140,6 200,7 C224,7.5 236,9 244,11 " +
-        "L252,8 L246,13 L253,15 C244,18 220,16 190,17 C130,18.5 60,17 22,15 C8,14 2,15 0,10 Z"
-
-    val all = listOf(A, B, C)
-}
-
-/** Faz cache do Path já parseado — parsear string toda recomposição seria desperdício. */
-private val parsedPathCache = HashMap<String, Path>()
-
-private fun svgPath(d: String): Path =
-    parsedPathCache.getOrPut(d) { PathParser().parsePathString(d).toPath() }
-
-// ---------------------------------------------------------------------
-// 2. Cores — mesmos hex do <linearGradient> do SVG (0% / 55% / 100%).
+// Cores do primitivo. A identidade vem do template resolvido no escopo.
 // ---------------------------------------------------------------------
 
 private data class InkGradient(val start: Color, val mid: Color, val end: Color)
@@ -264,8 +189,9 @@ fun InkButton(
     styleOverride: InkButtonStyle = InkButtonStyle(),
     content: (@Composable () -> Unit)? = null,
 ) {
+    val resolvedVisual = visualTemplate ?: LocalExaltedVisualTemplate.current
     if (variant == InkButtonVariant.Ghost) {
-        InkGhostButton(label, onClick, modifier, enabled, styleOverride)
+        InkGhostButton(label, onClick, modifier, enabled, styleOverride, resolvedVisual)
         return
     }
 
@@ -281,25 +207,18 @@ fun InkButton(
         label = "inkButtonScale",
     )
 
-    // Aba 11 pode fornecer a paleta do próprio NPC. Sem ela, preservamos
-    // exatamente o comportamento histórico baseado no tema global da ficha.
-    val ownerPrimary = visualTemplate?.let {
-        InkGradient(it.surface, it.metalDeep, it.accent)
-    }
-    val ownerSecondary = visualTemplate?.let {
-        InkGradient(it.surfaceVariant, it.surface, it.metalDeep)
-    }
-    val ownerSelected = visualTemplate?.let {
-        InkGradient(it.accent, it.metalShine, it.metalFlash)
-    }
+    // Uma única fonte de identidade: contexto da ficha ou override local.
+    val ownerPrimary = InkGradient(resolvedVisual.surface, resolvedVisual.metalDeep, resolvedVisual.accent)
+    val ownerSecondary = InkGradient(resolvedVisual.surfaceVariant, resolvedVisual.surface, resolvedVisual.metalDeep)
+    val ownerSelected = InkGradient(resolvedVisual.accent, resolvedVisual.metalShine, resolvedVisual.metalFlash)
     val gradient = when {
-        selected -> ownerSelected ?: InkColors.selected
-        variant == InkButtonVariant.Primary -> ownerPrimary ?: InkColors.primary
-        variant == InkButtonVariant.Secondary -> ownerSecondary ?: InkColors.secondary
+        selected -> ownerSelected
+        variant == InkButtonVariant.Primary -> ownerPrimary
+        variant == InkButtonVariant.Secondary -> ownerSecondary
         variant == InkButtonVariant.Danger -> InkColors.danger
-        variant == InkButtonVariant.ThematicDanger -> ownerPrimary ?: InkColors.thematicDanger
+        variant == InkButtonVariant.ThematicDanger -> ownerPrimary
         variant == InkButtonVariant.OnDark -> InkColors.onDark
-        else -> ownerPrimary ?: InkColors.primary // Ghost não chega aqui (early return acima)
+        else -> ownerPrimary // Ghost não chega aqui (early return acima)
     }
     val resolvedGradient = InkGradient(
         styleOverride.gradientStart ?: gradient.start,
@@ -307,11 +226,10 @@ fun InkButton(
         styleOverride.gradientEnd ?: gradient.end,
     )
     val textColor = styleOverride.labelColor ?: when {
-        visualTemplate != null && selected -> corTextoContraste(visualTemplate.metalShine)
-        visualTemplate != null && variant != InkButtonVariant.Danger -> visualTemplate.onSurface
-        selected -> corTextoContraste(InkColors.selected.mid)
+        selected -> corTextoContraste(ownerSelected.mid)
+        variant == InkButtonVariant.Danger -> InkColors.textOnLight
         variant == InkButtonVariant.OnDark -> InkColors.textOnDark
-        else -> InkColors.textOnLight
+        else -> resolvedVisual.onSurface
     }
     // APPROVED VISUAL CUSTOMIZATION
     // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
@@ -438,7 +356,7 @@ fun InkButton(
     )
 }
 
-/** Variante "ghost": sem massa de tinta atrás, só um traço fino sob o texto. */
+/** Variante "ghost": texto + traço geométrico simples; nenhum Canvas/SVG. */
 @Composable
 private fun InkGhostButton(
     label: String,
@@ -446,10 +364,11 @@ private fun InkGhostButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     styleOverride: InkButtonStyle = InkButtonStyle(),
+    visualTemplate: ExaltVisualTemplate = LocalExaltedVisualTemplate.current,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    val underlinePath = remember { svgPath(InkBrushPaths.UNDERLINE) }
-    val textColor = styleOverride.labelColor ?: InkColors.textBody
+    val textColor = styleOverride.labelColor ?: visualTemplate.onSurface
+    val underlineMid = styleOverride.gradientMiddle ?: visualTemplate.accent
 
     Column(
         modifier = modifier
@@ -469,16 +388,20 @@ private fun InkGhostButton(
             color = if (enabled) textColor else textColor.copy(alpha = 0.5f),
             fontWeight = FontWeight.SemiBold,
         )
-        Canvas(modifier = Modifier.size(width = 74.dp, height = 12.dp)) {
-            val scaleX = this.size.width / 320f
-            val scaleY = this.size.height / 20f
-            scale(scaleX, scaleY, pivot = Offset.Zero) {
-                drawPath(
-                    path = underlinePath,
-                    color = (styleOverride.gradientMiddle ?: InkColors.primary.mid).copy(alpha = if (enabled) 0.85f else 0.4f),
+        Box(
+            modifier = Modifier
+                .padding(top = 2.dp)
+                .size(width = 74.dp, height = 2.dp)
+                .background(
+                    Brush.horizontalGradient(
+                        listOf(
+                            Color.Transparent,
+                            underlineMid.copy(alpha = if (enabled) 0.85f else 0.4f),
+                            Color.Transparent
+                        )
+                    )
                 )
-            }
-        }
+        )
     }
 }
 
