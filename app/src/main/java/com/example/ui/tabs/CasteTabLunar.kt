@@ -49,6 +49,7 @@ import com.example.ui.theme.ExaltedDarkSurfaceVariant
 import com.example.ui.theme.ExaltedBlack
 import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.ExaltedAccentBright
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.ui.theme.ExaltedMuted
 import com.example.ui.theme.ExaltedOnSurface
 import com.example.ui.theme.ExaltedOutline
@@ -65,6 +66,7 @@ internal fun LunarCasteTabContent(
     viewModel: SheetViewModel,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     if (!sheet.lunarCastaEscolhida) {
         Column(
             modifier = modifier
@@ -78,7 +80,7 @@ internal fun LunarCasteTabContent(
             AppText(
                 text = "Casta não selecionada",
                 style = MaterialTheme.typography.bodyMedium,
-                color = ExaltedMuted,
+                color = visual.muted,
                 textAlign = TextAlign.Center
             )
         }
@@ -113,7 +115,7 @@ internal fun LunarCasteTabContent(
             text = sheet.lunarCasta.displayName,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
-            color = ExaltedAccentBright,
+            color = visual.accentBright,
             textAlign = androidx.compose.ui.text.style.TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
@@ -142,15 +144,15 @@ internal fun LunarCasteTabContent(
                 label = { AppText("Forma Espiritual") },
                 modifier = Modifier.weight(1f),
                 colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = ExaltedAccentBright,
-                    unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
-                    focusedLabelColor = ExaltedAccentBright,
-                    unfocusedLabelColor = ExaltedMuted,
-                    cursorColor = ExaltedGold,
+                    focusedBorderColor = visual.accentBright,
+                    unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
+                    focusedLabelColor = visual.accentBright,
+                    unfocusedLabelColor = visual.muted,
+                    cursorColor = visual.accent,
                     focusedTextColor = ExaltedOnSurface,
                     unfocusedTextColor = ExaltedOnSurface,
-                    focusedContainerColor = ExaltedDarkSurface,
-                    unfocusedContainerColor = ExaltedDarkSurface
+                    focusedContainerColor = visual.surface,
+                    unfocusedContainerColor = visual.surface
                 )
             )
             androidx.compose.material3.OutlinedTextField(
@@ -159,15 +161,15 @@ internal fun LunarCasteTabContent(
                 label = { AppText("Sinal") },
                 modifier = Modifier.weight(1f),
                 colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = ExaltedAccentBright,
-                    unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
-                    focusedLabelColor = ExaltedAccentBright,
-                    unfocusedLabelColor = ExaltedMuted,
-                    cursorColor = ExaltedGold,
+                    focusedBorderColor = visual.accentBright,
+                    unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
+                    focusedLabelColor = visual.accentBright,
+                    unfocusedLabelColor = visual.muted,
+                    cursorColor = visual.accent,
                     focusedTextColor = ExaltedOnSurface,
                     unfocusedTextColor = ExaltedOnSurface,
-                    focusedContainerColor = ExaltedDarkSurface,
-                    unfocusedContainerColor = ExaltedDarkSurface
+                    focusedContainerColor = visual.surface,
+                    unfocusedContainerColor = visual.surface
                 )
             )
         }
@@ -181,8 +183,7 @@ internal fun LunarCasteTabContent(
         val lunarCasteSelected = androidx.compose.runtime.remember(sheet.lunarCasteAttributesEscolhidos) { sheet.lunarCasteAttributesEscolhidos.toSet() }
         SectionHeader(title = "ATRIBUTOS DE CASTA — ESCOLHA 2 (${sheet.lunarCasteAttributesEscolhidos.size}/2)")
         GildedCard(
-            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2),
-            colors = CardDefaults.cardColors(containerColor = ExaltedBlack)
+            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2)
         ) {
             androidx.compose.foundation.layout.FlowRow(
                 modifier = Modifier.fillMaxWidth().padding(14.dp),
@@ -212,8 +213,7 @@ internal fun LunarCasteTabContent(
         val favoredSelected = androidx.compose.runtime.remember(sheet.favoredAttributes) { sheet.favoredAttributes.toSet() }
         SectionHeader(title = "ATRIBUTOS FAVORECIDOS (${sheet.favoredAttributes.size}/2)")
         GildedCard(
-            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2),
-            colors = CardDefaults.cardColors(containerColor = ExaltedBlack)
+            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2)
         ) {
             androidx.compose.foundation.layout.FlowRow(
                 modifier = Modifier
@@ -244,8 +244,7 @@ internal fun LunarCasteTabContent(
         // dourado. ---
         SectionHeader(title = "Limite (quebra de limite)")
         GildedCard(
-            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2),
-            colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2)
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth().padding(14.dp),
@@ -268,17 +267,17 @@ internal fun LunarCasteTabContent(
                             }
                         },
                         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = ExaltedAccentBright,
-                            unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
-                            focusedLabelColor = ExaltedAccentBright,
-                            unfocusedLabelColor = ExaltedMuted,
-                            cursorColor = ExaltedGold,
+                            focusedBorderColor = visual.accentBright,
+                            unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
+                            focusedLabelColor = visual.accentBright,
+                            unfocusedLabelColor = visual.muted,
+                            cursorColor = visual.accent,
                             focusedTextColor = ExaltedOnSurface,
                             unfocusedTextColor = ExaltedOnSurface,
-                            focusedContainerColor = ExaltedDarkSurface,
-                            unfocusedContainerColor = ExaltedDarkSurface,
-                            focusedPlaceholderColor = ExaltedMuted,
-                            unfocusedPlaceholderColor = ExaltedMuted
+                            focusedContainerColor = visual.surface,
+                            unfocusedContainerColor = visual.surface,
+                            focusedPlaceholderColor = visual.muted,
+                            unfocusedPlaceholderColor = visual.muted
                         ),
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -290,7 +289,7 @@ internal fun LunarCasteTabContent(
                     androidx.compose.material3.DropdownMenu(
                         expanded = expandedVirtudeLunar,
                         onDismissRequest = { expandedVirtudeLunar = false },
-                        modifier = Modifier.fillMaxWidth(0.85f).background(ExaltedDarkSurfaceVariant)
+                        modifier = Modifier.fillMaxWidth(0.85f).background(visual.surfaceVariant)
                     ) {
                         falhasDeVirtudeLunar.forEach { falha ->
                             androidx.compose.material3.DropdownMenuItem(
@@ -317,17 +316,17 @@ internal fun LunarCasteTabContent(
                     label = { AppText("Gatilho do Limite") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = ExaltedAccentBright,
-                        unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
-                        focusedLabelColor = ExaltedAccentBright,
-                        unfocusedLabelColor = ExaltedMuted,
-                        cursorColor = ExaltedGold,
+                        focusedBorderColor = visual.accentBright,
+                        unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
+                        focusedLabelColor = visual.accentBright,
+                        unfocusedLabelColor = visual.muted,
+                        cursorColor = visual.accent,
                         focusedTextColor = ExaltedOnSurface,
                         unfocusedTextColor = ExaltedOnSurface,
-                        focusedContainerColor = ExaltedDarkSurface,
-                        unfocusedContainerColor = ExaltedDarkSurface,
-                        focusedPlaceholderColor = ExaltedMuted,
-                        unfocusedPlaceholderColor = ExaltedMuted
+                        focusedContainerColor = visual.surface,
+                        unfocusedContainerColor = visual.surface,
+                        focusedPlaceholderColor = visual.muted,
+                        unfocusedPlaceholderColor = visual.muted
                     )
                 )
                 Spacer(modifier = Modifier.height(5.dp))
@@ -335,7 +334,7 @@ internal fun LunarCasteTabContent(
                 Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                     AppText(
                         text = "Limite",
-                        color = ExaltedGold,
+                        color = visual.accent,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleMedium
@@ -355,7 +354,7 @@ internal fun LunarCasteTabContent(
                                 color = if (level <= sheet.limiteContador) limiteGradientColorLunar(level) else ExaltedDarkBackground.copy(alpha = 0.85f),
                                 border = androidx.compose.foundation.BorderStroke(
                                     1.dp,
-                                    if (level <= sheet.limiteContador) ExaltedAccentBright else ExaltedMuted.copy(alpha = 0.45f)
+                                    if (level <= sheet.limiteContador) visual.accentBright else visual.muted.copy(alpha = 0.45f)
                                 ),
                                 onClick = { viewModel.updateLimiteContador(level) }
                             ) {
@@ -365,7 +364,7 @@ internal fun LunarCasteTabContent(
                                         fontFamily = com.example.ui.theme.ExaltedSymbolFont,
                                         fontSize = 9.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = if (level <= sheet.limiteContador) limiteTextColorLunar(level) else ExaltedAccentBright,
+                                        color = if (level <= sheet.limiteContador) limiteTextColorLunar(level) else visual.accentBright,
                                         modifier = Modifier.padding(2.dp)
                                     )
                                 }
