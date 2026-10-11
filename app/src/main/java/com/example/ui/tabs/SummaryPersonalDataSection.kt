@@ -34,7 +34,7 @@ GildedCard(
                 ehLunar -> "1. Dados pessoais e casta"
                 else -> "1. Dados pessoais e casta"
             },
-            style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp), color = ExaltedAmber, fontWeight = FontWeight.Bold
+            style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp), color = visual.accentBright, fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(4.dp))
         AppText("Nome: ${sheet.nome.ifBlank { "-" }}")
