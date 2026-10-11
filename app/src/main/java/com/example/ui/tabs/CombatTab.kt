@@ -65,14 +65,12 @@ import com.example.ui.components.GildedCard
 import com.example.ui.components.WillpowerTrack
 import com.example.ui.theme.ExaltedAlertaFundo
 import com.example.ui.theme.ExaltedAlertaTexto
-import com.example.ui.theme.ExaltedAmber
 import com.example.ui.theme.ExaltedDanoAgravado
 import com.example.ui.theme.ExaltedDanoContundente
 import com.example.ui.theme.ExaltedDanoLetal
 import com.example.ui.theme.ExaltedDarkBackground
 import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import com.example.ui.theme.ExaltedOutline
