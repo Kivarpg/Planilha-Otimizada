@@ -64,11 +64,9 @@ import com.example.ui.components.InkButton
 import com.example.ui.components.InkButtonSize
 import com.example.ui.components.InkButtonVariant
 import com.example.ui.components.SectionHeader
-import com.example.ui.theme.ExaltedAmber
 import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
 import com.example.ui.theme.ExaltedStructuralMetalDeep
-import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import com.example.ui.theme.ExaltedOnSurface
