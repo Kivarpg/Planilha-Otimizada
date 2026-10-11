@@ -273,9 +273,9 @@ fun SectionHeader(title: String, modifier: Modifier = Modifier) {
                 ExaltedStructuralMetalShine.copy(alpha = if (ExaltedActiveMotif == ExaltedVisualMotif.LUNAR) .13f else .075f),
                 ExaltedDarkSurfaceVariant.copy(alpha = .82f),
                 ExaltedAccentBright.copy(alpha = when (ExaltedActiveMotif) {
-                    ExaltedVisualMotif.SOLAR -> .15f
-                    ExaltedVisualMotif.DRAGON_BLOODED -> .12f
-                    ExaltedVisualMotif.LUNAR -> .08f
+                    ExaltedVisualMotif.SOLAR -> .22f
+                    ExaltedVisualMotif.DRAGON_BLOODED -> .18f
+                    ExaltedVisualMotif.LUNAR -> .14f
                 }),
                 ExaltedDarkSurfaceVariant.copy(alpha = .70f)
             )))
@@ -287,9 +287,9 @@ fun SectionHeader(title: String, modifier: Modifier = Modifier) {
             })
             .background(Brush.horizontalGradient(listOf(
                 ExaltedAccentBright.copy(alpha = when (ExaltedActiveMotif) {
-                    ExaltedVisualMotif.SOLAR -> .34f
-                    ExaltedVisualMotif.DRAGON_BLOODED -> .27f
-                    ExaltedVisualMotif.LUNAR -> .19f
+                    ExaltedVisualMotif.SOLAR -> .42f
+                    ExaltedVisualMotif.DRAGON_BLOODED -> .36f
+                    ExaltedVisualMotif.LUNAR -> .27f
                 }),
                 ExaltedDarkSurfaceVariant.copy(alpha = .92f),
                 ExaltedDarkSurfaceVariant.copy(alpha = .74f)
