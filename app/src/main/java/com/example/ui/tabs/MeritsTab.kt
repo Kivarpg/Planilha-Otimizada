@@ -49,9 +49,7 @@ import com.example.ui.components.SectionHeader
 import com.example.ui.components.GildedCard
 import com.example.ui.components.GildedDialogButton
 import com.example.ui.components.GildedDialogTextButton
-import com.example.ui.theme.ExaltedAmber
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import com.example.viewmodel.SheetViewModel
