@@ -59,6 +59,21 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `header status and caste remain in separate text rows`() {
+        val header = File("src/main/java/com/example/ui/SheetTopBar.kt").readText()
+        assertTrue(header.contains("O estado da planilha nao deve disputar uma unica linha"))
+        assertTrue(header.contains("Column(verticalArrangement = Arrangement.spacedBy(4.dp))"))
+        assertTrue(header.contains("color = cor, maxLines = 2, softWrap = true"))
+    }
+
+    @Test
+    fun `shared counter follows active exalt color`() {
+        val counter = File("src/main/java/com/example/ui/components/CounterControls.kt").readText()
+        assertTrue(counter.contains("ExaltedAccentBright"))
+        assertFalse(counter.contains("ExaltedAmber"))
+    }
+
+    @Test
     fun `header reserves space for two accessible action targets`() {
         val header = File("src/main/java/com/example/ui/SheetTopBar.kt").readText()
         assertTrue(header.contains("val actionsWidth = if (compactHeader) 96.dp else 104.dp"))
