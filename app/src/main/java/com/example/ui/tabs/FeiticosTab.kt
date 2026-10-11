@@ -147,11 +147,19 @@ internal fun FeiticosPopup(
                     val desbloqueado = sheet.modoLivre || circulo in circulosDesbloqueados
                     val feiticos = feiticosPorCirculo[circulo].orEmpty()
                     if (feiticos.isEmpty()) return@forEach
-                    AppText(
-                        "Círculo $circulo",
-                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                        color = if (desbloqueado) ExaltedAccentBright else ExaltedMuted
-                    )
+                    Surface(
+                        color = ExaltedDarkSurfaceVariant,
+                        border = BorderStroke(1.dp, (if (desbloqueado) ExaltedAccentBright else ExaltedMuted).copy(alpha = 0.65f)),
+                        shape = MaterialTheme.shapes.small,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        AppText(
+                            "Círculo $circulo",
+                            style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
+                            color = if (desbloqueado) ExaltedAccentBright else ExaltedMuted,
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 9.dp)
+                        )
+                    }
                     feiticos.forEach { def ->
                         val nomeDefinicaoNormalizado = EncantosSolaresCatalog.normalize(def.nome)
                         val jaAdquirido = nomeDefinicaoNormalizado in nomesEncantosAdquiridos
