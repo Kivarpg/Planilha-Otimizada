@@ -37,9 +37,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ui.theme.ExaltVisualTemplate
 import com.example.ui.theme.ExaltedDangerCore
-import com.example.ui.theme.ExaltedMetalGoldDeep
-import com.example.ui.theme.ExaltedMetalGoldFlash
-import com.example.ui.theme.ExaltedMetalGoldShine
 import com.example.ui.theme.LocalExaltedVisualTemplate
 
 @Composable
@@ -151,13 +148,23 @@ fun GildedDialogTextButton(
 // visual "gema lapidada" do resto do app).
 val dialogShape = androidx.compose.foundation.shape.RoundedCornerShape(14.dp)
 
-fun gildedDialogBorder(): Modifier = Modifier.border(
-    width = 1.5.dp,
-    brush = Brush.linearGradient(
-        listOf(ExaltedMetalGoldDeep, ExaltedMetalGoldShine, ExaltedMetalGoldFlash, ExaltedMetalGoldShine, ExaltedMetalGoldDeep)
-    ),
-    shape = dialogShape
-)
+@Composable
+fun gildedDialogBorder(): Modifier {
+    val visual = LocalExaltedVisualTemplate.current
+    return Modifier.border(
+        width = 1.5.dp,
+        brush = Brush.linearGradient(
+            listOf(
+                visual.metalDeep,
+                visual.metalShine,
+                visual.metalFlash,
+                visual.metalShine,
+                visual.metalDeep
+            )
+        ),
+        shape = dialogShape
+    )
+}
 
 @Composable
 fun SaveValidationModal(
