@@ -1,5 +1,7 @@
 package com.example.ui.components
 
+import com.example.ui.theme.ExaltedAccentBright
+
 import androidx.compose.ui.draw.drawBehind
 
 import androidx.compose.runtime.getValue
