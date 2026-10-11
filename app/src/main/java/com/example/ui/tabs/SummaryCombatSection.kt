@@ -27,7 +27,7 @@ GildedCard(
             .fillMaxWidth()
             .padding(14.dp)
     ) {
-        AppText("4. Combate", style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp), color = ExaltedAmber, fontWeight = FontWeight.Bold)
+        AppText("4. Combate", style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp), color = visual.accentBright, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(6.dp))
 
         AppText("Essência: ${sheet.essencia}")
