@@ -7,6 +7,7 @@ import com.example.ui.components.feedbackClickable
 import com.example.ui.components.feedbackOnPress
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,17 +24,16 @@ import com.example.ui.components.AppText
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
+import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.theme.corTextoContraste
 
 @Composable
 fun SyncedCounterColumn(
@@ -45,6 +45,7 @@ fun SyncedCounterColumn(
     onValueChange: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -69,17 +70,17 @@ fun SyncedCounterColumn(
                 onClick = { if (value - step >= minVal) onValueChange(value - step) },
                 enabled = value - step >= minVal
             ) {
-                AppText("-", style = MaterialTheme.typography.titleLarge, color = ExaltedAccentBright, fontWeight = FontWeight.Bold)
+                AppText("-", style = MaterialTheme.typography.titleLarge, color = visual.accentBright, fontWeight = FontWeight.Bold)
             }
             Surface(
-                color = ExaltedAccentBright.copy(alpha = 0.12f),
+                color = visual.accentBright.copy(alpha = 0.12f),
                 shape = MaterialTheme.shapes.small,
-                border = BorderStroke(1.dp, ExaltedAccentBright.copy(alpha = 0.5f))
+                border = BorderStroke(1.dp, visual.accentBright.copy(alpha = 0.5f))
             ) {
                 AppText(
                     text = "$value",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 4.dp)
                 )
             }
@@ -88,7 +89,7 @@ fun SyncedCounterColumn(
                 enabled = value + step <= maxVal
             
             ) {
-                AppText("+", style = MaterialTheme.typography.titleLarge, color = ExaltedAccentBright, fontWeight = FontWeight.Bold)
+                AppText("+", style = MaterialTheme.typography.titleLarge, color = visual.accentBright, fontWeight = FontWeight.Bold)
             }
         }
     }
@@ -99,28 +100,30 @@ fun SyncedCounterColumn(
 
 @Composable
 internal fun RingStepSymbol(symbol: String, onClick: () -> Unit, size: Dp, enabled: Boolean = true, modifier: Modifier = Modifier) {
-    val corPreenchimento = if (!enabled) {
-        ExaltedMuted.copy(alpha = 0.20f)
-    } else {
-        com.example.ui.theme.ExaltedStepperNeutral
-    }
-    val corBorda = if (enabled) ExaltedAccentBright else ExaltedMuted.copy(alpha = 0.45f)
-    val corSimbolo = if (enabled) Color.White else ExaltedMuted.copy(alpha = 0.6f)
+    val visual = LocalExaltedVisualTemplate.current
+    val corPreenchimento = if (enabled) visual.accent else visual.muted.copy(alpha = 0.20f)
+    val corBorda = if (enabled) visual.accentBright else visual.muted.copy(alpha = 0.45f)
+    val corSimbolo = if (enabled) corTextoContraste(corPreenchimento) else visual.muted.copy(alpha = 0.6f)
     Box(
         modifier = modifier
             .size(size)
-            .feedbackClickable(enabled = enabled, onClick = onClick)
-            .drawBehind {
-                drawCircle(color = corPreenchimento, radius = this.size.minDimension / 2f)
-                drawCircle(
-                    color = corBorda,
-                    radius = this.size.minDimension / 2f,
-                    style = Stroke(width = com.example.ui.theme.Dimens.StepperRingStroke.toPx())
-                )
-            },
+            .clip(androidx.compose.foundation.shape.CircleShape)
+            .background(corPreenchimento)
+            .border(
+                width = com.example.ui.theme.Dimens.StepperRingStroke,
+                color = corBorda,
+                shape = androidx.compose.foundation.shape.CircleShape
+            )
+            .feedbackClickable(enabled = enabled, onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
-        AppText(text = symbol, fontFamily = com.example.ui.theme.ExaltedSymbolFont, fontSize = 15.sp, fontWeight = FontWeight.Bold, color = corSimbolo)
+        AppText(
+            text = symbol,
+            fontFamily = com.example.ui.theme.ExaltedSymbolFont,
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold,
+            color = corSimbolo
+        )
     }
 }
 
