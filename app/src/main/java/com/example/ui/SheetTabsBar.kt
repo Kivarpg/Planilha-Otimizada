@@ -5,9 +5,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.*
-import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -29,6 +27,7 @@ internal fun SheetTabsBar(
     onSelectedTab: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val listState = rememberLazyListState()
     // Passo 9/12 — a composição reage ao espaço realmente disponível e ao
     // fontScale do usuário sem alterar a ordem, quantidade ou ação das abas.
@@ -67,30 +66,17 @@ internal fun SheetTabsBar(
         val tabHeight = when { enlargedText -> 68.dp; compact -> 62.dp; else -> 60.dp }
         val tabMinWidth = if (enlargedText) 132.dp else 112.dp
         val tabMaxWidth = if (enlargedText) 178.dp else 156.dp
-    Column(Modifier.fillMaxWidth().background(ExaltedDarkBackground.copy(alpha = .98f))) {
+    Column(Modifier.fillMaxWidth().background(visual.surface)) {
         LazyRow(
             state = listState,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(tabHeight)
-                .drawBehind {
-                    val y = size.height - 1.dp.toPx()
-                    drawLine(ExaltedAccentBright.copy(alpha=.62f), Offset(8.dp.toPx(), y), Offset(size.width-8.dp.toPx(), y), 1.dp.toPx())
-                    drawLine(ExaltedStructuralMetalDeep.copy(alpha=.55f), Offset(14.dp.toPx(), 3.dp.toPx()), Offset(size.width-14.dp.toPx(), 3.dp.toPx()), .8.dp.toPx())
-                    // Estágio B: o trilho de navegação participa da mesma gramática do shell.
-                    when (ExaltedActiveMotif) {
-                        ExaltedVisualMotif.SOLAR -> {
-                            val cx=size.width*.5f
-                            drawLine(ExaltedStructuralMetalShine.copy(.34f),Offset(cx-34.dp.toPx(),6.dp.toPx()),Offset(cx,1.dp.toPx()),.8.dp.toPx())
-                            drawLine(ExaltedStructuralMetalShine.copy(.34f),Offset(cx,1.dp.toPx()),Offset(cx+34.dp.toPx(),6.dp.toPx()),.8.dp.toPx())
-                        }
-                        ExaltedVisualMotif.DRAGON_BLOODED -> {
-                            val p=Path().apply { moveTo(18.dp.toPx(),7.dp.toPx()); lineTo(40.dp.toPx(),2.dp.toPx()); lineTo(62.dp.toPx(),7.dp.toPx()); lineTo(84.dp.toPx(),3.dp.toPx()) }
-                            drawPath(p,ExaltedAccentBright.copy(.25f),style=androidx.compose.ui.graphics.drawscope.Stroke(.8.dp.toPx()))
-                        }
-                        ExaltedVisualMotif.LUNAR -> drawArc(ExaltedStructuralMetalShine.copy(.28f),205f,130f,false,Offset(size.width*.5f-24.dp.toPx(),-17.dp.toPx()),androidx.compose.ui.geometry.Size(48.dp.toPx(),48.dp.toPx()),style=androidx.compose.ui.graphics.drawscope.Stroke(.8.dp.toPx()))
-                    }
-                },
+                .background(visual.surfaceVariant.copy(alpha = .72f))
+                .border(
+                    width = 1.dp,
+                    color = visual.divider.copy(alpha = .58f)
+                ),
             contentPadding = PaddingValues(start = 10.dp, end = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(0.dp)
         ) {
@@ -103,37 +89,21 @@ internal fun SheetTabsBar(
                         // encolhem demais e títulos longos ainda recebem espaço extra.
                         .widthIn(min = tabMinWidth, max = tabMaxWidth)
                         .feedbackClickable { onSelectedTab(index) }
-                        .drawBehind {
-                            val edge = ExaltedStructuralMetalDeep.copy(alpha=.48f)
-                            drawLine(edge, Offset(size.width-1.dp.toPx(), 9.dp.toPx()), Offset(size.width-1.dp.toPx(), size.height-9.dp.toPx()), .8.dp.toPx())
-                            if (selected) {
-                                drawRect(ExaltedAccentBright.copy(alpha=.085f))
-                                drawLine(ExaltedAccentBright.copy(alpha=.92f), Offset(5.dp.toPx(), size.height - 3.dp.toPx()), Offset(size.width-5.dp.toPx(), size.height - 3.dp.toPx()), 3.dp.toPx())
-                                drawLine(ExaltedAccentBright.copy(alpha=.28f), Offset(8.dp.toPx(), 4.dp.toPx()), Offset(size.width-8.dp.toPx(), 4.dp.toPx()), 1.dp.toPx())
-                                // LEO: seleção continua sendo a mesma aba/ação, mas o
-                                // marcador deixa de ser apenas uma linha recolorida.
-                                val cx=size.width*.5f
-                                when (ExaltedActiveMotif) {
-                                    ExaltedVisualMotif.SOLAR -> {
-                                        drawLine(ExaltedAccentBright.copy(.55f),Offset(cx-13.dp.toPx(),7.dp.toPx()),Offset(cx,1.dp.toPx()),1.dp.toPx())
-                                        drawLine(ExaltedAccentBright.copy(.55f),Offset(cx,1.dp.toPx()),Offset(cx+13.dp.toPx(),7.dp.toPx()),1.dp.toPx())
-                                    }
-                                    ExaltedVisualMotif.DRAGON_BLOODED -> {
-                                        val p=Path().apply { moveTo(cx-15.dp.toPx(),5.dp.toPx()); lineTo(cx-5.dp.toPx(),1.dp.toPx()); lineTo(cx+4.dp.toPx(),6.dp.toPx()); lineTo(cx+15.dp.toPx(),2.dp.toPx()) }
-                                        drawPath(p,ExaltedAccentBright.copy(.52f),style=androidx.compose.ui.graphics.drawscope.Stroke(1.dp.toPx()))
-                                    }
-                                    ExaltedVisualMotif.LUNAR -> {
-                                        drawArc(ExaltedAccentBright.copy(.48f),205f,130f,false,Offset(cx-12.dp.toPx(),-8.dp.toPx()),androidx.compose.ui.geometry.Size(24.dp.toPx(),24.dp.toPx()),style=androidx.compose.ui.graphics.drawscope.Stroke(1.dp.toPx()))
-                                    }
-                                }
-                            }
-                        }
+                        .background(
+                            if (selected) visual.accentBright.copy(alpha = .10f)
+                            else Color.Transparent
+                        )
+                        .border(
+                            width = 1.dp,
+                            color = if (selected) visual.accentBright.copy(alpha = .52f)
+                            else visual.divider.copy(alpha = .28f)
+                        )
                         .padding(horizontal = 12.dp),
                     verticalArrangement = Arrangement.Center
                 ) {
                     AppText(
                         text = tab.title,
-                        color = if (selected) ExaltedOnSurface else ExaltedOnSurface.copy(alpha = .62f),
+                        color = if (selected) visual.onSurface else visual.onSurface.copy(alpha = .62f),
                         fontFamily = ExaltedSymbolFont,
                         fontWeight = if (selected) FontWeight.Black else FontWeight.Medium,
                         fontSize = when { enlargedText -> 14.sp; compact -> 13.sp; else -> 13.sp },
@@ -149,33 +119,32 @@ internal fun SheetTabsBar(
             // Em telas estreitas, dois saldos lado a lado truncavam o texto.
             // Mantemos os mesmos valores e apenas distribuimos em duas linhas.
             Column(
-                Modifier.fillMaxWidth().background(ExaltedDarkSurface.copy(alpha = .72f))
+                Modifier.fillMaxWidth().background(visual.surface.copy(alpha = .72f))
                     .padding(horizontal = 12.dp, vertical = 5.dp),
                 verticalArrangement = Arrangement.spacedBy(3.dp)
             ) {
                 AppText(
                     text = if (sheet.planilhaConcluida) "Experiência Restante: ${sheet.experienciaDisponivel()}" else "Pontos de Bônus: $pbExibido / 15",
                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Black),
-                    color = if (!sheet.planilhaConcluida && pbEmAlerta) ExaltedAlertaTexto else ExaltedAccentBright,
+                    color = if (!sheet.planilhaConcluida && pbEmAlerta) ExaltedAlertaTexto else visual.accentBright,
                     maxLines = 2, softWrap = true
                 )
                 AppText(
                     text = "Pontos de Habilidade: $pontosHabilidadeRestantes / $totalPontosHabilidade",
                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     maxLines = 2, softWrap = true
                 )
             }
         } else if (showsProgressStrip) {
             Row(
-                Modifier.fillMaxWidth().height(if (enlargedText) 34.dp else 25.dp).background(ExaltedDarkSurface.copy(alpha = .72f)),
+                Modifier.fillMaxWidth().height(if (enlargedText) 34.dp else 25.dp).background(visual.surface.copy(alpha = .72f)),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Box(Modifier.width(7.dp).fillMaxHeight().background(ExaltedAccentBright.copy(alpha = .72f)))
                 AppText(
                     text = if (sheet.planilhaConcluida) "Experiência Restante: ${sheet.experienciaDisponivel()}" else "Pontos de Bônus: $pbExibido / 15",
                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Black, letterSpacing = .25.sp),
-                    color = if (!sheet.planilhaConcluida && pbEmAlerta) ExaltedAlertaTexto else ExaltedAccentBright,
+                    color = if (!sheet.planilhaConcluida && pbEmAlerta) ExaltedAlertaTexto else visual.accentBright,
                     maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f).padding(start = 9.dp)
                 )
@@ -187,7 +156,7 @@ internal fun SheetTabsBar(
                     AppText(
                         text = "Pontos de Habilidade: $pontosHabilidadeRestantes / $totalPontosHabilidade",
                         style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                        color = ExaltedAccentBright, maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis,
+                        color = visual.accentBright, maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.weight(1f).padding(end = 10.dp), textAlign = TextAlign.End
                     )
                 }
