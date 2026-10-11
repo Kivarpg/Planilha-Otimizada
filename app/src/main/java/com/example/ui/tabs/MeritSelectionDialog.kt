@@ -40,12 +40,9 @@ import com.example.model.CharacterSheet
 import com.example.ui.components.InkButton
 import com.example.ui.components.SectionHeader
 import com.example.ui.theme.ExaltedDangerCore
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedGold
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedOnSurface
 import com.example.ui.theme.ExaltedSuccess
+import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.theme.corTextoContraste
 import com.example.viewmodel.SheetViewModel
 
 @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
@@ -56,6 +53,7 @@ internal fun MeritSelectionDialog(
     ratingStyle: com.example.model.RatingStyle,
     onDismiss: () -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     var meritoSelecionado by remember { mutableStateOf<com.example.data.MeritoDefinition?>(null) }
     var custoSelecionado by remember { mutableStateOf<Int?>(null) }
     var erroMensagem by remember { mutableStateOf<String?>(null) }
@@ -81,7 +79,7 @@ internal fun MeritSelectionDialog(
                     meritoAtual != null -> meritoAtual.nome
                     else -> "Cadastrar Mérito"
                 },
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 maxLines = 2,
@@ -105,7 +103,7 @@ internal fun MeritSelectionDialog(
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(10.dp))
-                    AppText("Graduação:", fontWeight = FontWeight.Bold, color = ExaltedGold)
+                    AppText("Graduação:", fontWeight = FontWeight.Bold, color = visual.accentBright)
                     Spacer(modifier = Modifier.height(4.dp))
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -117,21 +115,21 @@ internal fun MeritSelectionDialog(
                                 modifier = Modifier
                                     .size(36.dp)
                                     .clip(androidx.compose.foundation.shape.CircleShape)
-                                    .background(if (selecionado) ExaltedGold else Color.Transparent)
-                                    .border(1.5.dp, ExaltedGold, androidx.compose.foundation.shape.CircleShape)
+                                    .background(if (selecionado) visual.accentBright else Color.Transparent)
+                                    .border(1.5.dp, visual.accentBright, androidx.compose.foundation.shape.CircleShape)
                                     .feedbackClickable { nivelPersonalizado = n },
                                 contentAlignment = Alignment.Center
                             ) {
                                 AppText(
                                     n.toString(),
                                     fontWeight = FontWeight.Bold,
-                                    color = if (selecionado) ExaltedOnSurface else ExaltedGold
+                                    color = if (selecionado) corTextoContraste(visual.accentBright) else visual.accentBright
                                 )
                             }
                         }
                     }
                     Spacer(modifier = Modifier.height(10.dp))
-                    AppText("Categoria:", fontWeight = FontWeight.Bold, color = ExaltedGold)
+                    AppText("Categoria:", fontWeight = FontWeight.Bold, color = visual.accentBright)
                     Spacer(modifier = Modifier.height(4.dp))
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -153,7 +151,7 @@ internal fun MeritSelectionDialog(
                             checked = temPreRequisitoPersonalizado,
                             onCheckedChange = { temPreRequisitoPersonalizado = it }
                         )
-                        AppText("Possui pré-requisito?", color = ExaltedOnSurface)
+                        AppText("Possui pré-requisito?", color = visual.onSurface)
                     }
                     if (temPreRequisitoPersonalizado) {
                         Spacer(modifier = Modifier.height(4.dp))
@@ -173,7 +171,7 @@ internal fun MeritSelectionDialog(
                     viewModel.meritosNormais.forEach { m ->
                         AppText(
                             text = m.nome,
-                            color = ExaltedOnSurface,
+                            color = visual.onSurface,
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -190,7 +188,7 @@ internal fun MeritSelectionDialog(
                     viewModel.meritosSobrenaturais.forEach { m ->
                         AppText(
                             text = m.nome,
-                            color = ExaltedOnSurface,
+                            color = visual.onSurface,
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -213,11 +211,11 @@ internal fun MeritSelectionDialog(
                     com.example.ui.components.JustifiedBodyAppText(
                         text = def.descricao,
                         style = MaterialTheme.typography.bodySmall,
-                        color = ExaltedOnSurface
+                        color = visual.onSurface
                     )
                     if (def.preRequisitos.isNotEmpty()) {
                         Spacer(modifier = Modifier.height(10.dp))
-                        AppText("Pré-requisitos:", fontWeight = FontWeight.Bold, color = ExaltedGold)
+                        AppText("Pré-requisitos:", fontWeight = FontWeight.Bold, color = visual.accentBright)
                         def.preRequisitos.forEach { textoPreReq ->
                             val checagem = com.example.data.checarPreRequisito(textoPreReq, sheet.attributes, sheet.abilities)
                             val cor = when (checagem.atendido) {
@@ -238,7 +236,7 @@ internal fun MeritSelectionDialog(
                         }
                     }
                     Spacer(modifier = Modifier.height(10.dp))
-                    AppText("Custo:", fontWeight = FontWeight.Bold, color = ExaltedGold)
+                    AppText("Custo:", fontWeight = FontWeight.Bold, color = visual.accentBright)
                     Spacer(modifier = Modifier.height(4.dp))
                     if (def.custosPermitidos.size == 1) {
                         // Quando o Mérito possui apenas um custo possível, não há decisão a ser tomada.
@@ -246,7 +244,7 @@ internal fun MeritSelectionDialog(
                         val custoUnico = def.custosPermitidos.first()
                         AppText(
                             text = if (custoUnico == 0) "Grátis" else "$custoUnico ${if (custoUnico == 1) "ponto" else "pontos"}",
-                            color = ExaltedAccentBright,
+                            color = visual.accentBright,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center,
                             modifier = Modifier.fillMaxWidth()
@@ -355,6 +353,8 @@ internal fun MeritSelectionDialog(
                 }
             )
         },
-        containerColor = ExaltedDarkSurface
+        containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
