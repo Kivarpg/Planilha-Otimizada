@@ -13,14 +13,15 @@ import androidx.compose.ui.unit.*
 import com.example.model.*
 import com.example.ui.components.*
 import com.example.ui.theme.*
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 
 @Composable
 internal fun SummaryVitalitySection(sheet: CharacterSheet, viewModel: SheetViewModel) {
+    val visual = LocalExaltedVisualTemplate.current
 // Vitalidade
 GildedCard(
-    modifier = Modifier.fillMaxWidth(),
-    colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+    modifier = Modifier.fillMaxWidth()
 ) {
     Column(
         modifier = Modifier
@@ -60,7 +61,7 @@ GildedCard(
                         caixas.chunked(maxPerRow).forEachIndexed { rowIndex, rowBoxes ->
                             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                                 if (rowIndex == 0) {
-                                    AppText(text = if (penalidade == "Inc") "Inc." else penalidade, style = MaterialTheme.typography.titleMedium, color = ExaltedMuted, maxLines = 1, softWrap = false, modifier = Modifier.width(labelWidth))
+                                    AppText(text = if (penalidade == "Inc") "Inc." else penalidade, style = MaterialTheme.typography.titleMedium, color = visual.muted, maxLines = 1, softWrap = false, modifier = Modifier.width(labelWidth))
                                 } else Spacer(modifier = Modifier.width(labelWidth))
                                 Row(horizontalArrangement = Arrangement.spacedBy(gap)) {
                                     rowBoxes.forEach { box ->
@@ -68,11 +69,11 @@ GildedCard(
                                             1 -> "/" to ExaltedDanoContundente
                                             2 -> "X" to ExaltedDanoLetal
                                             3 -> "*" to ExaltedDanoAgravado
-                                            else -> "" to ExaltedMuted
+                                            else -> "" to visual.muted
                                         }
                                         Box(
-                                            modifier = Modifier.size(boxSize).clip(RoundedCornerShape(6.dp)).background(ExaltedDarkSurface)
-                                                .border(1.dp, ExaltedGold.copy(alpha = 0.45f), RoundedCornerShape(6.dp))
+                                            modifier = Modifier.size(boxSize).clip(RoundedCornerShape(6.dp)).background(visual.surface)
+                                                .border(1.dp, visual.accent.copy(alpha = 0.45f), RoundedCornerShape(6.dp))
                                                 .feedbackClickable { viewModel.cycleHealthDamage(box.id) },
                                             contentAlignment = Alignment.Center
                                         ) {
