@@ -4,12 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.example.ui.components.InkButton
 import com.example.ui.components.feedbackClickable
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.CircleShape
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -63,14 +62,8 @@ internal fun charmTreeViewportHeight(screenHeightDp: Int): Dp =
 private val TreeNodeHorizontalPadding = 12.dp
 private val TreeNodeVerticalPadding = 9.dp
 
-// Cores das caixas de Encanto na árvore de pré-requisitos — decoração que
-// deve seguir a paleta do template ativo (dourado/vermelho/prata), por
-// isso são propriedades computadas (get()), não vals fixos.
-private val CharmBoxGold: Color get() = ExaltedAccentBright
-private val CharmBoxGoldOff: Color get() = ExaltedAccentBright.copy(alpha = 0.35f)
 private val CharmBoxRed = Color(0xFFB73A35)
 private val CharmBoxRedOff = Color(0xFF6F6662)
-private val CharmConnector = Color(0xFF9A9A9A)
 private const val IndicatorCount = 5
 
 /**
@@ -105,6 +98,7 @@ fun CharmPrerequisiteTreeDialog(
     preparedResult: CharmTreeResult? = null,
     onTreePrepared: ((List<CharmTreeEntry>, CharmTreeResult) -> Unit)? = null
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     var entries by remember(rootCharmId, charms, includeFullCatalog, canonicalPrerequisites, preparedEntries) {
         mutableStateOf(preparedEntries)
     }
@@ -158,7 +152,10 @@ fun CharmPrerequisiteTreeDialog(
         },
         text = {
             AppText("Carregando árvore…")
-        }
+        },
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
 
@@ -174,6 +171,7 @@ private fun CharmPrerequisiteTreeDialogEntries(
     preparedResult: CharmTreeResult? = null,
     onTreePrepared: ((CharmTreeResult) -> Unit)? = null
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     var result by remember(rootCharmId, charms, includeFullCatalog, preparedResult) { mutableStateOf(preparedResult) }
     var buildFinished by remember(rootCharmId, charms, includeFullCatalog, preparedResult) { mutableStateOf(preparedResult != null) }
 
@@ -221,7 +219,10 @@ private fun CharmPrerequisiteTreeDialogEntries(
                 buildFinished -> AppText("Encanto não encontrado no catálogo desta árvore.")
                 else -> AppText("Carregando árvore…")
             }
-        }
+        },
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
 
@@ -345,6 +346,7 @@ private fun CharmTreeLayout(
     onToggle: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val levelHeights = levels.map { level ->
         level.maxOfOrNull { node ->
             if (node.key in expandedKeys) TreeExpandedHeight else TreeCollapsedHeight
@@ -365,7 +367,7 @@ private fun CharmTreeLayout(
             .padding(TreeContentPadding)
     ) {
         Canvas(Modifier.fillMaxSize()) {
-            drawConnectors(levels, levelHeights, expandedKeys)
+            drawConnectors(levels, levelHeights, expandedKeys, connectorColor = visual.muted.copy(alpha = 0.72f))
         }
 
         Column(modifier = Modifier.fillMaxSize()) {
@@ -403,6 +405,7 @@ private fun CharmTreeNodeCard(
     onClick: () -> Unit,
     modifier: Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     Surface(
         modifier = modifier
             .height(if (expanded) TreeExpandedHeight else TreeCollapsedHeight)
@@ -410,10 +413,10 @@ private fun CharmTreeNodeCard(
             .feedbackClickable(onClick = onClick),
         tonalElevation = if (status == CharmTreeVisualStatus.FOCAL) 5.dp else 2.dp,
         color = when (status) {
-            CharmTreeVisualStatus.FOCAL -> ExaltedAccentBright.copy(alpha = 0.20f)
-            CharmTreeVisualStatus.ACQUIRED -> MaterialTheme.colorScheme.primary.copy(alpha = 0.16f)
-            CharmTreeVisualStatus.AVAILABLE -> MaterialTheme.colorScheme.surfaceVariant
-            CharmTreeVisualStatus.BLOCKED -> MaterialTheme.colorScheme.surface.copy(alpha = 0.72f)
+            CharmTreeVisualStatus.FOCAL -> visual.accentBright.copy(alpha = 0.20f)
+            CharmTreeVisualStatus.ACQUIRED -> visual.accent.copy(alpha = 0.16f)
+            CharmTreeVisualStatus.AVAILABLE -> visual.surfaceVariant
+            CharmTreeVisualStatus.BLOCKED -> visual.surface.copy(alpha = 0.72f)
         },
         shape = MaterialTheme.shapes.medium
     ) {
@@ -425,8 +428,8 @@ private fun CharmTreeNodeCard(
         ) {
             RequirementDots(
                 value = node.charm.essenceMinimum,
-                activeColor = CharmBoxGold,
-                inactiveColor = CharmBoxGoldOff,
+                activeColor = visual.accentBright,
+                inactiveColor = visual.accentBright.copy(alpha = 0.35f),
                 contentDescription = "Essência mínima ${node.charm.essenceMinimum}"
             )
 
@@ -477,10 +480,10 @@ private fun CharmTreeNodeCard(
                 style = MaterialTheme.typography.labelSmall,
                 fontWeight = FontWeight.Bold,
                 color = when (status) {
-                    CharmTreeVisualStatus.FOCAL -> ExaltedAccentBright
-                    CharmTreeVisualStatus.ACQUIRED -> MaterialTheme.colorScheme.primary
-                    CharmTreeVisualStatus.AVAILABLE -> MaterialTheme.colorScheme.onSurface
-                    CharmTreeVisualStatus.BLOCKED -> ExaltedMuted
+                    CharmTreeVisualStatus.FOCAL -> visual.accentBright
+                    CharmTreeVisualStatus.ACQUIRED -> visual.accentBright
+                    CharmTreeVisualStatus.AVAILABLE -> visual.onSurface
+                    CharmTreeVisualStatus.BLOCKED -> visual.muted
                 }
             )
             Spacer(Modifier.height(3.dp))
@@ -564,7 +567,8 @@ private fun levelWidth(count: Int): Dp =
 private fun DrawScope.drawConnectors(
     levels: List<List<CharmTreeLayoutNode>>,
     levelHeights: List<Dp>,
-    expandedKeys: Set<String>
+    expandedKeys: Set<String>,
+    connectorColor: Color
 ) {
     if (levels.size < 2) return
 
@@ -638,7 +642,7 @@ private fun DrawScope.drawConnectors(
                 val busRight = endpointXs.last()
                 if (busRight > busLeft) {
                     drawLine(
-                        color = CharmConnector,
+                        color = connectorColor,
                         start = Offset(busLeft, busY),
                         end = Offset(busRight, busY),
                         strokeWidth = 2.5.dp.toPx(),
@@ -652,7 +656,7 @@ private fun DrawScope.drawConnectors(
                 sourceXs.forEach { sourceX ->
                     val source = group.first { it.source.centerX == sourceX }.source
                     drawLine(
-                        color = CharmConnector,
+                        color = connectorColor,
                         start = source.bottomCenter(),
                         end = Offset(sourceX, busY),
                         strokeWidth = 2.5.dp.toPx(),
@@ -667,7 +671,7 @@ private fun DrawScope.drawConnectors(
                     .distinctBy { it.targetKey }
                     .forEach { edge ->
                         drawArrowConnector(
-                            color = CharmConnector,
+                            color = connectorColor,
                             start = Offset(edge.target.centerX, busY),
                             end = edge.target.topCenter()
                         )
