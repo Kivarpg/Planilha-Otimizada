@@ -533,10 +533,12 @@ fun EncounterGeneratorTab(
                                     ),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    androidx.compose.material3.Text(
+                                    AppText(
                                         text = "Gerar NPC",
+                                        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
                                         color = if (gerando) ExaltedMuted else ExaltedOnSurface,
                                         style = MaterialTheme.typography.labelMedium,
+                                        fontWeight = FontWeight.Bold,
                                         textAlign = TextAlign.Center,
                                         maxLines = 2
                                     )
@@ -611,10 +613,12 @@ fun EncounterGeneratorTab(
                                                     ),
                                                 contentAlignment = Alignment.Center
                                             ) {
-                                                androidx.compose.material3.Text(
+                                                AppText(
                                         text = "Gerar NPC",
+                                        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
                                         color = if (gerando) ExaltedMuted else ExaltedOnSurface,
                                         style = MaterialTheme.typography.labelMedium,
+                                        fontWeight = FontWeight.Bold,
                                         textAlign = TextAlign.Center,
                                         maxLines = 2
                                     )
