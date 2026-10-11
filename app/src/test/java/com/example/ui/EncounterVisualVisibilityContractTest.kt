@@ -13,9 +13,11 @@ class EncounterVisualVisibilityContractTest {
 
     @Test
     fun `generate npc labels remain present in both layouts`() {
-        assertEquals(2, generator.split("text = \"Gerar NPC\"").size - 1)
-        assertEquals(2, generator.split(".background(ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))").size - 1)
-        assertTrue(generator.contains("enabled = !gerando, role = Role.Button"))
+        assertEquals(2, generator.split("label = \"Gerar NPC\"").size - 1)
+        assertEquals(2, generator.split("onClick = gerarNpcDaInterface").size - 1)
+        assertEquals(2, generator.split("enabled = !gerando").size - 1)
+        assertTrue(generator.contains("val gerarNpcDaInterface: () -> Unit"))
+        assertTrue(!generator.contains(".background(ExaltedAccentBright, androidx.compose.foundation.shape.RoundedCornerShape(10.dp))"))
     }
 
     @Test
