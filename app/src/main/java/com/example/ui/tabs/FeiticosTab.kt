@@ -47,10 +47,7 @@ import com.example.model.CharacterSheet
 import com.example.search.SkillSearchEngine
 import com.example.search.toSearchableSkill
 import com.example.ui.components.EncantoQuadroBox
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 
 // Extraído de CharmsTab.kt (2026-09, refatoração estrutural) — o código
@@ -68,6 +65,7 @@ internal fun FeiticosPopup(
     onShowDetail: (FeiticoDefinition) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val circulosDesbloqueados = remember(sheet, viewModel) { viewModel.circulosDesbloqueados(sheet) }
     val circulos = when {
         sheet.tipoPersonagem.isDragonBlooded() -> listOf("Terrestre")
@@ -79,7 +77,7 @@ internal fun FeiticosPopup(
         onDismissRequest = onDismiss,
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
-        title = { AppText("Feitiços", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
+        title = { AppText("Feitiços", color = visual.accentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
         text = {
             Column(
                 modifier = Modifier
@@ -138,7 +136,7 @@ internal fun FeiticosPopup(
                     AppText(
                         "Nenhum Feitiço encontrado.\nTente remover o filtro ou alterar os termos da busca.",
                         style = MaterialTheme.typography.bodySmall,
-                        color = ExaltedMuted,
+                        color = visual.muted,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)
                     )
@@ -148,15 +146,15 @@ internal fun FeiticosPopup(
                     val feiticos = feiticosPorCirculo[circulo].orEmpty()
                     if (feiticos.isEmpty()) return@forEach
                     Surface(
-                        color = ExaltedDarkSurfaceVariant,
-                        border = BorderStroke(1.dp, (if (desbloqueado) ExaltedAccentBright else ExaltedMuted).copy(alpha = 0.65f)),
+                        color = visual.surfaceVariant,
+                        border = BorderStroke(1.dp, (if (desbloqueado) visual.accentBright else visual.muted).copy(alpha = 0.65f)),
                         shape = MaterialTheme.shapes.small,
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         AppText(
                             "Círculo $circulo",
                             style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                            color = if (desbloqueado) ExaltedAccentBright else ExaltedMuted,
+                            color = if (desbloqueado) visual.accentBright else visual.muted,
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 13.dp)
                         )
                     }
@@ -170,9 +168,9 @@ internal fun FeiticosPopup(
                                     detectTapGestures(onDoubleTap = { onShowDetail(def) })
                                 }
                                 .feedbackOnPress(),
-                            color = if (desbloqueado) ExaltedDarkSurface else ExaltedDarkSurface.copy(alpha = 0.5f),
+                            color = if (desbloqueado) visual.surface else visual.surface.copy(alpha = 0.5f),
                             shape = MaterialTheme.shapes.small,
-                            border = BorderStroke(1.dp, if (desbloqueado) ExaltedAccentBright.copy(alpha = 0.5f) else ExaltedMuted.copy(alpha = 0.3f))
+                            border = BorderStroke(1.dp, if (desbloqueado) visual.accentBright.copy(alpha = 0.5f) else visual.muted.copy(alpha = 0.3f))
                         ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth().padding(horizontal = 6.dp, vertical = 4.dp),
@@ -188,21 +186,21 @@ internal fun FeiticosPopup(
                                                 primeiroEncantoPorNome[nomeDefinicaoNormalizado]?.let { viewModel.removeCharm(it.id) }
                                             }
                                         },
-                                        colors = CheckboxDefaults.colors(checkedColor = ExaltedAccentBright, uncheckedColor = ExaltedAccentBright)
+                                        colors = CheckboxDefaults.colors(checkedColor = visual.accentBright, uncheckedColor = visual.accentBright)
                                     )
                                 } else {
                                     Box(modifier = Modifier.size(40.dp), contentAlignment = Alignment.Center) {
-                                        Icon(Icons.Outlined.Lock, contentDescription = "Círculo bloqueado", tint = ExaltedMuted, modifier = Modifier.size(18.dp))
+                                        Icon(Icons.Outlined.Lock, contentDescription = "Círculo bloqueado", tint = visual.muted, modifier = Modifier.size(18.dp))
                                     }
                                 }
                                 AppText(
                                     text = def.nome,
-                                    color = if (desbloqueado) MaterialTheme.colorScheme.onSurface else ExaltedMuted,
+                                    color = if (desbloqueado) MaterialTheme.colorScheme.onSurface else visual.muted,
                                     fontWeight = if (jaAdquirido) FontWeight.Bold else FontWeight.Normal,
                                     modifier = Modifier.weight(1f)
                                 )
                                 InkButton(onClick = { onShowDetail(def) }, modifier = Modifier.size(40.dp)) {
-                                    Icon(Icons.Outlined.Info, contentDescription = "Ver detalhes", tint = ExaltedAccentBright, modifier = Modifier.size(18.dp))
+                                    Icon(Icons.Outlined.Info, contentDescription = "Ver detalhes", tint = visual.accentBright, modifier = Modifier.size(18.dp))
                                 }
                             }
                         }
@@ -213,7 +211,9 @@ internal fun FeiticosPopup(
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "Fechar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
 
@@ -223,6 +223,7 @@ internal fun FeiticoDetailsDialog(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
@@ -249,6 +250,8 @@ internal fun FeiticoDetailsDialog(
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "Fechar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
