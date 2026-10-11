@@ -62,14 +62,14 @@ private fun PriorityBadge(
     Box(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
-            .background(if (isSelected) ExaltedAccentBright.copy(alpha = 0.34f) else ExaltedDarkSurfaceVariant)
+            .background(if (isSelected) ExaltedAccentBright.copy(alpha = 0.46f) else ExaltedDarkSurfaceVariant)
             .border(
                 1.dp,
-                if (isSelected) ExaltedAccentBright else ExaltedOutline.copy(alpha = 0.5f),
+                if (isSelected) ExaltedAccentBright else ExaltedOutline.copy(alpha = 0.72f),
                 MaterialTheme.shapes.small
             )
             .feedbackClickable(onClick = onClick)
-            .padding(horizontal = 13.dp, vertical = 8.dp),
+            .padding(horizontal = 15.dp, vertical = 10.dp),
         contentAlignment = Alignment.Center
     ) {
         AppText(
@@ -101,7 +101,7 @@ private fun AttributeRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 5.dp),
+            .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (favoritoInfo != null) {
