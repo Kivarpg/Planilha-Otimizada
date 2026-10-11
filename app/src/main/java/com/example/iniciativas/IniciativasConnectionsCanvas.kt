@@ -9,10 +9,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
-import com.example.ui.theme.ExaltedAccentBright
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 private val CorClashConexao = Color(0xFF9C27B0)
-private val CorLinhaNormalConexao: Color get() = ExaltedAccentBright
 private val GutterWidthConexao = 28.dp
 
 // APPROVED VISUAL CUSTOMIZATION
@@ -25,6 +24,7 @@ internal fun IniciativasConnectionsCanvas(
     modifier: Modifier = Modifier,
     declaracoesMulti: Map<String, List<String>> = emptyMap()
 ) {
+    val corLinhaNormalConexao = LocalExaltedVisualTemplate.current.accentBright
     Canvas(modifier) {
         val gutter = size.width - GutterWidthConexao.toPx() / 2f
         val shaftWidth = 5.dp.toPx()
@@ -65,13 +65,13 @@ internal fun IniciativasConnectionsCanvas(
 
         declaracoes.forEach { (de, para) ->
             val reciproco = declaracoes[para] == de
-            val cor = if (reciproco) CorClashConexao else CorLinhaNormalConexao
+            val cor = if (reciproco) CorClashConexao else corLinhaNormalConexao
             desenharSeta(de, para, cor)
         }
 
         declaracoesMulti.forEach { (de, alvos) ->
             alvos.forEach { para ->
-                desenharSeta(de, para, CorLinhaNormalConexao)
+                desenharSeta(de, para, corLinhaNormalConexao)
             }
         }
     }
