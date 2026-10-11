@@ -619,8 +619,8 @@ private fun TravelScaleBar(
         ) {
             Box(
                 modifier = Modifier
-                    .width(70.dp)
-                    .height(2.dp)
+                    .width(82.dp)
+                    .height(3.dp)
                     .background(gold)
             )
             AppText(
