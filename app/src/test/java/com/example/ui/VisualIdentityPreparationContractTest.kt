@@ -59,6 +59,14 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `ability balance strip stacks labels on compact screens`() {
+        assertTrue(navigation.contains("selectedTabIndex == 3 && (compact || enlargedText)"))
+        assertTrue(navigation.contains("verticalArrangement = Arrangement.spacedBy(3.dp)"))
+        assertTrue(navigation.contains("maxLines = 2, softWrap = true"))
+        assertTrue(navigation.contains("else if (showsProgressStrip)"))
+    }
+
+    @Test
     fun `troop and npc labels use the active exalt palette`() {
         val troops = File("src/main/java/com/example/ui/tabs/BattleGroupsTab.kt").readText()
         val npcs = File("src/main/java/com/example/ui/tabs/NPCsTab.kt").readText()
