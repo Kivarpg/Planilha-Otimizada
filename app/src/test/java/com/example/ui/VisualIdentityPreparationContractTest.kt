@@ -59,6 +59,17 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `troop and npc labels use the active exalt palette`() {
+        val troops = File("src/main/java/com/example/ui/tabs/BattleGroupsTab.kt").readText()
+        val npcs = File("src/main/java/com/example/ui/tabs/NPCsTab.kt").readText()
+        assertTrue(troops.contains("cursorColor = ExaltedAccentBright"))
+        assertTrue(troops.contains("AppText(\"Tipo de tropa\", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)"))
+        assertTrue(npcs.contains("AppText(\"Lealdade\", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)"))
+        assertFalse(troops.contains("ExaltedGold"))
+        assertFalse(npcs.contains("ExaltedAmber"))
+    }
+
+    @Test
     fun `encounter header inputs follow active exalt palette in both layouts`() {
         val encounter = File("src/main/java/com/example/ui/tabs/EncounterGeneratorTab.kt").readText()
         assertTrue(encounter.split("cursorColor = ExaltedAccentBright,").size >= 3)
