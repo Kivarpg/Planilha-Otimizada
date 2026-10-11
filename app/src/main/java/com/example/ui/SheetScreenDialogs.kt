@@ -1,5 +1,7 @@
 package com.example.ui
 
+import com.example.BuildConfig
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.example.ui.components.feedbackClickable
@@ -221,6 +223,15 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                     Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = ExaltedMuted, modifier = Modifier.padding(horizontal = 12.dp))
                     AppText("Ver Log de Erros", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
                 }
+                androidx.compose.material3.HorizontalDivider(color = ExaltedMuted.copy(alpha = 0.3f))
+
+                AppText(
+                    text = "Exalted.${BuildConfig.VERSION_NAME} • ${BuildConfig.BUILD_COMMIT}",
+                    color = ExaltedMuted,
+                    style = MaterialTheme.typography.labelSmall,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         },
         confirmButton = {
