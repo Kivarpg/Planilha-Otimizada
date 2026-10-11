@@ -206,3 +206,8 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Faixa de saldos na aba Habilidades: em telas compactas ou com fonte ampliada, bonus e pontos de habilidade agora ocupam linhas separadas, evitando a disputa horizontal e truncamento do texto.
 - Telas amplas preservam a disposicao anterior; valores e regras de calculo permanecem intactos.
 - Teste de contrato estatico adicionado. Compilacao e inspecao visual em dispositivo pendentes.
+
+## Preparacao Exalted.864 — Cabecalho e alvos de toque
+- Auditoria do cabecalho identificou dois botoes de 48dp na mesma linha (96dp no total), mas largura reservada de apenas 80dp em telas compactas e 88dp nas demais.
+- Corrigida a reserva horizontal para 96dp e 104dp respectivamente, sem alterar acoes ou ordem dos botoes.
+- Adicionado teste estatico de regressao. Conferencia de layout real, fontScale e compilacao permanecem pendentes.
