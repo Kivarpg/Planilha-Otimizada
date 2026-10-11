@@ -294,7 +294,7 @@ fun SectionHeader(title: String, modifier: Modifier = Modifier) {
                 ExaltedDarkSurfaceVariant.copy(alpha = .92f),
                 ExaltedDarkSurfaceVariant.copy(alpha = .74f)
             )))
-            .padding(horizontal = 18.dp, vertical = 16.dp),
+            .padding(horizontal = 18.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // O antigo marcador temático à esquerda (incluindo o pequeno
@@ -305,46 +305,16 @@ fun SectionHeader(title: String, modifier: Modifier = Modifier) {
             text = title,
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Black,
-            maxFontSize = 19.sp,
-            minFontSize = 13.sp,
-            letterSpacing = 1.1.sp,
+            maxFontSize = 20.sp,
+            minFontSize = 14.sp,
+            letterSpacing = 0.7.sp,
             // Títulos das seções usam o metal claro da identidade ativa;
             // o texto de conteúdo permanece neutro para legibilidade.
             color = ExaltedAccentBright,
             textAlign = TextAlign.Start,
             modifier = Modifier.weight(1f, fill = true)
         )
-        Spacer(Modifier.width(6.dp))
-        Box(
-            Modifier
-                .widthIn(min = 12.dp, max = 44.dp)
-                .height(1.dp)
-                .background(Brush.horizontalGradient(listOf(ExaltedDivider.copy(alpha = .7f), Color.Transparent)))
-        )
-        Spacer(Modifier.width(5.dp))
-        Canvas(Modifier.size(18.dp)) {
-            val c = center
-            when (ExaltedActiveMotif) {
-                ExaltedVisualMotif.SOLAR -> {
-                    val r=size.minDimension*.18f
-                    drawCircle(ExaltedAccentBright.copy(alpha=.68f), r, c, style=androidx.compose.ui.graphics.drawscope.Stroke(1.1f))
-                    drawCircle(ExaltedAccentBright.copy(alpha=.20f), r*.34f, c)
-                    drawLine(ExaltedAccentBright.copy(alpha=.48f), androidx.compose.ui.geometry.Offset(c.x-r*1.65f,c.y), androidx.compose.ui.geometry.Offset(c.x-r*1.15f,c.y), .9f)
-                    drawLine(ExaltedAccentBright.copy(alpha=.48f), androidx.compose.ui.geometry.Offset(c.x+r*1.15f,c.y), androidx.compose.ui.geometry.Offset(c.x+r*1.65f,c.y), .9f)
-                }
-                ExaltedVisualMotif.DRAGON_BLOODED -> {
-                    val r=size.minDimension*.16f
-                    val p=androidx.compose.ui.graphics.Path().apply { moveTo(c.x,c.y-r); lineTo(c.x+r,c.y); lineTo(c.x,c.y+r); lineTo(c.x-r,c.y); close() }
-                    drawPath(p, ExaltedAccentBright.copy(alpha=.72f), style=androidx.compose.ui.graphics.drawscope.Stroke(1.2f))
-                    drawCircle(ExaltedAccentBright.copy(alpha=.24f), r*.35f, c)
-                }
-                ExaltedVisualMotif.LUNAR -> {
-                    val r=size.minDimension*.23f
-                    drawCircle(ExaltedStructuralMetalShine.copy(alpha=.52f), r, c)
-                    drawCircle(ExaltedDarkSurface, r*.90f, androidx.compose.ui.geometry.Offset(c.x+r*.42f,c.y-r*.08f))
-                }
-            }
-        }
+
     }
 }
 
