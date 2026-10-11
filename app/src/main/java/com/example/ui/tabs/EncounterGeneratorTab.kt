@@ -491,7 +491,7 @@ fun EncounterGeneratorTab(
                                     unfocusedBorderColor = com.example.ui.theme.ExaltedOutline.copy(alpha = 0.55f),
                                     focusedLabelColor = ExaltedAccentBright,
                                     unfocusedLabelColor = ExaltedMuted,
-                                    cursorColor = ExaltedGold,
+                                    cursorColor = ExaltedAccentBright,
                                     focusedTextColor = ExaltedOnSurface,
                                     unfocusedTextColor = ExaltedOnSurface
                                 )
@@ -507,7 +507,7 @@ fun EncounterGeneratorTab(
                                         checked = enviarParaConflito,
                                         onCheckedChange = { enviarParaConflito = it },
                                         colors = androidx.compose.material3.CheckboxDefaults.colors(
-                                            checkedColor = ExaltedAmber,
+                                            checkedColor = ExaltedAccentBright,
                                             uncheckedColor = ExaltedMuted
                                         ))
                                     AppText("Conflito", style = MaterialTheme.typography.bodySmall, color = if (enviarParaConflito) ExaltedAccentBright else ExaltedMuted)
@@ -554,7 +554,7 @@ fun EncounterGeneratorTab(
                                                     unfocusedBorderColor = com.example.ui.theme.ExaltedOutline.copy(alpha = 0.55f),
                                                     focusedLabelColor = ExaltedAccentBright,
                                                     unfocusedLabelColor = ExaltedMuted,
-                                                    cursorColor = ExaltedGold,
+                                                    cursorColor = ExaltedAccentBright,
                                                     focusedTextColor = ExaltedOnSurface,
                                                     unfocusedTextColor = ExaltedOnSurface
                                                 )
@@ -572,7 +572,7 @@ fun EncounterGeneratorTab(
                                                     checked = enviarParaConflito,
                                                     onCheckedChange = { enviarParaConflito = it },
                                                     colors = androidx.compose.material3.CheckboxDefaults.colors(
-                                                        checkedColor = ExaltedAmber,
+                                                        checkedColor = ExaltedAccentBright,
                                                         uncheckedColor = ExaltedMuted
                                                     ))
                                                 AppText(
