@@ -226,13 +226,13 @@ internal fun WeaponSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
                     AppText(
                         text = "Fulminante: ${w.iniciativa}   Decisivo: ${w.decisivo}   Defesa: ${w.defesa}",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = visual.onSurface
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     AppText(
                         text = "Dano: ${w.dano}   Dano Mínimo: ${w.danoMinimo.ifBlank { "-" }}   Comitamento: ${if (w.ataqueDesarmado) 0 else WeaponStatsTable.comitamento(w.tipoArma)}",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = visual.onSurface
                     )
                     if (w.habilidadeVinculada == "Arremesso" || w.habilidadeVinculada == "Arqueirismo") {
                         val distancias = remember(w.id, w.habilidadeVinculada, w.tipoArma) {
@@ -403,7 +403,7 @@ internal fun WeaponSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
                             ,
     modifier = Modifier.feedbackOnPress(enabled = true)
 )
-                            AppText("Ataque Desarmado", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                            AppText("Ataque Desarmado", style = MaterialTheme.typography.bodyMedium, color = visual.onSurface)
                         }
                     }
                 }
@@ -571,22 +571,22 @@ private fun WeaponEditManualDialog(
             BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
                 if (maxWidth < 380.dp) {
                     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                        OutlinedTextField(value = ini, onValueChange = com.example.ui.components.rememberTypingFeedback { ini = it.take(6) }, label = { AppText("Ini.") }, modifier = Modifier.fillMaxWidth())
-                        OutlinedTextField(value = dec, onValueChange = com.example.ui.components.rememberTypingFeedback { dec = it.take(6) }, label = { AppText("Dec.") }, modifier = Modifier.fillMaxWidth())
-                        OutlinedTextField(value = def, onValueChange = com.example.ui.components.rememberTypingFeedback { def = it.take(6) }, label = { AppText("Def.") }, modifier = Modifier.fillMaxWidth())
-                        OutlinedTextField(value = dmg, onValueChange = com.example.ui.components.rememberTypingFeedback { dmg = it.take(6) }, label = { AppText("Dano") }, modifier = Modifier.fillMaxWidth())
-                        OutlinedTextField(value = dmgMin, onValueChange = com.example.ui.components.rememberTypingFeedback { dmgMin = it.take(6) }, label = { AppText("Dano Mín.") }, modifier = Modifier.fillMaxWidth())
+                        OutlinedTextField(value = ini, onValueChange = com.example.ui.components.rememberTypingFeedback { ini = it.take(6) }, label = { AppText("Ini.") }, modifier = Modifier.fillMaxWidth(), colors = com.example.ui.components.exaltedTextFieldColors())
+                        OutlinedTextField(value = dec, onValueChange = com.example.ui.components.rememberTypingFeedback { dec = it.take(6) }, label = { AppText("Dec.") }, modifier = Modifier.fillMaxWidth(), colors = com.example.ui.components.exaltedTextFieldColors())
+                        OutlinedTextField(value = def, onValueChange = com.example.ui.components.rememberTypingFeedback { def = it.take(6) }, label = { AppText("Def.") }, modifier = Modifier.fillMaxWidth(), colors = com.example.ui.components.exaltedTextFieldColors())
+                        OutlinedTextField(value = dmg, onValueChange = com.example.ui.components.rememberTypingFeedback { dmg = it.take(6) }, label = { AppText("Dano") }, modifier = Modifier.fillMaxWidth(), colors = com.example.ui.components.exaltedTextFieldColors())
+                        OutlinedTextField(value = dmgMin, onValueChange = com.example.ui.components.rememberTypingFeedback { dmgMin = it.take(6) }, label = { AppText("Dano Mín.") }, modifier = Modifier.fillMaxWidth(), colors = com.example.ui.components.exaltedTextFieldColors())
                     }
                 } else {
                     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                            OutlinedTextField(value = ini, onValueChange = com.example.ui.components.rememberTypingFeedback { ini = it.take(6) }, label = { AppText("Ini.") }, modifier = Modifier.weight(1f))
-                            OutlinedTextField(value = dec, onValueChange = com.example.ui.components.rememberTypingFeedback { dec = it.take(6) }, label = { AppText("Dec.") }, modifier = Modifier.weight(1f))
-                            OutlinedTextField(value = def, onValueChange = com.example.ui.components.rememberTypingFeedback { def = it.take(6) }, label = { AppText("Def.") }, modifier = Modifier.weight(1f))
+                            OutlinedTextField(value = ini, onValueChange = com.example.ui.components.rememberTypingFeedback { ini = it.take(6) }, label = { AppText("Ini.") }, modifier = Modifier.weight(1f), colors = com.example.ui.components.exaltedTextFieldColors())
+                            OutlinedTextField(value = dec, onValueChange = com.example.ui.components.rememberTypingFeedback { dec = it.take(6) }, label = { AppText("Dec.") }, modifier = Modifier.weight(1f), colors = com.example.ui.components.exaltedTextFieldColors())
+                            OutlinedTextField(value = def, onValueChange = com.example.ui.components.rememberTypingFeedback { def = it.take(6) }, label = { AppText("Def.") }, modifier = Modifier.weight(1f), colors = com.example.ui.components.exaltedTextFieldColors())
                         }
                         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                            OutlinedTextField(value = dmg, onValueChange = com.example.ui.components.rememberTypingFeedback { dmg = it.take(6) }, label = { AppText("Dano") }, modifier = Modifier.weight(1f))
-                            OutlinedTextField(value = dmgMin, onValueChange = com.example.ui.components.rememberTypingFeedback { dmgMin = it.take(6) }, label = { AppText("Dano Mín.") }, modifier = Modifier.weight(1f))
+                            OutlinedTextField(value = dmg, onValueChange = com.example.ui.components.rememberTypingFeedback { dmg = it.take(6) }, label = { AppText("Dano") }, modifier = Modifier.weight(1f), colors = com.example.ui.components.exaltedTextFieldColors())
+                            OutlinedTextField(value = dmgMin, onValueChange = com.example.ui.components.rememberTypingFeedback { dmgMin = it.take(6) }, label = { AppText("Dano Mín.") }, modifier = Modifier.weight(1f), colors = com.example.ui.components.exaltedTextFieldColors())
                         }
                     }
                 }
