@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import com.example.ui.components.AppText
@@ -28,18 +27,15 @@ import androidx.compose.ui.unit.sp
 import com.example.model.Arma
 import com.example.ui.components.IniciativaAjusteButton
 import com.example.ui.components.GildedCard
-import com.example.ui.theme.ExaltedAmber
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
 import com.example.ui.theme.ExaltedEssenciaClaro
 import com.example.ui.theme.ExaltedEssenciaEscuro
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 @Composable
 internal fun AtaqueCard(arma: Arma) {
+    val visual = LocalExaltedVisualTemplate.current
     GildedCard(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier
@@ -58,21 +54,21 @@ internal fun AtaqueCard(arma: Arma) {
                     fontWeight = FontWeight.Bold,
                     maxFontSize = MaterialTheme.typography.titleLarge.fontSize,
                     minFontSize = 13.sp,
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.weight(1f, fill = false)
                 )
                 if (arma.ataqueDesarmado) {
                     Spacer(modifier = Modifier.width(6.dp))
                     Surface(
-                        color = ExaltedAmber.copy(alpha = 0.18f),
+                        color = visual.accentBright.copy(alpha = 0.18f),
                         shape = RoundedCornerShape(4.dp),
-                        border = androidx.compose.foundation.BorderStroke(1.dp, ExaltedAmber.copy(alpha = 0.6f))
+                        border = androidx.compose.foundation.BorderStroke(1.dp, visual.accentBright.copy(alpha = 0.6f))
                     ) {
                         AppText(
                             text = "Desarmado",
                             style = MaterialTheme.typography.labelSmall,
-                            color = ExaltedAmber,
+                            color = visual.accentBright,
                             modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                         )
                     }
@@ -82,7 +78,7 @@ internal fun AtaqueCard(arma: Arma) {
             AppText(
                 text = "Ini: ${arma.iniciativa} | Dec: ${arma.decisivo} | Defesa: ${arma.defesa} | Dano: ${arma.dano} | Dano Mín: ${arma.danoMinimo.ifBlank { "-" }}",
                 style = MaterialTheme.typography.bodyMedium,
-                color = ExaltedMuted,
+                color = visual.muted,
                 textAlign = TextAlign.Center
             )
         }
