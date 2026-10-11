@@ -118,7 +118,7 @@ fun CharmDetailsDialog(
     viewModel: SheetViewModel? = null,
     dragonBlooded: Boolean = false,
     tipoPersonagem: String? = null,
-    titleColor: androidx.compose.ui.graphics.Color = com.example.ui.theme.ExaltedAccentBright
+    titleColor: androidx.compose.ui.graphics.Color = androidx.compose.ui.graphics.Color.Unspecified
 ) {
     val visual = LocalExaltedVisualTemplate.current
     val resolvedTitleColor = if (titleColor != androidx.compose.ui.graphics.Color.Unspecified) titleColor else visual.accentBright
