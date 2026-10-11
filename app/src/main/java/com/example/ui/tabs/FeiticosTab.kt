@@ -152,7 +152,7 @@ internal fun FeiticosPopup(
                     AppText(
                         "Círculo $circulo",
                         style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                        color = if (desbloqueado) ExaltedGold else ExaltedMuted
+                        color = if (desbloqueado) ExaltedAccentBright else ExaltedMuted
                     )
                     feiticos.forEach { def ->
                         val nomeDefinicaoNormalizado = EncantosSolaresCatalog.normalize(def.nome)
@@ -166,7 +166,7 @@ internal fun FeiticosPopup(
                                 .feedbackOnPress(),
                             color = if (desbloqueado) ExaltedDarkSurface else ExaltedDarkSurface.copy(alpha = 0.5f),
                             shape = MaterialTheme.shapes.small,
-                            border = BorderStroke(1.dp, if (desbloqueado) ExaltedGold.copy(alpha = 0.5f) else ExaltedMuted.copy(alpha = 0.3f))
+                            border = BorderStroke(1.dp, if (desbloqueado) ExaltedAccentBright.copy(alpha = 0.5f) else ExaltedMuted.copy(alpha = 0.3f))
                         ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth().padding(horizontal = 6.dp, vertical = 4.dp),
@@ -182,7 +182,7 @@ internal fun FeiticosPopup(
                                                 primeiroEncantoPorNome[nomeDefinicaoNormalizado]?.let { viewModel.removeCharm(it.id) }
                                             }
                                         },
-                                        colors = CheckboxDefaults.colors(checkedColor = ExaltedAmber, uncheckedColor = ExaltedGold)
+                                        colors = CheckboxDefaults.colors(checkedColor = ExaltedAccentBright, uncheckedColor = ExaltedAccentBright)
                                     )
                                 } else {
                                     Box(modifier = Modifier.size(40.dp), contentAlignment = Alignment.Center) {
