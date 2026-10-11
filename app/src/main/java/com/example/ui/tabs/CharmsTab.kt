@@ -146,7 +146,7 @@ fun CharmsTab(
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
             SearchButton(activeCount = encantosFilter.activeCount, onClick = { showEncantosSearch = true })
         }
-        Spacer(Modifier.height(6.dp))
+        Spacer(Modifier.height(12.dp))
 
         if (!encantosFilter.isEmpty) {
             ActiveFilterChips(
