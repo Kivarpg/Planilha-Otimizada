@@ -26,19 +26,19 @@ fun SummaryTab(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ExperienceCounterSection(sheet, viewModel)
-        Spacer(modifier = Modifier.height(18.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         SummaryPersonalDataSection(sheet)
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         SummaryAttributesSection(sheet)
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         SummaryAbilitiesSection(sheet)
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         SummaryCombatSection(sheet, viewModel)
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         SummaryVitalitySection(sheet, viewModel)
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         SummaryCharmsSection(sheet, viewModel)
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         SummaryExperienceSection(sheet, bpInfo)
     }
 }
