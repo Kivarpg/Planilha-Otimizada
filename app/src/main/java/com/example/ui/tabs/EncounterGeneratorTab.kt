@@ -562,7 +562,7 @@ fun EncounterGeneratorTab(
                                                 onClick = gerarNpcDaInterface,
                                                 enabled = !gerando,
                                                 size = InkButtonSize.Small,
-                                                customWidth = 120.dp,
+                                                customWidth = 136.dp,
                                                 customHeight = 64.dp
                                             )
                                         }
