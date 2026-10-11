@@ -175,7 +175,7 @@ internal fun SheetTabsBar(
                 AppText(
                     text = if (sheet.planilhaConcluida) "Experiência Restante: ${sheet.experienciaDisponivel()}" else "Pontos de Bônus: $pbExibido / 15",
                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Black, letterSpacing = .25.sp),
-                    color = if (!sheet.planilhaConcluida && pbEmAlerta) ExaltedAlertaTexto else ExaltedGold,
+                    color = if (!sheet.planilhaConcluida && pbEmAlerta) ExaltedAlertaTexto else ExaltedAccentBright,
                     maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f).padding(start = 9.dp)
                 )
@@ -187,7 +187,7 @@ internal fun SheetTabsBar(
                     AppText(
                         text = "Pontos de Habilidade: $pontosHabilidadeRestantes / $totalPontosHabilidade",
                         style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                        color = ExaltedGold, maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis,
+                        color = ExaltedAccentBright, maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.weight(1f).padding(end = 10.dp), textAlign = TextAlign.End
                     )
                 }
