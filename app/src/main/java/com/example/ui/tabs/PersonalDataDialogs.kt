@@ -29,33 +29,22 @@ internal fun IntimidadeDialog(show:Boolean,nome:String,tipo:String,intensidade:S
         onDismissRequest = onDismiss,
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
-        title = { AppText("Intimidade", color = ExaltedGold, maxLines = 2, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
+        title = { AppText("Intimidade", color = visual.accentBright, maxLines = 2, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
         text = {
             Column(
                 modifier = Modifier.fillMaxWidth().heightIn(max = contentHeightLimit).verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
+    val visual = LocalExaltedVisualTemplate.current
                 OutlinedTextField(
                     value = nome,
                     onValueChange = com.example.ui.components.rememberTypingFeedback { onNome(it.take(60)) },
                     label = { AppText("Intimidade") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = ExaltedAccentBright,
-                        unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
-                        focusedLabelColor = ExaltedAccentBright,
-                        unfocusedLabelColor = ExaltedMuted,
-                        cursorColor = ExaltedGold,
-                        focusedTextColor = ExaltedOnSurface,
-                        unfocusedTextColor = ExaltedOnSurface,
-                        focusedContainerColor = ExaltedDarkSurface,
-                        unfocusedContainerColor = ExaltedDarkSurface,
-                        focusedPlaceholderColor = ExaltedMuted,
-                        unfocusedPlaceholderColor = ExaltedMuted
-                    )
+                    colors = exaltedTextFieldColors()
                 )
-                AppText("Tipo", color = ExaltedAmber, fontWeight = FontWeight.Bold)
+                AppText("Tipo", color = visual.accent, fontWeight = FontWeight.Bold)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -71,7 +60,7 @@ internal fun IntimidadeDialog(show:Boolean,nome:String,tipo:String,intensidade:S
                         )
                     }
                 }
-                AppText("Intensidade", color = ExaltedAmber, fontWeight = FontWeight.Bold)
+                AppText("Intensidade", color = visual.accent, fontWeight = FontWeight.Bold)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -105,7 +94,9 @@ internal fun IntimidadeDialog(show:Boolean,nome:String,tipo:String,intensidade:S
         confirmButton = {
             com.example.ui.components.GildedDialogTextButton(text = "Cancelar", onClick = { onDismiss() })
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
 
@@ -127,6 +118,7 @@ internal fun LinguaDialog(show:Boolean,sheet:CharacterSheet,onDismiss:()->Unit,v
     // Se o idioma nativo atual não está na lista base, foi digitada
     // manualmente via "Outra" — pré-preenche o campo de texto com ela.
     var textoCustomNativa by remember(sheet.linguaNativa) {
+    val visual = LocalExaltedVisualTemplate.current
         mutableStateOf(if (sheet.linguaNativa != null && sheet.linguaNativa !in idiomasBase) sheet.linguaNativa else "")
     }
     var editandoNativaCustom by remember(sheet.linguaNativa) {
@@ -151,7 +143,7 @@ internal fun LinguaDialog(show:Boolean,sheet:CharacterSheet,onDismiss:()->Unit,v
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         title = {
-            AppText("Idioma", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true)
+            AppText("Idioma", color = visual.accentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true)
         },
         text = {
             Column(
@@ -160,7 +152,7 @@ internal fun LinguaDialog(show:Boolean,sheet:CharacterSheet,onDismiss:()->Unit,v
             ) {
                 // --- Idioma Nativo ---
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    AppText("Idioma nativo", style = MaterialTheme.typography.labelMedium, color = ExaltedGold)
+                    AppText("Idioma nativo", style = MaterialTheme.typography.labelMedium, color = visual.accentBright)
                     Box {
                         InkButton(label = sheet.linguaNativa ?: "Selecionar…", onClick = { menuNativaAberto = true }, modifier = Modifier.fillMaxWidth(), fillMaxWidth = true, size = InkButtonSize.Small)
                         DropdownMenu(expanded = menuNativaAberto, onDismissRequest = { menuNativaAberto = false }) {
@@ -202,7 +194,7 @@ internal fun LinguaDialog(show:Boolean,sheet:CharacterSheet,onDismiss:()->Unit,v
 
                 // --- Idiomas Adicionais ---
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                    AppText("Idiomas adicionais", style = MaterialTheme.typography.labelMedium, color = ExaltedGold)
+                    AppText("Idiomas adicionais", style = MaterialTheme.typography.labelMedium, color = visual.accentBright)
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -217,7 +209,7 @@ internal fun LinguaDialog(show:Boolean,sheet:CharacterSheet,onDismiss:()->Unit,v
                             ) {
                                 AppText(
                                     lingua,
-                                    color = ExaltedOnSurface,
+                                    color = visual.onSurface,
                                     modifier = Modifier.fillMaxWidth()
                                 )
                                 com.example.ui.components.GildedDialogTextButton(
@@ -274,7 +266,7 @@ internal fun LinguaDialog(show:Boolean,sheet:CharacterSheet,onDismiss:()->Unit,v
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "Fechar", onClick = { onDismiss() })
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = visual.surfaceVariant
     )
 
 }
