@@ -967,15 +967,12 @@ fun NpcEncontroCard(
                     AppText(if (expandida) "▾" else "▸", color = visualTemplate.gold, modifier = Modifier.padding(end = 6.dp),
                     forceStroke = true
 )
-                    AppText(
-                        "$habilidade (${encantosDaGaveta.size})",
+                    androidx.compose.material3.Text(
+                        text = "$habilidade (${encantosDaGaveta.size})",
                         style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp),
                         fontWeight = FontWeight.Bold,
-                        // O título é o nível hierárquico da gaveta: usa a cor
-                        // própria do Tipo de Exaltado sem o contorno branco.
-                        // Os nomes dos Encantos permanecem em onSurface.
                         color = visualTemplate.accentBright,
-                        forceStroke = false
+                        maxLines = 2
                     )
                 }
                 if (expandida) {
