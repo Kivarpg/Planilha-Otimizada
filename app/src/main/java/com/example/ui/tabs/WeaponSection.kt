@@ -56,7 +56,6 @@ import com.example.ui.components.dialogShape
 import com.example.ui.components.gildedDialogBorder
 import com.example.ui.theme.ExaltedDangerCore
 import com.example.ui.theme.LocalExaltedVisualTemplate
-import com.example.ui.theme.ExaltedOnSurface
 import com.example.viewmodel.SheetViewModel
 
 // APPROVED VISUAL CUSTOMIZATION
@@ -656,7 +655,7 @@ private fun CatalogoArmaDetalhesDialog(
         },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
-                AppText("Categoria: $peso", color = ExaltedOnSurface)
+                AppText("Categoria: $peso", color = visual.onSurface)
                 custoRecursos?.let {
                     AppText(
                         "Recursos: ${custoRecursosTexto(it)} ($it)" + if (presente) " — Presente" else "",
@@ -666,7 +665,7 @@ private fun CatalogoArmaDetalhesDialog(
                 }
                 AppText(
                     "Características: ${if (etiquetas.isEmpty()) "Nenhuma" else etiquetas.joinToString(", ")}",
-                    color = ExaltedOnSurface,
+                    color = visual.onSurface,
                     modifier = Modifier.padding(top = 6.dp)
                 )
                 AppText(
@@ -678,18 +677,18 @@ private fun CatalogoArmaDetalhesDialog(
                 )
                 if (ehDistancia) {
                     val (dano, danoMinimo) = com.example.model.WeaponStatsTable.distancia(tipoArma, peso)
-                    AppText("Precisão: —", color = ExaltedOnSurface)
-                    AppText("Dano: $dano", color = ExaltedOnSurface)
-                    AppText("Defesa: —", color = ExaltedOnSurface)
-                    AppText("Dano Mínimo: $danoMinimo", color = ExaltedOnSurface)
+                    AppText("Precisão: —", color = visual.onSurface)
+                    AppText("Dano: $dano", color = visual.onSurface)
+                    AppText("Defesa: —", color = visual.onSurface)
+                    AppText("Dano Mínimo: $danoMinimo", color = visual.onSurface)
                 } else {
                     val stats = com.example.model.WeaponStatsTable.corpoACorpo(tipoArma, peso)
-                    AppText("Precisão: ${stats.precisao}", color = ExaltedOnSurface)
-                    AppText("Dano: ${stats.dano}", color = ExaltedOnSurface)
-                    AppText("Defesa: ${stats.defesa}", color = ExaltedOnSurface)
-                    AppText("Dano Mínimo: ${stats.danoMinimo}", color = ExaltedOnSurface)
+                    AppText("Precisão: ${stats.precisao}", color = visual.onSurface)
+                    AppText("Dano: ${stats.dano}", color = visual.onSurface)
+                    AppText("Defesa: ${stats.defesa}", color = visual.onSurface)
+                    AppText("Dano Mínimo: ${stats.danoMinimo}", color = visual.onSurface)
                 }
-                AppText("Comitamento: $comitamento motes", color = ExaltedOnSurface)
+                AppText("Comitamento: $comitamento motes", color = visual.onSurface)
             }
         },
         confirmButton = {
@@ -736,7 +735,7 @@ private fun CatalogoArmaDialog(
                         AppText(
                             candidata.nome,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = ExaltedOnSurface,
+                            color = visual.onSurface,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .feedbackClickable { onEscolher(candidata, peso) }
@@ -834,7 +833,7 @@ private fun CatalogoArmaMundanaDialog(
                                     .padding(vertical = 8.dp),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                AppText(candidata.nome, style = MaterialTheme.typography.bodyMedium, color = ExaltedOnSurface, modifier = Modifier.weight(1f).padding(end = 8.dp))
+                                AppText(candidata.nome, style = MaterialTheme.typography.bodyMedium, color = visual.onSurface, modifier = Modifier.weight(1f).padding(end = 8.dp))
                                 AppText(custoRecursosTexto(candidata.custoRecursos), style = MaterialTheme.typography.bodyMedium, color = visual.accentBright)
                             }
                         }
