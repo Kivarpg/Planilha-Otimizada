@@ -58,6 +58,16 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `ability filter remains type specific on narrow screens`() {
+        val tab = File("src/main/java/com/example/ui/tabs/AbilitiesTab.kt").readText()
+        assertTrue(tab.contains("val columns = if (maxWidth < 390.dp) 1 else 2"))
+        assertTrue(tab.contains("maxItemsInEachRow = columns"))
+        assertTrue(tab.contains("sheet.tipoPersonagem.isLunar()"))
+        assertTrue(tab.contains("0 to \"Todas\", 2 to \"Com Pontos\""))
+        assertTrue(tab.contains("onSelected(i)"))
+    }
+
+    @Test
     fun `personal data identity fields retain callbacks in responsive layout`() {
         val tab = File("src/main/java/com/example/ui/tabs/PersonalDataTab.kt").readText()
         assertTrue(tab.contains("if (maxWidth < 390.dp)"))
