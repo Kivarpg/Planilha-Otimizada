@@ -94,7 +94,7 @@ private fun ValorCalculadoCard(label: String, valor: Int, modifier: Modifier = M
     GildedCard(
         modifier = modifier.fillMaxWidth().padding(vertical = 4.dp),
         colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant),
-        border = androidx.compose.foundation.BorderStroke(1.dp, ExaltedOutline),
+        border = androidx.compose.foundation.BorderStroke(1.dp, ExaltedAccentBright.copy(alpha = 0.65f)),
         shape = MaterialTheme.shapes.medium
     ) {
         Column(
