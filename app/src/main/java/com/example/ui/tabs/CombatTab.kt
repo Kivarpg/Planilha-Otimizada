@@ -154,7 +154,7 @@ fun CombatTab(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(14.dp),
+                    .padding(18.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AppText(
@@ -167,7 +167,7 @@ fun CombatTab(
                     for (nivel in 1..5) {
                         Box(
                             modifier = Modifier
-                                .size(26.dp)
+                                .size(30.dp)
                                 .clip(CircleShape)
                                 .background(if (nivel <= sheet.essencia) essenciaGradientColor(nivel) else ExaltedDarkBackground.copy(alpha = 0.85f))
                                 .border(1.dp, if (nivel <= sheet.essencia) ExaltedAccentBright else ExaltedOutline.copy(alpha = 0.45f), CircleShape)
@@ -241,7 +241,7 @@ fun CombatTab(
             }
         }
 
-        Spacer(modifier = Modifier.height(7.dp))
+        Spacer(modifier = Modifier.height(22.dp))
 
         SectionHeader(title = "Força de vontade")
         WillpowerTrack(
