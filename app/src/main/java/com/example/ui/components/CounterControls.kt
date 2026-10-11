@@ -32,7 +32,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ui.theme.ExaltedAmber
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 
@@ -69,17 +68,17 @@ fun SyncedCounterColumn(
                 onClick = { if (value - step >= minVal) onValueChange(value - step) },
                 enabled = value - step >= minVal
             ) {
-                AppText("-", style = MaterialTheme.typography.titleLarge, color = ExaltedAmber, fontWeight = FontWeight.Bold)
+                AppText("-", style = MaterialTheme.typography.titleLarge, color = ExaltedAccentBright, fontWeight = FontWeight.Bold)
             }
             Surface(
-                color = ExaltedAmber.copy(alpha = 0.12f),
+                color = ExaltedAccentBright.copy(alpha = 0.12f),
                 shape = MaterialTheme.shapes.small,
-                border = BorderStroke(1.dp, ExaltedAmber.copy(alpha = 0.5f))
+                border = BorderStroke(1.dp, ExaltedAccentBright.copy(alpha = 0.5f))
             ) {
                 AppText(
                     text = "$value",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = ExaltedAmber,
+                    color = ExaltedAccentBright,
                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 4.dp)
                 )
             }
@@ -88,7 +87,7 @@ fun SyncedCounterColumn(
                 enabled = value + step <= maxVal
             
             ) {
-                AppText("+", style = MaterialTheme.typography.titleLarge, color = ExaltedAmber, fontWeight = FontWeight.Bold)
+                AppText("+", style = MaterialTheme.typography.titleLarge, color = ExaltedAccentBright, fontWeight = FontWeight.Bold)
             }
         }
     }
