@@ -59,6 +59,13 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `header reserves space for two accessible action targets`() {
+        val header = File("src/main/java/com/example/ui/SheetTopBar.kt").readText()
+        assertTrue(header.contains("val actionsWidth = if (compactHeader) 96.dp else 104.dp"))
+        assertTrue(header.contains("modifier = Modifier.size(48.dp)"))
+    }
+
+    @Test
     fun `ability balance strip stacks labels on compact screens`() {
         assertTrue(navigation.contains("selectedTabIndex == 3 && (compact || enlargedText)"))
         assertTrue(navigation.contains("verticalArrangement = Arrangement.spacedBy(3.dp)"))
