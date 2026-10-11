@@ -12,10 +12,11 @@ class DialogButtonLayoutContractTest {
     private val inkButton = File("src/main/java/com/example/ui/components/InkButton.kt").readText()
     private val dialogComponents = File("src/main/java/com/example/ui/components/DialogComponents.kt").readText()
 
-    @Test fun `ink brush uses the measured button bounds`() {
+    @Test fun `ink button keeps measured bounds without overlaying labels`() {
         assertTrue(inkButton.contains("Modifier.widthIn(min = 48.dp, max = width).height(height)"))
-        assertTrue(inkButton.contains("modifier = Modifier.fillMaxSize()"))
-        assertTrue(inkButton.contains("clipRect {"))
+        assertTrue(inkButton.contains("contentAlignment = Alignment.Center"))
+        assertTrue(inkButton.contains(".feedbackClickable("))
+        assertFalse(inkButton.contains("clipRect {"))
         assertFalse(inkButton.contains("Modifier.size(width, height)"))
     }
 
