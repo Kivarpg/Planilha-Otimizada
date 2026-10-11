@@ -143,7 +143,7 @@ fun AppText(
         letterSpacing, lineHeight, softWrap, measuredAppTextWidthPx
     ) { mutableStateOf(requestedFontSize) }
     val effectiveStyle = style.copy(
-        color = if (isTitle) color else ExaltedTextFill,
+        color = if (color != Color.Unspecified) color else if (isTitle) style.color else ExaltedTextFill,
         fontSize = fittedFontSize,
         fontWeight = fontWeight ?: style.fontWeight,
         fontStyle = fontStyle ?: style.fontStyle,
@@ -177,7 +177,7 @@ fun AppText(
             drawStyle = androidx.compose.ui.graphics.drawscope.Stroke(width = with(LocalDensity.current) { Dimens.TextStrokeWidth.toPx() })
         )
         val fillStyle = effectiveStyle.copy(
-            color = ExaltedTextFill,
+            color = effectiveStyle.color,
             drawStyle = androidx.compose.ui.graphics.drawscope.Fill
         )
         // O Modifier externo pertence ao contêiner, não deve ser aplicado duas vezes.
@@ -228,7 +228,7 @@ fun AppText(
     onTextLayout: (androidx.compose.ui.text.TextLayoutResult) -> Unit = {}
 ) {
     val effectiveStyle = style.copy(
-        color = ExaltedTextFill,
+        color = if (color != Color.Unspecified) color else ExaltedTextFill,
         fontSize = if (fontSize != TextUnit.Unspecified) fontSize else style.fontSize,
         fontWeight = fontWeight ?: style.fontWeight,
         fontFamily = fontFamily ?: style.fontFamily,
