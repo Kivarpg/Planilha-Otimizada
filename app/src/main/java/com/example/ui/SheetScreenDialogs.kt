@@ -34,13 +34,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.example.ui.components.InteractionFeedback
-import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedOnSurface
 import com.example.ui.theme.ExaltedDangerCore
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 
 // Diálogos extraídos de SheetScreen.kt (arquivo ficou grande demais —
@@ -60,6 +56,7 @@ import com.example.viewmodel.SheetViewModel
 
 @Composable
 fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewModel, onAbrirLogErros: () -> Unit, modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     if (!show) return
     val context = LocalContext.current
     var hapticEnabled by remember { mutableStateOf(InteractionFeedback.isHapticEnabled(context)) }
@@ -73,12 +70,12 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         icon = {
-            Icon(imageVector = Icons.Outlined.Settings, contentDescription = null, tint = ExaltedAccentBright)
+            Icon(imageVector = Icons.Outlined.Settings, contentDescription = null, tint = visual.accentBright)
         },
         title = {
             com.example.ui.components.AutoSizeText(
                 text = "Configurações",
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold,
                 maxFontSize = MaterialTheme.typography.titleLarge.fontSize,
                 modifier = Modifier.fillMaxWidth(),
@@ -93,7 +90,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                 AppText(
                     "Estilo de avaliação (Atributos, Habilidades e Méritos)",
                     style = MaterialTheme.typography.labelMedium,
-                    color = ExaltedAccentBright
+                    color = visual.accentBright
                 )
                 listOf(
                     com.example.model.RatingStyle.DIAMOND to "Modo Clássico (trilha de círculos ●●○○○)",
@@ -108,7 +105,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                         androidx.compose.material3.RadioButton(
                             selected = currentStyle == style,
                             onClick = null,
-                            colors = androidx.compose.material3.RadioButtonDefaults.colors(selectedColor = ExaltedAccentBright)
+                            colors = androidx.compose.material3.RadioButtonDefaults.colors(selectedColor = visual.accentBright)
                         
 )
                         AppText(label, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
@@ -120,7 +117,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                 AppText(
                     "Idioma",
                     style = MaterialTheme.typography.labelMedium,
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     modifier = Modifier.padding(top = 4.dp)
                 )
                 Row(
@@ -130,7 +127,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                     androidx.compose.material3.RadioButton(
                         selected = true,
                         onClick = { },
-                        colors = androidx.compose.material3.RadioButtonDefaults.colors(selectedColor = ExaltedAccentBright)
+                        colors = androidx.compose.material3.RadioButtonDefaults.colors(selectedColor = visual.accentBright)
                     
 )
                     AppText("Português", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
@@ -143,19 +140,19 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                         selected = false,
                         onClick = { },
                         enabled = false,
-                        colors = androidx.compose.material3.RadioButtonDefaults.colors(selectedColor = ExaltedAccentBright)
+                        colors = androidx.compose.material3.RadioButtonDefaults.colors(selectedColor = visual.accentBright)
                     ,
     modifier = Modifier.feedbackOnPress(enabled = false)
 )
-                    AppText("English", color = ExaltedMuted, modifier = Modifier.weight(1f))
+                    AppText("English", color = visual.muted, modifier = Modifier.weight(1f))
                 }
 
-                androidx.compose.material3.HorizontalDivider(color = ExaltedMuted.copy(alpha = 0.3f))
+                androidx.compose.material3.HorizontalDivider(color = visual.muted.copy(alpha = 0.3f))
 
                 AppText(
                     "Feedback de interação",
                     style = MaterialTheme.typography.labelMedium,
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     modifier = Modifier.padding(top = 4.dp)
                 )
                 Row(
@@ -191,7 +188,7 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                     AppText("Som ao tocar", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f).padding(start = 8.dp))
                 }
 
-                androidx.compose.material3.HorizontalDivider(color = ExaltedMuted.copy(alpha = 0.3f))
+                androidx.compose.material3.HorizontalDivider(color = visual.muted.copy(alpha = 0.3f))
 
                 // Modo Livre — movido do menu de 3 pontos pra cá, pedido
                 // explícito do usuário. Não afeta a Aba 11 (Encontros),
@@ -206,13 +203,13 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                     androidx.compose.material3.Checkbox(
                         checked = sheetAtual.modoLivre,
                         onCheckedChange = null,
-                        colors = androidx.compose.material3.CheckboxDefaults.colors(checkedColor = ExaltedAccentBright)
+                        colors = androidx.compose.material3.CheckboxDefaults.colors(checkedColor = visual.accentBright)
                     
 )
                     AppText("Modo Livre", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
                 }
 
-                androidx.compose.material3.HorizontalDivider(color = ExaltedMuted.copy(alpha = 0.3f))
+                androidx.compose.material3.HorizontalDivider(color = visual.muted.copy(alpha = 0.3f))
 
                 Row(
                     modifier = Modifier
@@ -220,14 +217,14 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
                         .feedbackClickable { onDismiss(); onAbrirLogErros() },
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = ExaltedMuted, modifier = Modifier.padding(horizontal = 12.dp))
+                    Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = visual.muted, modifier = Modifier.padding(horizontal = 12.dp))
                     AppText("Ver Log de Erros", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f))
                 }
-                androidx.compose.material3.HorizontalDivider(color = ExaltedMuted.copy(alpha = 0.3f))
+                androidx.compose.material3.HorizontalDivider(color = visual.muted.copy(alpha = 0.3f))
 
                 AppText(
                     text = "Exalted.${BuildConfig.VERSION_NAME} • ${BuildConfig.BUILD_COMMIT}",
-                    color = ExaltedMuted,
+                    color = visual.muted,
                     style = MaterialTheme.typography.labelSmall,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
@@ -237,14 +234,15 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "Fechar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurfaceVariant,
-        titleContentColor = ExaltedOnSurface,
-        textContentColor = ExaltedOnSurface,
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface,
     )
 }
 
 @Composable
 fun ReversionConfirmDialog(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     val show by viewModel.showReversionConfirm.collectAsState()
     if (!show) return
     AlertDialog(
@@ -258,7 +256,7 @@ fun ReversionConfirmDialog(viewModel: SheetViewModel, modifier: Modifier = Modif
             AppText(
                 forceStroke = true,
                 text = "Desmarcar \"Planilha concluída\"?",
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -280,14 +278,15 @@ fun ReversionConfirmDialog(viewModel: SheetViewModel, modifier: Modifier = Modif
         confirmButton = {
             com.example.ui.components.GildedDialogTextButton(text = "Cancelar", onClick = { viewModel.cancelarReversaoPlanilhaConcluida() })
         },
-        containerColor = ExaltedDarkSurface,
-        titleContentColor = ExaltedOnSurface,
-        textContentColor = ExaltedOnSurface,
+        containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface,
     )
 }
 
 @Composable
 fun CommitmentErrorDialog(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     val message by viewModel.commitmentError.collectAsState()
     if (message == null) return
     // Mantem a area de aviso rolavel em telas compactas sem modificar a confirmacao.
@@ -297,13 +296,13 @@ fun CommitmentErrorDialog(viewModel: SheetViewModel, modifier: Modifier = Modifi
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         icon = {
-            Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = ExaltedAccentBright)
+            Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = visual.accentBright)
         },
         title = {
             AppText(
                 forceStroke = true,
                 text = "Aviso",
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -317,9 +316,9 @@ fun CommitmentErrorDialog(viewModel: SheetViewModel, modifier: Modifier = Modifi
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "OK", onClick = { viewModel.dismissCommitmentError() })
         },
-        containerColor = ExaltedDarkSurface,
-        titleContentColor = ExaltedOnSurface,
-        textContentColor = ExaltedOnSurface,
+        containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface,
     )
 }
 
@@ -330,6 +329,7 @@ fun CommitmentErrorDialog(viewModel: SheetViewModel, modifier: Modifier = Modifi
 // AbilitiesActions.setAttributeRating/setAbilityRating).
 @Composable
 fun PendingMeritBreakDialog(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     val pendente by viewModel.pendingMeritBreak.collectAsState()
     val info = pendente ?: return
     // Preserva a lista rolavel de meritos afetados ate a validacao em dispositivo.
@@ -339,13 +339,13 @@ fun PendingMeritBreakDialog(viewModel: SheetViewModel, modifier: Modifier = Modi
         modifier = modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
         icon = {
-            Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = ExaltedAccentBright)
+            Icon(imageVector = Icons.Outlined.Warning, contentDescription = null, tint = visual.accentBright)
         },
         title = {
             AppText(
                 forceStroke = true,
                 text = "Isso vai remover um Mérito",
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -370,7 +370,7 @@ fun PendingMeritBreakDialog(viewModel: SheetViewModel, modifier: Modifier = Modi
                 AppText(
                     text = "Confirmando, a redução é aplicada e esse(s) Mérito(s) são removidos da planilha.",
                     style = MaterialTheme.typography.bodySmall,
-                    color = ExaltedMuted
+                    color = visual.muted
                 )
             }
         },
@@ -380,8 +380,8 @@ fun PendingMeritBreakDialog(viewModel: SheetViewModel, modifier: Modifier = Modi
         confirmButton = {
             com.example.ui.components.GildedDialogTextButton(text = "Cancelar", onClick = { viewModel.cancelarPendingMeritBreak() })
         },
-        containerColor = ExaltedDarkSurface,
-        titleContentColor = ExaltedOnSurface,
-        textContentColor = ExaltedOnSurface,
+        containerColor = visual.surface,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface,
     )
 }
