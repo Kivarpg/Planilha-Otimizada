@@ -16,18 +16,18 @@ import com.example.viewmodel.SheetViewModel
 
 @Composable
 internal fun ExperienceCounterSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
+    val visual = LocalExaltedVisualTemplate.current
 // Contador Dinâmico de Experiência: funciona como a carteira de pontos
 // do personagem — gerencia sessões jogadas e o saldo de Experiência.
 GildedCard(
-    modifier = Modifier.fillMaxWidth(),
-    colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+    modifier = Modifier.fillMaxWidth()
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(14.dp)
     ) {
-        AppText("Contador dinâmico de experiência", style = MaterialTheme.typography.titleMedium, color = ExaltedAmber, fontWeight = FontWeight.Bold)
+        AppText("Contador dinâmico de experiência", style = MaterialTheme.typography.titleMedium, color = visual.accentBright, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(6.dp))
         SyncedCounterColumn(
             label = "Sessões Jogadas",
@@ -46,19 +46,19 @@ GildedCard(
             ExperienceStat(
                 label = "XP Total",
                 valor = sheet.experienciaCalculada(),
-                cor = ExaltedGold,
+                cor = visual.accentBright,
                 modifier = Modifier.weight(1f)
             )
             ExperienceStat(
                 label = "XP Gasto",
                 valor = sheet.experienciaGastaTotal,
-                cor = ExaltedMuted,
+                cor = visual.muted,
                 modifier = Modifier.weight(1f)
             )
             ExperienceStat(
                 label = "XP Disponível",
                 valor = sheet.experienciaDisponivel(),
-                cor = ExaltedAmber,
+                cor = visual.accent,
                 destaque = true,
                 modifier = Modifier.weight(1f)
             )
