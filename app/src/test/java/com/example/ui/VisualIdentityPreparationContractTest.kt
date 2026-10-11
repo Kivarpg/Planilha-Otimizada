@@ -59,6 +59,16 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `navigation progress strip uses active palette and accessible header height`() {
+        val tabs = File("src/main/java/com/example/ui/SheetTabsBar.kt").readText()
+        val header = File("src/main/java/com/example/ui/SheetTopBar.kt").readText()
+        assertFalse(tabs.contains("ExaltedGold"))
+        assertTrue(tabs.contains("ExaltedAccentBright"))
+        assertTrue(tabs.contains("maxLines = 2, softWrap = true"))
+        assertTrue(header.contains("val headerHeight = if (enlargedHeaderText) 156.dp else 132.dp"))
+    }
+
+    @Test
     fun `header action icons follow selected Exalt palette`() {
         val header = File("src/main/java/com/example/ui/SheetTopBar.kt").readText()
         assertTrue(header.contains("Icon(Icons.Outlined.Settings, \"Configurações\", tint = ExaltedAccentBright"))
