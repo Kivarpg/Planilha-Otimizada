@@ -114,7 +114,7 @@ fun LongPressCard(
 @Composable
 fun GildedCard(
     modifier: Modifier = Modifier,
-    colors: androidx.compose.material3.CardColors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant.copy(alpha = 0.96f)),
+    colors: androidx.compose.material3.CardColors? = null,
     border: BorderStroke? = null,
     shape: androidx.compose.ui.graphics.Shape = MaterialTheme.shapes.medium,
     elevation: androidx.compose.material3.CardElevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
@@ -129,7 +129,7 @@ fun GildedCard(
         // Conteúdo e decoração não compartilham mais a mesma fase de desenho.
         // A identidade fica no container/borda; nada é pintado depois do conteúdo.
         modifier = modifier,
-        colors = if (visualTemplate != null) CardDefaults.cardColors(containerColor = surface.copy(alpha = .98f)) else colors,
+        colors = colors ?: CardDefaults.cardColors(containerColor = surface.copy(alpha = .98f)),
         border = border ?: BorderStroke(1.25.dp, Brush.linearGradient(listOf(deep.copy(alpha=.82f),accent.copy(alpha=.86f),deep.copy(alpha=.82f)))),
         shape = shape,
         elevation = elevation
