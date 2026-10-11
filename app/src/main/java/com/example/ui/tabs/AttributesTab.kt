@@ -218,7 +218,7 @@ private fun AttributeGroupCard(
                         AppText(
                             text = "Total",
                             style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold, letterSpacing = 0.6.sp),
-                            color = ExaltedGold
+                            color = ExaltedAccentBright
                         )
                         AppText(
                             text = "$restante",
