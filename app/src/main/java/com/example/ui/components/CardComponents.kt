@@ -62,7 +62,8 @@ fun LongPressCard(
             // APPROVED VISUAL CUSTOMIZATION
             // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
             // Mesmo tratamento estrutural do GildedCard para cartões de interação.
-            .drawBehind {
+            .drawWithContent {
+                drawContent()
                 val accent = ExaltedAccentBright
                 val deep = ExaltedStructuralMetalDeep
                 drawLine(
