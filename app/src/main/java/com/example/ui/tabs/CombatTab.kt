@@ -75,6 +75,7 @@ import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import com.example.ui.theme.ExaltedOutline
 import com.example.ui.theme.corTextoContraste
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 
 // APPROVED VISUAL CUSTOMIZATION
@@ -92,10 +93,10 @@ private val INICIATIVA_REGEX = Regex("^-?\\d{0,3}$")
 // VISUAL IDENTITY 314: remodelação específica desta aba; somente apresentação, sem novos campos.
 @Composable
 private fun ValorCalculadoCard(label: String, valor: Int, modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     GildedCard(
         modifier = modifier.fillMaxWidth().padding(vertical = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant),
-        border = androidx.compose.foundation.BorderStroke(1.dp, ExaltedAccentBright.copy(alpha = 0.65f)),
+        border = androidx.compose.foundation.BorderStroke(1.dp, visual.accentBright.copy(alpha = 0.65f)),
         shape = MaterialTheme.shapes.medium
     ) {
         Column(
@@ -114,14 +115,14 @@ private fun ValorCalculadoCard(label: String, valor: Int, modifier: Modifier = M
             )
             Spacer(modifier = Modifier.height(6.dp))
             Surface(
-                color = ExaltedAccentBright.copy(alpha = 0.12f),
+                color = visual.accentBright.copy(alpha = 0.12f),
                 shape = MaterialTheme.shapes.small,
-                border = androidx.compose.foundation.BorderStroke(1.dp, ExaltedAccentBright.copy(alpha = 0.5f))
+                border = androidx.compose.foundation.BorderStroke(1.dp, visual.accentBright.copy(alpha = 0.5f))
             ) {
                 AppText(
                     text = "$valor",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 4.dp)
                 )
             }
@@ -135,6 +136,7 @@ fun CombatTab(
     viewModel: SheetViewModel,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     var showVitalitySettingsDialog by remember { mutableStateOf(false) }
     var boxToDelete by remember { mutableStateOf<CaixaVitalidade?>(null) }
 
@@ -149,8 +151,7 @@ fun CombatTab(
         SectionHeader(title = "Essência")
 
         GildedCard(
-            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(5),
-            colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(5)
         ) {
             Column(
                 modifier = Modifier
@@ -161,7 +162,7 @@ fun CombatTab(
                 AppText(
                     text = "Essência Permanente",
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                    color = ExaltedAccentBright
+                    color = visual.accentBright
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 // Indicadores de Essência precisam permanecer visíveis mesmo quando
@@ -180,18 +181,18 @@ fun CombatTab(
                                 .clip(CircleShape)
                                 .background(
                                     if (ativo) essenciaGradientColor(nivel)
-                                    else ExaltedDarkSurfaceVariant
+                                    else visual.surfaceVariant
                                 )
                                 .border(
                                     width = if (ativo) 2.dp else 1.dp,
-                                    color = if (ativo) ExaltedAccentBright else ExaltedOutline,
+                                    color = if (ativo) visual.accentBright else visual.outline,
                                     shape = CircleShape
                                 ),
                             contentAlignment = Alignment.Center
                         ) {
                             AppText(
                                 text = nivel.toString(),
-                                color = if (ativo) corTextoContraste(essenciaGradientColor(nivel)) else ExaltedOnSurface,
+                                color = if (ativo) corTextoContraste(essenciaGradientColor(nivel)) else visual.onSurface,
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.Bold,
                                 maxLines = 1
@@ -207,7 +208,7 @@ fun CombatTab(
                 AppText(
                     text = "Motes",
                     style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -289,8 +290,7 @@ fun CombatTab(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
         )
         GildedCard(
-            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(5),
-            colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(5)
         ) {
             Column(
                 modifier = Modifier
@@ -326,17 +326,17 @@ fun CombatTab(
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             modifier = Modifier.width(84.dp),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = ExaltedAccentBright,
-                                unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
-                                focusedLabelColor = ExaltedAccentBright,
-                                unfocusedLabelColor = ExaltedMuted,
-                                cursorColor = ExaltedAccentBright,
+                                focusedBorderColor = visual.accentBright,
+                                unfocusedBorderColor = visual.outline.copy(alpha = 0.55f),
+                                focusedLabelColor = visual.accentBright,
+                                unfocusedLabelColor = visual.muted,
+                                cursorColor = visual.accentBright,
                                 focusedTextColor = corIniciativaPorValor(iniciativaAtual),
                                 unfocusedTextColor = corIniciativaPorValor(iniciativaAtual),
-                                focusedContainerColor = ExaltedDarkSurface,
-                                unfocusedContainerColor = ExaltedDarkSurface,
-                                focusedPlaceholderColor = ExaltedMuted,
-                                unfocusedPlaceholderColor = ExaltedMuted
+                                focusedContainerColor = visual.surface,
+                                unfocusedContainerColor = visual.surface,
+                                focusedPlaceholderColor = visual.muted,
+                                unfocusedPlaceholderColor = visual.muted
                             )
                         )
                     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -384,7 +384,7 @@ fun CombatTab(
             AppText(
                 text = "Nenhuma arma registrada",
                 style = MaterialTheme.typography.bodySmall,
-                color = ExaltedMuted,
+                color = visual.muted,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
             )
@@ -403,8 +403,7 @@ fun CombatTab(
         // refletem automaticamente o equipamento comitado.
         SectionHeader(title = "Defesas")
         GildedCard(
-            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(5),
-            colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(5)
         ) {
             Column(modifier = Modifier.fillMaxWidth().padding(14.dp)) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -466,7 +465,7 @@ fun CombatTab(
                                         text = if (penalidade == "Inc") "Inc." else penalidade,
                                         style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold,
                                         maxFontSize = MaterialTheme.typography.titleMedium.fontSize, minFontSize = 10.sp,
-                                        color = ExaltedAccentBright, modifier = Modifier.width(labelWidth)
+                                        color = visual.accentBright, modifier = Modifier.width(labelWidth)
                                     )
                                 } else Spacer(modifier = Modifier.width(labelWidth))
                                 Row(horizontalArrangement = Arrangement.spacedBy(gap), verticalAlignment = Alignment.CenterVertically) {
@@ -476,12 +475,12 @@ fun CombatTab(
                                             1 -> "/" to ExaltedDanoContundente
                                             2 -> "X" to ExaltedDanoLetal
                                             3 -> "*" to ExaltedDanoAgravado
-                                            else -> "" to ExaltedMuted
+                                            else -> "" to visual.muted
                                         }
                                         val ehExtra = !box.isPermanente
                                         Box(
-                                            modifier = Modifier.size(boxSize).clip(RoundedCornerShape(6.dp)).background(ExaltedDarkSurface)
-                                                .border(if (ehExtra) 2.dp else 1.dp, if (ehExtra) ExaltedAccentBright else damageColor.takeIf { box.tipoDano != 0 } ?: ExaltedAccentBright.copy(alpha = 0.45f), RoundedCornerShape(6.dp))
+                                            modifier = Modifier.size(boxSize).clip(RoundedCornerShape(6.dp)).background(visual.surface)
+                                                .border(if (ehExtra) 2.dp else 1.dp, if (ehExtra) visual.accentBright else damageColor.takeIf { box.tipoDano != 0 } ?: visual.accentBright.copy(alpha = 0.45f), RoundedCornerShape(6.dp))
                                                 .pointerInput(box.id) { detectTapGestures(onTap = { viewModel.cycleHealthDamage(box.id) }, onLongPress = { if (!bloqueadaParaRemocao) boxToDelete = box }) }
                                                 .feedbackOnPress(),
                                             contentAlignment = Alignment.Center
@@ -551,18 +550,19 @@ private fun ConfiguracoesVitalidadeDialog(
     viewModel: SheetViewModel,
     onDismiss: () -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
-        title = { AppText("Configurações da Vitalidade", color = ExaltedAccentBright, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
+        title = { AppText("Configurações da Vitalidade", color = visual.accentBright, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 val extras = remember(sheet.healthBoxes) {
                     sheet.healthBoxes.filter { !it.isPermanente && it.origemAutomatica == null }
                 }
                 if (extras.isNotEmpty()) {
-                    AppText("Caixas extras atuais", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)
+                    AppText("Caixas extras atuais", style = MaterialTheme.typography.labelMedium, color = visual.accentBright)
                     extras.forEach { box ->
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -575,13 +575,13 @@ private fun ConfiguracoesVitalidadeDialog(
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                 }
-                AppText("Adicionar novo nível", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)
+                AppText("Adicionar novo nível", style = MaterialTheme.typography.labelMedium, color = visual.accentBright)
                 HEALTH_EXTRA_LEVELS.forEach { nivel ->
                     Surface(
                         modifier = Modifier
                             .fillMaxWidth()
                             .feedbackClickable { viewModel.addExtraHealthBox(nivel) },
-                        color = ExaltedDarkSurface,
+                        color = visual.surface,
                         shape = RoundedCornerShape(4.dp)
                     ) {
                         AppText(
@@ -596,9 +596,9 @@ private fun ConfiguracoesVitalidadeDialog(
         confirmButton = {
             InkButton(label = "Fechar", onClick = onDismiss, size = InkButtonSize.Small, variant = InkButtonVariant.Secondary)
         },
-        containerColor = ExaltedDarkSurfaceVariant,
-        titleContentColor = ExaltedOnSurface,
-        textContentColor = ExaltedOnSurface
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
 
