@@ -129,6 +129,19 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `custom dialog containers always define readable content colors`() {
+        val searchDialogs = File("src/main/java/com/example/ui/components/SearchComponents.kt").readText()
+        val combatDialogs = File("src/main/java/com/example/ui/tabs/CombatTab.kt").readText()
+        val sources = listOf(commonDialogs, searchDialogs, dialogs, lifecycleDialogs, combatDialogs)
+        for (source in sources) {
+            if (source.contains("containerColor = ExaltedDarkSurface") || source.contains("containerColor = ExaltedDarkSurfaceVariant")) {
+                assertTrue(source.contains("titleContentColor = ExaltedOnSurface"))
+                assertTrue(source.contains("textContentColor = ExaltedOnSurface"))
+            }
+        }
+    }
+
+    @Test
     fun `numeric selectors respect active exalt palette`() {
         val source = File("src/main/java/com/example/ui/components/NumericRatingControls.kt").readText()
         assertTrue(source.contains("ExaltedAccentBright"))
