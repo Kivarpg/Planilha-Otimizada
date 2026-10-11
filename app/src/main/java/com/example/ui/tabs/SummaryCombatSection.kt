@@ -12,14 +12,15 @@ import androidx.compose.ui.unit.*
 import com.example.model.*
 import com.example.ui.components.*
 import com.example.ui.theme.*
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.viewmodel.SheetViewModel
 
 @Composable
 internal fun SummaryCombatSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
+    val visual = LocalExaltedVisualTemplate.current
 // Combat Readonly (sem Vitalidade, que passou para o item 5)
 GildedCard(
-    modifier = Modifier.fillMaxWidth(),
-    colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+    modifier = Modifier.fillMaxWidth()
 ) {
     Column(
         modifier = Modifier
@@ -47,11 +48,11 @@ GildedCard(
 
         if (armasEquipadas.isEmpty() && armaduraEquipada == null) {
             Spacer(modifier = Modifier.height(6.dp))
-            AppText("Nenhuma arma ou armadura equipada.", style = MaterialTheme.typography.bodySmall, color = ExaltedMuted)
+            AppText("Nenhuma arma ou armadura equipada.", style = MaterialTheme.typography.bodySmall, color = visual.muted)
         } else {
             if (armasEquipadas.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(6.dp))
-                AppText("Arma(s) Equipada(s):", fontWeight = FontWeight.Bold, color = ExaltedGold)
+                AppText("Arma(s) Equipada(s):", fontWeight = FontWeight.Bold, color = visual.accent)
                 armasEquipadas.forEach { w ->
                     val nomeExibido = if (w.ataqueDesarmado) "${w.nome} [Ataque Desarmado]" else w.nome
                     val comitamentoReal = w.motesPessoaisComitados + w.motesPerifericosComitados
@@ -64,7 +65,7 @@ GildedCard(
             }
             if (armaduraEquipada != null) {
                 Spacer(modifier = Modifier.height(6.dp))
-                AppText("Armadura Equipada:", fontWeight = FontWeight.Bold, color = ExaltedGold)
+                AppText("Armadura Equipada:", fontWeight = FontWeight.Bold, color = visual.accent)
                 AppText(
                     "• ${armaduraEquipada.nome} — Absorção: ${armaduraEquipada.absorcao} | Dureza: ${armaduraEquipada.dureza} | Penalidade: ${armaduraEquipada.penalidadeMobilidade} | Comitamento: ${com.example.model.ArmorStatsTable.stats(armaduraEquipada.tipoArmadura, armaduraEquipada.categoriaPeso).comitamento}",
                     style = MaterialTheme.typography.bodySmall,
