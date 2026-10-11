@@ -26,9 +26,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.model.RatingStyle
-import com.example.ui.theme.visual.accentBright
-import com.example.ui.theme.visual.outline
-import com.example.ui.theme.visual.accentBright
 import com.example.ui.theme.LocalExaltedVisualTemplate
 
 @Composable
