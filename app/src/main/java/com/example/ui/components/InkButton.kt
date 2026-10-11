@@ -388,6 +388,15 @@ fun InkButton(
                         end = Offset(this.size.width - inset, 3.dp.toPx()),
                         strokeWidth = 1.dp.toPx()
                     )
+                    // Segundo filete, mais escuro, reforça a profundidade da tinta.
+                    drawLine(
+                        brush = Brush.horizontalGradient(
+                            listOf(Color.Transparent, metal.copy(alpha = 0.24f), Color.Transparent)
+                        ),
+                        start = Offset(inset, this.size.height - 3.dp.toPx()),
+                        end = Offset(this.size.width - inset, this.size.height - 3.dp.toPx()),
+                        strokeWidth = .8.dp.toPx()
+                    )
                 }
             }
         }
