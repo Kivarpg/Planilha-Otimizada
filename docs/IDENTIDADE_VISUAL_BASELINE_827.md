@@ -181,3 +181,10 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Equipamentos: cursor de Pertences, radio selecionado no dialogo de Comitamento e estados selecionados do seletor de motes usam a cor ativa.
 - Verificacoes estaticas de regressao adicionadas. A compilacao e os testes no dispositivo ainda nao ocorreram.
 - Escopo: consistencia de cores; nao declarar remodelacao completa das abas.
+
+## Preparacao Exalted.858 — Recursos, atributos e anima
+- Combate: indicadores numericos, bordas dos circulos de Essencia e titulo Motes usam o acento do Tipo de Exaltado, sem alterar recursos nem calculos.
+- Atributos: realce da prioridade selecionada e bordas de casta utilizam o acento ativo.
+- Dados pessoais: cursor do campo de descricao da Anima acompanha o acento ativo.
+- Testes de contrato estaticos adicionados; ainda sem compilacao nem validacao em dispositivo.
+- As alteracoes visam coerencia visual, nao substituem auditoria completa das 15 abas.
