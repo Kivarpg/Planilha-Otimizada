@@ -248,3 +248,11 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Aba Encontros: alvo de toque de remover NPC na faixa de abas passou de 18dp a 40dp e ganhou descricao semantica por NPC. A faixa permanece horizontalmente rolavel e a logica de remocao nao foi alterada.
 - Teste de contrato verifica alvo, descricao e callbacks de remocao/limpeza de selecao.
 - Pendencias: compilar a versao 870, auditar os arquivos auxiliares e realizar testes de layout e toque em Android, incluindo fontScale elevado, pop-ups, mapa em tela cheia e as 15 abas individualmente.
+
+## Preparacao apos Exalted.870 — Componentes compartilhados
+- SearchComponents.kt: filtros, etiquetas, bordas e estados selecionados deixam de forcar ExaltedGold/ExaltedAmber e usam ExaltedAccentBright (paleta ativa).
+- TextComponents.kt: titulos de quadros de Encantos e cartoes expansivos, bem como seta de expansao, passam a usar a cor da paleta ativa.
+- CombatTrackControls.kt: os fallbacks de accent e metalShine da trilha de Forca de Vontade deixam de ser Solar; templates explicitos continuam prioritarios.
+- ButtonComponents.kt: removido import sem uso da antiga cor Solar.
+- Teste de contrato acrescentado para impedir a volta de cores Solar nos tres componentes compartilhados.
+- Estas mudancas sao posteriores ao disparo da Exalted.870 e precisam de compilacao separada; nao declarar validadas pela 870.
