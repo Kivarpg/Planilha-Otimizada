@@ -347,7 +347,7 @@ fun MapTab(
         )
 
         // Respiro entre a informação/controles fixos e a área do mapa.
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(18.dp))
 
         // —— MAPA ——
         MapaInterativo(
