@@ -131,7 +131,7 @@ fun GildedCard(
         // Conteúdo e decoração não compartilham mais a mesma fase de desenho.
         // A identidade fica no container/borda; nada é pintado depois do conteúdo.
         modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = surface.copy(alpha=.98f)),
+        colors = if (visualTemplate != null) CardDefaults.cardColors(containerColor = surface.copy(alpha = .98f)) else colors,
         border = border ?: BorderStroke(1.25.dp, Brush.linearGradient(listOf(deep.copy(alpha=.82f),accent.copy(alpha=.86f),deep.copy(alpha=.82f)))),
         shape = shape,
         elevation = elevation
