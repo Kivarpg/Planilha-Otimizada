@@ -56,7 +56,7 @@ fun AbilitiesTab(
     }
 
     Column(
-        modifier = modifier.fillMaxSize().exaltedTabIdentity(4).exaltedContentStage(4).padding(horizontal = 10.dp, vertical = 8.dp).verticalScroll(rememberScrollState()),
+        modifier = modifier.fillMaxSize().exaltedTabIdentity(4).exaltedContentStage(4).padding(horizontal = 16.dp, vertical = 12.dp).verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         GildedCard(modifier = Modifier.fillMaxWidth().exaltedSectionPanel(4)) {
