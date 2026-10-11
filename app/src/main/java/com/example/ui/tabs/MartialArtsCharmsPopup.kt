@@ -24,6 +24,7 @@ internal fun MartialArtsCharmsPopup(
     onDismiss: () -> Unit,
     onShowDetail: (com.example.data.EncantoSolarDefinition) -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     // A Aba 8 exibe o catálogo global de estilos. A qualificação para
     // aquisição é avaliada somente no segundo popup, encanto por encanto.
     val estilos = remember(viewModel) {
@@ -38,14 +39,14 @@ internal fun MartialArtsCharmsPopup(
         onDismissRequest = onDismiss,
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
-        title = { AppText("Artes Marciais", color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
+        title = { AppText("Artes Marciais", color = visual.accentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
         text = {
             Column(Modifier.fillMaxWidth().heightIn(max = 460.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 if (estilos.isEmpty()) {
                     AppText(
                         "Nenhum estilo de Arte Marcial cadastrado no catálogo.",
                         style = MaterialTheme.typography.bodySmall,
-                        color = ExaltedMuted,
+                        color = visual.muted,
                         textAlign = TextAlign.Center
                     )
                 }
@@ -63,8 +64,8 @@ internal fun MartialArtsCharmsPopup(
                             .padding(vertical = 5.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        AppText(estilo.nomePt, color = ExaltedAccentBright, fontWeight = FontWeight.Bold)
-                        if (!estilo.armaduraTexto.isNullOrBlank()) AppText("Armadura: ${estilo.armaduraTexto}", style = MaterialTheme.typography.labelSmall, color = ExaltedMuted)
+                        AppText(estilo.nomePt, color = visual.accentBright, fontWeight = FontWeight.Bold)
+                        if (!estilo.armaduraTexto.isNullOrBlank()) AppText("Armadura: ${estilo.armaduraTexto}", style = MaterialTheme.typography.labelSmall, color = visual.muted)
                         CharmAbilityButton(
                             text = "Árvore",
                             selected = false,
@@ -77,7 +78,9 @@ internal fun MartialArtsCharmsPopup(
             }
         },
         confirmButton = { GildedDialogButton(text = "Fechar", onClick = onDismiss) },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
         )
     }
 
@@ -112,6 +115,7 @@ internal fun EstiloArteMarcialCharmsPopup(
     onDismiss: () -> Unit,
     onShowDetail: (com.example.data.EncantoSolarDefinition) -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val itens = remember(sheet, estilo.id) { viewModel.encantosDaArteMarcialComElegibilidade(estilo.id, sheet) }
     val adquiridoPorNome = remember(sheet.charms) {
         buildMap<String, Encanto> {
@@ -123,13 +127,13 @@ internal fun EstiloArteMarcialCharmsPopup(
         onDismissRequest = onDismiss,
         modifier = Modifier.then(com.example.ui.components.gildedDialogBorder()),
         shape = com.example.ui.components.dialogShape,
-        title = { AppText(estilo.nomePt, color = ExaltedAccentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
+        title = { AppText(estilo.nomePt, color = visual.accentBright, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
         text = {
             if (itens.isEmpty()) {
                 AppText(
                     "Nenhum Encanto cadastrado para este estilo.",
                     style = MaterialTheme.typography.bodySmall,
-                    color = ExaltedMuted,
+                    color = visual.muted,
                     textAlign = TextAlign.Center
                 )
             } else {
@@ -154,6 +158,8 @@ internal fun EstiloArteMarcialCharmsPopup(
             }
         },
         confirmButton = { GildedDialogButton(text = "Fechar", onClick = onDismiss) },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
