@@ -1,0 +1,55 @@
+package com.example.ui
+
+import androidx.compose.ui.graphics.Color
+import com.example.ui.theme.ExaltedOnSurface
+import com.example.ui.theme.ExaltedVisualMotif
+import com.example.ui.theme.visualTemplatePorMotif
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.pow
+import kotlin.test.Test
+import kotlin.test.assertTrue
+
+class VisualContrastAuditTest {
+    private fun linear(channel: Float): Double =
+        if (channel <= 0.03928f) channel.toDouble() / 12.92
+        else ((channel.toDouble() + 0.055) / 1.055).pow(2.4)
+
+    private fun luminance(color: Color): Double =
+        0.2126 * linear(color.red) +
+            0.7152 * linear(color.green) +
+            0.0722 * linear(color.blue)
+
+    private fun contrast(a: Color, b: Color): Double {
+        val la = luminance(a)
+        val lb = luminance(b)
+        return (max(la, lb) + 0.05) / (min(la, lb) + 0.05)
+    }
+
+    @Test
+    fun `all exalted surfaces keep readable text contrast`() {
+        ExaltedVisualMotif.entries.forEach { motif ->
+            val visual = visualTemplatePorMotif(motif)
+            val surfaceRatio = contrast(visual.onSurface, visual.surface)
+            val variantRatio = contrast(visual.onSurface, visual.surfaceVariant)
+            assertTrue(surfaceRatio >= 4.5, "$motif surface contrast=$surfaceRatio")
+            assertTrue(variantRatio >= 4.5, "$motif surfaceVariant contrast=$variantRatio")
+        }
+    }
+
+    @Test
+    fun `all exalted accents remain distinguishable from their surfaces`() {
+        ExaltedVisualMotif.entries.forEach { motif ->
+            val visual = visualTemplatePorMotif(motif)
+            val surfaceRatio = contrast(visual.accentBright, visual.surface)
+            val variantRatio = contrast(visual.accentBright, visual.surfaceVariant)
+            assertTrue(surfaceRatio >= 3.0, "$motif accent/surface contrast=$surfaceRatio")
+            assertTrue(variantRatio >= 3.0, "$motif accent/surfaceVariant contrast=$variantRatio")
+        }
+    }
+
+    @Test
+    fun `neutral text token itself is never transparent`() {
+        assertTrue(ExaltedOnSurface.alpha == 1f)
+    }
+}
