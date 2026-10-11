@@ -74,6 +74,7 @@ internal fun LunarCasteTabContent(
             verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center
         ) {
             SectionHeader(title = "Casta selecionada")
+            Spacer(Modifier.height(12.dp))
             AppText(
                 text = "Casta não selecionada",
                 style = MaterialTheme.typography.bodyMedium,
