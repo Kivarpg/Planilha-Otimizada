@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedDarkSurface
+import com.example.ui.theme.ExaltedOnSurface
 import com.example.ui.theme.ExaltVisualTemplate
 import com.example.ui.theme.ExaltedDangerCore
 import com.example.ui.theme.ExaltedMetalGoldDeep
@@ -88,7 +89,9 @@ fun ConfirmDeleteDialog(
         confirmButton = {
             GildedDialogTextButton(text = "Cancelar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurface
+        containerColor = ExaltedDarkSurface,
+        titleContentColor = ExaltedOnSurface,
+        textContentColor = ExaltedOnSurface,
     )
 }
 
@@ -215,7 +218,9 @@ fun SaveValidationModal(
         confirmButton = {
             GildedDialogTextButton(text = "Cancelar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurface
+        containerColor = ExaltedDarkSurface,
+        titleContentColor = ExaltedOnSurface,
+        textContentColor = ExaltedOnSurface,
     )
 }
 
