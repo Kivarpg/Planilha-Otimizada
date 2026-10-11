@@ -45,10 +45,8 @@ import androidx.compose.ui.unit.dp
 import com.example.search.KeywordMode
 import com.example.search.NumericMatchMode
 import com.example.search.SkillFilter
-import com.example.ui.theme.ExaltedAmber
 import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMuted
 import kotlinx.coroutines.delay
@@ -119,10 +117,10 @@ private fun FilterChip(text: String, onRemove: () -> Unit, modifier: Modifier = 
         modifier = modifier,
         color = ExaltedDarkSurfaceVariant,
         shape = MaterialTheme.shapes.small,
-        border = BorderStroke(1.dp, ExaltedAmber.copy(alpha = 0.6f))
+        border = BorderStroke(1.dp, ExaltedAccentBright.copy(alpha = 0.6f))
     ) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 10.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)) {
-            AppText(text, color = ExaltedGold, style = MaterialTheme.typography.labelMedium, maxLines = 1)
+            AppText(text, color = ExaltedAccentBright, style = MaterialTheme.typography.labelMedium, maxLines = 1)
             InkButton(onClick = onRemove, modifier = Modifier.width(24.dp).height(24.dp)) {
                 Icon(Icons.Outlined.Close, contentDescription = "Remover filtro", tint = ExaltedMuted, modifier = Modifier.width(14.dp))
             }
@@ -170,7 +168,7 @@ fun SkillSearchModal(
                     label = { AppText("Nome (PT ou EN)") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
-                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = ExaltedAmber, focusedLabelColor = ExaltedAmber)
+                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = ExaltedAccentBright, focusedLabelColor = ExaltedAccentBright)
                 )
 
                 // Seleção por habilidade/círculo — recolhida por padrão
@@ -179,11 +177,11 @@ fun SkillSearchModal(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth().feedbackClickable { skillsExpanded = !skillsExpanded }
                     ) {
-                        AppText(if (skillsExpanded) "▾" else "▸", color = ExaltedGold, modifier = Modifier.padding(end = 6.dp))
+                        AppText(if (skillsExpanded) "▾" else "▸", color = ExaltedAccentBright, modifier = Modifier.padding(end = 6.dp))
                         AppText(
                             config.skillGroupLabel + if (draft.selectedSkillIds.isNotEmpty()) " (${draft.selectedSkillIds.size})" else "",
                             style = MaterialTheme.typography.labelMedium,
-                            color = ExaltedGold
+                            color = ExaltedAccentBright
                         )
                     }
                     if (skillsExpanded) {
@@ -193,7 +191,7 @@ fun SkillSearchModal(
                             label = { AppText("Buscar em ${config.skillGroupLabel.lowercase()}s") },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth().padding(top = 6.dp),
-                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = ExaltedAmber, focusedLabelColor = ExaltedAmber)
+                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = ExaltedAccentBright, focusedLabelColor = ExaltedAccentBright)
                         )
                         val skillsFiltrados = remember(skillQuery, config.availableSkillIds) {
                             if (skillQuery.isBlank()) config.availableSkillIds
@@ -210,7 +208,7 @@ fun SkillSearchModal(
                                         draft = draft.copy(selectedSkillIds = if (checked) draft.selectedSkillIds - skillId else draft.selectedSkillIds + skillId)
                                     }
                                 ) {
-                                    Checkbox(checked = checked, onCheckedChange = null, colors = CheckboxDefaults.colors(checkedColor = ExaltedAmber, uncheckedColor = ExaltedGold))
+                                    Checkbox(checked = checked, onCheckedChange = null, colors = CheckboxDefaults.colors(checkedColor = ExaltedAccentBright, uncheckedColor = ExaltedAccentBright))
                                     AppText(skillId, color = MaterialTheme.colorScheme.onSurface)
                                 }
                             }
@@ -242,11 +240,11 @@ fun SkillSearchModal(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth().feedbackClickable { typesExpanded = !typesExpanded }
                     ) {
-                        AppText(if (typesExpanded) "▾" else "▸", color = ExaltedGold, modifier = Modifier.padding(end = 6.dp))
+                        AppText(if (typesExpanded) "▾" else "▸", color = ExaltedAccentBright, modifier = Modifier.padding(end = 6.dp))
                         AppText(
                             "Tipo" + if (draft.types.isNotEmpty()) " (${draft.types.size})" else "",
                             style = MaterialTheme.typography.labelMedium,
-                            color = ExaltedGold
+                            color = ExaltedAccentBright
                         )
                     }
                     if (typesExpanded) {
@@ -265,11 +263,11 @@ fun SkillSearchModal(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.weight(1f).feedbackClickable { keywordsExpanded = !keywordsExpanded }
                         ) {
-                            AppText(if (keywordsExpanded) "▾" else "▸", color = ExaltedGold, modifier = Modifier.padding(end = 6.dp))
+                            AppText(if (keywordsExpanded) "▾" else "▸", color = ExaltedAccentBright, modifier = Modifier.padding(end = 6.dp))
                             AppText(
                                 "Palavras-chave" + if (draft.keywords.isNotEmpty()) " (${draft.keywords.size})" else "",
                                 style = MaterialTheme.typography.labelMedium,
-                                color = ExaltedGold
+                                color = ExaltedAccentBright
                             )
                         }
                         if (keywordsExpanded) {
@@ -298,11 +296,11 @@ fun SkillSearchModal(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth().feedbackClickable { durationsExpanded = !durationsExpanded }
                     ) {
-                        AppText(if (durationsExpanded) "▾" else "▸", color = ExaltedGold, modifier = Modifier.padding(end = 6.dp))
+                        AppText(if (durationsExpanded) "▾" else "▸", color = ExaltedAccentBright, modifier = Modifier.padding(end = 6.dp))
                         AppText(
                             "Duração" + if (draft.durations.isNotEmpty()) " (${draft.durations.size})" else "",
                             style = MaterialTheme.typography.labelMedium,
-                            color = ExaltedGold
+                            color = ExaltedAccentBright
                         )
                     }
                     if (durationsExpanded) {
@@ -339,15 +337,15 @@ private fun NumericFilterRow(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        AppText(label, style = MaterialTheme.typography.labelMedium, color = ExaltedGold)
+        AppText(label, style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             (1..5).forEach { n ->
                 val selected = value == n
                 Surface(
                     modifier = Modifier.feedbackClickable { onValueChange(if (selected) null else n) },
-                    color = if (selected) ExaltedAmber.copy(alpha = 0.3f) else ExaltedDarkSurface,
+                    color = if (selected) ExaltedAccentBright.copy(alpha = 0.3f) else ExaltedDarkSurface,
                     shape = MaterialTheme.shapes.small,
-                    border = BorderStroke(1.dp, if (selected) ExaltedAccentBright else ExaltedGold.copy(alpha = 0.4f))
+                    border = BorderStroke(1.dp, if (selected) ExaltedAccentBright else ExaltedAccentBright.copy(alpha = 0.4f))
                 ) {
                     AppText("$n", color = if (selected) ExaltedAccentBright else ExaltedMuted, modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp))
                 }
@@ -379,9 +377,9 @@ fun MultiSelectChips(options: List<String>, selected: Set<String>, onToggle: (St
             val isSelected = opt in selected
             Surface(
                 modifier = Modifier.feedbackClickable { onToggle(opt) },
-                color = if (isSelected) ExaltedAmber.copy(alpha = 0.28f) else ExaltedDarkSurface,
+                color = if (isSelected) ExaltedAccentBright.copy(alpha = 0.28f) else ExaltedDarkSurface,
                 shape = MaterialTheme.shapes.small,
-                border = BorderStroke(1.dp, if (isSelected) ExaltedAccentBright else ExaltedGold.copy(alpha = 0.4f))
+                border = BorderStroke(1.dp, if (isSelected) ExaltedAccentBright else ExaltedAccentBright.copy(alpha = 0.4f))
             ) {
                 AppText(
                     opt,
@@ -414,6 +412,6 @@ fun DebouncedSearchField(
         label = { AppText(label) },
         singleLine = true,
         modifier = modifier.fillMaxWidth(),
-        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = ExaltedAmber, focusedLabelColor = ExaltedAmber)
+        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = ExaltedAccentBright, focusedLabelColor = ExaltedAccentBright)
     )
 }
