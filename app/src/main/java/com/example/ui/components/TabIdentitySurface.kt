@@ -23,13 +23,13 @@ import com.example.ui.theme.ExaltedOutline
  * Estes modificadores permanecem apenas para preservar as chamadas
  * existentes e evitar qualquer alteração funcional nas telas.
  */
-fun Modifier.exaltedTabIdentity(chapter: Int = 0): Modifier = this
+fun Modifier.exaltedTabIdentity(chapter: Int = 0): Modifier = this.background(ExaltedDarkSurface)
 
 fun Modifier.exaltedContentStage(chapter: Int): Modifier = this.background(
     Brush.verticalGradient(
         listOf(
             ExaltedDarkSurface,
-            ExaltedDarkSurfaceVariant.copy(alpha = 0.34f),
+            ExaltedDarkSurfaceVariant.copy(alpha = 0.72f),
             ExaltedDarkSurface
         )
     )
