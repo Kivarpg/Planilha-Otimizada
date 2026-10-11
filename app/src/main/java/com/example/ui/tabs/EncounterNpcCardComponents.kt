@@ -38,6 +38,7 @@ import com.example.ui.theme.ExaltVisualTemplate
 import com.example.ui.theme.ExaltedGold
 import com.example.ui.theme.ExaltedMuted
 import com.example.ui.theme.ExaltedOnSurface
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 internal fun corZebrada(indice: Int, visualTemplate: ExaltVisualTemplate? = null): Color =
     if (indice % 2 == 0) {
@@ -89,6 +90,7 @@ internal fun LinhaInfo(
     valueTextStyle: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.bodyLarge,
     inlineSummary: Boolean = false
 ) {
+    val visual = visualTemplate ?: LocalExaltedVisualTemplate.current
     var mostrarCalculo by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     var mostrarLongPress by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     // A ação de toque pode mudar com o NPC sem reiniciar o detector de gestos
@@ -98,7 +100,7 @@ internal fun LinhaInfo(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(corZebrada(indice, visualTemplate))
+                .background(corZebrada(indice, visual))
                 .padding(vertical = 7.dp, horizontal = 8.dp)
                 .then(
                     if (onTapOverride != null) {
@@ -136,7 +138,7 @@ internal fun LinhaInfo(
                         append(" ").append(rotulo)
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    color = visualTemplate?.onSurface ?: ExaltedOnSurface,
+                    color = visual.onSurface,
                     fontWeight = FontWeight.Bold,
                     maxFontSize = androidx.compose.ui.unit.TextUnit(16f, androidx.compose.ui.unit.TextUnitType.Sp),
                     minFontSize = androidx.compose.ui.unit.TextUnit(8f, androidx.compose.ui.unit.TextUnitType.Sp),
@@ -155,7 +157,7 @@ internal fun LinhaInfo(
                     AppText(
                         prefixo,
                         style = MaterialTheme.typography.bodyLarge.copy(fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace),
-                        color = visualTemplate?.onSurface ?: ExaltedOnSurface,
+                        color = visual.onSurface,
                         fontWeight = FontWeight.Bold
                     )
                 }
@@ -167,7 +169,7 @@ internal fun LinhaInfo(
                 AppText(
                     formatarValorPlanilha(valor),
                     style = valueTextStyle.copy(fontFamily = androidx.compose.ui.text.font.FontFamily.Monospace),
-                    color = visualTemplate?.onSurface ?: ExaltedOnSurface,
+                    color = visual.onSurface,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.End,
                     maxLines = 1
@@ -181,7 +183,7 @@ internal fun LinhaInfo(
                     AppText(
                         sufixo,
                         style = MaterialTheme.typography.bodyLarge,
-                        color = visualTemplate?.onSurface ?: ExaltedOnSurface,
+                        color = visual.onSurface,
                         fontWeight = FontWeight.Bold,
                         softWrap = false,
                         maxLines = 1
@@ -192,7 +194,7 @@ internal fun LinhaInfo(
             AppText(
                 rotulo,
                 style = MaterialTheme.typography.bodyLarge,
-                color = visualTemplate?.muted ?: ExaltedMuted,
+                color = visual.muted,
                 modifier = Modifier.weight(1f)
             )
             }
@@ -204,15 +206,15 @@ internal fun LinhaInfo(
                 onDismissRequest = { mostrarCalculo = false }
             ) {
                 Surface(
-                    color = ExaltedDarkSurfaceVariant,
+                    color = visual.surfaceVariant,
                     shape = MaterialTheme.shapes.small,
-                    border = androidx.compose.foundation.BorderStroke(1.dp, ExaltedGold),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, visual.accentBright),
                     shadowElevation = 4.dp
                 ) {
                     AppText(
                         calculo,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = visualTemplate?.onSurface ?: ExaltedOnSurface,
+                        color = visual.onSurface,
                         modifier = Modifier.padding(12.dp)
                     )
                 }
@@ -225,7 +227,7 @@ internal fun LinhaInfo(
                     title = {
                         AppText(
                             longPressTitulo,
-                            color = visualTemplate?.accentBright ?: ExaltedGold,
+                            color = visual.accentBright,
                             textAlign = TextAlign.Center,
                             modifier = Modifier.fillMaxWidth(),
                             fontWeight = FontWeight.Bold
@@ -233,9 +235,9 @@ internal fun LinhaInfo(
                     },
                     text = {
                         Surface(
-                            color = ExaltedDarkSurfaceVariant,
+                            color = visual.surfaceVariant,
                             shape = MaterialTheme.shapes.small,
-                            border = androidx.compose.foundation.BorderStroke(1.dp, ExaltedGold),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, visual.accentBright),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             if (longPressContent != null) {
@@ -251,7 +253,7 @@ internal fun LinhaInfo(
                                 AppText(
                                     calculoLongPress,
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = visualTemplate?.onSurface ?: ExaltedOnSurface,
+                                    color = visual.onSurface,
                                     modifier = Modifier
                                         .padding(12.dp)
                                         .widthIn(max = 420.dp)
@@ -266,7 +268,9 @@ internal fun LinhaInfo(
                             onClick = { mostrarLongPress = false }
                         )
                     },
-                    containerColor = ExaltedDarkSurfaceVariant
+                    containerColor = visual.surfaceVariant,
+                    titleContentColor = visual.onSurface,
+                    textContentColor = visual.onSurface
                 )
             } else {
                 Popup(
@@ -275,15 +279,15 @@ internal fun LinhaInfo(
                     onDismissRequest = { mostrarLongPress = false }
                 ) {
                     Surface(
-                        color = ExaltedDarkSurfaceVariant,
+                        color = visual.surfaceVariant,
                         shape = MaterialTheme.shapes.small,
-                        border = androidx.compose.foundation.BorderStroke(1.dp, ExaltedGold),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, visual.accentBright),
                         shadowElevation = 4.dp
                     ) {
                         AppText(
                             calculoLongPress,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = visualTemplate?.onSurface ?: ExaltedOnSurface,
+                            color = visual.onSurface,
                             modifier = Modifier.padding(12.dp).widthIn(max = 320.dp)
                         )
                     }
