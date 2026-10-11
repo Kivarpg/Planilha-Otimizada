@@ -47,11 +47,7 @@ import com.example.ui.components.LongPressCard
 import com.example.ui.components.dialogShape
 import com.example.ui.components.gildedDialogBorder
 import com.example.ui.theme.ExaltedDangerCore
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedAmber
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedGold
-import com.example.ui.theme.ExaltedMuted
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.ui.theme.ExaltedOnSurface
 import com.example.viewmodel.SheetViewModel
 
@@ -62,6 +58,7 @@ import com.example.viewmodel.SheetViewModel
 @Composable
 @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 internal fun ArmorSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
+    val visual = LocalExaltedVisualTemplate.current
     var showArmorConfigDialog by remember { mutableStateOf(false) }
     var mostrarCatalogoArmadura by remember { mutableStateOf(false) }
     var mostrarCatalogoArmaduraMundana by remember { mutableStateOf(false) }
@@ -74,7 +71,7 @@ internal fun ArmorSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
     var armorToCommitWithMotes by remember { mutableStateOf<Armadura?>(null) }
     var armorMarcadores by remember { mutableStateOf<List<String>>(emptyList()) }
 
-    AppText("Armadura", style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), color = ExaltedAmber, modifier = Modifier.padding(vertical = 4.dp))
+    AppText("Armadura", style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), color = visual.accent, modifier = Modifier.padding(vertical = 4.dp))
 
     InkButton(
         label = "Cadastrar Armadura",
@@ -89,14 +86,14 @@ internal fun ArmorSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
         AppText(
             text = "Nenhuma armadura registrada.",
             style = MaterialTheme.typography.bodySmall,
-            color = ExaltedMuted,
+            color = visual.muted,
             textAlign = TextAlign.Center
         )
     } else {
         AppText(
             text = "Toque no cartão para comitar (apenas uma por vez). Pressione longo para remover.",
             style = MaterialTheme.typography.bodySmall,
-            color = ExaltedMuted,
+            color = visual.muted,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(bottom = 8.dp)
         )
@@ -134,7 +131,7 @@ internal fun ArmorSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
                                         viewModel.toggleArmorEquipped(armor.id)
                                     }
                                 },
-                                colors = CheckboxDefaults.colors(checkedColor = ExaltedGold, uncheckedColor = ExaltedMuted)
+                                colors = CheckboxDefaults.colors(checkedColor = visual.accentBright, uncheckedColor = visual.muted)
                             ,
     modifier = Modifier.feedbackOnPress(enabled = true)
 )
@@ -144,7 +141,7 @@ internal fun ArmorSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
                                 fontWeight = FontWeight.Bold,
                                 maxFontSize = MaterialTheme.typography.titleMedium.fontSize,
                                 minFontSize = 12.sp,
-                                color = ExaltedAmber,
+                                color = visual.accent,
                                 modifier = Modifier.weight(1f)
                             )
                         }
@@ -155,14 +152,14 @@ internal fun ArmorSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
                         ) {
                             if (armor.equipada) {
                             Surface(
-                                color = ExaltedGold.copy(alpha = 0.18f),
+                                color = visual.accentBright.copy(alpha = 0.18f),
                                 shape = MaterialTheme.shapes.small,
-                                border = BorderStroke(1.dp, ExaltedGold)
+                                border = BorderStroke(1.dp, visual.accentBright)
                             ) {
                                 AppText(
                                     text = "Comitado",
                                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                                    color = ExaltedGold,
+                                    color = visual.accentBright,
                                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
                                 )
                             }
@@ -180,7 +177,7 @@ internal fun ArmorSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
                         AppText(
                             text = "Marcadores: ${armor.marcadores.joinToString(", ")}",
                             style = MaterialTheme.typography.bodySmall,
-                            color = ExaltedMuted
+                            color = visual.muted
                         )
                     }
                 }
@@ -193,7 +190,7 @@ internal fun ArmorSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
             onDismissRequest = { showArmorConfigDialog = false },
             modifier = Modifier.then(gildedDialogBorder()),
             shape = dialogShape,
-            title = { AppText("Configuração da Armadura", color = ExaltedAmber, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
+            title = { AppText("Configuração da Armadura", color = visual.accent, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2, overflow = TextOverflow.Ellipsis, forceStroke = true) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     OutlinedTextField(
@@ -262,8 +259,10 @@ internal fun ArmorSection(sheet: CharacterSheet, viewModel: SheetViewModel) {
             confirmButton = {
                 GildedDialogTextButton(text = "Cancelar", onClick = { showArmorConfigDialog = false })
             },
-            containerColor = ExaltedDarkSurfaceVariant
-        )
+            containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
+    )
     }
 
     armorToCommitWithMotes?.let { armor ->
@@ -368,12 +367,13 @@ private fun CatalogoArmaduraDetalhesDialog(
     onSelecionar: () -> Unit,
     onDismiss: () -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     val stats = ArmorStatsTable.stats(tipo, peso)
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = Modifier.then(gildedDialogBorder()),
         title = {
-            AppText(nome, color = ExaltedAmber, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true)
+            AppText(nome, color = visual.accent, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true)
         },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -382,12 +382,12 @@ private fun CatalogoArmaduraDetalhesDialog(
                 AppText("Absorção: ${stats.absorcao}", color = ExaltedOnSurface, modifier = Modifier.padding(top = 6.dp))
                 AppText("Dureza: ${stats.dureza}", color = ExaltedOnSurface)
                 AppText("Penalidade: ${stats.penalidadeMobilidade}", color = ExaltedOnSurface)
-                AppText("Comitamento: ${stats.comitamento}", color = ExaltedGold)
+                AppText("Comitamento: ${stats.comitamento}", color = visual.accentBright)
                 custoMerito?.let {
-                    AppText("Mérito: ${"•".repeat(it)} ($it)", color = ExaltedGold, modifier = Modifier.padding(top = 6.dp))
+                    AppText("Mérito: ${"•".repeat(it)} ($it)", color = visual.accentBright, modifier = Modifier.padding(top = 6.dp))
                 }
                 custoRecursos?.let {
-                    AppText("Recursos: ${"•".repeat(it)} ($it)" + if (presente) " — Presente" else "", color = ExaltedGold, modifier = Modifier.padding(top = 6.dp))
+                    AppText("Recursos: ${"•".repeat(it)} ($it)" + if (presente) " — Presente" else "", color = visual.accentBright, modifier = Modifier.padding(top = 6.dp))
                 }
                 AppText(
                     "Características: ${if (marcadores.isEmpty()) "Nenhuma" else marcadores.joinToString(", ")}",
@@ -405,7 +405,9 @@ private fun CatalogoArmaduraDetalhesDialog(
                 GildedDialogTextButton(text = "Voltar", onClick = onDismiss)
             }
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
 
@@ -417,11 +419,12 @@ private fun CatalogoArmaduraDialog(
     onEscolher: (com.example.data.ArmorCatalog.CatalogoArmadura, String) -> Unit,
     onDismiss: () -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     AlertDialog(
         onDismissRequest = onDismiss,
         modifier = Modifier.then(gildedDialogBorder()),
         shape = dialogShape,
-        title = { AppText("Catálogo de Armaduras", color = ExaltedAmber, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
+        title = { AppText("Catálogo de Armaduras", color = visual.accent, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
         text = {
             Column(
                 modifier = Modifier
@@ -432,7 +435,7 @@ private fun CatalogoArmaduraDialog(
                 listOf("Leve", "Média", "Pesada").forEach { peso ->
                     val candidatas = com.example.data.ArmorCatalog.candidatas(peso)
                     if (candidatas.isEmpty()) return@forEach
-                    AppText(peso, style = MaterialTheme.typography.titleSmall, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = ExaltedAccentBright, modifier = Modifier.padding(top = 10.dp, bottom = 4.dp))
+                    AppText(peso, style = MaterialTheme.typography.titleSmall, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = visual.accentBright, modifier = Modifier.padding(top = 10.dp, bottom = 4.dp))
                     candidatas.forEach { candidata ->
                         AppText(
                             candidata.nome,
@@ -450,7 +453,9 @@ private fun CatalogoArmaduraDialog(
         confirmButton = {
             GildedDialogTextButton(text = "Cancelar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
 
@@ -463,6 +468,7 @@ private fun CatalogoArmaduraMundanaDialog(
     onEscolher: (com.example.data.ArmorCatalogMundano.CatalogoArmaduraMundana, String, Boolean) -> Unit,
     onDismiss: () -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     var presente by remember { mutableStateOf(false) }
     var erroRecursos by remember { mutableStateOf<String?>(null) }
     fun custoTexto(c: Int) = if (c <= 0) "—" else "•".repeat(c)
@@ -470,7 +476,7 @@ private fun CatalogoArmaduraMundanaDialog(
         onDismissRequest = onDismiss,
         modifier = Modifier.then(gildedDialogBorder()),
         shape = dialogShape,
-        title = { AppText("Catálogo de Armaduras", color = ExaltedAmber, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
+        title = { AppText("Catálogo de Armaduras", color = visual.accent, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true) },
         text = {
             Column(
                 modifier = Modifier
@@ -482,10 +488,10 @@ private fun CatalogoArmaduraMundanaDialog(
                     Checkbox(checked = presente, onCheckedChange = { presente = it; erroRecursos = null },
     modifier = Modifier.feedbackOnPress(enabled = true)
 )
-                    AppText("Presente (ignora o requisito de Recursos)", style = MaterialTheme.typography.bodySmall, color = ExaltedMuted)
+                    AppText("Presente (ignora o requisito de Recursos)", style = MaterialTheme.typography.bodySmall, color = visual.muted)
                 }
                 if (!presente) {
-                    AppText("Seu nível de Recursos: ${custoTexto(nivelRecursos)} ($nivelRecursos)", style = MaterialTheme.typography.bodySmall, color = ExaltedMuted, modifier = Modifier.padding(bottom = 6.dp))
+                    AppText("Seu nível de Recursos: ${custoTexto(nivelRecursos)} ($nivelRecursos)", style = MaterialTheme.typography.bodySmall, color = visual.muted, modifier = Modifier.padding(bottom = 6.dp))
                 }
                 erroRecursos?.let {
                     AppText(it, style = MaterialTheme.typography.bodySmall, color = ExaltedDangerCore, modifier = Modifier.padding(bottom = 6.dp))
@@ -493,7 +499,7 @@ private fun CatalogoArmaduraMundanaDialog(
                 listOf("Leve", "Média", "Pesada").forEach { peso ->
                     val candidatas = com.example.data.ArmorCatalogMundano.candidatas(peso)
                     if (candidatas.isEmpty()) return@forEach
-                    AppText(peso, style = MaterialTheme.typography.titleSmall, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = ExaltedAccentBright, modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
+                    AppText(peso, style = MaterialTheme.typography.titleSmall, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = visual.accentBright, modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
                     candidatas.forEach { candidata ->
                         Row(
                             modifier = Modifier
@@ -510,7 +516,7 @@ private fun CatalogoArmaduraMundanaDialog(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             AppText(candidata.nome, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.weight(1f).padding(end = 8.dp))
-                            AppText(custoTexto(candidata.custoRecursos), style = MaterialTheme.typography.bodyMedium, color = ExaltedGold)
+                            AppText(custoTexto(candidata.custoRecursos), style = MaterialTheme.typography.bodyMedium, color = visual.accentBright)
                         }
                     }
                 }
@@ -519,6 +525,8 @@ private fun CatalogoArmaduraMundanaDialog(
         confirmButton = {
             GildedDialogTextButton(text = "Cancelar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = visual.surfaceVariant,
+        titleContentColor = visual.onSurface,
+        textContentColor = visual.onSurface
     )
 }
