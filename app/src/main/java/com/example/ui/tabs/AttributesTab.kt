@@ -111,7 +111,7 @@ private fun AttributeRow(
                 contentAlignment = Alignment.Center
             ) {
                 if (favoritoInfo.ehCasta) {
-                    AppText("C", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = visual.onSurface)
+                    AppText("C", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = corTextoContraste(visual.accentBright))
                 }
             }
             AppText(
