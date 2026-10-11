@@ -201,3 +201,8 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Removidos imports de paleta fixa obsoletos em seis abas, sem alterar logica.
 - Acrescentados testes de contrato estatico para os controles de tropas e NPCs.
 - Esta auditoria e apenas de codigo-fonte: nao substitui capturas de tela, testes de sobreposicao ou verificacao de dispositivo. Compilacao pendente.
+
+## Preparacao Exalted.863 — Navegacao responsiva
+- Faixa de saldos na aba Habilidades: em telas compactas ou com fonte ampliada, bonus e pontos de habilidade agora ocupam linhas separadas, evitando a disputa horizontal e truncamento do texto.
+- Telas amplas preservam a disposicao anterior; valores e regras de calculo permanecem intactos.
+- Teste de contrato estatico adicionado. Compilacao e inspecao visual em dispositivo pendentes.
