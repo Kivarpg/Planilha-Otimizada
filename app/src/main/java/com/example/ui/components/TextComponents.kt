@@ -58,15 +58,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.model.EncantoQuadro
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedMuted
-import com.example.ui.theme.ExaltedOnSurface
-import com.example.ui.theme.ExaltedOutline
 import com.example.ui.theme.ExaltedDivider
 import com.example.ui.theme.ExaltedTextStroke
-import com.example.ui.theme.ExaltedStructuralMetalShine
 import com.example.ui.theme.Dimens
 import com.example.ui.theme.LocalExaltedVisualTemplate
 
@@ -425,12 +418,14 @@ fun ChamTitleTwoLines(
     nomePt: String,
     nomeEn: String,
     modifier: Modifier = Modifier,
-    titleColor: Color = ExaltedAccentBright
+    titleColor: Color = Color.Unspecified
 ) {
+    val visual = LocalExaltedVisualTemplate.current
+    val resolvedTitleColor = if (titleColor != Color.Unspecified) titleColor else visual.accentBright
     Column(modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         AutoSizeText(
             text = nomePt,
-            color = titleColor,
+            color = resolvedTitleColor,
             fontWeight = FontWeight.Bold,
             maxFontSize = 16.sp,
             minFontSize = 12.sp,
@@ -440,7 +435,7 @@ fun ChamTitleTwoLines(
         if (nomeEn.isNotBlank()) {
             AutoSizeText(
                 text = nomeEn,
-                color = ExaltedOnSurface,
+                color = visual.onSurface,
                 fontWeight = FontWeight.Normal,
                 maxFontSize = 11.sp,
                 minFontSize = 9.sp,
@@ -453,6 +448,7 @@ fun ChamTitleTwoLines(
 }
 @Composable
 fun EncantoQuadroBox(quadro: EncantoQuadro, modifier: Modifier = Modifier) {
+    val visual = LocalExaltedVisualTemplate.current
     // "Quadro" (caixa de destaque) do livro original: título e corpo
     // centralizados, com borda e fundo sutil
     // pra parecer uma caixa de verdade, não só um parágrafo a mais no meio
@@ -461,8 +457,8 @@ fun EncantoQuadroBox(quadro: EncantoQuadro, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .border(1.dp, ExaltedOutline.copy(alpha = 0.6f), MaterialTheme.shapes.small)
-            .background(ExaltedDarkSurfaceVariant.copy(alpha = 0.5f), MaterialTheme.shapes.small)
+            .border(1.dp, visual.outline.copy(alpha = 0.6f), MaterialTheme.shapes.small)
+            .background(visual.surfaceVariant.copy(alpha = 0.5f), MaterialTheme.shapes.small)
             .padding(10.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
@@ -470,7 +466,7 @@ fun EncantoQuadroBox(quadro: EncantoQuadro, modifier: Modifier = Modifier) {
             AppText(
                 quadro.titulo,
                 fontWeight = FontWeight.Bold,
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 style = MaterialTheme.typography.labelLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -480,7 +476,7 @@ fun EncantoQuadroBox(quadro: EncantoQuadro, modifier: Modifier = Modifier) {
             // Pedido do usuário: textos dentro de caixas centralizados.
             AppText(
                 quadro.texto,
-                color = ExaltedOnSurface,
+                color = visual.onSurface,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -499,12 +495,13 @@ fun ExpandableTextCard(
     texto: String,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     var expandido by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     androidx.compose.foundation.layout.Column(
         modifier = modifier
             .fillMaxWidth()
-            .border(1.dp, ExaltedOutline.copy(alpha = 0.6f), MaterialTheme.shapes.small)
-            .background(ExaltedDarkSurfaceVariant.copy(alpha = 0.5f), MaterialTheme.shapes.small)
+            .border(1.dp, visual.outline.copy(alpha = 0.6f), MaterialTheme.shapes.small)
+            .background(visual.surfaceVariant.copy(alpha = 0.5f), MaterialTheme.shapes.small)
             .feedbackClickable { expandido = !expandido }
             .padding(10.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -517,7 +514,7 @@ fun ExpandableTextCard(
             AppText(
                 titulo,
                 fontWeight = FontWeight.Bold,
-                color = ExaltedAccentBright,
+                color = visual.accentBright,
                 style = MaterialTheme.typography.labelLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1f).fillMaxWidth()
@@ -525,14 +522,14 @@ fun ExpandableTextCard(
             androidx.compose.material3.Icon(
                 imageVector = if (expandido) androidx.compose.material.icons.Icons.Default.ArrowDropUp else androidx.compose.material.icons.Icons.Default.ArrowDropDown,
                 contentDescription = if (expandido) "Retrair" else "Expandir",
-                tint = ExaltedAccentBright
+                tint = visual.accentBright
             )
         }
         androidx.compose.animation.AnimatedVisibility(visible = expandido) {
             // Pedido do usuário: texto do Poder da Anima (Aba 2) justificado.
             AppText(
                 texto,
-                color = ExaltedOnSurface,
+                color = visual.onSurface,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Justify,
                 modifier = Modifier.fillMaxWidth()
