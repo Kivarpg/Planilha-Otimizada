@@ -191,7 +191,9 @@ internal fun SheetTopBar(
                     overflow = TextOverflow.Ellipsis
                 )
                 Spacer(Modifier.height(5.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                // O estado da planilha nao deve disputar uma unica linha com
+                // nomes longos de Casta/Aspecto em celulares.
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     AppText(
                         when {
                             sheet.tipoPersonagem.isDragonBlooded() -> sheet.aspecto.ifBlank { "Aspecto" }
@@ -200,19 +202,21 @@ internal fun SheetTopBar(
                         },
                         style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Black, letterSpacing = 1.5.sp),
                         color = ExaltedAccentBright,
-                        maxLines = 1,
+                        maxLines = 2,
+                        softWrap = true,
                         overflow = TextOverflow.Ellipsis
                     )
-                    Spacer(Modifier.width(10.dp))
                     val completa = viewModel.isSheetComplete(sheet)
                     val cor = if (completa) ExaltedStatusCompleto else ExaltedStatusIncompleto
-                    Box(Modifier.size(6.dp).background(cor))
-                    Spacer(Modifier.width(6.dp))
-                    AppText(
-                        if (completa) "Planilha completa e válida" else "Planilha em criação",
-                        style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                        color = cor, maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(Modifier.size(6.dp).background(cor))
+                        Spacer(Modifier.width(6.dp))
+                        AppText(
+                            if (completa) "Planilha completa e válida" else "Planilha em criação",
+                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                            color = cor, maxLines = 2, softWrap = true, overflow = TextOverflow.Ellipsis
+                        )
+                    }
                 }
             }
             Column(
