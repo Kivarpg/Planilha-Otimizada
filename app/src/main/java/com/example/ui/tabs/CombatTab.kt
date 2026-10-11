@@ -163,15 +163,39 @@ fun CombatTab(
                     color = ExaltedAccentBright
                 )
                 Spacer(modifier = Modifier.height(6.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                // Indicadores de Essência precisam permanecer visíveis mesmo quando
+                // a paleta ativa é muito escura. Mantemos a leitura 1..5 e damos
+                // a cada nível uma superfície própria, sem depender de Canvas/SVG.
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     for (nivel in 1..5) {
+                        val ativo = nivel <= sheet.essencia
                         Box(
                             modifier = Modifier
-                                .size(30.dp)
+                                .size(34.dp)
                                 .clip(CircleShape)
-                                .background(if (nivel <= sheet.essencia) essenciaGradientColor(nivel) else ExaltedDarkBackground.copy(alpha = 0.85f))
-                                .border(1.dp, if (nivel <= sheet.essencia) ExaltedAccentBright else ExaltedOutline.copy(alpha = 0.45f), CircleShape)
-                        )
+                                .background(
+                                    if (ativo) essenciaGradientColor(nivel)
+                                    else ExaltedDarkSurfaceVariant
+                                )
+                                .border(
+                                    width = if (ativo) 2.dp else 1.dp,
+                                    color = if (ativo) ExaltedAccentBright else ExaltedOutline,
+                                    shape = CircleShape
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            AppText(
+                                text = nivel.toString(),
+                                color = if (ativo) corTextoContraste(essenciaGradientColor(nivel)) else ExaltedOnSurface,
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Bold,
+                                maxLines = 1
+                            )
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(5.dp))
