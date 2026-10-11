@@ -130,9 +130,14 @@ fun AppText(
         MaterialTheme.typography.titleMedium.fontFamily,
         MaterialTheme.typography.titleSmall.fontFamily
     )
-    val isTitle = !forceStroke && (style.fontFamily in titleFonts ||
-        fontFamily in titleFonts ||
-        (fontSize.value != 0f && fontSize.value >= 18f))
+    // FontFamily may be null for both body and title typography. A null
+    // membership match previously classified ordinary labels as titles.
+    // Use explicit text size and non-null title families only.
+    val isTitle = !forceStroke && (
+        (style.fontFamily != null && style.fontFamily in titleFonts) ||
+        (fontFamily != null && fontFamily in titleFonts) ||
+        (fontSize != TextUnit.Unspecified && fontSize.value >= 18f)
+    )
 
     val requestedFontSize = if (fontSize != TextUnit.Unspecified) fontSize else style.fontSize
     // A largura real pode mudar sem que o Modifier ou o texto mudem.
