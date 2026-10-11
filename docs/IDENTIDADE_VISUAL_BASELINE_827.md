@@ -157,3 +157,8 @@ Uma compilacao bem-sucedida nao certifica fidelidade visual nem ausencia de sobr
 - Os filtros existentes Todas / Casta ou Aspecto e Favorecidas / Com Pontos passam a ocupar uma coluna quando o espaco disponivel e inferior a 390dp; em telas maiores permanecem duas colunas.
 - Preservada a diferenca Lunar (sem filtro de habilidades de casta) e os callbacks originais.
 - Acrescentado teste estatico. Compilacao e verificacao visual ainda pendentes; nao considerar a aba artisticamente remodelada.
+
+## Preparacao Exalted.854 — Aba Atributos
+- O seletor de prioridade dos grupos Fisicos, Sociais e Mentais agora separa o rotulo dos tres botoes e distribui 1º, 2º e 3º em larguras iguais.
+- Preservados os nomes, as prioridades e a chamada setGroupPriority(groupName, prio), sem mudancas de regras.
+- Acrescentado teste estatico de regressao. Compilacao e validacao visual pendentes.
