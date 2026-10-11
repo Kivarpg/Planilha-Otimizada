@@ -438,7 +438,7 @@ fun InkButton(
             Text(
                 text = label,
                 color = (styleOverride.outlineColor ?: ExaltedTextStroke).copy(alpha = if (enabled) 1f else 0.55f),
-                style = textStyle.copy(drawStyle = Stroke(width = Dimens.TextStrokeWidth.value)),
+                style = textStyle.copy(drawStyle = Stroke(width = with(androidx.compose.ui.platform.LocalDensity.current) { Dimens.TextStrokeWidth.toPx() })),
                 maxLines = 2,
                 overflow = TextOverflow.Clip,
                 softWrap = true,
