@@ -350,8 +350,9 @@ fun InkButton(
             // Em botões estreitos (Rows com weight no telefone), não deformamos a
             // pincelada horizontalmente. Escala uniforme pela altura e recorte central
             // preservam a identidade visual mesmo quando a largura disponível diminui.
-            val uniformScale = this.size.height / VIEWBOX_H
+            val uniformScale = minOf(this.size.width / VIEWBOX_W, this.size.height / VIEWBOX_H)
             val translatedX = (this.size.width - VIEWBOX_W * uniformScale) / 2f
+            val translatedY = (this.size.height - VIEWBOX_H * uniformScale) / 2f
             val brush = if (enabled) {
                 resolvedGradient.toBrush(this.size.width)
             } else {
@@ -370,7 +371,7 @@ fun InkButton(
             // inclusive seus rótulos. O recorte torna o limite visual do botão
             // idêntico ao limite medido pelo layout, globalmente.
             clipRect {
-                translate(left = translatedX) {
+                translate(left = translatedX, top = translatedY) {
                     scale(uniformScale, uniformScale, pivot = Offset.Zero) {
                         drawPath(path = path, brush = brush)
                     }
@@ -437,7 +438,7 @@ fun InkButton(
             textAlign = androidx.compose.ui.text.style.TextAlign.Center,
         )
         if (content != null) {
-            Box(contentAlignment = Alignment.Center) { content() }
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { content() }
         } else Box(contentAlignment = Alignment.Center) {
             Text(
                 text = label,
