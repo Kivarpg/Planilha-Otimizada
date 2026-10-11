@@ -226,11 +226,11 @@ internal fun SheetTopBar(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     InkButton(onClick = { onShowSettingsDialog(true) }, modifier = Modifier.size(48.dp)) {
-                        Icon(Icons.Outlined.Settings, "Configurações", tint = ExaltedGold, modifier = Modifier.size(20.dp))
+                        Icon(Icons.Outlined.Settings, "Configurações", tint = ExaltedAccentBright, modifier = Modifier.size(20.dp))
                     }
                     Box {
                         InkButton(onClick = { onShowOpcoesMenu(true) }, modifier = Modifier.size(48.dp)) {
-                            Icon(Icons.Outlined.MoreVert, "Opções", tint = ExaltedGold, modifier = Modifier.size(22.dp))
+                            Icon(Icons.Outlined.MoreVert, "Opções", tint = ExaltedAccentBright, modifier = Modifier.size(22.dp))
                         }
                         DropdownMenu(expanded = showOpcoesMenu, onDismissRequest = { onShowOpcoesMenu(false) }) {
                             DropdownMenuItem(text = { AppText("Novo") }, onClick = { onShowOpcoesMenu(false); onShowNovoConfirmDialog(true) },
