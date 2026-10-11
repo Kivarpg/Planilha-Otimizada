@@ -72,6 +72,21 @@ fun LongPressCard(
                     end = Offset(size.width - 8.dp.toPx(), 2.dp.toPx()),
                     strokeWidth = 1.8f
                 )
+                // Mesma leitura de metal das placas ornamentadas, mantendo a
+                // área de toque e a semântica de clique longo inalteradas.
+                val sideWidth = 2.dp.toPx()
+                drawLine(
+                    brush = Brush.verticalGradient(listOf(accent.copy(alpha = .65f), deep.copy(alpha = .22f), deep.copy(alpha = .55f))),
+                    start = Offset(sideWidth / 2f, 0f),
+                    end = Offset(sideWidth / 2f, size.height),
+                    strokeWidth = sideWidth
+                )
+                drawLine(
+                    brush = Brush.verticalGradient(listOf(accent.copy(alpha = .65f), deep.copy(alpha = .22f), deep.copy(alpha = .55f))),
+                    start = Offset(size.width - sideWidth / 2f, 0f),
+                    end = Offset(size.width - sideWidth / 2f, size.height),
+                    strokeWidth = sideWidth
+                )
                 drawLine(
                     color = accent.copy(alpha = 0.35f),
                     start = Offset(8.dp.toPx(), size.height - 2.dp.toPx()),
