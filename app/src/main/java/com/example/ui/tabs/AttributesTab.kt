@@ -101,7 +101,7 @@ private fun AttributeRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 2.dp),
+            .padding(vertical = 5.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (favoritoInfo != null) {
@@ -151,7 +151,7 @@ private fun AttributeRow(
             maxValue = maxVal,
             minValue = minVal,
             style = ratingStyle,
-            stepperSize = 34.dp,
+            stepperSize = 36.dp,
             onValueChange = { novo -> if (novo > value) onIncrement() else if (novo < value) onDecrement() }
         )
     }
