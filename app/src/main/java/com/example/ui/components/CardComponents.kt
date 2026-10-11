@@ -148,6 +148,13 @@ fun GildedCard(
             drawLine(Brush.horizontalGradient(listOf(Color.Transparent, deep, accent, deep, Color.Transparent)), Offset(8.dp.toPx(),2.dp.toPx()), Offset(size.width-8.dp.toPx(),2.dp.toPx()), outer)
             drawLine(Brush.horizontalGradient(listOf(Color.Transparent, deep.copy(.45f), accent.copy(.48f), deep.copy(.45f), Color.Transparent)), Offset(12.dp.toPx(),size.height-2.dp.toPx()), Offset(size.width-12.dp.toPx(),size.height-2.dp.toPx()), 1.dp.toPx())
             // Moldura interna cria profundidade real sem tocar no conteúdo.
+            // Cantos internos chanfrados, com silhueta inspirada em placas de armadura.
+            val bevel = 14.dp.toPx()
+            val bevelInk = accent.copy(alpha = .64f)
+            drawLine(bevelInk, Offset(inner, inner + bevel), Offset(inner + bevel, inner), 1.5.dp.toPx())
+            drawLine(bevelInk, Offset(size.width - inner - bevel, inner), Offset(size.width - inner, inner + bevel), 1.5.dp.toPx())
+            drawLine(deep.copy(alpha = .78f), Offset(inner, size.height - inner - bevel), Offset(inner + bevel, size.height - inner), 1.5.dp.toPx())
+            drawLine(deep.copy(alpha = .78f), Offset(size.width - inner - bevel, size.height - inner), Offset(size.width - inner, size.height - inner - bevel), 1.5.dp.toPx())
             drawLine(deep.copy(.38f), Offset(inner,inner), Offset(size.width-inner,inner), 1.dp.toPx())
             drawLine(deep.copy(.26f), Offset(inner,size.height-inner), Offset(size.width-inner,size.height-inner), 1.dp.toPx())
             drawLine(deep.copy(.28f), Offset(inner,inner), Offset(inner,size.height-inner), 1.dp.toPx())
