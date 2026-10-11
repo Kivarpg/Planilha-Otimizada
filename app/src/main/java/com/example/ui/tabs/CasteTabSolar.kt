@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import com.example.ui.components.AppText
 import androidx.compose.runtime.Composable
@@ -42,16 +41,11 @@ import com.example.ui.components.SectionHeader
 import com.example.ui.components.GildedCard
 import com.example.ui.theme.ExaltedAmber
 import com.example.ui.theme.ExaltedDarkBackground
-import com.example.ui.theme.ExaltedDarkSurface
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedBlack
 import com.example.ui.theme.ExaltedGold
-import com.example.ui.theme.ExaltedAccentBright
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.ui.theme.ExaltedLimiteClaro
 import com.example.ui.theme.ExaltedLimiteEscuro
-import com.example.ui.theme.ExaltedMuted
 import com.example.ui.theme.ExaltedOnSurface
-import com.example.ui.theme.ExaltedOutline
 import com.example.viewmodel.SheetViewModel
 
 // Extraído de CasteTab.kt (refatoração de organização — pedido explícito
@@ -68,6 +62,7 @@ internal fun SolarCasteTabContent(
     viewModel: SheetViewModel,
     modifier: Modifier = Modifier
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     // Assim como o Aspecto na planilha de Sangue de Dragão, uma planilha Solar
     // nova não possui Casta selecionada. O valor Dawn no modelo é apenas um
     // valor técnico de fallback; a escolha real é indicada por castaEscolhida.
@@ -84,7 +79,7 @@ internal fun SolarCasteTabContent(
             AppText(
                 text = "Casta não selecionada",
                 style = MaterialTheme.typography.bodyMedium,
-                color = ExaltedMuted,
+                color = visual.muted,
                 textAlign = TextAlign.Center
             )
         }
@@ -130,7 +125,7 @@ internal fun SolarCasteTabContent(
             text = sheet.casta.displayName,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-            color = com.example.ui.theme.ExaltedAccentBright,
+            color = visual.accentBright,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
@@ -149,8 +144,7 @@ internal fun SolarCasteTabContent(
         SectionHeader(title = "HABILIDADES DE CASTA (${sheet.casteAbilities.size}/5)")
 
         GildedCard(
-            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2),
-            colors = CardDefaults.cardColors(containerColor = ExaltedBlack)
+            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2)
         ) {
             androidx.compose.foundation.layout.FlowRow(
                 modifier = Modifier
@@ -179,8 +173,7 @@ internal fun SolarCasteTabContent(
 
         if (sheet.casteAbilities.isNotEmpty()) {
             GildedCard(
-                modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2),
-                colors = CardDefaults.cardColors(containerColor = ExaltedBlack)
+                modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2)
             ) {
                 androidx.compose.foundation.layout.FlowRow(
                     modifier = Modifier
@@ -212,8 +205,7 @@ internal fun SolarCasteTabContent(
         SectionHeader(title = "HABILIDADES FAVORECIDAS (${sheet.favoredAbilities.size}/5)")
 
         GildedCard(
-            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2),
-            colors = CardDefaults.cardColors(containerColor = ExaltedBlack)
+            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2)
         ) {
             androidx.compose.foundation.layout.FlowRow(
                 modifier = Modifier
@@ -243,8 +235,7 @@ internal fun SolarCasteTabContent(
         // salvos. Só a posição na tela mudou. ---
         SectionHeader(title = "Limite (quebra de limite)")
         GildedCard(
-            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2),
-            colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+            modifier = Modifier.fillMaxWidth().exaltedSectionPanel(2)
         ) {
             Column(
                 modifier = Modifier
@@ -270,17 +261,17 @@ internal fun SolarCasteTabContent(
                             }
                         },
                         colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = com.example.ui.theme.ExaltedAccentBright,
-                            unfocusedBorderColor = com.example.ui.theme.ExaltedOutline.copy(alpha = 0.55f),
-                            focusedLabelColor = com.example.ui.theme.ExaltedAccentBright,
-                            unfocusedLabelColor = ExaltedMuted,
-                            cursorColor = com.example.ui.theme.ExaltedGold,
+                            focusedBorderColor = visual.accentBright,
+                            unfocusedBorderColor = com.example.ui.theme.visual.outline.copy(alpha = 0.55f),
+                            focusedLabelColor = visual.accentBright,
+                            unfocusedLabelColor = visual.muted,
+                            cursorColor = visual.accent,
                             focusedTextColor = com.example.ui.theme.ExaltedOnSurface,
                             unfocusedTextColor = com.example.ui.theme.ExaltedOnSurface,
-                            focusedContainerColor = com.example.ui.theme.ExaltedDarkSurface,
-                            unfocusedContainerColor = com.example.ui.theme.ExaltedDarkSurface,
-                            focusedPlaceholderColor = ExaltedMuted,
-                            unfocusedPlaceholderColor = ExaltedMuted
+                            focusedContainerColor = visual.surface,
+                            unfocusedContainerColor = visual.surface,
+                            focusedPlaceholderColor = visual.muted,
+                            unfocusedPlaceholderColor = visual.muted
                         ),
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -294,7 +285,7 @@ internal fun SolarCasteTabContent(
                         onDismissRequest = { expandedVirtude = false },
                         modifier = Modifier
                             .fillMaxWidth(0.85f)
-                            .background(ExaltedDarkSurfaceVariant)
+                            .background(visual.surfaceVariant)
                     ) {
                         falhasDeVirtude.forEach { falha ->
                             androidx.compose.material3.DropdownMenuItem(
@@ -321,17 +312,17 @@ internal fun SolarCasteTabContent(
                     label = { AppText("Gatilho do Limite") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = com.example.ui.theme.ExaltedAccentBright,
-                        unfocusedBorderColor = com.example.ui.theme.ExaltedOutline.copy(alpha = 0.55f),
-                        focusedLabelColor = com.example.ui.theme.ExaltedAccentBright,
-                        unfocusedLabelColor = ExaltedMuted,
-                        cursorColor = com.example.ui.theme.ExaltedGold,
+                        focusedBorderColor = visual.accentBright,
+                        unfocusedBorderColor = com.example.ui.theme.visual.outline.copy(alpha = 0.55f),
+                        focusedLabelColor = visual.accentBright,
+                        unfocusedLabelColor = visual.muted,
+                        cursorColor = visual.accent,
                         focusedTextColor = com.example.ui.theme.ExaltedOnSurface,
                         unfocusedTextColor = com.example.ui.theme.ExaltedOnSurface,
-                        focusedContainerColor = com.example.ui.theme.ExaltedDarkSurface,
-                        unfocusedContainerColor = com.example.ui.theme.ExaltedDarkSurface,
-                        focusedPlaceholderColor = ExaltedMuted,
-                        unfocusedPlaceholderColor = ExaltedMuted
+                        focusedContainerColor = visual.surface,
+                        unfocusedContainerColor = visual.surface,
+                        focusedPlaceholderColor = visual.muted,
+                        unfocusedPlaceholderColor = visual.muted
                     )
                 )
                 Spacer(modifier = Modifier.height(5.dp))
@@ -343,7 +334,7 @@ internal fun SolarCasteTabContent(
                 ) {
                     AppText(
                         text = "Limite",
-                        color = com.example.ui.theme.ExaltedGold,
+                        color = visual.accent,
                         fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleMedium
@@ -367,7 +358,7 @@ internal fun SolarCasteTabContent(
                                 },
                                 border = androidx.compose.foundation.BorderStroke(
                                     1.dp,
-                                    if (level <= sheet.limiteContador) com.example.ui.theme.ExaltedGold else com.example.ui.theme.ExaltedAmber.copy(alpha = 0.45f)
+                                    if (level <= sheet.limiteContador) visual.accent else com.example.ui.theme.ExaltedAmber.copy(alpha = 0.45f)
                                 ),
                                 onClick = { viewModel.updateLimiteContador(level) }
                             ) {
@@ -377,7 +368,7 @@ internal fun SolarCasteTabContent(
                                         fontFamily = com.example.ui.theme.ExaltedSymbolFont,
                                         fontSize = 9.sp,
                                         fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-                                        color = if (level <= sheet.limiteContador) limiteTextColor(level) else com.example.ui.theme.ExaltedAccentBright,
+                                        color = if (level <= sheet.limiteContador) limiteTextColor(level) else visual.accentBright,
                                         maxLines = 1,
                                         softWrap = false
                                     )
