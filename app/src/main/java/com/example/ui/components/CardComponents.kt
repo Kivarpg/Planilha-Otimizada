@@ -35,7 +35,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.ui.theme.ExaltedSubtleGoldBorderBrush
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
 import com.example.ui.theme.ExaltedAccentBright
 import com.example.ui.theme.ExaltedMetalGoldDeep
@@ -43,8 +42,8 @@ import com.example.ui.theme.ExaltedStructuralMetalDeep
 import com.example.ui.theme.ExaltedStructuralMetal
 import com.example.ui.theme.ExaltedStructuralMetalShine
 import com.example.ui.theme.ExaltVisualTemplate
-import com.example.ui.theme.ExaltedActiveMotif
-import com.example.ui.theme.ExaltedVisualMotif
+import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.theme.ProvideExaltedVisualTemplate
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -54,6 +53,7 @@ fun LongPressCard(
     onClick: (() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -63,8 +63,8 @@ fun LongPressCard(
             // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
             // Mesmo tratamento estrutural do GildedCard para cartões de interação.
             .drawBehind {
-                val accent = ExaltedAccentBright
-                val deep = ExaltedStructuralMetalDeep
+                val accent = visual.accentBright
+                val deep = visual.metalDeep
                 drawLine(
                     brush = Brush.horizontalGradient(listOf(Color.Transparent, deep, accent, Color.Transparent)),
                     start = Offset(8.dp.toPx(), 2.dp.toPx()),
@@ -97,10 +97,10 @@ fun LongPressCard(
                 onClick = { onClick?.invoke() },
                 onLongClick = onLongClick
             ),
-        colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant),
+        colors = CardDefaults.cardColors(containerColor = visual.surfaceVariant),
         border = BorderStroke(
             1.25.dp,
-            ExaltedSubtleGoldBorderBrush
+            Brush.linearGradient(listOf(visual.metalDeep, visual.outline, visual.metalDeep))
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
@@ -121,11 +121,10 @@ fun GildedCard(
     visualTemplate: ExaltVisualTemplate? = null,
     content: @Composable () -> Unit
 ) {
-    val visual = visualTemplate
-    val accent = visual?.accentBright ?: ExaltedAccentBright
-    val deep = visual?.metalDeep ?: ExaltedStructuralMetalDeep
-    val surface = visual?.surfaceVariant ?: ExaltedDarkSurfaceVariant
-    val motif = if (visualTemplate == null) ExaltedActiveMotif else null
+    val visual = visualTemplate ?: LocalExaltedVisualTemplate.current
+    val accent = visual.accentBright
+    val deep = visual.metalDeep
+    val surface = visual.surfaceVariant
     Card(
         // Conteúdo e decoração não compartilham mais a mesma fase de desenho.
         // A identidade fica no container/borda; nada é pintado depois do conteúdo.
@@ -134,7 +133,11 @@ fun GildedCard(
         border = border ?: BorderStroke(1.25.dp, Brush.linearGradient(listOf(deep.copy(alpha=.82f),accent.copy(alpha=.86f),deep.copy(alpha=.82f)))),
         shape = shape,
         elevation = elevation
-    ) { content() }
+    ) {
+        ProvideExaltedVisualTemplate(visual) {
+            content()
+        }
+    }
 }
 
 /**
