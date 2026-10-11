@@ -62,14 +62,14 @@ private fun PriorityBadge(
     Box(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
-            .background(if (isSelected) ExaltedAccentBright.copy(alpha = 0.25f) else ExaltedDarkSurface)
+            .background(if (isSelected) ExaltedAccentBright.copy(alpha = 0.34f) else ExaltedDarkSurfaceVariant)
             .border(
                 1.dp,
                 if (isSelected) ExaltedAccentBright else ExaltedOutline.copy(alpha = 0.5f),
                 MaterialTheme.shapes.small
             )
             .feedbackClickable(onClick = onClick)
-            .padding(horizontal = 10.dp, vertical = 5.dp),
+            .padding(horizontal = 13.dp, vertical = 8.dp),
         contentAlignment = Alignment.Center
     ) {
         AppText(
