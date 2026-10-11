@@ -58,6 +58,18 @@ class VisualIdentityPreparationContractTest {
     }
 
     @Test
+    fun `type palette covers remaining sorcery merits and equipment controls`() {
+        val sorcery = File("src/main/java/com/example/ui/tabs/FeiticosTab.kt").readText()
+        val merits = File("src/main/java/com/example/ui/tabs/MeritsTab.kt").readText()
+        val equipment = File("src/main/java/com/example/ui/tabs/EquipmentTab.kt").readText()
+        assertTrue(sorcery.contains("tint = ExaltedAccentBright, modifier = Modifier.size(18.dp)"))
+        assertTrue(merits.contains("color = ExaltedAccentBright,\n                    fontWeight = FontWeight.Bold,\n                    textAlign = TextAlign.Center"))
+        assertTrue(equipment.contains("selectedColor = com.example.ui.theme.ExaltedAccentBright"))
+        assertTrue(equipment.contains("cursorColor = com.example.ui.theme.ExaltedAccentBright"))
+        assertTrue(equipment.contains("if (isSelected) com.example.ui.theme.ExaltedAccentBright else ExaltedOutline"))
+    }
+
+    @Test
     fun `sorcery circle controls and commitment dialog use active palette`() {
         val sorcery = File("src/main/java/com/example/ui/tabs/FeiticosTab.kt").readText()
         val equipment = File("src/main/java/com/example/ui/tabs/EquipmentTab.kt").readText()
