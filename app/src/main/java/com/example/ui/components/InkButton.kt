@@ -212,7 +212,11 @@ fun InkButton(
                 brush = styleOverride.outlineColor?.let { outline ->
                     Brush.horizontalGradient(listOf(outline, outline, outline))
                 } ?: Brush.horizontalGradient(
-                    listOf(resolvedGradient.start, resolvedGradient.mid, resolvedGradient.end)
+                    if (enabled) {
+                        listOf(resolvedGradient.start, resolvedGradient.mid, resolvedGradient.end)
+                    } else {
+                        listOf(resolvedVisual.outline, resolvedVisual.accent, resolvedVisual.outline)
+                    }
                 ),
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
             )
@@ -236,7 +240,7 @@ fun InkButton(
         // Acabamento padrão: contorno + preenchimento, igual à tipografia
         // temática usada no restante do aplicativo. O contorno fica abaixo
         // do preenchimento para manter a leitura sobre qualquer pincelada.
-        val effectiveTextColor = if (enabled) textColor else textColor.copy(alpha = 0.72f)
+        val effectiveTextColor = textColor
         // O InkButton é usado em larguras muito diferentes (inclusive em Rows com weight).
         // O padding antigo de 28.dp por lado consumia quase toda a largura dos botões
         // compactos e cortava rótulos como "Automático". Mantemos uma margem segura e
