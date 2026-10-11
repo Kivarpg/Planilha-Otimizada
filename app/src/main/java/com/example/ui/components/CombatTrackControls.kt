@@ -6,7 +6,6 @@ import androidx.compose.material3.Surface
 import com.example.ui.components.AppText
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.components.InkButtonVariant
 import com.example.ui.components.InkButtonSize
 import com.example.ui.components.InkButton
@@ -36,10 +35,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.unit.dp
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedOutline
 import com.example.ui.theme.ExaltVisualTemplate
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 // Trilha de Força de Vontade: uma única trilha de 1 a 10 pontos, iniciando em 5.
 // Os botões "−"/"+" reduzem/aumentam o valor atual em 1. Tocar diretamente em
@@ -57,11 +54,12 @@ fun WillpowerTrack(
     maxValor: Int = 10,
     visualTemplate: ExaltVisualTemplate? = null
 ) {
-    val surfaceVariant = visualTemplate?.surfaceVariant ?: ExaltedDarkSurfaceVariant
-    val outline = visualTemplate?.outline ?: ExaltedOutline
-    val accent = visualTemplate?.accent ?: ExaltedAccentBright
-    val accentBright = visualTemplate?.accentBright ?: ExaltedAccentBright
-    val shine = visualTemplate?.metalShine ?: ExaltedAccentBright
+    val resolvedVisual = visualTemplate ?: LocalExaltedVisualTemplate.current
+    val surfaceVariant = resolvedVisual.surfaceVariant
+    val outline = resolvedVisual.outline
+    val accent = resolvedVisual.accent
+    val accentBright = resolvedVisual.accentBright
+    val shine = resolvedVisual.metalShine
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = surfaceVariant),
