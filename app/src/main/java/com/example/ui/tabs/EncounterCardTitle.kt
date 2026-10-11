@@ -56,39 +56,16 @@ fun EncounterCardTitle(
     softWrap: Boolean = true,
     textAlign: TextAlign = TextAlign.Center
 ) {
-    val strokeWidthPx = with(LocalDensity.current) { Dimens.TextStrokeWidth.toPx() }
-    // Reserva vertical própria para o título. O contorno tipográfico pode
-    // ultrapassar visualmente a métrica nominal da fonte em alguns devices;
-    // sem esta folga, o primeiro controle da seção parece colado/sobreposto.
-    // Centralizar a proteção aqui evita depender de Spacers externos e mantém
-    // todas as seções da Aba 11 consistentes.
-    Box(
-        modifier = Modifier
+    // Uma única camada: o título não pode depender de duas medições e
+    // pinturas sobrepostas, especialmente nos cartões compactos da Aba 11.
+    Text(
+        text = text,
+        color = color,
+        style = style.copy(fontWeight = fontWeight ?: style.fontWeight),
+        softWrap = softWrap,
+        textAlign = textAlign,
+        modifier = modifier
             .fillMaxWidth()
-            .then(modifier)
             .padding(top = 3.dp, bottom = 7.dp)
-    ) {
-        Text(
-            text = text,
-            style = style.copy(
-                color = ExaltedTextStroke,
-                fontWeight = fontWeight ?: style.fontWeight,
-                drawStyle = Stroke(width = strokeWidthPx)
-            ),
-            softWrap = softWrap,
-            textAlign = textAlign,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Text(
-            text = text,
-            style = style.copy(
-                color = color,
-                fontWeight = fontWeight ?: style.fontWeight,
-                drawStyle = Fill
-            ),
-            softWrap = softWrap,
-            textAlign = textAlign,
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
+    )
 }
