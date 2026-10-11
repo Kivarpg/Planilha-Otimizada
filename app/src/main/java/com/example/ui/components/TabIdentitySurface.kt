@@ -34,7 +34,7 @@ fun Modifier.exaltedSectionPanel(
     .background(
         Brush.verticalGradient(
             listOf(
-                ExaltedStructuralMetalDeep.copy(alpha = 0.56f),
+                ExaltedStructuralMetalDeep.copy(alpha = 0.62f),
                 backgroundColor,
                 backgroundColor.copy(alpha = 0.98f),
                 ExaltedDarkSurface
@@ -57,7 +57,7 @@ fun Modifier.exaltedSectionPanel(
 fun Modifier.exaltedControlBand(
     surfaceColor: Color = ExaltedDarkSurface,
     accentColor: Color = ExaltedAccentBright,
-    accentAlpha: Float = 0.085f
+    accentAlpha: Float = 0.12f
 ): Modifier = this.background(
     Brush.horizontalGradient(
         listOf(
