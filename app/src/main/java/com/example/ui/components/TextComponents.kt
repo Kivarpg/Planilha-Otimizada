@@ -157,29 +157,19 @@ fun AppText(
         fontFamily = fontFamily ?: style.fontFamily,
         textAlign = textAlign ?: style.textAlign
     )
-    val density = LocalDensity.current
-    // O Modifier externo pertence ao contêiner. Aplicá-lo em ambos os
-    // BasicText duplicava padding e podia deslocar contorno e preenchimento.
-    Box(modifier = modifier) {
-        BasicText(
-            text = text,
-            modifier = Modifier.fillMaxWidth(),
-            style = effectiveStyle.copy(
-                color = ExaltedTextStroke,
-                drawStyle = androidx.compose.ui.graphics.drawscope.Stroke(
-                    width = with(density) { Dimens.TextStrokeWidth.toPx() }
-                )
-            ),
-            overflow = overflow, softWrap = softWrap, maxLines = maxLines, minLines = minLines
-        )
-        BasicText(
-            text = text,
-            modifier = Modifier.fillMaxWidth(),
-            style = effectiveStyle,
-            overflow = overflow, softWrap = softWrap, maxLines = maxLines, minLines = minLines,
-            onTextLayout = onTextLayout
-        )
-    }
+    // Uma única camada de texto: evita divergência de medição/recorte entre
+    // contorno e preenchimento em layouts estreitos. O contraste passa a ser
+    // responsabilidade do token de cor resolvido, não de uma segunda pintura.
+    BasicText(
+        text = text,
+        modifier = modifier,
+        style = effectiveStyle,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
+        minLines = minLines,
+        onTextLayout = onTextLayout
+    )
 }
 
 @Composable
@@ -268,29 +258,10 @@ fun AutoSizeText(
         brush = brush,
         textAlign = textAlign
     )
-    val density = LocalDensity.current
-    val strokeWidth = with(density) { Dimens.TextStrokeWidth.toPx() }
     Box(modifier = modifier.onSizeChanged { availableTextWidthPx = it.width }) {
-        // APPROVED VISUAL CUSTOMIZATION
-        // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
-        // AutoSizeText é usado em botões e rótulos que antes escapavam do
-        // contorno global. Mantemos a mesma medição/auto-redução e aplicamos
-        // somente o tratamento visual do contorno, sem alterar o callback.
-        androidx.compose.material3.Text(
-            text = text,
-            color = ExaltedTextStroke,
-            style = effectiveStyle.copy(brush = null, drawStyle = androidx.compose.ui.graphics.drawscope.Stroke(width = strokeWidth)),
-            maxLines = 1,
-            softWrap = false,
-            overflow = TextOverflow.Ellipsis,
-            textAlign = textAlign,
-            // CORREÇÃO: sem fillMaxWidth aqui, o Text fica do tamanho do
-            // próprio texto e "textAlign" não tem espaço sobrando pra
-            // centralizar dentro de — por isso o rótulo aparecia encostado
-            // à esquerda em vez de centralizado (Idioma/Intimidade na Aba 1,
-            // caixas de Habilidade/Atributo na Aba 2).
-            modifier = Modifier.fillMaxWidth()
-        )
+        // Uma única camada mantém medição, alinhamento e pintura sincronizados.
+        // A auto-redução continua idêntica; apenas removemos o contorno duplicado
+        // que podia divergir do preenchimento em constraints estreitas.
         androidx.compose.material3.Text(
             text = text,
             color = if (brush == null) color else Color.Unspecified,
