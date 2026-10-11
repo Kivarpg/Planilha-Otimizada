@@ -33,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.example.ui.components.InteractionFeedback
 import com.example.ui.theme.ExaltedDarkSurface
+import com.example.ui.theme.ExaltedOnSurface
 import com.example.ui.theme.ExaltedDangerCore
 import com.example.ui.theme.ExaltedDarkSurfaceVariant
 import com.example.ui.theme.ExaltedAccentBright
@@ -225,7 +226,9 @@ fun SettingsDialog(show: Boolean, onDismiss: () -> Unit, viewModel: SheetViewMod
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "Fechar", onClick = onDismiss)
         },
-        containerColor = ExaltedDarkSurfaceVariant
+        containerColor = ExaltedDarkSurfaceVariant,
+        titleContentColor = ExaltedOnSurface,
+        textContentColor = ExaltedOnSurface,
     )
 }
 
@@ -266,7 +269,9 @@ fun ReversionConfirmDialog(viewModel: SheetViewModel, modifier: Modifier = Modif
         confirmButton = {
             com.example.ui.components.GildedDialogTextButton(text = "Cancelar", onClick = { viewModel.cancelarReversaoPlanilhaConcluida() })
         },
-        containerColor = ExaltedDarkSurface
+        containerColor = ExaltedDarkSurface,
+        titleContentColor = ExaltedOnSurface,
+        textContentColor = ExaltedOnSurface,
     )
 }
 
@@ -301,7 +306,9 @@ fun CommitmentErrorDialog(viewModel: SheetViewModel, modifier: Modifier = Modifi
         confirmButton = {
             com.example.ui.components.GildedDialogButton(text = "OK", onClick = { viewModel.dismissCommitmentError() })
         },
-        containerColor = ExaltedDarkSurface
+        containerColor = ExaltedDarkSurface,
+        titleContentColor = ExaltedOnSurface,
+        textContentColor = ExaltedOnSurface,
     )
 }
 
@@ -362,6 +369,8 @@ fun PendingMeritBreakDialog(viewModel: SheetViewModel, modifier: Modifier = Modi
         confirmButton = {
             com.example.ui.components.GildedDialogTextButton(text = "Cancelar", onClick = { viewModel.cancelarPendingMeritBreak() })
         },
-        containerColor = ExaltedDarkSurface
+        containerColor = ExaltedDarkSurface,
+        titleContentColor = ExaltedOnSurface,
+        textContentColor = ExaltedOnSurface,
     )
 }
