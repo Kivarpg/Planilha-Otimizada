@@ -74,6 +74,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.sp
 import com.example.R
 import com.example.ui.theme.ExaltedAccentBright
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import com.example.ui.theme.ExaltedDarkBackground
 import com.example.ui.theme.ExaltedDarkSurface
 import com.example.ui.theme.ExaltedOnSurface
@@ -139,6 +140,10 @@ fun MapTab(
     gold: Color = ExaltedAccentBright,
     routePoints: SnapshotStateList<Offset> = remember { mutableStateListOf() }
 ) {
+    val visual = LocalExaltedVisualTemplate.current
+    val mapBackground = if (background == ExaltedDarkBackground) visual.surface else background
+    val mapAccent = if (gold == ExaltedAccentBright) visual.accentBright else gold
+
     var scale by remember { mutableFloatStateOf(1f) }
     var normalizedOffset by remember { mutableStateOf(Offset.Zero) }
 
@@ -167,17 +172,17 @@ fun MapTab(
     }
 
     val fieldColors = OutlinedTextFieldDefaults.colors(
-        focusedBorderColor = gold,
-        unfocusedBorderColor = gold.copy(alpha = 0.45f),
-        focusedLabelColor = gold,
-        cursorColor = gold,
-        focusedTextColor = ExaltedOnSurface,
-        unfocusedTextColor = ExaltedOnSurface,
-        focusedContainerColor = ExaltedDarkSurface,
-        unfocusedContainerColor = ExaltedDarkSurface,
-        disabledBorderColor = gold.copy(alpha = 0.35f),
-        disabledLabelColor = gold.copy(alpha = 0.7f),
-        disabledTextColor = ExaltedOnSurface
+        focusedBorderColor = mapAccent,
+        unfocusedBorderColor = mapAccent.copy(alpha = 0.45f),
+        focusedLabelColor = mapAccent,
+        cursorColor = mapAccent,
+        focusedTextColor = visual.onSurface,
+        unfocusedTextColor = visual.onSurface,
+        focusedContainerColor = visual.surface,
+        unfocusedContainerColor = visual.surface,
+        disabledBorderColor = mapAccent.copy(alpha = 0.35f),
+        disabledLabelColor = mapAccent.copy(alpha = 0.7f),
+        disabledTextColor = visual.onSurface
     )
 
     val mode = modes.getOrNull(selectedModeIndex.coerceIn(0, (modes.size - 1).coerceAtLeast(0)))
@@ -191,7 +196,7 @@ fun MapTab(
         modifier = modifier
             .fillMaxSize()
             .exaltedTabIdentity(14).exaltedContentStage(14)
-            .background(background.copy(alpha = 0.82f))
+            .background(mapBackground.copy(alpha = 0.82f))
             .padding(horizontal = 18.dp, vertical = 18.dp)
     ) {
         // APPROVED VISUAL CUSTOMIZATION
@@ -245,7 +250,7 @@ fun MapTab(
                     colors = fieldColors,
                     textStyle = TextStyle(
                         fontSize = autoFontSizeForName(mode?.name.orEmpty()),
-                        color = ExaltedOnSurface
+                        color = visual.onSurface
                     )
                 )
                 // APPROVED VISUAL CUSTOMIZATION
@@ -260,7 +265,7 @@ fun MapTab(
                     expanded = transportMenuOpen,
                     onDismissRequest = { transportMenuOpen = false },
                     modifier = Modifier
-                        .background(ExaltedDarkSurface)
+                        .background(visual.surface)
                         .heightIn(max = 320.dp)
                 ) {
                     // DropdownMenu já fornece o container/rolagem necessários para o conteúdo.
@@ -271,7 +276,7 @@ fun MapTab(
                             text = {
                                 AppText(
                                     "${m.name}  ·  ${m.kmh.toInt()} km/h  ·  ${m.hoursPerDay.toInt()} h/dia",
-                                    color = if (index == selectedModeIndex) gold else ExaltedOnSurface,
+                                    color = if (index == selectedModeIndex) mapAccent else visual.onSurface,
                                     fontSize = 13.sp
                                 )
                             },
@@ -285,7 +290,7 @@ fun MapTab(
                         text = {
                             AppText(
                                 "Cadastrar novo",
-                                color = gold,
+                                color = mapAccent,
                                 fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                                 modifier = Modifier.fillMaxWidth()
@@ -339,7 +344,7 @@ fun MapTab(
         Spacer(Modifier.height(10.dp))
         TravelSummaryPanel(
             modifier = Modifier.fillMaxWidth(),
-            gold = gold,
+            mapAccent = mapAccent,
             transportName = mode?.name.orEmpty(),
             pointCount = routePoints.size,
             distanceKm = distanceKm,
@@ -359,7 +364,7 @@ fun MapTab(
             onScaleChange = { scale = it },
             onNormalizedOffsetChange = { normalizedOffset = it },
             routePoints = routePoints,
-            gold = gold
+            mapAccent = mapAccent
         )
 
         if (mapaEmTelaCheia) {
@@ -376,7 +381,7 @@ fun MapTab(
                         onScaleChange = { scale = it },
                         onNormalizedOffsetChange = { normalizedOffset = it },
                                     routePoints = routePoints,
-                        gold = gold
+                        mapAccent = mapAccent
                     )
 
                     // APPROVED VISUAL CUSTOMIZATION
@@ -429,7 +434,7 @@ fun MapTab(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(end = 4.dp),
-                                    gold = gold,
+                                    mapAccent = mapAccent,
                                     transportName = mode?.name.orEmpty(),
                                     pointCount = routePoints.size,
                                     distanceKm = distanceKm,
@@ -442,7 +447,7 @@ fun MapTab(
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
-                                    TravelScaleBar(gold = gold, representedKm = scaleBarKm)
+                                    TravelScaleBar(mapAccent = mapAccent, representedKm = scaleBarKm)
                                     InkButton(
                                         label = "Limpar",
                                         onClick = { routePoints.clear() },
@@ -458,10 +463,10 @@ fun MapTab(
                                 verticalAlignment = Alignment.Top,
                                 horizontalArrangement = Arrangement.spacedBy(10.dp)
                             ) {
-                                TravelScaleBar(gold = gold, representedKm = scaleBarKm)
+                                TravelScaleBar(mapAccent = mapAccent, representedKm = scaleBarKm)
                                 TravelSummaryPanel(
                                     modifier = Modifier.weight(1f),
-                                    gold = gold,
+                                    mapAccent = mapAccent,
                                     transportName = mode?.name.orEmpty(),
                                     pointCount = routePoints.size,
                                     distanceKm = distanceKm,
@@ -484,7 +489,7 @@ fun MapTab(
                             .align(Alignment.TopEnd)
                             .padding(12.dp)
                             .size(48.dp)) {
-                        Icon(Icons.Default.FullscreenExit, contentDescription = "Sair da tela cheia", tint = gold)
+                        Icon(Icons.Default.FullscreenExit, contentDescription = "Sair da tela cheia", tint = mapAccent)
                     }
                 }
             }
@@ -497,7 +502,7 @@ fun MapTab(
         AlertDialog(
             onDismissRequest = { showCadastro = false },
             title = {
-                AppText("Cadastrar novo", color = gold, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true)
+                AppText("Cadastrar novo", color = mapAccent, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier.fillMaxWidth(), forceStroke = true)
             },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -544,7 +549,9 @@ fun MapTab(
             confirmButton = {
                 InkButton(label = "Cancelar", onClick = { showCadastro = false }, size = InkButtonSize.Small, variant = InkButtonVariant.Secondary)
             },
-            containerColor = ExaltedDarkSurface
+            containerColor = visual.surface,
+            titleContentColor = visual.onSurface,
+            textContentColor = visual.onSurface
         )
     }
 }
@@ -559,6 +566,7 @@ private fun TravelSummaryPanel(
     distanceKm: Float,
     travelTime: String
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -569,7 +577,7 @@ private fun TravelSummaryPanel(
     ) {
         AppText(
             text = "Transporte: ${transportName.ifBlank { "—" }} • Tempo de viagem: $travelTime • Pontos: $pointCount • Distância: ${formatKm(distanceKm)} km",
-            color = ExaltedOnSurface,
+            color = visual.onSurface,
             fontSize = 12.sp,
             lineHeight = 17.sp,
             fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold,
