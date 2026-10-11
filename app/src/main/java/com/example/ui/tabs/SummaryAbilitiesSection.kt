@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.*
 import com.example.model.*
 import com.example.ui.components.*
 import com.example.ui.theme.*
+import com.example.ui.theme.LocalExaltedVisualTemplate
 
 // APPROVED VISUAL CUSTOMIZATION
 // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
@@ -17,9 +18,9 @@ import com.example.ui.theme.*
 // quadrados da Aba 11 — Encontros. Nenhuma regra de habilidade é alterada.
 @Composable
 internal fun SummaryAbilitiesSection(sheet: CharacterSheet) {
+    val visual = LocalExaltedVisualTemplate.current
     GildedCard(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = ExaltedDarkSurfaceVariant)
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier
@@ -82,7 +83,7 @@ internal fun SummaryAbilitiesSection(sheet: CharacterSheet) {
                                     AppText(
                                         "Supernal",
                                         style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                                        color = ExaltedAccentBright,
+                                        color = visual.accentBright,
                                         maxLines = 1,
                                         softWrap = false
                                     )
