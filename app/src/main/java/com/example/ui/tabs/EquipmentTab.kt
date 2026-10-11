@@ -172,7 +172,7 @@ internal fun MoteSourceDialog(
         title = {
             AppText(
                 "Comitar $itemName",
-                color = ExaltedAmber,
+                color = com.example.ui.theme.ExaltedAccentBright,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
