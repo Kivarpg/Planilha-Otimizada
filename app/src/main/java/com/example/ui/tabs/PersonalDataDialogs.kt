@@ -19,10 +19,12 @@ import com.example.model.CharacterSheet
 import com.example.viewmodel.SheetViewModel
 import com.example.ui.theme.*
 import com.example.ui.components.InkButton
+import com.example.ui.components.exaltedTextFieldColors
 
 @Composable
 internal fun IntimidadeDialog(show:Boolean,nome:String,tipo:String,intensidade:String,onNome:(String)->Unit,onTipo:(String)->Unit,onIntensidade:(String)->Unit,onDismiss:()->Unit,viewModel:SheetViewModel){
     if(!show) return
+    val visual = LocalExaltedVisualTemplate.current
 
     val contentHeightLimit = (LocalConfiguration.current.screenHeightDp - 240).coerceIn(160, 460).dp
     AlertDialog(
@@ -35,7 +37,6 @@ internal fun IntimidadeDialog(show:Boolean,nome:String,tipo:String,intensidade:S
                 modifier = Modifier.fillMaxWidth().heightIn(max = contentHeightLimit).verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-    val visual = LocalExaltedVisualTemplate.current
                 OutlinedTextField(
                     value = nome,
                     onValueChange = com.example.ui.components.rememberTypingFeedback { onNome(it.take(60)) },
@@ -103,6 +104,7 @@ internal fun IntimidadeDialog(show:Boolean,nome:String,tipo:String,intensidade:S
 @Composable
 internal fun LinguaDialog(show:Boolean,sheet:CharacterSheet,onDismiss:()->Unit,viewModel:SheetViewModel){
     if(!show) return
+    val visual = LocalExaltedVisualTemplate.current
 
     // Lista base fixa (sem "Outra", que é só um gatilho de UI, nunca
     // um valor persistido) + "Outra" sempre por último.
@@ -118,7 +120,6 @@ internal fun LinguaDialog(show:Boolean,sheet:CharacterSheet,onDismiss:()->Unit,v
     // Se o idioma nativo atual não está na lista base, foi digitada
     // manualmente via "Outra" — pré-preenche o campo de texto com ela.
     var textoCustomNativa by remember(sheet.linguaNativa) {
-    val visual = LocalExaltedVisualTemplate.current
         mutableStateOf(if (sheet.linguaNativa != null && sheet.linguaNativa !in idiomasBase) sheet.linguaNativa else "")
     }
     var editandoNativaCustom by remember(sheet.linguaNativa) {
