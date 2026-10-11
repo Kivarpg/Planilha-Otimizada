@@ -44,6 +44,7 @@ import com.example.ui.components.feedbackClickable
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -347,6 +348,11 @@ fun InkButton(
                     )
                 ),
                 androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
+            )
+            .border(
+                width = 1.dp,
+                brush = Brush.horizontalGradient(listOf(resolvedGradient.start, resolvedGradient.mid, resolvedGradient.end)),
+                shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
             )
             .feedbackClickable(
                 interactionSource = interactionSource,
