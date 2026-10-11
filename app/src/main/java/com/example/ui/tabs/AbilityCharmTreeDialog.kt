@@ -12,9 +12,7 @@ import com.example.ui.components.AppText
 import com.example.ui.components.GildedDialogButton
 import com.example.ui.components.gildedDialogBorder
 import com.example.ui.components.dialogShape
-import com.example.ui.theme.ExaltedAccentBright
-import com.example.ui.theme.ExaltedDarkSurfaceVariant
-import com.example.ui.theme.ExaltedMuted
+import com.example.ui.theme.LocalExaltedVisualTemplate
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.text.font.FontWeight
@@ -139,6 +137,7 @@ internal fun CharmListTreeDialog(
     preparedTree: PreparedCharmTree? = null,
     onTreePrepared: ((PreparedCharmTree) -> Unit)? = null
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     // Long press em Habilidade/Atributo sempre abre a árvore a partir do
     // menor requisito disponível no grupo. A ordenação é lexicográfica:
     // primeiro Essência mínima e, em caso de empate, Habilidade/Atributo mínimo.
@@ -159,14 +158,14 @@ internal fun CharmListTreeDialog(
                     modifier = Modifier.fillMaxWidth(),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
-                    color = ExaltedAccentBright,
+                    color = visual.accentBright,
                     textAlign = TextAlign.Center
                 )
             },
             text = {
                 AppText(
                     "Nenhum Encanto encontrado para esta opção.",
-                    color = ExaltedMuted,
+                    color = visual.muted,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -174,7 +173,9 @@ internal fun CharmListTreeDialog(
             confirmButton = {
                 GildedDialogButton(text = "Fechar", onClick = onDismiss)
             },
-            containerColor = ExaltedDarkSurfaceVariant
+            containerColor = visual.surfaceVariant,
+            titleContentColor = visual.onSurface,
+            textContentColor = visual.onSurface
         )
         return
     }
