@@ -26,7 +26,10 @@ class VisualIdentityPreparationContractTest {
     fun `neutral panels use bounded dark-metal styling without decorative symbols`() {
         assertTrue(identity.contains("Brush.verticalGradient("))
         assertTrue(identity.contains("backgroundColor.copy(alpha = 0.96f)"))
-        assertTrue(identity.contains("ExaltedOutline.copy(alpha = 0.32f)"))
+        assertTrue(identity.contains("brush = Brush.linearGradient("))
+        assertTrue(identity.contains("ExaltedStructuralMetalDeep.copy(alpha = 0.72f)"))
+        assertTrue(identity.contains("ExaltedStructuralMetalShine.copy(alpha = 0.62f)"))
+        assertTrue(identity.contains("ExaltedOutline.copy(alpha = 0.52f)"))
         assertTrue(identity.contains("RoundedCornerShape(8.dp)"))
         assertTrue(!identity.contains("drawArc("))
         assertTrue(!identity.contains("drawPath("))
