@@ -307,7 +307,7 @@ fun CombatTab(
                                 unfocusedBorderColor = ExaltedOutline.copy(alpha = 0.55f),
                                 focusedLabelColor = ExaltedAccentBright,
                                 unfocusedLabelColor = ExaltedMuted,
-                                cursorColor = ExaltedGold,
+                                cursorColor = ExaltedAccentBright,
                                 focusedTextColor = corIniciativaPorValor(iniciativaAtual),
                                 unfocusedTextColor = corIniciativaPorValor(iniciativaAtual),
                                 focusedContainerColor = ExaltedDarkSurface,
@@ -443,7 +443,7 @@ fun CombatTab(
                                         text = if (penalidade == "Inc") "Inc." else penalidade,
                                         style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold,
                                         maxFontSize = MaterialTheme.typography.titleMedium.fontSize, minFontSize = 10.sp,
-                                        color = ExaltedGold, modifier = Modifier.width(labelWidth)
+                                        color = ExaltedAccentBright, modifier = Modifier.width(labelWidth)
                                     )
                                 } else Spacer(modifier = Modifier.width(labelWidth))
                                 Row(horizontalArrangement = Arrangement.spacedBy(gap), verticalAlignment = Alignment.CenterVertically) {
@@ -458,7 +458,7 @@ fun CombatTab(
                                         val ehExtra = !box.isPermanente
                                         Box(
                                             modifier = Modifier.size(boxSize).clip(RoundedCornerShape(6.dp)).background(ExaltedDarkSurface)
-                                                .border(if (ehExtra) 2.dp else 1.dp, if (ehExtra) ExaltedAmber else damageColor.takeIf { box.tipoDano != 0 } ?: ExaltedGold.copy(alpha = 0.45f), RoundedCornerShape(6.dp))
+                                                .border(if (ehExtra) 2.dp else 1.dp, if (ehExtra) ExaltedAccentBright else damageColor.takeIf { box.tipoDano != 0 } ?: ExaltedAccentBright.copy(alpha = 0.45f), RoundedCornerShape(6.dp))
                                                 .pointerInput(box.id) { detectTapGestures(onTap = { viewModel.cycleHealthDamage(box.id) }, onLongPress = { if (!bloqueadaParaRemocao) boxToDelete = box }) }
                                                 .feedbackOnPress(),
                                             contentAlignment = Alignment.Center
@@ -539,7 +539,7 @@ private fun ConfiguracoesVitalidadeDialog(
                     sheet.healthBoxes.filter { !it.isPermanente && it.origemAutomatica == null }
                 }
                 if (extras.isNotEmpty()) {
-                    AppText("Caixas extras atuais", style = MaterialTheme.typography.labelMedium, color = ExaltedGold)
+                    AppText("Caixas extras atuais", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)
                     extras.forEach { box ->
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -552,7 +552,7 @@ private fun ConfiguracoesVitalidadeDialog(
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                 }
-                AppText("Adicionar novo nível", style = MaterialTheme.typography.labelMedium, color = ExaltedGold)
+                AppText("Adicionar novo nível", style = MaterialTheme.typography.labelMedium, color = ExaltedAccentBright)
                 HEALTH_EXTRA_LEVELS.forEach { nivel ->
                     Surface(
                         modifier = Modifier
