@@ -221,7 +221,7 @@ internal fun MeritSelectionDialog(
                             val cor = when (checagem.atendido) {
                                 true -> ExaltedSuccess
                                 false -> ExaltedDangerCore
-                                null -> ExaltedMuted
+                                null -> visual.muted
                             }
                             val prefixo = when (checagem.atendido) {
                                 true -> "✓ "
