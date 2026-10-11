@@ -2,6 +2,7 @@ package com.example.ui.tabs
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.example.ui.components.exaltedSectionPanel
 import com.example.ui.components.exaltedContentStage
 import com.example.ui.components.exaltedTabIdentity
 import com.example.ui.components.feedbackOnPress
@@ -156,7 +157,7 @@ fun BattleGroupsTab(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
     )
 
     Column(modifier.fillMaxSize().exaltedTabIdentity(13).exaltedContentStage(13).verticalScroll(rememberScrollState()).padding(horizontal = 18.dp, vertical = 16.dp)) {
-        GildedCard(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
+        GildedCard(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).exaltedSectionPanel(13)) {
             Column(Modifier.padding(12.dp)) {
                 OutlinedTextField(name, { name = it }, label = { AppText("Nome") }, modifier = Modifier.fillMaxWidth(), colors = coresCampoTexto)
                 Spacer(Modifier.height(8.dp))
@@ -209,7 +210,7 @@ fun BattleGroupsTab(viewModel: SheetViewModel, modifier: Modifier = Modifier) {
         groups.forEach { group ->
             val troop = group.troopTypeName?.let { n -> battleGroupTroopTypes.firstOrNull { it.name == n } }
             val derived = BattleGroupRules.derive(group, troop)
-            GildedCard(Modifier.fillMaxWidth()) {
+            GildedCard(modifier = Modifier.fillMaxWidth().exaltedSectionPanel(13)) {
                 Column(Modifier.padding(12.dp)) {
                     AppText(group.name, style = MaterialTheme.typography.titleMedium, color = ExaltedAccentBright)
                     AppText(group.troopTypeName ?: "Custom Army", style = MaterialTheme.typography.bodySmall, color = ExaltedMuted)
