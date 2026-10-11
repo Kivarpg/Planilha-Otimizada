@@ -53,7 +53,7 @@ fun SyncedCounterColumn(
         AppText(
             text = label,
             style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
-            color = MaterialTheme.colorScheme.onSurface,
+            color = visual.onSurface,
             textAlign = TextAlign.Center,
             maxLines = 2,
             softWrap = true,
