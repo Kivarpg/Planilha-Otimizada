@@ -30,7 +30,7 @@ GildedCard(
             .fillMaxWidth()
             .padding(14.dp)
     ) {
-        AppText("6. Encantos (${sheet.charms.size})", style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp), color = ExaltedAmber, fontWeight = FontWeight.Bold)
+        AppText("6. Encantos (${sheet.charms.size})", style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp), color = visual.accentBright, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(6.dp))
 
         if (sheet.charms.isEmpty()) {
