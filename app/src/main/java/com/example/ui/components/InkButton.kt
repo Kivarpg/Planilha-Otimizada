@@ -337,6 +337,7 @@ private fun InkGhostButton(
     Column(
         modifier = modifier
             .wrapContentSize()
+            .height(48.dp)
             .feedbackClickable(
                 interactionSource = interactionSource,
                 indication = null,
