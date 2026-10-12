@@ -306,7 +306,7 @@ fun AttributesTab(
         modifier = modifier
             .fillMaxSize()
             .exaltedTabIdentity(3).exaltedContentStage(3)
-            .padding(horizontal = 18.dp, vertical = 16.dp)
+            .padding(horizontal = 16.dp, vertical = 18.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
