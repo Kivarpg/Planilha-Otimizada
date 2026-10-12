@@ -502,7 +502,10 @@ fun EncounterGeneratorTab(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                                ) {
                                     androidx.compose.material3.Checkbox(
                                         modifier = Modifier.feedbackOnPress(),
                                         checked = enviarParaConflito,
