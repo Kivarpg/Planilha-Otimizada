@@ -500,7 +500,7 @@ fun EncounterGeneratorTab(
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
+                                horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start)
                             ) {
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
