@@ -1,6 +1,9 @@
 package com.example.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
@@ -11,6 +14,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ui.theme.LocalExaltedVisualTemplate
+import com.example.ui.theme.ExaltedStructuralMetalDeep
+import com.example.ui.theme.ExaltedStructuralMetalShine
 
 /**
  * Componentes decorativos neutralizados.
@@ -37,8 +42,9 @@ fun PriorityShieldBadge(number: Int, modifier: Modifier = Modifier) {
     val visual = LocalExaltedVisualTemplate.current
     Box(
         modifier = modifier
-            .size(26.dp)
-            .background(visual.surface),
+            .size(30.dp)
+            .background(visual.surfaceVariant, RoundedCornerShape(5.dp))
+            .border(1.dp, Brush.linearGradient(listOf(visual.metalDeep, visual.metalShine, visual.metalDeep)), RoundedCornerShape(5.dp)),
         contentAlignment = Alignment.Center
     ) {
         AppText(
@@ -68,7 +74,11 @@ fun OnyxTexturedBackground(
     }
 }
 
-fun Modifier.gildedFrame(): Modifier = this
+fun Modifier.gildedFrame(): Modifier = this.border(
+    width = 1.5.dp,
+    brush = Brush.linearGradient(listOf(ExaltedStructuralMetalDeep, ExaltedStructuralMetalShine, ExaltedStructuralMetalDeep)),
+    shape = RoundedCornerShape(6.dp)
+)
 
 @Composable
 fun OrnateFlourish(modifier: Modifier = Modifier) {
