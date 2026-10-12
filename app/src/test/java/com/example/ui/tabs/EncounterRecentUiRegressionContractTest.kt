@@ -107,6 +107,10 @@ class EncounterRecentUiRegressionContractTest {
         val compactSection = generator.substring(compactStart, wideStart)
         assertTrue(compactSection.contains("verticalArrangement = Arrangement.spacedBy(8.dp)"))
         assertTrue(compactSection.contains("label = \"Gerar NPC\""))
+        assertTrue(compactSection.contains("modifier = Modifier.fillMaxWidth()"))
+        assertTrue(compactSection.contains("AppText(\"Conflito\""))
+        val wideSection = generator.substring(wideStart)
+        assertTrue(wideSection.contains("label = \"Gerar NPC\""))
         assertTrue(!generator.contains("ícone 0000.png dispara"))
     }
 
