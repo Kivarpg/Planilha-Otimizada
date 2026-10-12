@@ -86,7 +86,18 @@ fun GildedCard(
         // A identidade fica no container/borda; nada é pintado depois do conteúdo.
         modifier = modifier,
         colors = colors ?: CardDefaults.cardColors(containerColor = surface.copy(alpha = .98f)),
-        border = border ?: BorderStroke(1.25.dp, Brush.linearGradient(listOf(deep.copy(alpha=.82f),accent.copy(alpha=.86f),deep.copy(alpha=.82f)))),
+        border = border ?: BorderStroke(
+            1.5.dp,
+            Brush.linearGradient(
+                listOf(
+                    deep.copy(alpha = .96f),
+                    visual.outline,
+                    accent.copy(alpha = .96f),
+                    visual.metalShine,
+                    deep.copy(alpha = .96f)
+                )
+            )
+        ),
         shape = shape,
         elevation = elevation
     ) {
