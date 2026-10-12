@@ -193,10 +193,10 @@ fun SectionHeader(title: String, modifier: Modifier = Modifier) {
             .background(
                 Brush.horizontalGradient(
                     listOf(
-                        visual.metalShine.copy(alpha = .11f),
-                        visual.surfaceVariant.copy(alpha = .84f),
-                        visual.accentBright.copy(alpha = .18f),
-                        visual.surfaceVariant.copy(alpha = .72f)
+                        visual.metalDeep.copy(alpha = .92f),
+                        visual.surfaceVariant,
+                        visual.accentBright.copy(alpha = .22f),
+                        visual.surfaceVariant
                     )
                 )
             )
@@ -206,8 +206,8 @@ fun SectionHeader(title: String, modifier: Modifier = Modifier) {
                     listOf(
                         visual.metalShine.copy(alpha = .72f),
                         visual.accentBright.copy(alpha = .65f),
-                        visual.divider.copy(alpha = .48f),
-                        Color.Transparent
+                        visual.outline.copy(alpha = .75f),
+                        visual.metalDeep.copy(alpha = .85f)
                     )
                 ),
                 shape = RectangleShape
