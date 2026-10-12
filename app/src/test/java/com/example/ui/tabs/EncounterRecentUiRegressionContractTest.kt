@@ -99,6 +99,8 @@ class EncounterRecentUiRegressionContractTest {
         assertTrue(occurrences >= 2)
         assertTrue(generator.split("customWidth = 136.dp").size - 1 >= 2)
         assertTrue(generator.contains("customHeight = 64.dp"))
+        assertTrue(generator.contains("val compactHeader = maxWidth < 560.dp"))
+        assertTrue(generator.contains("horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start)"))
         assertTrue(!generator.contains("ícone 0000.png dispara"))
     }
 
