@@ -209,7 +209,8 @@ fun CombatTab(
                 Spacer(modifier = Modifier.height(6.dp))
 
                 BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-                    val compactMotes = maxWidth < 430.dp
+                    // Dois seletores com botões laterais exigem mais espaço que dois campos simples.
+                    val compactMotes = maxWidth < 560.dp
                     val arrangement = Arrangement.spacedBy(8.dp)
                     if (compactMotes) {
                         Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = arrangement) {
