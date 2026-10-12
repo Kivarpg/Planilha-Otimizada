@@ -957,10 +957,10 @@ fun NpcEncontroCard(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 4.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                        .padding(vertical = 6.dp)
+                        .clip(RoundedCornerShape(10.dp))
                         .background(visualTemplate.surfaceVariant)
-                        .border(2.dp, visualTemplate.accentBright, RoundedCornerShape(8.dp))
+                        .border(2.dp, visualTemplate.accentBright, RoundedCornerShape(10.dp))
                         .feedbackClickable {
                             gavetasExpandidas = if (expandida) gavetasExpandidas - habilidade else gavetasExpandidas + habilidade
                         }
