@@ -57,10 +57,18 @@ private fun PriorityBadge(
     Box(
         modifier = modifier
             .clip(MaterialTheme.shapes.small)
-            .background(if (isSelected) visual.accent else visual.surfaceVariant)
+            .background(
+                androidx.compose.ui.graphics.Brush.horizontalGradient(
+                    if (isSelected) listOf(visual.metalDeep, visual.accent, visual.metalDeep)
+                    else listOf(visual.surface, visual.surfaceVariant, visual.surface)
+                ),
+                MaterialTheme.shapes.small
+            )
             .border(
-                1.dp,
-                if (isSelected) visual.accentBright else visual.outline.copy(alpha = 0.72f),
+                1.5.dp,
+                androidx.compose.ui.graphics.Brush.horizontalGradient(
+                    listOf(visual.metalDeep, if (isSelected) visual.metalShine else visual.outline, visual.metalDeep)
+                ),
                 MaterialTheme.shapes.small
             )
             .feedbackClickable(onClick = onClick)
