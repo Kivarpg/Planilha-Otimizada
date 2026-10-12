@@ -91,6 +91,10 @@ class EncounterRecentUiRegressionContractTest {
         assertTrue(section.contains("val nomeExibicao = \"\${indice + 1}. \${formatGroupedEncounterCharmName(grupo)}\""))
         assertTrue(section.contains("color = visualTemplate.onSurface"))
         assertTrue(section.contains("fontSize = 17.sp, lineHeight = 22.sp"))
+        assertTrue(section.contains(".padding(vertical = 6.dp)"))
+        assertTrue(section.contains(".padding(horizontal = 16.dp, vertical = 14.dp)"))
+        assertTrue(section.contains("fontSize = 20.sp, lineHeight = 24.sp"))
+        assertTrue(section.contains("modifier = Modifier.padding(end = 12.dp)"))
         assertTrue(!section.contains("val nomeExibicao = \"• "))
     }
 
