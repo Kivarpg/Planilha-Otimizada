@@ -517,15 +517,18 @@ fun EncounterGeneratorTab(
                                         ))
                                     AppText("Conflito", style = MaterialTheme.typography.bodySmall, color = if (enviarParaConflito) visual.accentBright else visual.muted)
                                 }
-                                InkButton(
-                                    label = "Gerar NPC",
-                                    onClick = gerarNpcDaInterface,
-                                    enabled = !gerando,
-                                    size = InkButtonSize.Small,
-                                    customWidth = 136.dp,
-                                    customHeight = 64.dp
-                                )
                             }
+                            // Em celulares, o botão de geração ocupa sua própria linha:
+                            // não disputa largura com o controle Conflito nem fica invisível.
+                            InkButton(
+                                label = "Gerar NPC",
+                                onClick = gerarNpcDaInterface,
+                                enabled = !gerando,
+                                modifier = Modifier.fillMaxWidth(),
+                                fillMaxWidth = true,
+                                size = InkButtonSize.Small,
+                                customHeight = 64.dp
+                            )
                         }
                     } else {
                         Row(
