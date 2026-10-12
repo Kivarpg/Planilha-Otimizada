@@ -487,7 +487,7 @@ fun EncounterGeneratorTab(
                     if (compactHeader) {
                         Column(
                             modifier = Modifier.fillMaxWidth(),
-                            verticalArrangement = Arrangement.spacedBy(6.dp)
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             OutlinedTextField(
                                 value = nomeManual,
