@@ -90,6 +90,7 @@ class EncounterRecentUiRegressionContractTest {
         assertTrue(section.contains("forEachIndexed { indice, grupo ->"))
         assertTrue(section.contains("val nomeExibicao = \"\${indice + 1}. \${formatGroupedEncounterCharmName(grupo)}\""))
         assertTrue(section.contains("color = visualTemplate.onSurface"))
+        assertTrue(section.contains("fontSize = 17.sp, lineHeight = 22.sp"))
         assertTrue(!section.contains("val nomeExibicao = \"• "))
     }
 
