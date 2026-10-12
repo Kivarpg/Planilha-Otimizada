@@ -975,8 +975,6 @@ fun NpcEncontroCard(
                     AppText(
                         text = "$habilidade (${encantosDaGaveta.size})",
                         style = MaterialTheme.typography.titleMedium.copy(fontSize = 17.sp, lineHeight = 22.sp),
-                        maxLines = 3,
-                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
                         fontWeight = FontWeight.Bold,
                         color = visualTemplate.accentBright,
                         modifier = Modifier.weight(1f),
