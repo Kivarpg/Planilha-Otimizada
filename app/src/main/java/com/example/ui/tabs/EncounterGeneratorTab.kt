@@ -481,7 +481,9 @@ fun EncounterGeneratorTab(
                 // do usuário: só "Nome" como rótulo, sem texto auxiliar
                 // explicando o preenchimento automático.
                 BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-                    val compactHeader = maxWidth < 430.dp
+                    // Reserva espaço para o campo Nome, o controle Conflito e o botão Gerar NPC.
+                    // Em larguras intermediárias, a disposição vertical evita compressão.
+                    val compactHeader = maxWidth < 560.dp
                     if (compactHeader) {
                         Column(
                             modifier = Modifier.fillMaxWidth(),
