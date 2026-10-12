@@ -62,15 +62,15 @@ fun CharmsTab(
     modifier: Modifier = Modifier
 ) {
     val visual = LocalExaltedVisualTemplate.current
-    var selectedAbility by remember { mutableStateOf<String?>(null) }
+    var selectedAbility by remember(sheet.tipoPersonagem) { mutableStateOf<String?>(null) }
     var catalogDetail by remember { mutableStateOf<EncantoSolarDefinition?>(null) }
     var feiticoDetail by remember { mutableStateOf<FeiticoDefinition?>(null) }
     var detailCharm by remember { mutableStateOf<Encanto?>(null) }
     var charmToDelete by remember { mutableStateOf<Encanto?>(null) }
-    var gavetasExpandidas by remember { mutableStateOf(setOf<String>()) }
-    var encantosFilter by remember { mutableStateOf(SkillFilter()) }
+    var gavetasExpandidas by remember(sheet.tipoPersonagem) { mutableStateOf(setOf<String>()) }
+    var encantosFilter by remember(sheet.tipoPersonagem) { mutableStateOf(SkillFilter()) }
     var showEncantosSearch by remember { mutableStateOf(false) }
-    var abilityTree by remember { mutableStateOf<String?>(null) }
+    var abilityTree by remember(sheet.tipoPersonagem) { mutableStateOf<String?>(null) }
 
     val feiticariaHabilitada = viewModel.feiticariaHabilitada(sheet)
 
