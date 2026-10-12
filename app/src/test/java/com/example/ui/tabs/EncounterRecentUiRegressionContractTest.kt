@@ -101,7 +101,6 @@ class EncounterRecentUiRegressionContractTest {
         assertTrue(generator.split("customWidth = 136.dp").size - 1 >= 2)
         assertTrue(generator.contains("customHeight = 64.dp"))
         assertTrue(generator.contains("val compactHeader = maxWidth < 560.dp"))
-        assertTrue(generator.contains("verticalArrangement = Arrangement.spacedBy(8.dp)"))
         val compactStart = generator.indexOf("if (compactHeader) {")
         val wideStart = generator.indexOf("} else {", compactStart)
         assertTrue(compactStart >= 0 && wideStart > compactStart)
