@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -193,7 +194,13 @@ fun InkButton(
 
     Box(
         modifier = modifier
-            .then(if (fillMaxWidth) Modifier.fillMaxWidth().height(height) else Modifier.widthIn(min = 48.dp, max = width).height(height))
+            .then(
+                when {
+                    fillMaxWidth -> Modifier.fillMaxWidth().height(height)
+                    customWidth != null -> Modifier.width(width).height(height)
+                    else -> Modifier.widthIn(min = 48.dp, max = width).height(height)
+                }
+            )
             .graphicsLayer { scaleX = scale; scaleY = scale }
             // Fundo de segurança: o controle continua visível mesmo quando
             // a pincelada SVG é parcialmente recortada em layouts compactos.
