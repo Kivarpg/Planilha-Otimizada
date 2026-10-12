@@ -10,10 +10,13 @@ class InteractionFeedbackContractTest {
     private val personalData = File("src/main/java/com/example/ui/tabs/PersonalDataSections.kt").readText()
 
     @Test fun `dragon blooded aspect buttons remain connected to global feedback`() {
-        val start = personalData.indexOf("private fun ItemAspecto")
+        val start = personalData.indexOf("internal fun AspectSelectionSection")
         val end = personalData.indexOf("@Composable\ninternal fun CasteSection", start)
         val section = personalData.substring(start, end)
-        assertTrue(section.contains(".feedbackClickable { viewModel.updateAspecto(aspecto) }"))
+        assertTrue(section.contains("LeoEmblemCard(aspecto.displayName"))
+        assertTrue(section.contains("onClick = { viewModel.updateAspecto(aspecto) }"))
+        val cards = File("src/main/java/com/example/ui/components/LeoIdentity.kt").readText()
+        assertTrue(cards.contains(".feedbackClickable(role = Role.RadioButton, interactionSource = interaction, onClick = onClick)"))
     }
 
     @Test fun `global haptic uses portable vibration with view fallback`() {

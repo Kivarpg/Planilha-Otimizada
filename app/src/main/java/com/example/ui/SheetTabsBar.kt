@@ -13,6 +13,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.*
 import com.example.ui.components.AppText
+import com.example.ui.components.leoFrame
+import com.example.ui.components.leoMotif
+import com.example.ui.components.leoTabSelection
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.selected
 import androidx.compose.material3.MaterialTheme
 import com.example.model.CharacterSheet
 import com.example.ui.theme.*
@@ -59,8 +64,7 @@ internal fun SheetTabsBar(
 
     // APPROVED VISUAL CUSTOMIZATION
     // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
-    // IDENTIDADE VISUAL v4 — índice de capítulos. Sem cartões, sem medalhões,
-    // sem caixas individuais: cada aba é uma entrada editorial contínua.
+    // LEO pilot: one outer frame and a luminous active baseline; no item dividers.
     BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
         val compact = maxWidth < 600.dp
         val tabHeight = when { enlargedText -> 68.dp; compact -> 62.dp; else -> 60.dp }
@@ -72,11 +76,7 @@ internal fun SheetTabsBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(tabHeight)
-                .background(visual.surfaceVariant.copy(alpha = .72f))
-                .border(
-                    width = 1.dp,
-                    color = visual.divider.copy(alpha = .58f)
-                ),
+                .leoFrame(leoMotif(sheet.tipoPersonagem), visual, compact = true),
             contentPadding = PaddingValues(start = 10.dp, end = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(0.dp)
         ) {
@@ -89,24 +89,17 @@ internal fun SheetTabsBar(
                         // encolhem demais e títulos longos ainda recebem espaço extra.
                         .widthIn(min = tabMinWidth, max = tabMaxWidth)
                         .feedbackClickable { onSelectedTab(index) }
-                        .background(
-                            if (selected) visual.accentBright.copy(alpha = .10f)
-                            else Color.Transparent
-                        )
-                        .border(
-                            width = 1.dp,
-                            color = if (selected) visual.accentBright.copy(alpha = .52f)
-                            else visual.divider.copy(alpha = .28f)
-                        )
+                        .semantics { this.selected = selected }
+                        .leoTabSelection(visual, selected)
                         .padding(horizontal = 12.dp),
                     verticalArrangement = Arrangement.Center
                 ) {
                     AppText(
                         text = tab.title,
-                        color = if (selected) visual.onSurface else visual.onSurface.copy(alpha = .62f),
+                        color = if (selected) visual.onSurface else visual.onSurface.copy(alpha = .82f),
                         fontFamily = ExaltedSymbolFont,
                         fontWeight = if (selected) FontWeight.Black else FontWeight.Medium,
-                        fontSize = when { enlargedText -> 14.sp; compact -> 13.sp; else -> 13.sp },
+                        fontSize = when { enlargedText -> 16.sp; compact -> 15.sp; else -> 15.sp },
                         letterSpacing = if (compact) .15.sp else .25.sp,
                         maxLines = if (compact || enlargedText) 2 else 1, softWrap = compact || enlargedText, overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.fillMaxWidth(),

@@ -1,6 +1,8 @@
 package com.example.ui.tabs
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -24,9 +26,11 @@ fun PersonalDataTab(sheet: CharacterSheet, viewModel: SheetViewModel, modifier: 
     var newIntimidadeNome by remember { mutableStateOf("") }
     var newIntimidadeTipo by remember { mutableStateOf("Laço") }
     var newIntimidadeIntensidade by remember { mutableStateOf("Menor") }
-    Column(modifier.fillMaxSize().exaltedTabIdentity(1).exaltedContentStage(1).padding(horizontal=18.dp,vertical=16.dp).verticalScroll(rememberScrollState()), horizontalAlignment=Alignment.CenterHorizontally) {
-        GildedCard(modifier = Modifier.fillMaxWidth().exaltedSectionPanel(1)) {
-            Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 22.dp)) {
+    Box(modifier.fillMaxSize().exaltedTabIdentity(1).background(Color(0xFF030405))) {
+    LeoScene(leoMotif(sheet.tipoPersonagem), Modifier.matchParentSize())
+    Column(Modifier.fillMaxSize().padding(horizontal=12.dp,vertical=16.dp).verticalScroll(rememberScrollState()), horizontalAlignment=Alignment.CenterHorizontally) {
+        LeoSection(leoMotif(sheet.tipoPersonagem)) {
+            Column(Modifier.fillMaxWidth()) {
                 PersonalIdentitySection(sheet,viewModel)
             }
         }
@@ -37,6 +41,7 @@ fun PersonalDataTab(sheet: CharacterSheet, viewModel: SheetViewModel, modifier: 
         LanguageSection(sheet){showLinguaDialog=true}
         Spacer(Modifier.height(24.dp))
         IntimaciesSection(sheet,onOpenAdd={showIntimidadeDialog=true},onDelete={itemToDelete=it})
+    }
     }
     IntimidadeDialog(show=showIntimidadeDialog,nome=newIntimidadeNome,tipo=newIntimidadeTipo,intensidade=newIntimidadeIntensidade,onNome={newIntimidadeNome=it},onTipo={newIntimidadeTipo=it},onIntensidade={newIntimidadeIntensidade=it},onDismiss={showIntimidadeDialog=false},viewModel=viewModel)
     LinguaDialog(showLinguaDialog,sheet,{showLinguaDialog=false},viewModel)

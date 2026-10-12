@@ -16,6 +16,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.*
 import com.example.R
 import com.example.model.*
@@ -57,39 +60,37 @@ internal fun SheetTopBar(
     // Passo 9/12 — composição adaptativa sem criar um fluxo Compact paralelo.
     // O mesmo cabeçalho preserva conteúdo e ações; apenas redistribui espaço.
     val visual = LocalExaltedVisualTemplate.current
+    val motif = leoMotif(sheet.tipoPersonagem)
     val fontScale = LocalDensity.current.fontScale
     val enlargedHeaderText = fontScale > 1.20f
+    val shortViewport = LocalConfiguration.current.screenHeightDp < 480
     val headerHeight = if (enlargedHeaderText) 156.dp else 132.dp
 
     // APPROVED VISUAL CUSTOMIZATION
     // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
-    // IDENTIDADE VISUAL v4 — composição editorial agressiva. O topo agora é
-    // uma peça de identidade + índice de capítulo; não é uma barra de app.
-    // Estados, ações, tabs e callbacks permanecem inalterados.
+    // LEO pilot: frame and emblem presentation; existing actions and state remain intact.
     BoxWithConstraints(modifier = modifier.fillMaxWidth()) {
     val compactHeader = maxWidth < 600.dp
     val identityWidth = if (compactHeader) 68.dp else 84.dp
     // Dois controles de 48.dp exigem ao menos 96.dp, mesmo no celular.
     val actionsWidth = if (compactHeader) 96.dp else 104.dp
-    val identityIconSize = if (compactHeader) 36.dp else 42.dp
+    val identityIconSize = if (compactHeader) 48.dp else 60.dp
+    Box(Modifier.fillMaxWidth().background(Color(0xFF030405))) {
+    LeoScene(motif, Modifier.matchParentSize(), alignment = Alignment.TopCenter)
     Column(
         Modifier
             .fillMaxWidth()
-            .background(
-                Brush.verticalGradient(
-                    listOf(
-                        visual.surface,
-                        visual.surfaceVariant.copy(alpha = .88f),
-                        visual.surface
-                    )
-                )
-            )
-            .border(
-                width = 1.dp,
-                color = visual.divider.copy(alpha = .72f),
-                shape = RoundedCornerShape(0.dp)
-            )
+            .leoFrame(motif, visual, backgroundAlpha = .24f)
+            .statusBarsPadding()
     ) {
+        // Use the supplied logo unchanged. Suppress only decorative branding in
+        // short landscape windows so navigation and identity keep usable space.
+        if (!shortViewport) {
+            Image(painterResource(R.drawable.logo_exalted), contentDescription = null,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+                    .padding(top = 8.dp).widthIn(max = 220.dp).fillMaxWidth(.6f).height(60.dp))
+        }
         val identidadeIcon = when {
             sheet.tipoPersonagem.isDragonBlooded() -> R.drawable.tab_icon_dragao
             sheet.tipoPersonagem.isLunar() -> R.drawable.tab_icon_lua
@@ -98,7 +99,6 @@ internal fun SheetTopBar(
         Row(
             Modifier
                 .fillMaxWidth()
-                .statusBarsPadding()
                 .height(headerHeight)
                 .padding(start = if (compactHeader) 14.dp else 20.dp, end = 8.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -108,21 +108,7 @@ internal fun SheetTopBar(
                     .width(identityWidth)
                     .fillMaxHeight()
                     .padding(vertical = 14.dp)
-                    .background(
-                        Brush.verticalGradient(
-                            listOf(
-                                visual.surfaceVariant,
-                                visual.surface,
-                                visual.surfaceVariant
-                            )
-                        ),
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .border(
-                        width = 1.25.dp,
-                        color = visual.accentBright.copy(alpha = .72f),
-                        shape = RoundedCornerShape(8.dp)
-                    ),
+                    .leoFrame(motif, visual, compact = true),
                 contentAlignment = Alignment.Center
             ) {
                 TabIconDisplay(
@@ -135,7 +121,7 @@ internal fun SheetTopBar(
             }
             Spacer(Modifier.width(if (compactHeader) 8.dp else 14.dp))
             Column(
-                Modifier.weight(1f).padding(top = if (compactHeader) 34.dp else 28.dp),
+                Modifier.weight(1f),
                 verticalArrangement = Arrangement.Center
             ) {
                 AppText(
@@ -214,9 +200,9 @@ internal fun SheetTopBar(
                 }
             }
         }
-        // Índice de capítulos: somente tipografia, ícone mínimo e linha ativa.
-        // A navegação deixa de parecer uma fileira de botões.
+        // LEO navigation preserves labels, order and scrolling without adding icons.
         SheetTabsBar(sheet, viewModel, tabs, selectedTabIndex, onSelectedTab)
+    }
     }
     }
 
