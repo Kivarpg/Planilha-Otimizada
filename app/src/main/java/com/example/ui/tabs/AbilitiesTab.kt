@@ -112,7 +112,8 @@ fun AbilitiesTab(
 @Composable
 private fun AbilitySubTabSelector(sheet: CharacterSheet, selected: Int, onSelected: (Int) -> Unit) {
     BoxWithConstraints(Modifier.fillMaxWidth()) {
-        val columns = if (maxWidth < 390.dp) 1 else 2
+        // Rótulos como "Aspecto e Favorecidas" precisam de largura real, não apenas espaço para toque.
+        val columns = if (maxWidth < 480.dp) 1 else 2
         FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp), maxItemsInEachRow = columns) {
         val ehLunar = sheet.tipoPersonagem.isLunar()
         val labelsComIndice = if (ehLunar) {
