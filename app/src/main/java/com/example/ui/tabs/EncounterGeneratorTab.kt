@@ -532,47 +532,42 @@ fun EncounterGeneratorTab(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(10.dp)
                         ) {
-                                            OutlinedTextField(
-                                                value = nomeManual,
-                                                onValueChange = com.example.ui.components.rememberTypingFeedback { onNomeManualChange(it.take(60)) },
-                                                label = { AppText("Nome") },
-                                                modifier = Modifier.weight(1f),
-                                                singleLine = true,
-                                                colors = exaltedTextFieldColors()
-                                            )
-                        
-                                            // O checkbox permanece com exatamente o mesmo estado e callback;
-                                            // apenas foi reposicionado para o cabeçalho, ao lado do nome
-                                            // e do botão de gerar NPC, conforme a referência visual.
-                                            Row(
-                                                verticalAlignment = Alignment.CenterVertically,
-                                                horizontalArrangement = Arrangement.spacedBy(6.dp)
-                                            ) {
-                                                androidx.compose.material3.Checkbox(
-                                                    modifier = Modifier.feedbackOnPress(),
-                                                    checked = enviarParaConflito,
-                                                    onCheckedChange = { enviarParaConflito = it },
-                                                    colors = androidx.compose.material3.CheckboxDefaults.colors(
-                                                        checkedColor = visual.accentBright,
-                                                        uncheckedColor = visual.muted
-                                                    ))
-                                                AppText(
-                                                    "Conflito",
-                                                    style = MaterialTheme.typography.bodySmall,
-                                                    color = if (enviarParaConflito) visual.accentBright else visual.muted
-                                                )
-                                            }
-                        
-                                            InkButton(
-                                                label = "Gerar NPC",
-                                                onClick = gerarNpcDaInterface,
-                                                enabled = !gerando,
-                                                size = InkButtonSize.Small,
-                                                customWidth = 136.dp,
-                                                customHeight = 64.dp
-                                            )
-                                        }
-                        
+                            OutlinedTextField(
+                                value = nomeManual,
+                                onValueChange = com.example.ui.components.rememberTypingFeedback { onNomeManualChange(it.take(60)) },
+                                label = { AppText("Nome") },
+                                modifier = Modifier.weight(1f),
+                                singleLine = true,
+                                colors = exaltedTextFieldColors()
+                            )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(6.dp)
+                            ) {
+                                androidx.compose.material3.Checkbox(
+                                    modifier = Modifier.feedbackOnPress(),
+                                    checked = enviarParaConflito,
+                                    onCheckedChange = { enviarParaConflito = it },
+                                    colors = androidx.compose.material3.CheckboxDefaults.colors(
+                                        checkedColor = visual.accentBright,
+                                        uncheckedColor = visual.muted
+                                    )
+                                )
+                                AppText(
+                                    "Conflito",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = if (enviarParaConflito) visual.accentBright else visual.muted
+                                )
+                            }
+                            InkButton(
+                                label = "Gerar NPC",
+                                onClick = gerarNpcDaInterface,
+                                enabled = !gerando,
+                                size = InkButtonSize.Small,
+                                customWidth = 136.dp,
+                                customHeight = 64.dp
+                            )
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(10.dp))
