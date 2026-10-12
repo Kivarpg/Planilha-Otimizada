@@ -161,7 +161,7 @@ fun ErgonomicMultiWordButton(
 
     // Geometria única e previsível. A identidade muda por tokens, não por
     // transforms/desenho manual que possam interferir em constraints.
-    val sentinelShape = RoundedCornerShape(8.dp)
+    val sentinelShape = RoundedCornerShape(6.dp)
     Box(
         modifier = modifier
             .defaultMinSize(minWidth = 72.dp, minHeight = 58.dp)
@@ -170,7 +170,7 @@ fun ErgonomicMultiWordButton(
                 Brush.horizontalGradient(
                     listOf(
                         if (isSelected) visual.accentBright.copy(alpha = 0.96f) else if (matchCharmPaletteWhenUnselected) ExaltedBlack else visual.surfaceVariant,
-                        if (isSelected) visual.accentBright.copy(alpha = 0.92f) else if (matchCharmPaletteWhenUnselected) ExaltedBlack else visual.surface,
+                        if (isSelected) visual.accentBright.copy(alpha = 0.92f) else if (matchCharmPaletteWhenUnselected) ExaltedBlack else visual.surface.copy(alpha = 0.98f),
                         if (isSelected) visual.accentBright.copy(alpha = 0.96f) else if (matchCharmPaletteWhenUnselected) ExaltedBlack else visual.surfaceVariant
                     )
                 )
