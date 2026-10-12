@@ -957,21 +957,19 @@ fun NpcEncontroCard(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 6.dp)
-                        .clip(RoundedCornerShape(10.dp))
+                        .padding(vertical = 4.dp)
+                        .clip(RoundedCornerShape(8.dp))
                         .background(visualTemplate.surfaceVariant)
-                        .border(2.dp, visualTemplate.accentBright, RoundedCornerShape(10.dp))
+                        .border(2.dp, visualTemplate.accentBright, RoundedCornerShape(8.dp))
                         .feedbackClickable {
                             gavetasExpandidas = if (expandida) gavetasExpandidas - habilidade else gavetasExpandidas + habilidade
                         }
-                        .padding(horizontal = 16.dp, vertical = 14.dp)
+                        .padding(horizontal = 14.dp, vertical = 12.dp)
                 ) {
                     AppText(
                         if (expandida) "▾" else "▸",
-                        style = MaterialTheme.typography.titleMedium.copy(fontSize = 20.sp, lineHeight = 24.sp),
-                        fontWeight = FontWeight.Bold,
                         color = visualTemplate.accentBright,
-                        modifier = Modifier.padding(end = 12.dp),
+                        modifier = Modifier.padding(end = 8.dp),
                         forceStroke = false
                     )
                     AppText(
