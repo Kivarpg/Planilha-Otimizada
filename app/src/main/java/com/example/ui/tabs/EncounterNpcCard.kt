@@ -964,12 +964,14 @@ fun NpcEncontroCard(
                         .feedbackClickable {
                             gavetasExpandidas = if (expandida) gavetasExpandidas - habilidade else gavetasExpandidas + habilidade
                         }
-                        .padding(horizontal = 14.dp, vertical = 12.dp)
+                        .padding(horizontal = 16.dp, vertical = 14.dp)
                 ) {
                     AppText(
                         if (expandida) "▾" else "▸",
+                        style = MaterialTheme.typography.titleMedium.copy(fontSize = 20.sp, lineHeight = 24.sp),
+                        fontWeight = FontWeight.Bold,
                         color = visualTemplate.accentBright,
-                        modifier = Modifier.padding(end = 8.dp),
+                        modifier = Modifier.padding(end = 12.dp),
                         forceStroke = false
                     )
                     AppText(
