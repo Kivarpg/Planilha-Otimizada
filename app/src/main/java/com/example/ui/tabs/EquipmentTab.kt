@@ -182,7 +182,8 @@ internal fun MoteSourceDialog(
                 }
                 if (modo == "Mistos") {
                     BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
-                        if (maxWidth < 360.dp) {
+                        // Campos numéricos devem manter largura suficiente para rótulos e teclado em telas compactas.
+                        if (maxWidth < 480.dp) {
                             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                                 OutlinedTextField(
                                     value = mistoPessoaisTexto,
