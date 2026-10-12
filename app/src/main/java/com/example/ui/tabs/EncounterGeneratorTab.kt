@@ -527,10 +527,11 @@ fun EncounterGeneratorTab(
                             }
                         }
                     } else {
-                                        Row(
-                                            verticalAlignment = Alignment.CenterVertically,
-                                            horizontalArrangement = Arrangement.spacedBy(6.dp)
-                                        ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
                                             OutlinedTextField(
                                                 value = nomeManual,
                                                 onValueChange = com.example.ui.components.rememberTypingFeedback { onNomeManualChange(it.take(60)) },
