@@ -540,7 +540,7 @@ fun EncounterGeneratorTab(
                                             // e do botão de gerar NPC, conforme a referência visual.
                                             Row(
                                                 verticalAlignment = Alignment.CenterVertically,
-                                                horizontalArrangement = Arrangement.spacedBy(2.dp)
+                                                horizontalArrangement = Arrangement.spacedBy(6.dp)
                                             ) {
                                                 androidx.compose.material3.Checkbox(
                                                     modifier = Modifier.feedbackOnPress(),
