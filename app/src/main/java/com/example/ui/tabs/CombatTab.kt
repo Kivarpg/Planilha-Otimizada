@@ -138,7 +138,7 @@ fun CombatTab(
         modifier = modifier
             .fillMaxSize()
             .exaltedTabIdentity(5).exaltedContentStage(5)
-            .padding(horizontal = 18.dp, vertical = 16.dp)
+            .padding(horizontal = 16.dp, vertical = 18.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
