@@ -188,7 +188,7 @@ private fun AttributeGroupCard(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .widthIn(max = 380.dp)
+            .widthIn(max = 520.dp)
             .padding(vertical = 4.dp)
             .padding(top = 7.dp)
     ) {
