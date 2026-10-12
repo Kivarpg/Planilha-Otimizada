@@ -298,7 +298,8 @@ class VisualIdentityPreparationContractTest {
         assertTrue(combat.contains("color = visual.accentBright.copy(alpha = 0.12f)"))
         assertTrue(combat.contains("if (ativo) visual.accentBright else visual.outline"))
         assertTrue(combat.contains("corTextoContraste(essenciaGradientColor(nivel))"))
-        assertTrue(attributes.contains(".background(if (isSelected) visual.accent else visual.surfaceVariant)"))
+        assertTrue(attributes.contains("if (isSelected) listOf(visual.metalDeep, visual.accent, visual.metalDeep)"))
+        assertTrue(attributes.contains("if (isSelected) corTextoContraste(visual.accent) else visual.muted"))
         assertTrue(attributes.contains("if (favoritoInfo.ehCasta) visual.accentBright else visual.outline"))
         assertTrue(personal.contains("colors = exaltedTextFieldColors()"))
     }
@@ -389,7 +390,7 @@ class VisualIdentityPreparationContractTest {
     @Test
     fun `ability filter remains type specific on narrow screens`() {
         val tab = File("src/main/java/com/example/ui/tabs/AbilitiesTab.kt").readText()
-        assertTrue(tab.contains("val columns = if (maxWidth < 390.dp) 1 else 2"))
+        assertTrue(tab.contains("val columns = if (maxWidth < 480.dp) 1 else 2"))
         assertTrue(tab.contains("maxItemsInEachRow = columns"))
         assertTrue(tab.contains("sheet.tipoPersonagem.isLunar()"))
         assertTrue(tab.contains("0 to \"Todas\", 2 to \"Com Pontos\""))

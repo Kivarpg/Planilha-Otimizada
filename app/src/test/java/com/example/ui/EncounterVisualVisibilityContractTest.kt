@@ -23,7 +23,9 @@ class EncounterVisualVisibilityContractTest {
     @Test
     fun `charm drawer heading remains visible and interactive`() {
         assertTrue(npcCard.contains("text = \"\$habilidade (\${encantosDaGaveta.size})\""))
-        assertTrue(npcCard.contains(".border(2.dp, visualTemplate.accentBright, RoundedCornerShape(8.dp))"))
+        assertTrue(npcCard.contains("listOf(visualTemplate.metalShine, visualTemplate.accentBright, visualTemplate.metalDeep)"))
+        assertTrue(npcCard.contains(".feedbackClickable {"))
+        assertTrue(npcCard.contains("fontSize = 17.sp, lineHeight = 22.sp"))
         assertTrue(npcCard.contains("gavetasExpandidas = if (expandida)"))
     }
 
