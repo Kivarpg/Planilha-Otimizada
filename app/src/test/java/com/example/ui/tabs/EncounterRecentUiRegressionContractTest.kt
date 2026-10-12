@@ -7,6 +7,14 @@ import kotlin.test.assertTrue
 class EncounterRecentUiRegressionContractTest {
     private val card = File("src/main/java/com/example/ui/tabs/EncounterNpcCard.kt").readText()
     private val generator = File("src/main/java/com/example/ui/tabs/EncounterGeneratorTab.kt").readText()
+    private val inkButton = File("src/main/java/com/example/ui/components/InkButton.kt").readText()
+
+    @Test fun `explicit InkButton widths are applied rather than treated only as maximums`() {
+        assertTrue(inkButton.contains("customWidth != null -> Modifier.width(width).height(height)"))
+        assertTrue(inkButton.contains("fillMaxWidth -> Modifier.fillMaxWidth().height(height)"))
+        assertTrue(generator.contains("customWidth = 136.dp"))
+        assertTrue(generator.contains("label = \"Gerar NPC\""))
+    }
 
     @Test fun `initiative keeps Combat tab three block layout`() {
         val start = card.indexOf("AppText(\"Controle de Iniciativa\"")
