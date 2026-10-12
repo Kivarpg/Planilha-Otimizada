@@ -5,8 +5,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,8 +33,18 @@ fun MedallionIcon(
     size: androidx.compose.ui.unit.Dp = com.example.ui.theme.Dimens.MedallionDefaultSize,
     content: @Composable () -> Unit
 ) {
+    val visual = LocalExaltedVisualTemplate.current
     Box(
-        modifier = modifier.size(size),
+        modifier = modifier
+            .size(size)
+            .background(visual.surfaceVariant, CircleShape)
+            .border(
+                1.5.dp,
+                Brush.sweepGradient(listOf(visual.metalDeep, visual.metalShine, visual.accentBright, visual.metalDeep)),
+                CircleShape
+            )
+            .padding(3.dp)
+            .border(1.dp, visual.outline.copy(alpha = 0.75f), CircleShape),
         contentAlignment = Alignment.Center
     ) { content() }
 }
