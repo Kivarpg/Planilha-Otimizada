@@ -497,10 +497,9 @@ fun EncounterGeneratorTab(
                                 singleLine = true,
                                 colors = exaltedTextFieldColors()
                             )
-                            Row(
+                            Column(
                                 modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.Start)
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
