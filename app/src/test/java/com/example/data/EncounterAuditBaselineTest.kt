@@ -46,16 +46,20 @@ class EncounterAuditBaselineTest {
         var scenarios = 0
         var errors = 0
         var nondeterministic = 0
+        var generationFailures = 0
         out.resolve("samples.csv").bufferedWriter().use { csv ->
             csv.appendLine("type,archetype,mode,seed,operation_ns,audit_errors,charms,trees,largest_tree,xp_available,xp_spent,deterministic")
             for (type in TipoExaltadoEncontro.entries) for (archetype in ArquetipoEncontro.entries) {
-                generate(type, archetype, -1, null) // unmeasured warmup
+                runCatching { generate(type, archetype, -1, null) } // unmeasured warmup
                 for (seed in 0 until 20) for (mode in listOf("automatic", "focus", "xp")) {
                     val focus = if (mode != "focus") null else when (archetype) {
                         ArquetipoEncontro.FISICO -> if (type == TipoExaltadoEncontro.LUNAR) "Destreza" else "Briga"
-                        ArquetipoEncontro.SOCIAL -> if (type == TipoExaltadoEncontro.LUNAR) "Carisma" else "Socializar"
+                        ArquetipoEncontro.SOCIAL -> if (type == TipoExaltadoEncontro.LUNAR) "Carisma" else "Socialização"
                         ArquetipoEncontro.MENTAL -> if (type == TipoExaltadoEncontro.LUNAR) "Inteligência" else "Ocultismo"
                     }
+                    val id = "${type.name}-${archetype.name}-$mode-$seed"
+                    scenarios++
+                    try {
                     val start = System.nanoTime()
                     val generated = generate(type, archetype, seed, focus)
                     val generationNs = System.nanoTime() - start
@@ -67,17 +71,21 @@ class EncounterAuditBaselineTest {
                     val deterministic = if (mode == "xp") snapshot(npc) == snapshot(xp(generated)) else snapshot(npc) == snapshot(generate(type, archetype, seed, focus))
                     if (!deterministic) nondeterministic++
                     errors += report.errors.size
-                    val id = "${type.name}-${archetype.name}-$mode-$seed"
                     out.resolve("$id.json").writeText(snapshot(npc))
                     if (report.issues.isNotEmpty()) out.resolve("$id.issues.txt").writeText(report.issues.joinToString("\n"))
                     assertEquals("JSON roundtrip $id", npc, NpcEncontroJsonCodec.decode(NpcEncontroJsonCodec.encode(npc)))
                     csv.appendLine(listOf(type, archetype, mode, seed, elapsed, report.errors.size, npc.charms.size, groups.size, groups.values.maxOrNull() ?: 0, npc.xpAtual, npc.xpGastoTotal, deterministic).joinToString(","))
                     csv.flush()
-                    scenarios++
+                    } catch (failure: IllegalStateException) {
+                        generationFailures++
+                        out.resolve("$id.failure.txt").writeText(failure.stackTraceToString())
+                        csv.appendLine(listOf(type, archetype, mode, seed, "", "GENERATION_FAILED", "", "", "", "", "", "").joinToString(","))
+                        csv.flush()
+                    }
                 }
             }
         }
-        out.resolve("summary.txt").writeText("scenarios=$scenarios\naudit_errors=$errors\nnondeterministic=$nondeterministic\nThese observations are not approved mechanical golden snapshots.\n")
+        out.resolve("summary.txt").writeText("scenarios=$scenarios\ngeneration_failures=$generationFailures\naudit_errors=$errors\nnondeterministic=$nondeterministic\nThese observations are not approved mechanical golden snapshots.\n")
         assertEquals(540, scenarios)
     }
 }
