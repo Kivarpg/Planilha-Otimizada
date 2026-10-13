@@ -175,13 +175,15 @@ fun TemplateSelectionScreen(onTemplateSelected: (String) -> Unit, modifier: Modi
                             }
                             Spacer(modifier = Modifier.width(if (narrowCard) 10.dp else 16.dp))
                             Column(modifier = Modifier.weight(1f)) {
-                                AppText(
+                                AutoSizeText(
                                     text = if (isDragon) "Dragon-Blooded" else template.nome,
+                                    modifier = Modifier.fillMaxWidth(),
                                     color = accent,
-                                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 20.sp),
+                                    style = MaterialTheme.typography.titleLarge,
                                     fontWeight = FontWeight.Bold,
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Ellipsis
+                                    maxFontSize = 20.sp,
+                                    minFontSize = 12.sp,
+                                    textAlign = TextAlign.Start
                                 )
                                 AppText(
                                     text = if (isSolar) "Solar" else if (isDragon) "Sangue de Dragão" else "Lunar",
