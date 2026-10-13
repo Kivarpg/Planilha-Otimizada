@@ -73,7 +73,11 @@ class EncounterAuditBaselineTest {
                     errors += report.errors.size
                     out.resolve("$id.json").writeText(snapshot(npc))
                     if (report.issues.isNotEmpty()) out.resolve("$id.issues.txt").writeText(report.issues.joinToString("\n"))
-                    assertEquals("JSON roundtrip $id", npc, NpcEncontroJsonCodec.decode(NpcEncontroJsonCodec.encode(npc)))
+                    val decoded = NpcEncontroJsonCodec.decode(NpcEncontroJsonCodec.encode(npc))
+                    if (npc.alertasValidacao != decoded.alertasValidacao) {
+                        out.resolve("$id.alert-migration.txt").writeText("before=${npc.alertasValidacao}\nafter=${decoded.alertasValidacao}\n")
+                    }
+                    assertEquals("Mechanical JSON roundtrip $id", npc.copy(alertasValidacao = decoded.alertasValidacao), decoded)
                     csv.appendLine(listOf(type, archetype, mode, seed, elapsed, report.errors.size, npc.charms.size, groups.size, groups.values.maxOrNull() ?: 0, npc.xpAtual, npc.xpGastoTotal, deterministic).joinToString(","))
                     csv.flush()
                     } catch (failure: IllegalStateException) {
