@@ -564,4 +564,60 @@ class CanonicalEncounterRulesTest {
         assertTrue(forte.total > fraco.total)
     }
 
+    @Test fun plannerRetainsHigherScoringOrderForEquivalentState() {
+        val catalog = PreparedEncounterCatalog.prepare(solares = listOf(
+            solar("a", "A", min = 1, essencia = 1), solar("b", "B", min = 1, essencia = 1)))
+        fun id(local: String) = PreparedEncounterCatalog.StableContentId(PreparedEncounterCatalog.NS_SOLAR, local)
+        val initial = EncounterRulesEngine.buildState(TipoExaltadoEncontro.SOLAR, 1,
+            abilities = mapOf("Briga" to 5), catalog = catalog)
+        val plan = EncounterBuildPlanner.plan(catalog, initial, listOf(
+            EncounterBuildPlanner.Candidate(id("a")) { state, _ -> if ("B" in state.acquiredCharmNames) 100 else 10 },
+            EncounterBuildPlanner.Candidate(id("b")) { _, _ -> 1 }), 2, fingerprint = "order")
+        assertEquals(listOf(id("b"), id("a")), plan.steps.map { it.id })
+        assertEquals(101, plan.totalScore)
+    }
+
+    @Test fun plannerCountsProjectedCharmsForAggregatePrerequisites() {
+        val catalog = PreparedEncounterCatalog.prepare(solares = listOf(
+            solar("a", "A", min = 1, essencia = 1),
+            solar("b", "B", min = 1, essencia = 1, prereq = "quaisquer um Encanto de Briga")))
+        fun id(local: String) = PreparedEncounterCatalog.StableContentId(PreparedEncounterCatalog.NS_SOLAR, local)
+        val initial = EncounterRulesEngine.buildState(TipoExaltadoEncontro.SOLAR, 1,
+            abilities = mapOf("Briga" to 5), catalog = catalog)
+        val after = EncounterRulesEngine.afterAcquisition(initial, id("a"), catalog)
+        assertEquals(1, after.charmCountByCategory["Briga"])
+        assertEquals(EncounterRulesEngine.buildState(TipoExaltadoEncontro.SOLAR, 1,
+            abilities = initial.abilities, acquiredCharmNames = setOf("A"), catalog = catalog), after)
+        val plan = EncounterBuildPlanner.plan(catalog, initial, listOf(
+            EncounterBuildPlanner.Candidate(id("a")) { _, _ -> 1 },
+            EncounterBuildPlanner.Candidate(id("b")) { _, _ -> 20 }), 2, fingerprint = "count")
+        assertEquals(listOf(id("a"), id("b")), plan.steps.map { it.id })
+    }
+
+    @Test fun plannerBudgetIncludesLockedCandidatesAndReportsExhaustion() {
+        val catalog = PreparedEncounterCatalog.prepare(solares = (0..20).map {
+            solar("locked$it", "Locked $it", min = 5, essencia = 5) })
+        val initial = EncounterRulesEngine.buildState(TipoExaltadoEncontro.SOLAR, 1, catalog = catalog)
+        val plan = EncounterBuildPlanner.plan(catalog, initial, catalog.byId.keys.map { id ->
+            EncounterBuildPlanner.Candidate(id) { _, _ -> error("Locked candidate scored") }
+        }, 10, fingerprint = "budget", maxCandidateEvaluations = 3)
+        assertTrue(plan.budgetExhausted)
+        assertEquals(3, plan.candidateEvaluations)
+        assertTrue(plan.steps.isEmpty())
+    }
+
+    @Test fun independentOrderOracleRejectsMutualCycleAndAcceptsCompleteChain() {
+        fun blocked(defs: List<EncantoSolarDefinition>): Set<PreparedEncounterCatalog.StableContentId> {
+            val catalog = PreparedEncounterCatalog.prepare(solares = defs)
+            val state = EncounterRulesEngine.buildState(TipoExaltadoEncontro.SOLAR, 1,
+                abilities = mapOf("Briga" to 5), acquiredCharmNames = defs.map { it.nome }.toSet(), catalog = catalog)
+            return EncounterAcquisitionOrderOracle.blocked(catalog, state)
+        }
+        assertEquals(2, blocked(listOf(solar("a", "A", min = 1, essencia = 1, prereq = "B"),
+            solar("b", "B", min = 1, essencia = 1, prereq = "A"))).size)
+        assertTrue(blocked(listOf(solar("a", "A", min = 1, essencia = 1),
+            solar("b", "B", min = 1, essencia = 1, prereq = "A"),
+            solar("c", "C", min = 1, essencia = 1, prereq = "B"))).isEmpty())
+    }
+
 }

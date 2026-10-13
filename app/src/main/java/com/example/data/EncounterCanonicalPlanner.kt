@@ -27,7 +27,6 @@ internal object EncounterCanonicalPlanner {
                 EncounterCombatSynergy.tagsFromCanonical(it.mechanicalTags)
             }.orEmpty()
         }
-        val candidateNames = uniqueCandidateIds.associateWith { id -> catalog.find(id)?.nome }
         // O score consulta repetidamente o mesmo conjunto adquirido em vários
         // candidatos do mesmo estado do beam. Memorizar por conjunto canônico
         // evita reconstruir plannedTags N vezes sem alterar ordem ou conteúdo.
@@ -53,13 +52,7 @@ internal object EncounterCanonicalPlanner {
                     // estado que o planner cria ao adquirir o Encanto. Alguns
                     // pré-requisitos históricos ainda são resolvidos por nome;
                     // copiar só o ID subestimava árvores A -> B nesses casos.
-                    val acquiredName = candidateNames[id]
-                    val after = build.copy(
-                        acquiredCharmIds = build.acquiredCharmIds + id,
-                        acquiredCharmNames = acquiredName?.let {
-                            build.acquiredCharmNames + it
-                        } ?: build.acquiredCharmNames
-                    )
+                    val after = EncounterRulesEngine.afterAcquisition(build, id, catalog)
                     catalog.directDependentsOf(id).asSequence()
                         .filter { it in candidateSet && it !in build.acquiredCharmIds }
                         .count { dependentId ->

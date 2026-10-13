@@ -21,7 +21,9 @@ internal object EncounterBuildPlanner {
     data class Plan(
         val fingerprint: String,
         val steps: List<PlannedAcquisition>,
-        val totalScore: Int
+        val totalScore: Int,
+        val candidateEvaluations: Int = 0,
+        val budgetExhausted: Boolean = false
     )
 
     data class Candidate(
@@ -59,42 +61,28 @@ internal object EncounterBuildPlanner {
         val candidateEntries = candidateById.entries.toList()
         var frontier = listOf(SearchState(initial, emptyList(), 0, ""))
         var best = frontier.first()
-        val initiallyAvailable = candidateEntries.asSequence()
-            .map { it.key }
-            .filter { it !in initial.acquiredCharmIds }
-            .filter {
-                EncounterRulesEngine.evaluate(graph, it, initial) is
-                    EncounterRulesEngine.Eligibility.Available
-            }.toSet()
+        val initiallyAvailable = hashSetOf<PreparedEncounterCatalog.StableContentId>()
 
         var candidateEvaluations = 0
         var budgetExhausted = false
-        repeat(maxSteps.coerceAtMost(32)) {
-            if (budgetExhausted) return@repeat
-            val next = ArrayList<SearchState>()
-            // distinctBy abaixo sempre preservava a primeira rota gerada para
-            // um mesmo conjunto adquirido. Detectar esse conjunto antes do
-            // score evita pontuar/materializar rotas que seriam descartadas.
-            val seenAcquiredSets = HashSet<Set<PreparedEncounterCatalog.StableContentId>>()
-            frontier.forEach { state ->
-                if (budgetExhausted) return@forEach
-                candidateEntries.asSequence()
-                    .filter { (id, _) -> id !in state.build.acquiredCharmIds }
-                    .mapNotNull { (id, candidate) ->
-                        val eligibility = EncounterRulesEngine.evaluate(graph, id, state.build)
-                            as? EncounterRulesEngine.Eligibility.Available
-                        eligibility?.let { Triple(id, candidate, it) }
-                    }
-                    .forEach { (id, candidate, eligibility) ->
+        for (depth in 0 until maxSteps.coerceAtMost(32)) {
+            if (budgetExhausted) break
+            // Score can depend on acquisition order. Deduplicate only after scoring,
+            // retaining the best path for the complete mechanical state.
+            val nextByBuild = LinkedHashMap<EncounterRulesEngine.BuildState, SearchState>()
+            expansion@ for (state in frontier) {
+                for ((id, candidate) in candidateEntries) {
+                    if (id in state.build.acquiredCharmIds) continue
                     if (candidateEvaluations >= maxCandidateEvaluations) {
                         budgetExhausted = true
-                        return@forEach
+                        break@expansion
                     }
                     candidateEvaluations++
-                    val nextAcquiredIds = state.build.acquiredCharmIds + id
-                    if (!seenAcquiredSets.add(nextAcquiredIds)) return@forEach
-                    val node = graph.node(id) ?: return@forEach
-                    val route = eligibility.routes.minByOrNull { it.routeId } ?: return@forEach
+                    val eligibility = EncounterRulesEngine.evaluate(graph, id, state.build)
+                        as? EncounterRulesEngine.Eligibility.Available ?: continue
+                    if (depth == 0) initiallyAvailable += id
+                    val node = graph.node(id) ?: continue
+                    val route = eligibility.routes.minByOrNull { it.routeId } ?: continue
                     val quality = EncounterBuildQuality.combine(
                         current = candidate.score(state.build, node),
                         future = candidate.futureScore(state.build, node)
@@ -102,12 +90,7 @@ internal object EncounterBuildPlanner {
                     val currentValue = quality.current
                     val futureValue = quality.future
                     val value = quality.total
-                    val nextBuild = state.build.copy(
-                        acquiredCharmIds = nextAcquiredIds,
-                        acquiredCharmNames = catalog.find(id)?.nome?.let {
-                            state.build.acquiredCharmNames + it
-                        } ?: state.build.acquiredCharmNames
-                    )
+                    val nextBuild = EncounterRulesEngine.afterAcquisition(state.build, id, catalog)
                     val step = PlannedAcquisition(
                         id = id,
                         routeId = route.routeId,
@@ -117,10 +100,16 @@ internal object EncounterBuildPlanner {
                         futureValue = futureValue
                     )
                     val nextTieKey = if (state.tieKey.isEmpty()) id.value else state.tieKey + "|" + id.value
-                    next += SearchState(nextBuild, state.steps + step, state.score + value, nextTieKey)
+                    val proposed = SearchState(nextBuild, state.steps + step, state.score + value, nextTieKey)
+                    val previous = nextByBuild[nextBuild]
+                    if (previous == null || proposed.score > previous.score ||
+                        (proposed.score == previous.score && proposed.tieKey < previous.tieKey)) {
+                        nextByBuild[nextBuild] = proposed
+                    }
                 }
             }
-            if (next.isEmpty()) return@repeat
+            val next = nextByBuild.values
+            if (next.isEmpty()) break
             frontier = next
                 .sortedWith(
                     compareByDescending<SearchState> { it.score }
@@ -133,6 +122,6 @@ internal object EncounterBuildPlanner {
                 (roundBest.score == best.score && roundBest.steps.size > best.steps.size)
             ) best = roundBest
         }
-        return Plan(fingerprint, best.steps, best.score)
+        return Plan(fingerprint, best.steps, best.score, candidateEvaluations, budgetExhausted)
     }
 }

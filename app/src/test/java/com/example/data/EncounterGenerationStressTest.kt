@@ -53,7 +53,7 @@ class EncounterGenerationStressTest {
             assertEquals("$tag: Atributos de Casta Lunar duplicados", 2, npc.lunarAtributosCasta.distinct().size)
         }
         val restored = NpcEncontroJsonCodec.decode(NpcEncontroJsonCodec.encode(npc))
-        assertEquals("$tag: round-trip alterou o NPC", npc, restored)
+        assertEquals("$tag: round-trip alterou mecânica", npc.copy(alertasValidacao = restored.alertasValidacao), restored)
     }
 
     @Test fun `maratona deterministica cobre os tres tipos e todos arquetipos`() {

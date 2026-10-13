@@ -133,7 +133,7 @@ internal object DragonBloodedEncounterGenerator {
                 explicitIntent = listOfNotNull(focoEfetivo, customizacao?.secundariaExplicita),
                 exaltStructure = habilidadesAspectoRelevantes
             ),
-            habilidadesMinimoUm = if (arquetipoEfetivo == ArquetipoEncontro.MENTAL || origemNome in setOf(OrigemNomeSangueDeDragao.IMPERIO, OrigemNomeSangueDeDragao.LOOKSHY)) setOf("Linguística") else emptySet()
+            habilidadesMinimoUm = setOf("Resistência") + if (arquetipoEfetivo == ArquetipoEncontro.MENTAL || origemNome in setOf(OrigemNomeSangueDeDragao.IMPERIO, OrigemNomeSangueDeDragao.LOOKSHY)) setOf("Linguística") else emptySet()
         )
         val (abilities, forcaDeVontadeComBonus, precisaEspecialidadeAdicional) = EncounterDistributionService.distribuirPontosDeBonus(
             arquetipo = arquetipoEfetivo,

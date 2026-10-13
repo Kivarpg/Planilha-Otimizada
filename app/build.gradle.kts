@@ -200,7 +200,10 @@ val auditTestPatterns = listOf(
     "**/*StressTest.class",
 )
 
+val fullEncounterAudit = providers.gradleProperty("fullEncounterAudit").map { it.toBoolean() }.orElse(false)
+
 tasks.withType<Test>().configureEach {
+    systemProperty("exalted.fullAudit", fullEncounterAudit.get().toString())
     testLogging {
         events("started", "passed", "skipped", "failed")
         showStandardStreams = true
@@ -208,7 +211,7 @@ tasks.withType<Test>().configureEach {
 
     // AGP registra testDebugUnitTest durante a configuração de variantes.
     // A filtragem é aplicada quando a task Test realmente existe.
-    if (name == "testDebugUnitTest") {
+    if (name == "testDebugUnitTest" && !fullEncounterAudit.get()) {
         auditTestPatterns.forEach(::exclude)
     }
 }
@@ -216,5 +219,4 @@ tasks.withType<Test>().configureEach {
 // Auditorias completas permanecem fora da suíte normal por padrão.
 // Não criamos uma segunda task Test espelhando testDebugUnitTest: no Gradle 9.8/AGP 9
 // configurar um TaskProvider a partir do callback configureEach viola o MutationGuard.
-// Quando necessária, a auditoria pode ser executada explicitamente removendo o filtro
-// ou por um job de CI dedicado, sem alterar a criação da task Android.
+// Auditoria explícita: -PfullEncounterAudit=true, com --tests para selecionar a matriz desejada.

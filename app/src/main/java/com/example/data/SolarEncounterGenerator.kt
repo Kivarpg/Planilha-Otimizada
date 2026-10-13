@@ -104,7 +104,7 @@ internal object SolarEncounterGenerator {
                 explicitIntent = listOfNotNull(focoEfetivo, customizacao?.secundariaExplicita),
                 exaltStructure = habilidadesCastaRelevantes
             ),
-            habilidadesMinimoUm = if (arquetipoEfetivo == ArquetipoEncontro.MENTAL) setOf("Linguística") else emptySet()
+            habilidadesMinimoUm = setOf("Resistência") + if (arquetipoEfetivo == ArquetipoEncontro.MENTAL) setOf("Linguística") else emptySet()
         )
         val (abilities, forcaDeVontadeComBonus, precisaEspecialidadeAdicional) = EncounterDistributionService.distribuirPontosDeBonus(
             arquetipo = arquetipoEfetivo,

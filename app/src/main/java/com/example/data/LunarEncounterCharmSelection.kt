@@ -37,24 +37,28 @@ internal object LunarEncounterCharmSelection {
             ).also { catalogMetadataCache[catalogo] = it }
         }
 
+    private data class OrderedCatalogKey(val archetype: ArquetipoEncontro, val traits: Set<LunarSpiritTrait>)
+
     private val orderedCatalogCache =
         java.util.Collections.synchronizedMap(
-            java.util.WeakHashMap<List<EncantoLunarDefinition>, MutableMap<ArquetipoEncontro, Map<String, List<EncantoLunarDefinition>>>>()
+            java.util.WeakHashMap<List<EncantoLunarDefinition>, MutableMap<OrderedCatalogKey, Map<String, List<EncantoLunarDefinition>>>>()
         )
 
     private fun orderedByAttribute(
         catalogo: List<EncantoLunarDefinition>,
         catalogoPorAtributo: Map<String, List<EncantoLunarDefinition>>,
-        arquetipo: ArquetipoEncontro
+        arquetipo: ArquetipoEncontro,
+        spiritTraits: Set<LunarSpiritTrait>
     ): Map<String, List<EncantoLunarDefinition>> = synchronized(orderedCatalogCache) {
         val byArchetype = orderedCatalogCache.getOrPut(catalogo) { mutableMapOf() }
-        byArchetype[arquetipo] ?: catalogoPorAtributo.mapValues { (_, lista) ->
+        val key = OrderedCatalogKey(arquetipo, spiritTraits.toSet())
+        byArchetype[key] ?: catalogoPorAtributo.mapValues { (_, lista) ->
             lista.sortedWith(
                 compareBy<EncantoLunarDefinition> { it.minEssencia }
                     .thenBy { LunarArchetypePolicy.subdivisionRank(arquetipo, it.subdivisao) }
                     .thenBy { it.nome }
             )
-        }.also { byArchetype[arquetipo] = it }
+        }.also { byArchetype[key] = it }
     }
 
     private val preparedRouteCatalogCache =
@@ -225,7 +229,8 @@ internal object LunarEncounterCharmSelection {
         val catalogoOrdenadoPorAtributo = orderedByAttribute(
             catalogo = catalogo,
             catalogoPorAtributo = catalogoPorAtributo,
-            arquetipo = arquetipo
+            arquetipo = arquetipo,
+            spiritTraits = spiritTraits
         )
 
         // Catálogo/tags/categorias são invariantes durante esta seleção. Preparar

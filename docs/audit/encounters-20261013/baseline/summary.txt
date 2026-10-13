@@ -1,0 +1,5 @@
+scenarios=540
+generation_failures=0
+audit_errors=55
+nondeterministic=0
+These observations are not approved mechanical golden snapshots.

@@ -1,0 +1,52 @@
+package com.example.data
+
+import android.app.Application
+import androidx.test.core.app.ApplicationProvider
+import com.example.model.TipoExaltadoEncontro
+import java.io.File
+import kotlin.random.Random
+import org.junit.Assert.assertEquals
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [35])
+class EncounterStateIndexDifferentialTest {
+    @Test fun `indexed states equal frozen implementation for mixed real catalogs and normalized names`() {
+        val app = ApplicationProvider.getApplicationContext<Application>()
+        val catalog = PreparedEncounterCatalog.prepare(
+            EncantosSolaresCatalog(app).definitions, EncantosSangueDosDragoesCatalog(app).definitions,
+            EncantosLunaresCatalog(app).definitions, FeiticariaCatalog(app).definitions,
+            ArtesMarciaisCatalog(app).definitions)
+        val names = catalog.byId.values.map { it.nome }.distinct()
+        val samples = (0 until 120).map { seed ->
+            names.shuffled(Random(seed)).take(seed % 60).mapIndexed { i, name ->
+                if (i % 3 == 0) "  ${name.uppercase()}  " else name
+            }.toSet() + "Unknown legacy charm"
+        }
+        fun state(selected: Set<String>, legacy: Boolean) = if (legacy)
+            EncounterLegacyStateReference.legacyBuildState(TipoExaltadoEncontro.SOLAR, 3,
+                acquiredCharmNames = selected, catalog = catalog)
+        else EncounterRulesEngine.buildState(TipoExaltadoEncontro.SOLAR, 3,
+                acquiredCharmNames = selected, catalog = catalog)
+        for (selected in samples) assertEquals(state(selected, true), state(selected, false))
+        // Same process/catalog/samples, alternate order to limit warmup and scheduling bias.
+        repeat(2) { for (selected in samples) { state(selected, true); state(selected, false) } }
+        val report = File("build/reports/encounter-audit/state-index.csv").apply { parentFile.mkdirs() }
+        report.bufferedWriter().use { out ->
+            out.appendLine("round,legacy_ns,indexed_ns,states")
+            repeat(10) { round ->
+                fun timed(legacy: Boolean): Long {
+                    val start = System.nanoTime()
+                    for (selected in samples) state(selected, legacy)
+                    return System.nanoTime() - start
+                }
+                val first = timed(round % 2 == 0)
+                val second = timed(round % 2 != 0)
+                out.appendLine("$round,${if (round % 2 == 0) first else second},${if (round % 2 == 0) second else first},${samples.size}")
+            }
+        }
+    }
+}

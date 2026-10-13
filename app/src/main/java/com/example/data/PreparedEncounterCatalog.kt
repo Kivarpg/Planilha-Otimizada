@@ -93,6 +93,50 @@ internal class PreparedEncounterCatalog private constructor(
         EncounterRequirementGraph.compile(this)
     }
 
+    /** Immutable count contributions, computed once rather than scanned for every state. */
+    val countCategoriesByCharm: Map<StableContentId, List<String>> by lazy(LazyThreadSafetyMode.PUBLICATION) {
+        val solarById = solares.associateBy { it.id }
+        val dragonById = sangueDeDragao.associateBy { it.id }
+        val lunarById = lunares.associateBy { it.id }
+        byId.values.associate { ref ->
+            val countKeys = mutableListOf<String>()
+            when (ref.id.namespace) {
+                PreparedEncounterCatalog.NS_SOLAR -> {
+                    solarById[ref.id.localId]?.let { def ->
+                        countKeys += def.habilidade
+                        if (def.minEssencia >= 2) countKeys += "${def.habilidade} de Essência 2+"
+                        if (def.minEssencia >= 3) countKeys += "Essência 3+ de ${def.habilidade}"
+                        val compositeCategories = listOf(
+                            setOf("Performance", "Presença", "Socialização") to "Performance, Presença ou Socialização",
+                            setOf("Burocracia", "Presença", "Guerra") to "Burocracia, Presença ou Guerra",
+                            setOf("Armas Brancas", "Arqueirismo", "Arremesso", "Briga", "Guerra") to
+                                "Armas brancas, Arqueirismo, Arremesso, Briga ou Guerra",
+                            setOf("Burocracia", "Performance", "Socialização") to "Burocracia, Performance ou Socialização",
+                            setOf("Conhecimento", "Presença", "Socialização") to "Conhecimento, Presença ou Socialização",
+                            setOf("Atletismo", "Resistência", "Sobrevivência") to "Atletismo, Resistência ou Sobrevivência"
+                        )
+                        compositeCategories.forEach { (members, label) ->
+                            if (def.habilidade in members) countKeys += label
+                        }
+                        if (def.habilidade in setOf("Burocracia", "Integridade", "Performance", "Presença", "Socialização")) {
+                            countKeys += "sociais"
+                        }
+                    }
+                }
+                PreparedEncounterCatalog.NS_DRAGON_BLOODED ->
+                    dragonById[ref.id.localId]?.let { countKeys += it.habilidade }
+                PreparedEncounterCatalog.NS_LUNAR ->
+                    lunarById[ref.id.localId]?.let { def ->
+                        countKeys += def.atributo
+                        if (def.atributo in com.example.model.ExaltedConstants.MENTAL_ATTRIBUTES) {
+                            countKeys += "Atributo Mental"
+                        }
+                    }
+            }
+            ref.id to countKeys.toList()
+        }
+    }
+
     fun find(id: StableContentId): ContentRef? = byId[id]
 
     fun findByName(nome: String): List<ContentRef> =
