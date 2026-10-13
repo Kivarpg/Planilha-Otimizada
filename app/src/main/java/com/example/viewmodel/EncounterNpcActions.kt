@@ -78,11 +78,11 @@ internal class EncounterNpcActions(
         val aspecto: String,
         val favorecidas: List<String>
     )
-    private val dragonBloodedXpExpanders = HashMap<DragonBloodedXpProfile, com.example.data.EncounterXpExpander>()
+    private val dragonBloodedXpExpanders = java.util.concurrent.ConcurrentHashMap<DragonBloodedXpProfile, com.example.data.EncounterXpExpander>()
 
     private fun dragonBloodedXpExpander(npc: NpcEncontro): com.example.data.EncounterXpExpander {
-        val profile = DragonBloodedXpProfile(npc.casta, npc.habilidadesFavorecidas)
-        return dragonBloodedXpExpanders.getOrPut(profile) {
+        val profile = DragonBloodedXpProfile(npc.casta, npc.habilidadesFavorecidas.toList())
+        return dragonBloodedXpExpanders.computeIfAbsent(profile) {
             com.example.data.DragonBloodedEncounterGenerator
                 .criarExpansorXpComCatalogoConvertido(dragonBloodedXpCatalog, npc)
         }
@@ -852,7 +852,7 @@ internal class EncounterNpcActions(
         return novoEstado
     }
 
-    private fun gerarComTratamento(onResultado: (NpcEncontro?) -> Unit, block: suspend () -> NpcEncontro) {
+    internal fun gerarComTratamento(onResultado: (NpcEncontro?) -> Unit, block: suspend () -> NpcEncontro) {
         iniciarOperacaoAssincrona()
         error.value = null
         lateinit var job: kotlinx.coroutines.Job
@@ -881,6 +881,9 @@ internal class EncounterNpcActions(
                         catalog = preparedEncounterCatalog
                     )
                     com.example.data.EncounterBuildObservability.publishFinalQuality(quality)
+                    check(quality.valid) {
+                        "NPC não publicado: ${quality.validationErrors} erro(s) de legalidade na validação final."
+                    }
                     generationQualityNanos = System.nanoTime() - qualityInicio
                     npc
                 }

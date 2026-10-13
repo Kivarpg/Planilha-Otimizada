@@ -1,0 +1,460 @@
+{
+  "before": {
+    "scenarios": 540,
+    "generation_failures": 0,
+    "audit_errors": 55,
+    "nondeterministic": 0
+  },
+  "after": {
+    "scenarios": 540,
+    "generation_failures": 0,
+    "audit_errors": 0,
+    "nondeterministic": 0
+  },
+  "measurements": [
+    {
+      "type": "LUNAR",
+      "mode": "automatic",
+      "before": {
+        "n": 60,
+        "p50_ms": 140.91623199999998,
+        "p95_ms": 193.468277,
+        "p99_ms": 261.723521
+      },
+      "after": {
+        "n": 60,
+        "p50_ms": 160.900689,
+        "p95_ms": 222.684395,
+        "p99_ms": 253.798498
+      },
+      "p50_change_percent": 14.181799155685649
+    },
+    {
+      "type": "LUNAR",
+      "mode": "focus",
+      "before": {
+        "n": 60,
+        "p50_ms": 124.5926465,
+        "p95_ms": 162.628798,
+        "p99_ms": 192.271106
+      },
+      "after": {
+        "n": 60,
+        "p50_ms": 143.90922,
+        "p95_ms": 191.08635,
+        "p99_ms": 204.50922
+      },
+      "p50_change_percent": 15.503782962022573
+    },
+    {
+      "type": "LUNAR",
+      "mode": "xp",
+      "before": {
+        "n": 60,
+        "p50_ms": 0.230776,
+        "p95_ms": 0.343357,
+        "p99_ms": 2.639985
+      },
+      "after": {
+        "n": 60,
+        "p50_ms": 0.2736055,
+        "p95_ms": 0.382661,
+        "p99_ms": 2.877591
+      },
+      "p50_change_percent": 18.558905605435562
+    },
+    {
+      "type": "SANGUE_DE_DRAGAO",
+      "mode": "automatic",
+      "before": {
+        "n": 60,
+        "p50_ms": 76.254552,
+        "p95_ms": 103.147382,
+        "p99_ms": 135.869505
+      },
+      "after": {
+        "n": 60,
+        "p50_ms": 83.573338,
+        "p95_ms": 90.351069,
+        "p99_ms": 111.426725
+      },
+      "p50_change_percent": 9.597834893843448
+    },
+    {
+      "type": "SANGUE_DE_DRAGAO",
+      "mode": "focus",
+      "before": {
+        "n": 60,
+        "p50_ms": 76.25049050000001,
+        "p95_ms": 88.244324,
+        "p99_ms": 137.13004
+      },
+      "after": {
+        "n": 60,
+        "p50_ms": 83.86550249999999,
+        "p95_ms": 90.78135,
+        "p99_ms": 142.719305
+      },
+      "p50_change_percent": 9.986836740414118
+    },
+    {
+      "type": "SANGUE_DE_DRAGAO",
+      "mode": "xp",
+      "before": {
+        "n": 60,
+        "p50_ms": 0.9406129999999999,
+        "p95_ms": 1.264195,
+        "p99_ms": 135.806698
+      },
+      "after": {
+        "n": 60,
+        "p50_ms": 1.1773985,
+        "p95_ms": 1.651311,
+        "p99_ms": 4.541135
+      },
+      "p50_change_percent": 25.173530453013093
+    },
+    {
+      "type": "SOLAR",
+      "mode": "automatic",
+      "before": {
+        "n": 60,
+        "p50_ms": 92.46131249999999,
+        "p95_ms": 101.806705,
+        "p99_ms": 119.789428
+      },
+      "after": {
+        "n": 60,
+        "p50_ms": 101.5926045,
+        "p95_ms": 110.115593,
+        "p99_ms": 144.720996
+      },
+      "p50_change_percent": 9.875797512608319
+    },
+    {
+      "type": "SOLAR",
+      "mode": "focus",
+      "before": {
+        "n": 60,
+        "p50_ms": 92.672724,
+        "p95_ms": 96.872682,
+        "p99_ms": 110.898455
+      },
+      "after": {
+        "n": 60,
+        "p50_ms": 101.66389,
+        "p95_ms": 108.025135,
+        "p99_ms": 157.609218
+      },
+      "p50_change_percent": 9.702062928462096
+    },
+    {
+      "type": "SOLAR",
+      "mode": "xp",
+      "before": {
+        "n": 60,
+        "p50_ms": 0.9472125,
+        "p95_ms": 2.232743,
+        "p99_ms": 196.655457
+      },
+      "after": {
+        "n": 60,
+        "p50_ms": 1.1032220000000001,
+        "p95_ms": 3.233621,
+        "p99_ms": 230.885641
+      },
+      "p50_change_percent": 16.470380194518143
+    }
+  ],
+  "changed_snapshot_fields": {
+    "LUNAR-MENTAL-automatic-11.json": [
+      "charms"
+    ],
+    "LUNAR-MENTAL-xp-11.json": [
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-automatic-12.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-automatic-14.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-automatic-16.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-automatic-17.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms",
+      "juntarABatalha"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-automatic-8.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-focus-12.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-focus-14.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-focus-16.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-focus-17.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms",
+      "juntarABatalha"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-focus-8.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-xp-12.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-xp-14.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-xp-16.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-xp-17.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms",
+      "juntarABatalha"
+    ],
+    "SANGUE_DE_DRAGAO-MENTAL-xp-8.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-automatic-0.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-automatic-14.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-automatic-16.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-automatic-17.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-automatic-18.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-automatic-2.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-automatic-3.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms",
+      "perseveranca"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-automatic-9.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-focus-0.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-focus-14.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-focus-17.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-focus-18.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-focus-2.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-focus-3.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms",
+      "perseveranca"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-focus-9.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-xp-0.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-xp-14.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-xp-16.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-xp-17.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-xp-18.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-xp-2.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-xp-3.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms",
+      "perseveranca"
+    ],
+    "SANGUE_DE_DRAGAO-SOCIAL-xp-9.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-MENTAL-automatic-10.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-MENTAL-automatic-13.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-MENTAL-automatic-18.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-MENTAL-automatic-6.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-MENTAL-focus-1.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-MENTAL-focus-10.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-MENTAL-focus-14.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-MENTAL-focus-16.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-MENTAL-focus-4.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-MENTAL-xp-10.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-MENTAL-xp-13.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-MENTAL-xp-18.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-MENTAL-xp-6.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-SOCIAL-automatic-13.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-SOCIAL-automatic-6.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-SOCIAL-xp-13.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ],
+    "SOLAR-SOCIAL-xp-6.json": [
+      "abilities",
+      "alertasValidacao",
+      "charms"
+    ]
+  },
+  "legal_gate_passed": true,
+  "limits": "Runner wall-clock timings include scheduling/JIT noise; audit is not a complete rules oracle."
+}

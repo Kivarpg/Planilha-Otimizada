@@ -116,6 +116,40 @@ class EncounterNpcActionsEquipmentIntegrationTest {
         assertEquals(listOf(atualizado), sincronizados)
     }
 
+    @Test
+    fun `invalid final candidate is neither published nor persisted`() = kotlinx.coroutines.runBlocking {
+        val repository = SheetRepository(app)
+        repository.salvarNpcsEncontro(emptyList())
+        val state = MutableStateFlow<List<NpcEncontro>>(emptyList())
+        val actions = actions(state, EncantosSolaresCatalog(app), mutableListOf())
+        val result = kotlinx.coroutines.CompletableDeferred<NpcEncontro?>()
+        actions.gerarComTratamento({ result.complete(it) }) { NpcEncontro(nome = "Invalid") }
+        assertEquals(null, kotlinx.coroutines.withTimeout(10_000) { result.await() })
+        assertEquals(emptyList<NpcEncontro>(), state.value)
+        assertEquals(emptyList<NpcEncontro>(), repository.carregarNpcsEncontro())
+    }
+
+    @Test
+    fun `cancelling generation cannot resurrect cleared encounter state`() = kotlinx.coroutines.runBlocking {
+        val repository = SheetRepository(app)
+        repository.salvarNpcsEncontro(emptyList())
+        val state = MutableStateFlow<List<NpcEncontro>>(emptyList())
+        val actions = actions(state, EncantosSolaresCatalog(app), mutableListOf())
+        val started = kotlinx.coroutines.CompletableDeferred<Unit>()
+        val stopped = kotlinx.coroutines.CompletableDeferred<Unit>()
+        actions.gerarComTratamento({ error("Cancelled generation must not publish") }) {
+            try {
+                started.complete(Unit)
+                kotlinx.coroutines.awaitCancellation()
+            } finally { stopped.complete(Unit) }
+        }
+        kotlinx.coroutines.withTimeout(10_000) { started.await() }
+        actions.limpar()
+        kotlinx.coroutines.withTimeout(10_000) { stopped.await() }
+        assertEquals(emptyList<NpcEncontro>(), state.value)
+        assertEquals(emptyList<NpcEncontro>(), repository.carregarNpcsEncontro())
+    }
+
     private fun actions(
         state: MutableStateFlow<List<NpcEncontro>>,
         solar: EncantosSolaresCatalog,

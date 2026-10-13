@@ -51,7 +51,7 @@ internal object EncounterAcquisitionOrderOracle {
                 pending.remove(id)
                 acquired.add(id)
                 catalog.find(id)?.let { names.add(it.nome) }
-                for (category in catalog.countCategoriesByCharm[id].orEmpty()) counts[category] = (counts[category] ?: 0) + 1
+                for (category in catalog.countCategoriesFor(id)) counts[category] = (counts[category] ?: 0) + 1
             }
         }
         return pending

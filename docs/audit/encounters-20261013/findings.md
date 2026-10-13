@@ -76,3 +76,16 @@ Suíte: 1.123 testes, dois testes antigos falharam por proibir todo rating 1 nã
 Microbenchmark alternado, 120 estados por rodada, 10 rodadas: mediana antiga 47,405 ms; indexada 8,625 ms (−81,8%). Isso não demonstra melhora global: nesta execução geração automática mediana foi Solar 108,08 ms (+16,9%), DB 87,88 ms (+15,2%), Lunar 173,70 ms (+23,3%). Runners diferentes, sem controle de CPU/JIT; ainda é preciso investigar custo frio e repetir. Não declarar otimização global bem-sucedida.
 
 A preservação de um Encanto de Destreza junto de uma árvore de Força não é automaticamente segundo foco de ataque: os casos detectados usam Forma do Gafanhoto Esmeralda como ponte estrutural da Forma Espiritual. Não remover essa função por uma simples contagem de categorias.
+
+
+## Validação consolidada — run 38426393963, commit 694717c
+
+Suíte normal: 1.125 testes, zero falhas/erros/skips. Matriz 540: zero exceções, zero erros de auditoria, zero divergências por seed; reconstrução de ordem de aquisição não encontrou bloqueios. Regressão: os 540 snapshots pré-refatoração carregam, seus SHA-256 são verificados e a migração é idempotente. Estresse: 1.080 gerações na matriz 3×3 e mais 300 Lunares consecutivos. XP: 9 perfis ×100 passos, medições nos marcos 1/10/50/100, saldos e persistência verificados, todos os lotes desfeitos preservando os campos mecânicos testados. Três métodos de teste de estresse/XP aprovados. Nenhum APK.
+
+Tempos desta repetição: Solar automático p50 101,59 ms; DB 83,57 ms; Lunar 160,90 ms. Persistem aumentos relativos ao baseline (+9,9%, +9,6%, +14,2%); não atribuir causalidade apenas por runners distintos. Arquivos brutos em results-run5.
+
+Próximo ajuste em validação: contribuições de contagem por Encanto passam a ser materializadas sob demanda; conjuntos compostos estáticos são construídos uma única vez. Isso remove preparação de contribuições de centenas de Encantos nunca adquiridos no NPC. Benchmark adicional inclui o custo frio de preparar catálogo +15 estados, além do benchmark aquecido já existente.
+
+H1: após confirmar ausência de falsos positivos na matriz, o chamador passa a recusar publicação/persistência quando quality.valid é falso. Teste de integração injeta candidato inválido e verifica estado e repositório; outro cancela geração suspensa e verifica que limpar não é revertido por resultado tardio. O cache de expansores DB usa ConcurrentHashMap e snapshot da lista de Favorecidas, evitando getOrPut não atômico concorrente com limpeza.
+
+Pendências de escopo: medir versão sob demanda, consolidar todos os testes e mapeamento T01–T52, ampliar avaliação estratégica de profundidade/progressão elevada nos três tipos. Correções no planejador canônico não equivalem à integração dele no seletor ativo. Nenhuma conclusão de otimização global ou término da tarefa neste checkpoint.

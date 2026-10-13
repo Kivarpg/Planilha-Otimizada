@@ -339,7 +339,7 @@ internal object EncounterRulesEngine {
         val ids = acquiredRefs.mapTo(linkedSetOf()) { it.id }
         val counts = linkedMapOf<String, Int>()
         for (ref in acquiredRefs) {
-            for (category in catalog.countCategoriesByCharm[ref.id].orEmpty()) {
+            for (category in catalog.countCategoriesFor(ref.id)) {
                 counts[category] = (counts[category] ?: 0) + 1
             }
         }
@@ -362,7 +362,7 @@ internal object EncounterRulesEngine {
                          catalog: PreparedEncounterCatalog): BuildState {
         if (id in state.acquiredCharmIds) return state
         val counts = state.charmCountByCategory.toMutableMap()
-        for (category in catalog.countCategoriesByCharm[id].orEmpty()) {
+        for (category in catalog.countCategoriesFor(id)) {
             counts[category] = (counts[category] ?: 0) + 1
         }
         return state.copy(

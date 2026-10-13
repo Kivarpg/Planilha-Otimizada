@@ -48,5 +48,28 @@ class EncounterStateIndexDifferentialTest {
                 out.appendLine("$round,${if (round % 2 == 0) first else second},${if (round % 2 == 0) second else first},${samples.size}")
             }
         }
+        // Cold per-NPC boundary: include preparation and repeated audit states.
+        val coldReport = File("build/reports/encounter-audit/state-index-cold.csv")
+        coldReport.bufferedWriter().use { out ->
+            out.appendLine("round,legacy_ns,indexed_ns,states")
+            repeat(10) { round ->
+                fun timed(legacy: Boolean): Long {
+                    val start = System.nanoTime()
+                    val fresh = PreparedEncounterCatalog.prepare(catalog.solares, catalog.sangueDeDragao,
+                        catalog.lunares, catalog.feiticos, catalog.estilosMarciais)
+                    for (selected in samples.take(15)) {
+                        if (legacy) EncounterLegacyStateReference.legacyBuildState(TipoExaltadoEncontro.SOLAR, 3,
+                            acquiredCharmNames = selected, catalog = fresh)
+                        else EncounterRulesEngine.buildState(TipoExaltadoEncontro.SOLAR, 3,
+                            acquiredCharmNames = selected, catalog = fresh)
+                    }
+                    return System.nanoTime() - start
+                }
+                val first = timed(round % 2 == 0)
+                val second = timed(round % 2 != 0)
+                out.appendLine("$round,${if (round % 2 == 0) first else second},${if (round % 2 == 0) second else first},15")
+            }
+        }
+
     }
 }
