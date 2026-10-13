@@ -67,6 +67,8 @@ class EncounterAuditBaselineTest {
                     val npc = if (mode == "xp") xp(generated) else generated
                     val elapsed = if (mode == "xp") System.nanoTime() - xpStart else generationNs
                     val report = EncounterNpcAuditor.audit(npc, catalog)
+                    val blocked = EncounterAcquisitionOrderOracle.blocked(npc, catalog)
+                    if (blocked.isNotEmpty()) out.resolve("$id.acquisition-blocked.txt").writeText(blocked.joinToString("\n"))
                     val groups = npc.charms.groupingBy { it.habilidadeVinculada }.eachCount()
                     val deterministic = if (mode == "xp") snapshot(npc) == snapshot(xp(generated)) else snapshot(npc) == snapshot(generate(type, archetype, seed, focus))
                     if (!deterministic) nondeterministic++
@@ -91,5 +93,8 @@ class EncounterAuditBaselineTest {
         }
         out.resolve("summary.txt").writeText("scenarios=$scenarios\ngeneration_failures=$generationFailures\naudit_errors=$errors\nnondeterministic=$nondeterministic\nThese observations are not approved mechanical golden snapshots.\n")
         assertEquals(540, scenarios)
+        assertEquals("Generation exceptions; inspect failure artifacts", 0, generationFailures)
+        assertEquals("Illegal generated NPCs; inspect issue artifacts", 0, errors)
+        assertEquals("Seed regression", 0, nondeterministic)
     }
 }

@@ -6,6 +6,11 @@ import com.example.model.TipoExaltadoEncontro
 
 /** Regras puras da gaveta de Feitiços dos NPCs da Aba 11. */
 object EncounterNpcSpellManagement {
+    internal val missingInitialSpell = EncounterValidationIssue(
+        "INITIAL_SPELL_NO_LEGAL_OPTION", EncounterValidationSeverity.WARNING,
+        "Feitiço inicial pendente: o catálogo não contém uma opção Terrestre elegível."
+    )
+
     // Os nomes dos Encantos de desbloqueio são constantes: normalizá-los
     // apenas uma vez evita trabalho repetido ao exibir/atualizar cada NPC.
     private val circleCharmNames = linkedMapOf(
@@ -85,7 +90,9 @@ object EncounterNpcSpellManagement {
                 candidatosNovos.add(def)
             }
         }
-        if (terrestres.isEmpty()) return npc
+        if (terrestres.isEmpty()) return npc.copy(
+            alertasValidacao = (npc.alertasValidacao + missingInitialSpell.message).distinct()
+        )
         val escolhido = candidatosNovos.randomOrNull(random)
             ?: run {
                 // Quando todos os candidatos ja foram aprendidos, usar um
@@ -103,7 +110,8 @@ object EncounterNpcSpellManagement {
 
         val jaExiste = EncantosSolaresCatalog.normalize(escolhido.nome) in nomesPossuidos
         val feiticos = if (jaExiste) npc.feiticos else npc.feiticos + FeiticoEncontro(escolhido.nome, escolhido.circulo, escolhido.custo)
-        return npc.copy(feiticos = feiticos, feiticoInicialNome = escolhido.nome)
+        return npc.copy(feiticos = feiticos, feiticoInicialNome = escolhido.nome,
+            alertasValidacao = npc.alertasValidacao.filterNot { it == missingInitialSpell.message })
     }
 
     /**

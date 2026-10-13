@@ -6,6 +6,26 @@ package com.example.data
  * does not prove historical XP prices or the ratings at each historical purchase.
  */
 internal object EncounterAcquisitionOrderOracle {
+    fun blocked(npc: com.example.model.NpcEncontro, catalog: PreparedEncounterCatalog): Set<PreparedEncounterCatalog.StableContentId> {
+        val namespace = when (npc.tipoExaltado) {
+            com.example.model.TipoExaltadoEncontro.SOLAR -> PreparedEncounterCatalog.NS_SOLAR
+            com.example.model.TipoExaltadoEncontro.SANGUE_DE_DRAGAO -> PreparedEncounterCatalog.NS_DRAGON_BLOODED
+            com.example.model.TipoExaltadoEncontro.LUNAR -> PreparedEncounterCatalog.NS_LUNAR
+        }
+        val names = npc.charms.map { it.nome }.toSet()
+        val ids = names.flatMap { catalog.findByName(it) }.filter {
+            it.id.namespace == namespace || it.id.namespace == PreparedEncounterCatalog.NS_MARTIAL_CHARM
+        }.map { it.id }.toSet()
+        val traits = npc.lunarArchetypeTraits.mapNotNull { runCatching { LunarSpiritTrait.valueOf(it) }.getOrNull() }
+            .toSet().ifEmpty { (LunarSpiritShapeArchetypeTraits.forDisplayName(npc.formaEspiritual) +
+                LunarSpiritShapeArchetypeTraits.forDisplayName(npc.formaEspiritualSecundaria)).toSet() }
+        val styles = (listOf(npc.estiloArtesMarciais) + npc.estilosArtesMarciaisAdicionais).toSet()
+        return blocked(catalog, EncounterRulesEngine.BuildState(npc.tipoExaltado, npc.essencia,
+            abilities = npc.abilities, attributes = npc.attributes, acquiredCharmNames = names,
+            acquiredCharmIds = ids, spiritTraits = traits,
+            martialStyleIds = catalog.estilosMarciais.filter { it.nomePt in styles || it.nomeEn in styles }.map { it.id }.toSet()))
+    }
+
     fun blocked(catalog: PreparedEncounterCatalog, finalState: EncounterRulesEngine.BuildState): Set<PreparedEncounterCatalog.StableContentId> {
         val pending = finalState.acquiredCharmIds.toMutableSet()
         val acquired = linkedSetOf<PreparedEncounterCatalog.StableContentId>()

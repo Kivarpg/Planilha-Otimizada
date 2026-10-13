@@ -23,12 +23,12 @@ class EncounterArchetypeMatrixTest {
             val solarNpc = EncounterGenerator.gerarSolar("", arquetipo, solar, random = Random(100 + a))
             assertTrue(solarNpc.motesPersonais >= 0 && solarNpc.motesPerifericos >= 0)
             assertTrue(solarNpc.especialidades.all { (solarNpc.abilities[it.habilidade] ?: 0) >= 2 })
-            assertTrue(solarNpc.abilities.filterKeys { it !in solarNpc.habilidadesFavorecidas }.values.none { it == 1 })
+            assertTrue(solarNpc.abilities.filterKeys { it !in solarNpc.habilidadesFavorecidas && it != "Resistência" && !(arquetipo == ArquetipoEncontro.MENTAL && it == "Linguística") }.values.none { it == 1 })
 
             val dragonNpc = EncounterGenerator.gerarSangueDeDragao("", arquetipo, dragon, random = Random(200 + a))
             assertTrue(dragonNpc.habilidadesFavorecidas.size == 5)
             assertTrue(dragonNpc.especialidades.all { (dragonNpc.abilities[it.habilidade] ?: 0) >= 2 })
-            assertTrue(dragonNpc.abilities.filterKeys { it !in dragonNpc.habilidadesFavorecidas }.values.none { it == 1 })
+            assertTrue(dragonNpc.abilities.filterKeys { it !in dragonNpc.habilidadesFavorecidas && it != "Resistência" && !(arquetipo == ArquetipoEncontro.MENTAL && it == "Linguística") }.values.none { it == 1 })
 
             val lunarNpc = EncounterGenerator.gerarLunar("", arquetipo, lunar, random = Random(300 + a))
             assertTrue(lunarNpc.lunarAtributosCasta.size == 2)

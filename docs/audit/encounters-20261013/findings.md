@@ -66,3 +66,13 @@ Baseline em execução, nenhuma mudança em algoritmo/regra de produção. O tes
 - Reconstrução canônica repetia duas resoluções por nome, buscas lineares de definição e criação de categorias. A candidata reutiliza contribuições imutáveis por ID do catálogo. Referência antiga congelada em teste diferencial; benchmark alterna ordem antigo/novo no mesmo processo. Nenhuma promessa de ganho até obter os resultados.
 
 Essas mudanças locais ainda aguardam baseline completo e testes de integração. Não constituem conclusão da auditoria.
+
+## Primeiro pacote validado parcialmente — run 38425139228
+
+540 cenários completados, zero exceções, zero erros no auditor e zero divergências de seed. As 55 violações anteriores eram Corpo de Touro com Resistência 0; ambos os catálogos exigem Resistência 1. Agora o mínimo entra na redistribuição dos 28 pontos, antes dos PB, sem ponto gratuito. Mudanças de snapshots: 17 Solar, 38 DB, 2 Lunar. As alterações Solar/DB decorrem da correção obrigatória; Lunar decorre da chave do cache de rotas. Detalhamento por campo em comparison-first-pass.json.
+
+Suíte: 1.123 testes, dois testes antigos falharam por proibir todo rating 1 não Favorecido, contradizendo o mínimo funcional de Resistência. A expectativa foi ajustada somente para os mínimos funcionais documentados (Resistência e Linguística Mental), mantendo os testes de 28 pontos e legalidade de Corpo de Touro.
+
+Microbenchmark alternado, 120 estados por rodada, 10 rodadas: mediana antiga 47,405 ms; indexada 8,625 ms (−81,8%). Isso não demonstra melhora global: nesta execução geração automática mediana foi Solar 108,08 ms (+16,9%), DB 87,88 ms (+15,2%), Lunar 173,70 ms (+23,3%). Runners diferentes, sem controle de CPU/JIT; ainda é preciso investigar custo frio e repetir. Não declarar otimização global bem-sucedida.
+
+A preservação de um Encanto de Destreza junto de uma árvore de Força não é automaticamente segundo foco de ataque: os casos detectados usam Forma do Gafanhoto Esmeralda como ponte estrutural da Forma Espiritual. Não remover essa função por uma simples contagem de categorias.

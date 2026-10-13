@@ -260,4 +260,20 @@ class EncounterNpcSpellManagementTest {
         }
     }
 
+    @Test fun `missing terrestrial catalog reports pending free spell without inventing acquisition`() {
+        val base = feiticeiro()
+        val pending = EncounterNpcSpellManagement.garantirInicialNaCriacao(base, emptyList(), kotlin.random.Random(7))
+        assertEquals(base.feiticos, pending.feiticos)
+        assertEquals(base.xpAtual, pending.xpAtual)
+        assertEquals(base.xpGastoTotal, pending.xpGastoTotal)
+        assertEquals(null, pending.feiticoInicialNome)
+        assertEquals(listOf(EncounterNpcSpellManagement.missingInitialSpell.message), pending.alertasValidacao)
+        val repeated = EncounterNpcSpellManagement.garantirInicialNaCriacao(pending, emptyList(), kotlin.random.Random(7))
+        assertEquals(pending, repeated)
+        val recovered = EncounterNpcSpellManagement.garantirInicialNaCriacao(pending, listOf(terrestre), kotlin.random.Random(7))
+        assertEquals(terrestre.nome, recovered.feiticoInicialNome)
+        assertEquals(emptyList(), recovered.alertasValidacao)
+        assertEquals(base.xpAtual, recovered.xpAtual)
+    }
+
 }

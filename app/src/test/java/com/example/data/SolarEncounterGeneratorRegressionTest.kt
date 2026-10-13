@@ -99,7 +99,7 @@ class SolarEncounterGeneratorRegressionTest {
     }
 
     @Test
-    fun `Solar atribui 1 ponto minimo somente por exigencia de Favorecida e evita ratings 1 desnecessarios`() {
+    fun `Solar permite minimo funcional legal e evita ratings 1 sem finalidade`() {
         val app = ApplicationProvider.getApplicationContext<Application>()
         val catalogo = EncantosSolaresCatalog(app).definitions
         repeat(EncounterTestSamples.count(100)) { seed ->
@@ -114,10 +114,10 @@ class SolarEncounterGeneratorRegressionTest {
                 assertTrue(npc.habilidadesFavorecidas.all { (npc.abilities[it] ?: 0) >= 1 })
                 assertTrue(
                     npc.abilities
-                        .filterKeys { it !in npc.habilidadesFavorecidas }
+                        .filterKeys { it !in npc.habilidadesFavorecidas && it != "Resistência" && !(arquetipo == ArquetipoEncontro.MENTAL && it == "Linguística") }
                         .values
                         .none { it == 1 },
-                    "Habilidades não favorecidas não devem ficar em 1 quando os 28 pontos permitem concentrar a distribuição"
+                    "Habilidades sem mínimo funcional não devem ficar em 1 quando os 28 pontos permitem concentrar a distribuição"
                 )
                 val castaRelevantes = casta.allowedAbilities().filter { habilidade ->
                     catalogo.any { it.habilidade == habilidade }
