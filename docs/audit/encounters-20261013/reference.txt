@@ -1,0 +1,407 @@
+AUDITORIA TÉCNICA E PLANO DE REFATORAÇÃO — ABA 11: ENCONTROS
+Projeto: Exalted / Kotlin / Jetpack Compose
+Data: 13/10/2026
+Repositório examinado: Kivarpg/Planilha-Otimizada, árvore da branch main
+Natureza: auditoria estática, plano de engenharia e especificação de testes
+Estado: NENHUMA alteração de código, compilação, benchmark ou execução de testes foi realizada nesta auditoria.
+
+======================================================================
+0. SUMÁRIO EXECUTIVO
+======================================================================
+A Aba 11 já contém uma arquitetura muito mais elaborada do que um gerador aleatório simples. Foram identificados geradores separados por tipo, fachada de geração, políticas estruturais, serviço de XP, planejadores, otimizador de rotas, grafo canônico de requisitos, catálogo preparado, validação, auditor independente, gerenciamento de feitiço inicial, métricas de desempenho, cache de progressão e muitos testes automatizados. Logo, uma reescrita integral seria uma intervenção de alto risco e não é recomendada.
+
+A refatoração recomendada é INCREMENTAL E CONTROLADA: primeiro congelar o comportamento legal e os exemplos canônicos, medir latência e qualidade, reforçar validações independentes, depois reduzir redundância e integrar melhor a seleção estratégica de Encantos. O Work deve operar sobre a branch correta e não substituir a identidade visual LEO.
+
+Achados comprovados por leitura de código:
+[A1] EncounterGenerator.kt delega geração Solar, Sangue de Dragão e Lunar a implementações separadas.
+[A2] EncounterConstructionPolicy.kt classifica regras MANDATORY e PREFERENCE, com invariantes explícitas por tipo.
+[A3] EncounterBuildPlanner.kt usa busca beam, teto de 32 passos por chamada e orçamento padrão de 1.000.000 avaliações de candidato.
+[A4] EncounterCharmRouteOptimizer.kt mantém algoritmo de rota com beam padrão 6, orçamento padrão de 100.000 unidades, estado compacto BitSet e cache de sinergia em WeakHashMap sincronizado.
+[A5] EncounterExperienceService.kt delega XP Lunar e Solar/Dragon-Blooded a módulos separados e estabelece XP_POR_CHAMADA = 5.
+[A6] EncounterExperienceLunar.kt contém loop de compras por ramo e laço limitado por 500 tentativas, além de expandLunarRepeated.
+[A7] EncounterValidationService.kt declara expressamente que sua validação pós-geração emite alertas e NÃO corrige ou bloqueia por si só.
+[A8] EncounterNpcAuditor.kt é auditor pós-geração independente, com errors/warnings e isValid.
+[A9] EncounterNpcSpellManagement.kt distingue círculos por tipo e contém funções para garantir feitiço inicial, gerenciá-lo e atualizá-lo.
+[A10] EncounterPerformanceMetrics.kt registra amostras, médias e p50/p95/p99 de geração e XP.
+[A11] EncounterProgressionCache.kt é cache LRU sincronizado, limite padrão de 64 NPCs.
+[A12] EncounterMutationPipeline.kt centraliza atualmente recálculo pós-mudança de equipamento e explicita que outras normalizações serão integradas gradualmente.
+[A13] EncounterGenerationRules.kt define 15 Encantos iniciais, 28 pontos normais de Habilidade e outros parâmetros, além de tratar Artes Marciais como método de ataque, não uma quinta Habilidade.
+
+Hipóteses / riscos que exigem prova dinâmica, NÃO bugs confirmados:
+[H1] Divergência entre validadores consultivos e bloqueios efetivos de construções inválidas.
+[H2] Custo de múltiplas avaliações de elegibilidade e sinergia durante seleção e XP.
+[H3] Divergência de decisões entre planejador canônico e otimizador histórico.
+[H4] Cache de roadmap obsoleto após mudanças de foco, equipamento, catálogo, XP ou versão de regras.
+[H5] Compra gulosa Lunar consumir orçamento sem aprofundar a melhor árvore.
+[H6] Mudanças de algoritmo alterar consumo de Random e, portanto, resultados para uma mesma seed.
+[H7] Feitiço inicial não selecionado em catálogos incompletos ou transições de XP.
+[H8] Regressões em salvamento/carregamento, desfazer XP, saúde/dano e motes após refatorações.
+
+======================================================================
+1. ESCOPO, MÉTODO E LIMITAÇÕES
+======================================================================
+1.1 Escopo: geração e evolução de NPCs da Aba 11, três tipos atuais, Físico/Social/Mental, foco personalizado, Encantos, pré-requisitos, Artes Marciais, Feitiçaria, XP, derivados, persistência, qualidade, desempenho e testes.
+1.2 Fonte: listagem recursiva da árvore main e leitura direta de arquivos Kotlin representativos em 13/10/2026. A branch de trabalho visual LEO design/leo-identity-20261012 foi identificada em contexto anterior; antes de qualquer implementação, confirmar qual branch contém a versão mais recente e conciliar mudanças divergentes.
+1.3 Não foram examinadas integralmente todas as centenas de classes e testes; por isso NÃO se atribui cobertura total nem se afirma que cada regra já está correta.
+1.4 Não foi consultado o texto integral licenciado do Exalted 3e nesta auditoria. Os valores existentes são tratados como contratos do aplicativo a preservar, sujeitos à conferência com a fonte autorizada e decisões do proprietário.
+1.5 Sem build/emulador/profiling nesta rodada. Estimativas de desempenho são METAS propostas, não resultados medidos.
+
+======================================================================
+2. MAPA DE ARQUITETURA ATUAL
+======================================================================
+Entrada/UI:
+- ui/tabs/EncounterGeneratorTab.kt
+- ui/tabs/EncounterNpcCard.kt e EncounterNpcCardComponents/Sections.kt
+- viewmodel/EncounterNpcActions.kt
+
+Fachada e geração por tipo:
+- data/EncounterGenerator.kt
+- data/SolarEncounterGenerator.kt
+- data/DragonBloodedEncounterGenerator.kt
+- data/LunarEncounterGenerator.kt
+- data/EncounterGenerationRules.kt
+- data/EncounterArchetypePolicy.kt
+- data/EncounterConstructionPolicy.kt
+- data/EncounterCustomization.kt
+
+Catálogo, requisitos, planejamento, qualidade:
+- data/PreparedEncounterCatalog.kt
+- data/CanonicalEncounterRules.kt
+- data/EncounterRuleResolutionEngine.kt
+- data/EncounterAcquisitionHypergraph.kt
+- data/EncounterBuildPlanner.kt
+- data/EncounterCanonicalPlanner.kt
+- data/EncounterCharmRouteOptimizer.kt
+- data/EncounterCharmSelectionService.kt
+- data/EncounterBuildQuality.kt
+- data/EncounterFinalBuildQuality.kt
+- data/EncounterCombatSynergy.kt
+- data/EncounterSocialSynergy.kt
+- data/EncounterCharmActivationCompatibility.kt
+- data/EncounterCombinationEvaluator.kt
+
+Progressão e estado:
+- data/EncounterExperienceService.kt
+- data/EncounterExperienceSolar.kt
+- data/EncounterExperienceLunar.kt
+- data/EncounterXpExpander.kt
+- data/EncounterProgressionRoadmap.kt
+- data/EncounterProgressionCache.kt
+- data/EncounterStateTransaction.kt
+- data/EncounterMutationPipeline.kt
+- data/EncounterDerivedStatsService.kt
+- data/EncounterMoteService.kt
+- data/EncounterVitalityService.kt
+
+Feitiçaria, equipamentos, persistência:
+- data/EncounterSorceryAccess.kt
+- data/EncounterSorceryRoutePolicy.kt
+- data/EncounterSpellSelectionService.kt
+- data/EncounterNpcSpellManagement.kt
+- data/EncounterEquipmentService.kt
+- data/EncounterNpcPersistenceCoordinator.kt
+- data/NpcEncontroJsonCodec.kt
+- data/SharedPreferencesEncounterNpcRepository.kt
+
+Garantias e observabilidade:
+- data/EncounterValidationService.kt
+- data/EncounterNpcAuditor.kt
+- data/EncounterValidationIssue.kt
+- data/EncounterPerformanceMetrics.kt
+- data/EncounterGenerationDiagnostics.kt
+- data/EncounterConstructionReport.kt
+
+Conclusão arquitetural: preservar os módulos existentes, estabelecer uma fronteira única para elegibilidade e mutações e tornar a seleção de rota substituível/avaliável. Não unir Solar, Sangue de Dragão e Lunar em uma implementação genérica que apague diferenças mecânicas.
+
+======================================================================
+3. CONTRATOS DE REGRAS A CONGELAR
+======================================================================
+3.1 Identidade por tipo (conforme EncounterConstructionPolicy.kt):
+SOLAR: cinco Habilidades Favorecidas incluindo Supernal; Essência inicial 1.
+SANGUE DE DRAGÃO: Aspecto válido, cinco Habilidades do Aspecto reconhecíveis, cinco Favorecidas adicionais disjuntas das cinco do Aspecto; Essência inicial 2.
+LUNAR: dois Atributos de Casta, dois Atributos Favorecidos adicionais, quatro especiais distintos; Essência inicial 1.
+
+3.2 Construção-base: 27 pontos base de Atributos, categorias 11/9/7, pelo menos um Atributo 5 na categoria primária, 28 pontos normais de Habilidades, PB sem saldo não contabilizado, foco de combate único e defesa correspondente. Verificar nos testes se cada regra é efetivamente aplicada em todos os caminhos, e não apenas descrita.
+
+3.3 Encantos e árvores:
+- Solar/Sangue de Dragão: progressão prioritária por Habilidades e requisitos reais.
+- Lunar: progressão prioritária por Atributos e requisitos reais.
+- Aprofundar árvores escolhidas em vez de dispersar Encantos sem necessidade.
+- Encantos de Essência mais alta só podem entrar quando requisitos e cadeia completa estiverem satisfeitos.
+- Não misturar Encantos exclusivos entre tipos.
+- Não inferir pré-requisitos por substring de nomes; usar IDs estáveis e grafo canônico, com compatibilidade explícita para dados legados.
+- Nunca permitir duas ações Simples simultâneas em uma combinação; respeitar regras de Tipo/tempo e compatibilidade de ativação. Exalted 3e, Core, capítulo Systems and Conflict, seção Type p.252 (referência fornecida pelo proprietário; validar com fonte autorizada).
+- Fulminante, Decisivo, Colisão e Atordoamento de iniciativa não são intercambiáveis.
+
+3.4 Foco e combate:
+- Foco selecionado pelo usuário prevalece sobre preferências automáticas, nunca sobre legalidade.
+- Selecionar uma única Habilidade principal de ataque e defesa apropriada; evitar múltiplos focos de ataque conflitantes.
+- Artes Marciais possuem estilos/rotas próprios; não mesclar Encantos de estilos diferentes na gaveta Briga.
+- Equipamento aleatório no modo Foco, preservando compatibilidade arma/armadura/estilo.
+
+3.5 Feitiçaria:
+- Sangue de Dragão: apenas Terrestre; Lunar: Terrestre/Celestial; Solar: Terrestre/Celestial/Solar, conforme código atual.
+- Se houver acesso legal a círculo e catálogo compatível, o feitiço inicial gratuito deve estar selecionado na criação.
+- 'Gerenciar Feitiço inicial' disponível somente antes de adicionar XP; após XP não exibir nem permitir operação equivalente por via alternativa.
+- Não conceder feitiço sem desbloqueio ou de círculo proibido.
+- Distinguir escolha inicial gratuita de compras posteriores de XP.
+
+3.6 XP e estado:
+- XP_POR_CHAMADA = 5 no serviço atual; congelar custo e semântica antes de otimizar.
+- Aumento de Essência apenas quando limiar real for alcançado.
+- Não gerar XP negativo, saldo inventado ou compra acima do orçamento.
+- Desfazer deve preservar estado e histórico coerentes; alterações posteriores precisam invalidar somente os derivados corretos.
+- Trilha de vitalidade deve preservar dano existente quando a capacidade muda.
+- Motes, absorção e dureza devem refletir tipo, Essência e equipamento.
+
+3.7 Identidade de nomes e persistência:
+- Bloquear duplicações indevidas como Ying Ying, Yuan Yuan, Xion Xion; preservar Ying, Yuan, Xion.
+- Round-trip JSON de NPC deve preservar IDs, compras, históricos, estado de feitiço inicial, dano, recursos e foco.
+- Dados legados não podem sofrer perda silenciosa.
+
+======================================================================
+4. DIAGNÓSTICO TÉCNICO POR SUBSISTEMA
+======================================================================
+4.1 Geração: três geradores específicos são apropriados. Risco de divergência de passos comuns (atributos, PB, pós-processamento) e de aplicar validação em momentos diferentes. Recomenda-se pipeline com fases explícitas e resultado tipado, mantendo regras por tipo como estratégias.
+
+4.2 Planejamento: coexistem EncounterBuildPlanner, EncounterCanonicalPlanner e EncounterCharmRouteOptimizer. Não se comprovou redundância funcional integral; porém existem duas superfícies de busca que devem ser comparadas por mesmos catálogos, seeds, estados e objetivos. Estabelecer um orquestrador com escolha documentada, sem eliminar algoritmo antes de teste diferencial.
+
+4.3 Orçamentos de CPU: beam até 32 passos/1.000.000 avaliações no planner e 100.000 unidades no otimizador são LIMITES de trabalho, não garantias de tempo em celular. Medir p95/p99 em dispositivo real e custo por avaliação. Limites não devem fazer o sistema aceitar compras ilegais ou descartar ramos obrigatórios; se o orçamento acabar, retornar resultado legal e diagnóstico de busca truncada.
+
+4.4 Lunar: laço de compra por ramo e teto de 500 tentativas pedem instrumentação. Esse teto evita loops infinitos, mas não demonstra boa qualidade da seleção. Comparar profundidade de árvores, Encantos de Essência alta alcançados, saldo e equilíbrio Vigor/Força ou Vigor/Destreza. Preservar decisão do usuário de apenas um atributo de ataque (Força OU Destreza), com mínimo estratégico de três Encantos no ramo escolhido, sujeito à legalidade e catálogo; não impor meta impossível como invariante de validade.
+
+4.5 Validação: EncounterValidationService retorna avisos, enquanto EncounterNpcAuditor distingue ERROR e WARNING. Verificar pontos de chamada e política de bloqueio: erro de legalidade deve impedir publicação de ficha inválida; aviso de preferência não deve. Não transformar toda preferência em erro.
+
+4.6 Cache: EncounterProgressionCache é limitado e sincronizado, mas chave por npcId exige auditoria de invalidação. Roadmap não pode sobreviver incorretamente a alteração de foco, XP, arma, armadura, Encantos, catálogo, versão de regras ou restauração de save. Preferir fingerprint de estado + catálogo + versão, ou invalidação comprovada em todos os mutadores.
+
+4.7 Feitiços: seleção considera lista fechada de sete feitiços terrestres e identificação textual de 'feitiço de controle'. Tratar como política explícita do produto, não como regra universal de Exalted. Testar catálogos vazios, duplicados, tradução/acentuação, círculo inválido e ausência de opções legais.
+
+4.8 Recalcular derivados: EncounterMutationPipeline atualmente cobre especialmente equipamento. Auditar outros caminhos de mutação (XP, feitiço, forma Lunar, atributos, restauração) para garantir que cada um passe por normalização coerente, sem recalcular tudo desnecessariamente.
+
+4.9 Métricas: há infraestrutura de percentis. Coletar resultados reais antes de estabelecer meta de velocidade. Medir geração, avaliação de qualidade, XP, load de catálogo, validação e persistência separadamente. Não armazenar dados pessoais desnecessários em logs.
+
+4.10 Determinismo: a fachada aceita kotlin.random.Random. Toda otimização que altere ordem de iteração, consumo de random ou desempates pode alterar NPCs. Diferenciar testes de equivalência exata por seed de testes de invariantes; mudanças intencionais de qualidade precisam aprovação e novo snapshot.
+
+======================================================================
+5. PLANO DE REFATORAÇÃO EM FASES E GATES
+======================================================================
+FASE 0 — CONGELAMENTO E INVENTÁRIO (obrigatória)
+Tarefas:
+  0.1 Identificar branch oficial de integração; verificar diferenças main versus design/leo-identity-20261012 e commits posteriores.
+  0.2 Registrar SHA base, versão Exalted.N, versão Kotlin/Gradle, JDK e catálogo.
+  0.3 Enumerar todas as entradas de geração, +XP, -XP, edição de foco, equipamento, feitiço e persistência.
+  0.4 Executar testes existentes e registrar falhas ANTES de modificar código.
+  0.5 Capturar baseline com 3 tipos x 3 arquétipos x seeds fixas x faixas de XP.
+Gate: baseline reproduzível e falhas conhecidas documentadas. Sem isso, não iniciar otimização.
+
+FASE 1 — ORÁCULO INDEPENDENTE DE LEGALIDADE
+Tarefas:
+  1.1 Formalizar invariantes em validador puro independente do gerador.
+  1.2 Reutilizar IDs canônicos e grafo de pré-requisitos para provar cadeia completa.
+  1.3 Classificar ERROR, WARNING, INFORMATION; ERROR nunca vira apenas alerta silencioso.
+  1.4 Construir matriz de regras por tipo e por arquétipo.
+  1.5 Criar fixture de catálogos mínimos e completos.
+Gate: 100% das construções de teste válidas aceitas; 100% das violações injetadas reconhecidas pelo oráculo.
+
+FASE 2 — PIPELINE DE GERAÇÃO EXPLÍCITO
+Proposta de fases: Input validado -> contexto/catálogo -> identidade -> distribuição base -> PB -> foco/equipamento -> Encantos -> feitiçaria -> derivados -> auditoria -> publicação/persistência.
+  2.1 Cada fase recebe estado imutável e devolve resultado/diagnóstico.
+  2.2 Regras Solar/DB/Lunar continuam separadas.
+  2.3 Eliminar somente duplicação comprovada por testes.
+  2.4 Em erro, não persistir NPC parcial; retornar diagnóstico claro.
+Gate: equivalência de snapshots aprovados e zero novas violações de invariantes.
+
+FASE 3 — SELEÇÃO ESTRATÉGICA DE ENCANTOS
+  3.1 Criar interface única para candidatos, legalidade, score atual e potencial futuro.
+  3.2 Usar grafo canônico para pré-requisitos; cache por estado mecânico completo.
+  3.3 Comparar otimizador histórico e planner canônico em testes diferenciais.
+  3.4 Priorizar continuidade de ramo e acesso a Encantos de maior Essência, sem violar foco nem orçamento.
+  3.5 Penalizar dispersão excessiva e compras sem continuidade quando existir alternativa legal melhor.
+  3.6 Preservar compatibilidade de ações Simples, defesa e economia de Iniciativa.
+  3.7 Definir desempates estáveis e diagnóstico do motivo de cada aquisição.
+Gate: zero aquisições ilegais; qualidade não inferior à baseline em matriz acordada; custo limitado.
+
+FASE 4 — XP, TRANSAÇÕES E REVERSÃO
+  4.1 Representar compra como transação com pré-condições, custo, alterações e inverso.
+  4.2 Aplicar passo somente se legal e saldo suficiente; falha não modifica NPC.
+  4.3 Garantir que repetição de +XP seja equivalente à sequência de passos sob mesma política.
+  4.4 Validar desfazimento em ordem inversa e preservação de dano, feitiços e derivados.
+  4.5 Versionar roadmap/fingerprint; invalidar após toda mutação relevante.
+Gate: testes de round-trip +XP/-XP, persistência e idempotência de recálculo.
+
+FASE 5 — OTIMIZAÇÃO COM PERFIL REAL
+  5.1 Instrumentar geração e XP por etapa; coletar p50/p95/p99 e alocação.
+  5.2 Pré-indexar catálogos, metadados, requisitos e sinergia uma vez por versão.
+  5.3 Evitar parsing textual em loops, alocações repetidas e cópias grandes de estado.
+  5.4 Aplicar memoização por fingerprint completo, sem colapsar estados mecanicamente distintos.
+  5.5 Comparar resultados antes/depois e executar benchmarks em Android representativo.
+Gate: melhoria mensurável sem queda de legalidade/qualidade; nenhum ANR novo.
+
+FASE 6 — INTEGRAÇÃO E ROLLOUT
+  6.1 Testar em emulador e aparelho, incluindo telas estreitas e orientação.
+  6.2 Garantir que ações de geração e +XP não bloqueiem thread principal.
+  6.3 Validar salvamento, reabertura, exportação, importação e casos legados.
+  6.4 Implementar feature flag temporária para comparar planner antigo/novo, se necessário.
+  6.5 Entregar relatório de mudanças, resultados, riscos residuais e instruções de rollback.
+Gate: usuário autoriza compilação; APK validado; nenhuma regressão bloqueante.
+
+======================================================================
+6. MATRIZ DE TESTES OBRIGATÓRIA
+======================================================================
+Identificadores para implementação automatizada:
+
+IDENTIDADE / BASE
+T01 Solar: 5 favorecidas incluindo Supernal; Essência inicial 1.
+T02 DB: aspecto correto; 5 habilidades de aspecto + 5 adicionais sem interseção; Essência inicial 2.
+T03 Lunar: 2 casta + 2 favorecidos adicionais, 4 especiais distintos; Essência inicial 1.
+T04 Cada tipo x Físico/Social/Mental: atributos 27, categorias 11/9/7, pelo menos um 5 na categoria primária.
+T05 Cada combinação: 28 pontos normais de Habilidade e PB reconciliados.
+T06 Catálogo vazio/parcial: falha ou degradação explícita, nunca compra inventada.
+T07 Mesmo input e seed: determinismo da versão congelada.
+
+FOCO / COMBATE
+T08 Foco manual de Habilidade Solar/DB prevalece sobre preferência automática.
+T09 Foco Lunar de Atributo prevalece e altera imediatamente a seleção de Encantos.
+T10 Um único método principal de ataque, defesa coerente.
+T11 Briga e estilos marciais não compartilham indevidamente a mesma árvore.
+T12 Arma/armadura sorteadas respeitam restrições do método/estilo.
+T13 Encanto Simples + Encanto Simples incompatíveis nunca compõem a mesma ação.
+T14 Fulminante/Decisivo/Colisão/Crash: categorias e efeitos não são confundidos.
+
+ENCANTOS / REQUISITOS
+T15 Toda aquisição tem Essência mínima e Habilidade/Atributo mínimos.
+T16 Fechamento transitivo de pré-requisitos presente antes de cada compra.
+T17 Encanto de outro tipo nunca entra no NPC.
+T18 IDs canônicos e nomes legados apontam para mesmo requisito quando explicitamente mapeados.
+T19 Dependência circular/ausente é detectada; não provoca loop infinito.
+T20 Ramo escolhido aprofunda antes de dispersar quando houver opções legais equivalentes.
+T21 Lunar: Vigor e um único ataque Força OU Destreza; meta de 3 Encantos no ramo de ataque quando viável.
+T22 Nenhuma poda de beam descarta a única rota legal obrigatória sem diagnóstico.
+T23 Estabilidade de desempate quando candidatos têm score idêntico.
+
+FEITIÇARIA
+T24 Círculos permitidos por tipo: DB terrestre; Lunar terrestre/celestial; Solar terrestre/celestial/solar.
+T25 Círculo desbloqueado + feitiço elegível -> feitiço inicial preenchido automaticamente.
+T26 Antes de XP, gerenciar/trocar feitiço inicial; após XP, operação indisponível também na camada de domínio.
+T27 Sem círculo desbloqueado -> nenhum feitiço ilegal.
+T28 Catálogo de feitiços vazio ou sem opções elegíveis -> aviso estruturado, sem crash.
+T29 Feitiço gratuito não consome XP de compra posterior.
+
+XP / DERIVADOS
+T30 Cada +XP credita 5 XP conforme semântica atual; compras nunca excedem saldo.
+T31 Limiares de Essência antes/depois da fronteira.
+T32 +XP repetido versus passos individuais: equivalência de estado onde aplicável.
+T33 Desfazer um lote reverte exatamente as aquisições do lote, preservando dados independentes.
+T34 Desfazer todos os lotes retorna ao snapshot base, ressalvadas alterações externas intencionais.
+T35 Mudança de Vigor/Corpo de Touro preserva dano existente e trilha coerente.
+T36 Mudança de arma/armadura recalcula absorção, dureza e motes sem duplicar bônus.
+T37 Alteração de foco ou equipamento invalida roadmap obsoleto.
+T38 Alteração de catálogo/regras invalida cache correspondente.
+T39 Quimera/forma espiritual Lunar mantém consistência após XP e reload.
+
+PERSISTÊNCIA / NOMES
+T40 JSON encode->decode preserva identidade, histórico, Encantos, feitiço inicial, foco, recursos e dano.
+T41 Save legado é migrado sem perda silenciosa.
+T42 Gerador de nomes não produz Ying Ying, Yuan Yuan, Xion Xion; mantém formas simples.
+T43 Gerar/editar/cancelar: nenhum NPC parcialmente inválido é salvo.
+
+DESEMPENHO / ROBUSTEZ
+T44 Geração 3 tipos x 3 arquétipos x 100 seeds: sem exceções ou violações.
+T45 Geração 3 tipos x 3 arquétipos x catálogos reais: medir p50/p95/p99 e memória.
+T46 +XP 1/10/50/100 passos: tempo, qualidade, orçamento e estabilidade.
+T47 Estresse com 1.000 NPCs gerados em JVM; checar invariantes, não somente ausência de crash.
+T48 Catálogos com duplicatas, IDs conflitantes, pré-requisitos ausentes e ciclos: diagnóstico.
+T49 Cache: hit/miss, evicção LRU e isolamento entre NPCs.
+T50 Execução concorrente de geração, cancelamento e troca de tela: sem estado parcial nem travamento da UI.
+T51 Propriedade: nenhuma otimização altera legalidade; comparar planner antigo/novo sobre estados gerados.
+T52 Teste de regressão do comportamento de RNG; snapshots só atualizados com aprovação.
+
+Matriz mínima: 3 tipos x 3 arquétipos x 3 modos (automático, foco, XP) x 20 seeds = 540 cenários; ampliar com casos-limite. As contagens são proposta de cobertura, não execução concluída.
+
+======================================================================
+7. ESTRATÉGIA DE TESTES E ORÁCULOS
+======================================================================
+7.1 Unitários puros: custos, requisitos, limites, política por tipo, score e mutações.
+7.2 Property-based/metamórficos: para qualquer NPC gerado legalmente, XP nunca negativo; nenhuma aquisição sem requisitos; serialização conserva estado; incremento e desfazimento mantêm invariantes.
+7.3 Golden snapshots: JSON mecânico canônico sem campos voláteis, seeds fixas, SHA de catálogo e versão do algoritmo. Mudança de snapshot requer diff explicado e aprovação.
+7.4 Diferenciais: mesmo estado inicial e conjunto de candidatos, comparar decisões do planejador antigo e novo. Divergência pode ser melhoria, mas precisa justificar legalidade, qualidade e custo.
+7.5 Mutação: injetar deliberadamente NPC com requisito ausente, Encanto de tipo errado, círculo proibido, orçamento negativo, duplicação ilegal; o auditor deve detectar todos.
+7.6 Integração: ViewModel -> geração -> edição -> XP -> save -> reload -> undo.
+7.7 Instrumentados Android: responsividade, ausência de bloqueio do main thread, abertura/fechamento, cancelamento, memória e crash.
+7.8 Teste de fonte de regras: mapear cada regra mandatória a referência de código, teste e fonte oficial/decisão do proprietário. Nenhuma alteração de custo/limiar por 'otimização'.
+
+Pseudocódigo de oráculo independente:
+  fun validate(npc, catalog, history): List<Issue> {
+    checkTypeIdentity(npc)
+    checkBaseDistribution(npc)
+    checkBudgetAndHistory(npc, history)
+    for (acquisition in chronologicalAcquisitions(history)) {
+      checkType(acquisition, npc.type)
+      checkPrerequisiteClosure(acquisition, priorState)
+      checkMinimums(acquisition, priorState)
+      checkCost(acquisition, priorState)
+      applyToPriorState(acquisition)
+    }
+    checkSpellAccess(npc)
+    checkDerivedStats(npc)
+    return issues
+  }
+IMPORTANTE: o oráculo não deve chamar o mesmo método de elegibilidade do gerador, senão ambos podem compartilhar o mesmo defeito.
+
+======================================================================
+8. MÉTRICAS E CRITÉRIOS DE ACEITE
+======================================================================
+LEGALIDADE: zero ERROR em todos os cenários aprovados; zero compra de Encanto com pré-requisito ausente; zero XP negativo.
+QUALIDADE: comparar número de Encantos legais, profundidade máxima e média de ramo, cobertura de foco, acesso a Encantos avançados, utilidade de combate/social, gasto útil de XP e diversidade controlada. Não otimizar apenas contagem bruta de Encantos.
+LATÊNCIA: registrar p50/p95/p99 reais por tipo/arquétipo e por operação. Meta inicial sugerida: reduzir p95 em >=20% sem aumentar p99 ou degradar qualidade; validar no aparelho-alvo antes de tornar compromisso.
+MEMÓRIA: não crescimento sem limite de caches, amostras e estados intermediários.
+DETERMINISMO: entradas e seeds iguais -> saída igual quando algoritmo/versionamento é o mesmo.
+CONFIABILIDADE: zero crash/ANR nos cenários de teste, save/reload consistente, undo correto.
+REPRODUTIBILIDADE: cada resultado deve informar SHA do código, SHA do catálogo, seed, tipo, arquétipo, foco e versão de regras.
+
+======================================================================
+9. RISCOS E MITIGAÇÕES
+======================================================================
+R1 ALTO: refatorar regra junto com desempenho -> separar commits e gates; teste diferencial.
+R2 ALTO: validador consultivo não bloquear ilegalidade -> oráculo independente e política ERROR/WARNING.
+R3 ALTO: cache com chave insuficiente -> fingerprint completo e testes de invalidação.
+R4 ALTO: regressão Lunar de rota -> métricas de profundidade e custo, seeds e cenários de Vigor/ataque.
+R5 ALTO: regressão de XP/undo -> transações e snapshots de histórico.
+R6 MÉDIO: alterar RNG -> congelar ordem e documentar diferenças intencionais.
+R7 MÉDIO: otimizar texto/regex com cache -> incluir versão de catálogo e conteúdo na chave.
+R8 MÉDIO: feitiçaria sem opção -> fallback explícito e sem feitiço ilegal.
+R9 MÉDIO: branch de UI divergente -> integrar por commits pequenos e resolver conflitos antes de build.
+R10 MÉDIO: falsa sensação de conclusão por build verde -> testes de regras, profiling e teste real no celular.
+
+======================================================================
+10. INSTRUÇÃO EXECUTÁVEL PARA CHATGPT WORK
+======================================================================
+'Faça uma refatoração conservadora da Aba 11: Encontros. Leia este relatório e o código real na branch de integração. Primeiro execute baseline, identifique regras e registre snapshots e métricas. Não altere a lógica de Exalted nem a identidade visual LEO. Preserve os geradores Solar, Sangue de Dragão e Lunar, os contratos de XP, foco, pré-requisitos, Artes Marciais e feitiçaria. Construa um auditor independente e testes da matriz T01-T52; depois refatore incrementalmente o pipeline, seleção de Encantos, cache e transações. Compare planner antigo e novo, nunca aceite construção ilegal por atingir orçamento de CPU, e documente toda divergência mecânica. Entregue diff, testes executados e seus resultados, métricas antes/depois, pendências, SHA e instrução de rollback. Não compile nem dispare GitHub Actions sem autorização expressa.'
+
+Ordem recomendada de PRs:
+PR1: baseline, fixtures, golden snapshots, instrumentação — nenhuma mudança funcional.
+PR2: oráculo independente e classificação de erros — comportamento protegido.
+PR3: pipeline e normalização transacional — equivalência demonstrada.
+PR4: seleção estratégica e cache — A/B com invariantes.
+PR5: desempenho medido, integração, testes instrumentados e documentação.
+
+Definição de pronto:
+[ ] Branch correta e SHA base identificados.
+[ ] Testes anteriores executados e baseline documentada.
+[ ] Matriz T01-T52 implementada, ou exceções justificadas.
+[ ] Todas as regras mandatórias mapeadas a testes.
+[ ] Zero violações em seeds e cenários de estresse.
+[ ] Save/reload e +XP/-XP aprovados.
+[ ] Métricas reais antes/depois documentadas.
+[ ] Nenhuma mudança de UI/LEO ou regras não autorizada.
+[ ] Usuário aprova compilação.
+[ ] APK validado em aparelho/emulador.
+
+======================================================================
+11. PARECER FINAL
+======================================================================
+A oportunidade principal NÃO é simplesmente tornar o gerador 'mais inteligente' por reescrita ampla. É garantir que cada decisão estratégica de Encanto seja legal, reproduzível, explicável e eficiente; que Solar/DB/Lunar mantenham identidades mecânicas distintas; que XP e desfazimento sejam transacionais; e que cache/otimizador não introduzam atalhos incorretos. O código atual já possui elementos importantes para isso. O caminho de menor risco é evoluí-los com oráculo independente, testes diferenciais e medições reais.
+
+Limite deste parecer: conclusões A1-A13 derivam de inspeção estática de arquivos concretos. H1-H8 são hipóteses de auditoria, não defeitos confirmados. Não há alegação de testes executados, bugs corrigidos, APK gerado ou desempenho melhorado.
+
+FIM DO RELATÓRIO
