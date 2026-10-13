@@ -53,8 +53,11 @@ fun LeoScene(motif: ExaltedVisualMotif, modifier: Modifier = Modifier,
         ExaltedVisualMotif.DRAGON_BLOODED -> com.example.R.drawable.leo_scene_dragon
         ExaltedVisualMotif.LUNAR -> com.example.R.drawable.leo_scene_lunar
     }
+    // Approved portrait artwork must remain complete at any viewport ratio.
+    // Black letterboxing preserves composition without stretching or cropping.
     Image(painterResource(scene), contentDescription = null,
-        modifier = modifier, contentScale = ContentScale.Crop, alignment = alignment)
+        modifier = modifier.background(Color.Black),
+        contentScale = ContentScale.Fit, alignment = alignment)
 }
 
 /**
