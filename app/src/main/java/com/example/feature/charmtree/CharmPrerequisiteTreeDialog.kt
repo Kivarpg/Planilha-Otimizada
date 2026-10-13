@@ -6,6 +6,7 @@ import com.example.ui.components.InkButton
 import com.example.ui.components.feedbackClickable
 import com.example.ui.theme.LocalExaltedVisualTemplate
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.CircleShape
@@ -418,7 +419,13 @@ private fun CharmTreeNodeCard(
             CharmTreeVisualStatus.AVAILABLE -> visual.surfaceVariant
             CharmTreeVisualStatus.BLOCKED -> visual.surface.copy(alpha = 0.72f)
         },
-        shape = MaterialTheme.shapes.medium
+        shape = MaterialTheme.shapes.medium,
+        // Toda entrada da árvore deve manter limites visíveis, inclusive
+        // Encantos bloqueados sobre fundos escuros ou ilustrados.
+        border = BorderStroke(
+            width = if (status == CharmTreeVisualStatus.FOCAL) 2.dp else 1.dp,
+            color = if (status == CharmTreeVisualStatus.FOCAL) visual.accentBright else visual.outline
+        )
     ) {
         Column(
             modifier = Modifier
