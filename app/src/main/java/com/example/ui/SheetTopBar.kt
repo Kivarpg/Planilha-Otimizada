@@ -57,9 +57,6 @@ internal fun SheetTopBar(
     // Passo 9/12 — composição adaptativa sem criar um fluxo Compact paralelo.
     // O mesmo cabeçalho preserva conteúdo e ações; apenas redistribui espaço.
     val visual = LocalExaltedVisualTemplate.current
-    val fontScale = LocalDensity.current.fontScale
-    val enlargedHeaderText = fontScale > 1.20f
-    val headerHeight = if (enlargedHeaderText) 156.dp else 132.dp
 
     // APPROVED VISUAL CUSTOMIZATION
     // DO NOT REMOVE OR MODIFY WITHOUT VISUAL IMPACT REVIEW
@@ -70,7 +67,6 @@ internal fun SheetTopBar(
     val compactHeader = maxWidth < 600.dp
     val identityWidth = if (compactHeader) 68.dp else 84.dp
     // Dois controles de 48.dp exigem ao menos 96.dp, mesmo no celular.
-    val actionsWidth = if (compactHeader) 96.dp else 104.dp
     val identityIconSize = if (compactHeader) 36.dp else 42.dp
     Column(
         Modifier
@@ -95,11 +91,47 @@ internal fun SheetTopBar(
             sheet.tipoPersonagem.isLunar() -> R.drawable.tab_icon_lua
             else -> R.drawable.tab_icon_sol
         }
+        // Ações em linha independente acima do nome para todos os tipos de Exaltado.
+            Column(
+                Modifier.fillMaxWidth().statusBarsPadding().padding(horizontal = 12.dp, vertical = 4.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    InkButton(onClick = { onShowSettingsDialog(true) }, modifier = Modifier.size(48.dp)) {
+                        Icon(Icons.Outlined.Settings, "Configurações", tint = visual.accentBright, modifier = Modifier.size(20.dp))
+                    }
+                    Box {
+                        InkButton(onClick = { onShowOpcoesMenu(true) }, modifier = Modifier.size(48.dp)) {
+                            Icon(Icons.Outlined.MoreVert, "Opções", tint = visual.accentBright, modifier = Modifier.size(22.dp))
+                        }
+                        DropdownMenu(expanded = showOpcoesMenu, onDismissRequest = { onShowOpcoesMenu(false) }) {
+                            DropdownMenuItem(text = { AppText("Novo") }, onClick = { onShowOpcoesMenu(false); onShowNovoConfirmDialog(true) },
+    modifier = Modifier.feedbackOnPress(enabled = true)
+)
+                            DropdownMenuItem(text = { AppText("Salvar") }, onClick = { onShowOpcoesMenu(false); viewModel.validateAndSaveSheet() },
+    modifier = Modifier.feedbackOnPress(enabled = true)
+)
+                            DropdownMenuItem(text = { AppText("Carregar") }, onClick = { onShowOpcoesMenu(false); onShowCarregarMenu(true) },
+    modifier = Modifier.feedbackOnPress(enabled = true)
+)
+                            DropdownMenuItem(text = { AppText("Exportar") }, onClick = { onShowOpcoesMenu(false); scope.launch { val resultado = withContext(Dispatchers.Default) { viewModel.exportarComoCodigo() }; resultado.fold({ codigo -> onShowCodeExportResultDialog(codigo) }, { erro -> snackbarHostState.showSnackbar(erro.message ?: "Não foi possível gerar o código.") }) } },
+    modifier = Modifier.feedbackOnPress(enabled = true)
+)
+                            DropdownMenuItem(text = { AppText("Reverter Conclusão…") }, enabled = sheet.planilhaConcluida, onClick = { onShowOpcoesMenu(false); viewModel.solicitarDesmarcarPlanilhaConcluida() },
+    modifier = Modifier.feedbackOnPress(enabled = sheet.planilhaConcluida)
+)
+                            DropdownMenuItem(text = { AppText("Restaurar Backup…") }, onClick = { onShowOpcoesMenu(false); onShowBackupListDialog(true) },
+    modifier = Modifier.feedbackOnPress(enabled = true)
+)
+                        }
+                    }
+                }
+            }
         Row(
             Modifier
                 .fillMaxWidth()
-                .statusBarsPadding()
-                .height(headerHeight)
+                .heightIn(min = 104.dp)
                 .padding(start = if (compactHeader) 14.dp else 20.dp, end = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -174,42 +206,6 @@ internal fun SheetTopBar(
                             style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
                             color = cor, maxLines = 2, softWrap = true, overflow = TextOverflow.Ellipsis
                         )
-                    }
-                }
-            }
-            Column(
-                Modifier.width(actionsWidth).fillMaxHeight().padding(vertical = 12.dp),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.End
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    InkButton(onClick = { onShowSettingsDialog(true) }, modifier = Modifier.size(48.dp)) {
-                        Icon(Icons.Outlined.Settings, "Configurações", tint = visual.accentBright, modifier = Modifier.size(20.dp))
-                    }
-                    Box {
-                        InkButton(onClick = { onShowOpcoesMenu(true) }, modifier = Modifier.size(48.dp)) {
-                            Icon(Icons.Outlined.MoreVert, "Opções", tint = visual.accentBright, modifier = Modifier.size(22.dp))
-                        }
-                        DropdownMenu(expanded = showOpcoesMenu, onDismissRequest = { onShowOpcoesMenu(false) }) {
-                            DropdownMenuItem(text = { AppText("Novo") }, onClick = { onShowOpcoesMenu(false); onShowNovoConfirmDialog(true) },
-    modifier = Modifier.feedbackOnPress(enabled = true)
-)
-                            DropdownMenuItem(text = { AppText("Salvar") }, onClick = { onShowOpcoesMenu(false); viewModel.validateAndSaveSheet() },
-    modifier = Modifier.feedbackOnPress(enabled = true)
-)
-                            DropdownMenuItem(text = { AppText("Carregar") }, onClick = { onShowOpcoesMenu(false); onShowCarregarMenu(true) },
-    modifier = Modifier.feedbackOnPress(enabled = true)
-)
-                            DropdownMenuItem(text = { AppText("Exportar") }, onClick = { onShowOpcoesMenu(false); scope.launch { val resultado = withContext(Dispatchers.Default) { viewModel.exportarComoCodigo() }; resultado.fold({ codigo -> onShowCodeExportResultDialog(codigo) }, { erro -> snackbarHostState.showSnackbar(erro.message ?: "Não foi possível gerar o código.") }) } },
-    modifier = Modifier.feedbackOnPress(enabled = true)
-)
-                            DropdownMenuItem(text = { AppText("Reverter Conclusão…") }, enabled = sheet.planilhaConcluida, onClick = { onShowOpcoesMenu(false); viewModel.solicitarDesmarcarPlanilhaConcluida() },
-    modifier = Modifier.feedbackOnPress(enabled = sheet.planilhaConcluida)
-)
-                            DropdownMenuItem(text = { AppText("Restaurar Backup…") }, onClick = { onShowOpcoesMenu(false); onShowBackupListDialog(true) },
-    modifier = Modifier.feedbackOnPress(enabled = true)
-)
-                        }
                     }
                 }
             }
