@@ -20,18 +20,21 @@ import com.example.ui.theme.LocalExaltedVisualTemplate
 @Composable
 fun Modifier.exaltedTabIdentity(chapter: Int = 0): Modifier {
     val visual = LocalExaltedVisualTemplate.current
-    return this.background(visual.surface)
+    // Painel sutil, nunca uma chapa opaca sobre a imagem global.
+    return this.background(visual.surface.copy(alpha = 0.10f))
 }
 
 @Composable
 fun Modifier.exaltedContentStage(chapter: Int): Modifier {
     val visual = LocalExaltedVisualTemplate.current
+    // O fundo permanece continuo em todas as abas; superficie de leitura
+    // semitransparente protege texto sem esconder a paisagem.
     return this.background(
         Brush.verticalGradient(
             listOf(
-                visual.surface,
-                visual.surfaceVariant.copy(alpha = 0.76f),
-                visual.surface
+                visual.surface.copy(alpha = 0.42f),
+                visual.surfaceVariant.copy(alpha = 0.30f),
+                visual.surface.copy(alpha = 0.42f)
             )
         )
     )
