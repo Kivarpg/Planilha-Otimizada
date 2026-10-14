@@ -485,10 +485,10 @@ fun CombatTab(
 
         // Ações da Vitalidade: Adicionar à esquerda e Limpar à direita,
         // mantendo a trilha livre de botões e seguindo a leitura visual do card.
-        Row(
+        androidx.compose.foundation.layout.FlowRow(
             modifier = Modifier.fillMaxWidth(0.94f),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             InkButton(
                 label = "Adicionar",
