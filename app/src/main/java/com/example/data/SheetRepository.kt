@@ -3,6 +3,7 @@ package com.example.data
 import android.content.Context
 import android.content.SharedPreferences
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.cancel
 import com.example.BuildConfig
 import com.example.iniciativas.IniciativasState
 import com.example.model.CharacterSheet
@@ -49,6 +50,20 @@ class SheetRepository(context: Context) {
                 ) { out -> out.write(codigo.toByteArray(Charsets.UTF_8)) }
             } catch (e: Exception) {
                 logErroInterno("Falha ao exportar código de Jogador", e)
+            }
+        }
+    }
+
+    /** Código compartilhável da lista manual de NPCs (aba NPCs). */
+    fun publicarCodigoNpcs(codigo: String) {
+        documentExportScope.launch {
+            try {
+                val name = "NPCs - codigo - ${System.currentTimeMillis()}.txt"
+                ExaltedDocumentFolders.write(
+                    fileContext, ExaltedDocumentFolders.NPC, name, "text/plain"
+                ) { output -> output.write(codigo.toByteArray(Charsets.UTF_8)) }
+            } catch (e: Exception) {
+                logErroInterno("Falha ao exportar código de NPCs", e)
             }
         }
     }
@@ -252,6 +267,7 @@ class SheetRepository(context: Context) {
         sheetPersistence.close()
         backupPersistence.close()
         encounterNpcRepository.close()
+        documentExportScope.cancel()
     }
 
     private fun logErroInterno(contexto: String, e: Exception) {
