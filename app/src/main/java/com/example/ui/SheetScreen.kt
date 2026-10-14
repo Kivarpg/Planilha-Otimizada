@@ -6,6 +6,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import com.example.ui.components.AppText
+import com.example.ui.components.ExaltedSceneBackdrop
+import androidx.compose.foundation.background
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.*
 import androidx.compose.ui.*
@@ -54,8 +56,16 @@ fun MainSheetScreen(
     val tabs=createSheetTabs(sheet,viewModel,abilitiesSubTabIndex,{abilitiesSubTabIndex=it},encontroNomeManual,{encontroNomeManual=it},encontroArquetipo,{encontroArquetipo=it},encontroGenero,{encontroGenero=it},encontroAbaSelecionadaId,{encontroAbaSelecionadaId=it},encontroMensagemLimite,{encontroMensagemLimite=it})
     val navigationKey = tabs.map { it.title to it.iconRes }
     val navigationTabs = remember(navigationKey) { tabs.navigationItems() }
+    // Um unico pano de fundo para cabecalho e todas as 15 abas.
+    // O Box externo controla a geometria, evitando recortes ou repeticoes
+    // da arte a cada troca de aba. A cena nao intercepta toques.
+    Box(modifier = modifier.fillMaxSize()) {
+        ExaltedSceneBackdrop(sheet.tipoPersonagem, Modifier.matchParentSize())
+        // Escurecimento leve do pano de fundo; os controles usam superficies
+        // mais opacas individualmente para manter leitura e digitacao.
+        Box(Modifier.matchParentSize().background(Color.Black.copy(alpha = 0.28f)))
     Scaffold(
-        modifier = modifier,
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             SheetTopBar(sheet = sheet,
                 viewModel = viewModel,
@@ -91,6 +101,7 @@ fun MainSheetScreen(
             SheetContentArea(tabs, selectedTabIndex)
         }
     }
+    } // fim do host unico de imagem para Scaffold e topBar
     // dialogs remain centralized below; state and callbacks are unchanged.
     SaveValidationDialog(viewModel = viewModel, scope = scope, snackbarHostState = snackbarHostState, onSaveSuccessful = { buscaPlanilhasSalvas = ""; showSheetsListDialog = true })
 
