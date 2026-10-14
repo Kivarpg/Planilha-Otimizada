@@ -2,6 +2,7 @@ package com.example.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import kotlinx.coroutines.launch
 import com.example.BuildConfig
 import com.example.iniciativas.IniciativasState
 import com.example.model.CharacterSheet
@@ -15,6 +16,28 @@ import com.example.model.RatingStyle
  * domain do not require editing this class or unrelated serialization code.
  */
 class SheetRepository(context: Context) {
+    private val fileContext = context.applicationContext
+    private val documentExportScope = kotlinx.coroutines.CoroutineScope(
+        kotlinx.coroutines.SupervisorJob() + kotlinx.coroutines.Dispatchers.IO
+    )
+
+    /** Publica cópia JSON somente no comando Salvar, sem exportar a cada tecla. */
+    fun publicarPlanilhaJogador(sheet: CharacterSheet) {
+        documentExportScope.launch {
+            try {
+                val name = "${sheet.numeroSequencial.coerceAtLeast(1).toString().padStart(3, '0')} - (Jogador) - " +
+                    ExaltedDocumentFolders.safeName(sheet.nome) + " - ${sheet.id.take(8)}.json"
+                ExaltedDocumentFolders.write(
+                    fileContext, ExaltedDocumentFolders.PLAYER, name, "application/json"
+                ) { out ->
+                    out.write(CharacterSheetJsonCodec.encode(sheet).toByteArray(Charsets.UTF_8))
+                }
+            } catch (e: Exception) {
+                logErroInterno("Falha ao publicar planilha em Exalted/Jogador", e)
+            }
+        }
+    }
+
     private val prefs: SharedPreferences =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
