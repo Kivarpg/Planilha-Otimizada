@@ -1342,7 +1342,7 @@ fun NpcEncontroCard(
                 npcIoScope.launch {
                     val arquivo = com.example.ui.tabs.EncounterCombatEquations.gerarPdfNpc(context, npc)
                     operacaoNpcEmAndamento = false
-                    val mensagem = if (arquivo != null) "PDF salvo em Documentos: ${arquivo.name}" else "Falha ao gerar o PDF"
+                    val mensagem = if (arquivo != null) "PDF salvo em Gerador Harmônico/NPC's: ${arquivo.name}" else "Falha ao gerar o PDF"
                     android.widget.Toast.makeText(context, mensagem, android.widget.Toast.LENGTH_LONG).show()
                 }
             },
@@ -1362,7 +1362,7 @@ fun NpcEncontroCard(
                     try {
                         val proximoNumero = com.example.data.NpcSaveLoadService.listarSalvos(context).size + 1
                         com.example.data.NpcSaveLoadService.salvar(context, npc, proximoNumero)
-                        android.widget.Toast.makeText(context, "NPC salvo com sucesso.", android.widget.Toast.LENGTH_SHORT).show()
+                        android.widget.Toast.makeText(context, "NPC salvo em Gerador Harmônico/NPC's.", android.widget.Toast.LENGTH_SHORT).show()
                     } catch (e: Exception) {
                         android.widget.Toast.makeText(context, "Falha ao salvar NPC.", android.widget.Toast.LENGTH_LONG).show()
                     } finally {
