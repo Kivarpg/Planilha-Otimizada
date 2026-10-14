@@ -45,19 +45,25 @@ fun PersonalDataTab(sheet: CharacterSheet, viewModel: SheetViewModel, modifier: 
 
 @Composable
 private fun PersonalIdentitySection(sheet:CharacterSheet,viewModel:SheetViewModel){
-    // Em telas estreitas, três campos lado a lado cortam os rótulos.
-    // Preserva os mesmos campos e callbacks, alterando apenas a composição.
+    // Os tres campos precisam de largura para o texto, rotulos e alvos de toque.
+    // A regra anterior (390.dp) colocava tres OutlinedTextFields espremidos
+    // em telas de celular e tablets compactos. O limite considera a area REAL
+    // disponivel dentro do cartao, nao a largura fisica do aparelho.
     BoxWithConstraints(Modifier.fillMaxWidth()) {
-        if (maxWidth < 390.dp) {
-            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        val largeText = androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.2f
+        if (maxWidth < 900.dp || largeText) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
                 CompactAutoSizeField(sheet.nome, { viewModel.updateNome(it) }, BoxNames.PersonalData.NAME, Modifier.fillMaxWidth())
                 CompactAutoSizeField(sheet.jogador, { viewModel.updateJogador(it) }, BoxNames.PersonalData.PLAYER, Modifier.fillMaxWidth())
                 CompactAutoSizeField(sheet.conceito, { viewModel.updateConceito(it) }, BoxNames.PersonalData.CONCEPT, Modifier.fillMaxWidth())
             }
         } else {
             Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 CompactAutoSizeField(sheet.nome, { viewModel.updateNome(it) }, BoxNames.PersonalData.NAME, Modifier.weight(1f))
                 CompactAutoSizeField(sheet.jogador, { viewModel.updateJogador(it) }, BoxNames.PersonalData.PLAYER, Modifier.weight(1f))
