@@ -37,6 +37,13 @@ class EncounterFutureGrowthPlannerTest {
         assertTrue(result.scores.isEmpty())
     }
 
+    @Test fun `equal future potential favors deepening a legal branch over another root`() {
+        val result = EncounterFutureGrowthPlanner.plan(listOf(node("Root A"), node("Root B"),
+            node("Middle", 1, "Root A"), node("Target A", 5, "Middle"), node("Target B", 5, "Root B")))
+        assertTrue(result.scores.getValue("Middle") > result.scores.getValue("Root B"))
+        assertEquals(result.scores.getValue("Root A"), result.scores.getValue("Root B"))
+    }
+
     private fun solar(name: String, essence: Int = 1, pre: String = "") = EncantoSolarDefinition(
         id = name, habilidade = "Briga", nome = name, nomeIngles = name, custo = "", minsTexto = "",
         minHabilidade = 3, minEssencia = essence, tipo = "Reflexivo", palavrasChave = "", duracao = "",

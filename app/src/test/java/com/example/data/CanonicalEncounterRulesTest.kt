@@ -30,6 +30,30 @@ class CanonicalEncounterRulesTest {
         rotasArquetipo = listOfNotNull(route)
     )
 
+    @Test fun sameNameAcrossExaltedCatalogsNeverInflatesAcquiredCounts() {
+        val root = solar(nome = "Shared root", min = 1, essencia = 1)
+        val dragon = EncantoSangueDeDragaoDefinition("db", "Briga", "Shared root", "", "", "", 1, 1,
+            "Reflexivo", "", "", "", "")
+        val lunar = lunar(prereq = "").copy(nome = "Shared root", minAtributo = 1, minEssencia = 1)
+        val target = solar(id = "target", nome = "Needs two", min = 1, essencia = 1,
+            prereq = "quaisquer dois Encantos de Briga")
+        val catalog = PreparedEncounterCatalog.prepare(listOf(root, target), listOf(dragon), listOf(lunar))
+        for ((type, namespace) in listOf(
+            TipoExaltadoEncontro.SOLAR to PreparedEncounterCatalog.NS_SOLAR,
+            TipoExaltadoEncontro.SANGUE_DE_DRAGAO to PreparedEncounterCatalog.NS_DRAGON_BLOODED,
+            TipoExaltadoEncontro.LUNAR to PreparedEncounterCatalog.NS_LUNAR)) {
+            val state = EncounterRulesEngine.buildState(type, 1,
+                abilities = mapOf("Briga" to 5), acquiredCharmNames = setOf("Shared root"), catalog = catalog)
+            if (type == TipoExaltadoEncontro.SOLAR) {
+                assertTrue(EncounterRulesEngine.evaluate(catalog.requirementGraph,
+                    PreparedEncounterCatalog.StableContentId(namespace, target.id), state) is EncounterRulesEngine.Eligibility.Locked)
+            }
+            assertEquals(1, state.acquiredCharmIds.size)
+            assertEquals(namespace, state.acquiredCharmIds.single().namespace)
+            assertEquals(1, state.charmCountByCategory[if (type == TipoExaltadoEncontro.LUNAR) "Destreza" else "Briga"])
+        }
+    }
+
     @Test fun solarDisponivelSomenteComMinimosEPrerequisito() {
         val def = solar(prereq = "Pai")
         val catalog = PreparedEncounterCatalog.prepare(solares = listOf(def))

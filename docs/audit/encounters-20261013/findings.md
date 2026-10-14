@@ -111,3 +111,12 @@ Geração automática p50 nesta execução: Solar 67,086 ms, Sangue de Dragão 5
 Novo defeito confirmado por inspeção: auditor chamava validação de recém-criado e exigia Essência 1/2 mesmo após XP. Validação comum extraída; entrada de criação preserva Essência inicial; entrada após progressão usa a fórmula de XP existente, sem alterar limiares. Saldo/gasto negativos agora são diagnosticados. Testes de mutação verificam catálogo estrangeiro, mínimos insuficientes, XP negativo e Essência incoerente. A matriz de estresse também passa a executar auditor e reconstrução independente da ordem legal. Tudo isso aguarda execução do próximo pacote.
 
 Mapeamento T01–T52 em `test-coverage.csv` distingue evidência e lacunas. Métricas de profundidade não medem força em combate, e testes Robolectric não substituem validação em aparelho. Não houve compilação de APK.
+
+
+## Execução 8: validação de progressão confirmada
+
+Commit `99d020b24206492ac924eea13063e4b96a29e716`, execução 38498787561: 1134 testes gerais aprovados e quatro testes ampliados aprovados, cobrindo 1380 gerações, matriz de 900 passos de XP e 1800 passos de trajetórias pareadas. A falha anterior da execução 7 foi confirmada: Solar Físico no passo 50 rejeitado indevidamente pela exigência de Essência inicial. Corrigida sem mudar a progressão de XP.
+
+Nas nove trajetórias pareadas, profundidade e quantidade finais após 100 passos ficaram iguais às históricas. Não se demonstrou melhoria estratégica com a primeira preferência futura. Próximo ajuste: com potencial futuro igual, priorizar candidato legal com cadeia própria mais profunda; evitar que raízes paralelas recebam vantagem apenas por pertencerem a um objetivo distante com mais pré-requisitos.
+
+Defeito adicional: buildState resolvia nomes em todos os catálogos e contava Encantos homônimos de outros tipos. Correção restringe IDs e contribuições ao Tipo de Exaltado, preservando Artes Marciais. Regressão exige que uma raiz compartilhada conte uma vez e não desbloqueie requisito de dois Encantos. Teste diferencial usa referência congelada com catálogo restrito ao tipo; a série de benchmark muda de escopo e não deve ser comparada diretamente às rodadas anteriores. Validação desse pacote ainda pendente.

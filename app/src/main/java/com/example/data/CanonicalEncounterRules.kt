@@ -327,10 +327,15 @@ internal object EncounterRulesEngine {
         spiritTraits: Set<LunarSpiritTrait> = emptySet(),
         martialStyleIds: Set<String> = emptySet()
     ): BuildState {
+        val allowedNamespace = when (exaltType) {
+            TipoExaltadoEncontro.SOLAR -> PreparedEncounterCatalog.NS_SOLAR
+            TipoExaltadoEncontro.SANGUE_DE_DRAGAO -> PreparedEncounterCatalog.NS_DRAGON_BLOODED
+            TipoExaltadoEncontro.LUNAR -> PreparedEncounterCatalog.NS_LUNAR
+        }
         val acquiredRefs = acquiredCharmNames.asSequence()
             .flatMap { catalog.findByName(it).asSequence() }
             .filter {
-                it.kind == PreparedEncounterCatalog.ContentKind.CHARM ||
+                (it.kind == PreparedEncounterCatalog.ContentKind.CHARM && it.id.namespace == allowedNamespace) ||
                     it.kind == PreparedEncounterCatalog.ContentKind.MARTIAL_CHARM
             }
             .distinctBy { it.id }

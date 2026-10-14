@@ -44,12 +44,15 @@ internal object EncounterFutureGrowthPlanner {
         for (target in nodes) {
             if (exhausted) break
             val path = resolve(target.name, emptySet()) ?: continue
-            // Higher Essence first; complete prerequisite depth is a bounded tie-break.
-            val value = target.essence * 100 + path.size.coerceAtMost(20)
+            // Propagate potential, then favor the deeper currently legal acquisition.
+            val value = target.essence * 100
             for (name in path) scores[name] = maxOf(scores[name] ?: 0, value)
             if (exhausted) break
         }
         // A partial traversal must not bias selection toward catalog order.
-        return if (exhausted) Result(emptyMap(), true) else Result(scores, false)
+        return if (exhausted) Result(emptyMap(), true) else Result(
+            scores.mapValues { (name, potential) -> potential + (complete[name]?.size ?: 0).coerceAtMost(20) },
+            false
+        )
     }
 }

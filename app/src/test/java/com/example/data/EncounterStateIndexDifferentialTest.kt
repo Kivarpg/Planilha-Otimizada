@@ -14,12 +14,16 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [35])
 class EncounterStateIndexDifferentialTest {
-    @Test fun `indexed states equal frozen implementation for mixed real catalogs and normalized names`() {
+    @Test fun `indexed states equal type restricted frozen implementation for normalized names`() {
         val app = ApplicationProvider.getApplicationContext<Application>()
         val catalog = PreparedEncounterCatalog.prepare(
             EncantosSolaresCatalog(app).definitions, EncantosSangueDosDragoesCatalog(app).definitions,
             EncantosLunaresCatalog(app).definitions, FeiticariaCatalog(app).definitions,
             ArtesMarciaisCatalog(app).definitions)
+        // Legacy input must be restricted to the NPC type: its old implementation
+        // incorrectly counted same-named charms from other Exalted catalogs.
+        val legacyCatalog = PreparedEncounterCatalog.prepare(solares = catalog.solares,
+            feiticos = catalog.feiticos, estilosMarciais = catalog.estilosMarciais)
         val names = catalog.byId.values.map { it.nome }.distinct()
         val samples = (0 until 120).map { seed ->
             names.shuffled(Random(seed)).take(seed % 60).mapIndexed { i, name ->
@@ -28,7 +32,7 @@ class EncounterStateIndexDifferentialTest {
         }
         fun state(selected: Set<String>, legacy: Boolean) = if (legacy)
             EncounterLegacyStateReference.legacyBuildState(TipoExaltadoEncontro.SOLAR, 3,
-                acquiredCharmNames = selected, catalog = catalog)
+                acquiredCharmNames = selected, catalog = legacyCatalog)
         else EncounterRulesEngine.buildState(TipoExaltadoEncontro.SOLAR, 3,
                 acquiredCharmNames = selected, catalog = catalog)
         for (selected in samples) assertEquals(state(selected, true), state(selected, false))
@@ -55,7 +59,9 @@ class EncounterStateIndexDifferentialTest {
             repeat(10) { round ->
                 fun timed(legacy: Boolean): Long {
                     val start = System.nanoTime()
-                    val fresh = PreparedEncounterCatalog.prepare(catalog.solares, catalog.sangueDeDragao,
+                    val fresh = if (legacy) PreparedEncounterCatalog.prepare(solares = catalog.solares,
+                        feiticos = catalog.feiticos, estilosMarciais = catalog.estilosMarciais)
+                    else PreparedEncounterCatalog.prepare(catalog.solares, catalog.sangueDeDragao,
                         catalog.lunares, catalog.feiticos, catalog.estilosMarciais)
                     for (selected in samples.take(15)) {
                         if (legacy) EncounterLegacyStateReference.legacyBuildState(TipoExaltadoEncontro.SOLAR, 3,
