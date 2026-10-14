@@ -1274,19 +1274,29 @@ fun NpcEncontroCard(
                         )
                     }
                 }
-                Box(
-                    modifier = Modifier.width(84.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    AppText(
-                        formatarNumeroPlanilha(iniciativaSincronizada),
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = com.example.ui.components.corIniciativaPorValor(iniciativaSincronizada),
+                // Mesmo mostrador enquadrado da Aba 5: Combate.
+                // Somente leitura: os ajustes e a sincronização continuam
+                // sendo realizados pelos botões existentes.
+                androidx.compose.material3.OutlinedTextField(
+                    value = formatarNumeroPlanilha(iniciativaSincronizada),
+                    onValueChange = {},
+                    readOnly = true,
+                    singleLine = true,
+                    textStyle = MaterialTheme.typography.bodyLarge.copy(
                         textAlign = TextAlign.Center,
-                        forceStroke = true
+                        fontWeight = FontWeight.Bold
+                    ),
+                    modifier = Modifier.width(84.dp),
+                    colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = visualTemplate.accentBright,
+                        unfocusedBorderColor = visualTemplate.outline.copy(alpha = 0.55f),
+                        focusedTextColor = com.example.ui.components.corIniciativaPorValor(iniciativaSincronizada),
+                        unfocusedTextColor = com.example.ui.components.corIniciativaPorValor(iniciativaSincronizada),
+                        focusedContainerColor = visualTemplate.surface,
+                        unfocusedContainerColor = visualTemplate.surface,
+                        cursorColor = visualTemplate.accentBright
                     )
-                }
+                )
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     NPC_DAMAGE_DELTAS_POSITIVE.forEach { delta ->
                         com.example.ui.components.IniciativaAjusteButton(
