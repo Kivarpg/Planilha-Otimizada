@@ -259,7 +259,9 @@ object EncounterProgressionRoadmapService {
             (expectedCatalogFingerprint.isNotBlank() && roadmap.catalogFingerprint != expectedCatalogFingerprint)
         ) return null
         val passo = roadmap.passos.getOrNull(roadmap.proximoPasso) ?: return null
-        return passo.takeIf { it.preconditionFingerprint.isBlank() || it.preconditionFingerprint == fingerprint(npc) }
+        // A legacy step without a precondition cannot prove that its purchases
+        // belong to this snapshot. The caller falls back to normal XP expansion.
+        return passo.takeIf { it.preconditionFingerprint.isNotBlank() && it.preconditionFingerprint == fingerprint(npc) }
     }
 
     fun avancar(roadmap: EncounterProgressionRoadmap): EncounterProgressionRoadmap =

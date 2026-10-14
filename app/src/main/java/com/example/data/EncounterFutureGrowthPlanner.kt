@@ -11,17 +11,19 @@ internal object EncounterFutureGrowthPlanner {
     data class Node(val name: String, val essence: Int, val routes: List<List<EncounterRequirement>>)
     data class Result(val scores: Map<String, Int>, val budgetExhausted: Boolean)
 
+    private data class Path(val names: Set<String>, val depth: Int)
+
     fun plan(nodes: List<Node>, maxWork: Int = 20_000): Result {
         require(maxWork > 0)
         val byName = nodes.groupBy { it.name }.filterValues { it.size == 1 }.mapValues { it.value.single() }
-        val complete = mutableMapOf<String, Set<String>>()
+        val complete = mutableMapOf<String, Path>()
         var work = 0
         var exhausted = false
-        lateinit var resolve: (String, Set<String>) -> Set<String>?
-        fun requirement(req: EncounterRequirement, visiting: Set<String>): Set<String>? = when (req) {
+        lateinit var resolve: (String, Set<String>) -> Path?
+        fun requirement(req: EncounterRequirement, visiting: Set<String>): Path? = when (req) {
             is EncounterRequirement.Charm -> resolve(req.name, visiting)
             is EncounterRequirement.AnyOf -> req.alternatives.mapNotNull { requirement(it, visiting) }
-                .minWithOrNull(compareBy<Set<String>> { it.size }.thenBy { it.sorted().joinToString("|") })
+                .minWithOrNull(compareBy<Path> { it.names.size }.thenBy { it.names.sorted().joinToString("|") })
             else -> null // Do not invent which charms satisfy aggregate or unknown requirements.
         }
         resolve = resolve@ { name, visiting ->
@@ -31,13 +33,15 @@ internal object EncounterFutureGrowthPlanner {
             val node = byName[name]?.takeIf { it.essence in 1..5 } ?: return@resolve null
             val plans = node.routes.mapNotNull { route ->
                 val result = linkedSetOf(name)
+                var prerequisiteDepth = 0
                 for (req in route) {
                     val prerequisites = requirement(req, visiting + name) ?: return@mapNotNull null
-                    result.addAll(prerequisites)
+                    result.addAll(prerequisites.names)
+                    prerequisiteDepth = maxOf(prerequisiteDepth, prerequisites.depth)
                 }
-                result.toSet()
+                Path(result.toSet(), prerequisiteDepth + 1)
             }
-            plans.minWithOrNull(compareBy<Set<String>> { it.size }.thenBy { it.sorted().joinToString("|") })
+            plans.minWithOrNull(compareBy<Path> { it.names.size }.thenBy { it.names.sorted().joinToString("|") })
                 ?.also { complete[name] = it }
         }
         val scores = mutableMapOf<String, Int>()
@@ -46,12 +50,12 @@ internal object EncounterFutureGrowthPlanner {
             val path = resolve(target.name, emptySet()) ?: continue
             // Propagate potential, then favor the deeper currently legal acquisition.
             val value = target.essence * 100
-            for (name in path) scores[name] = maxOf(scores[name] ?: 0, value)
+            for (name in path.names) scores[name] = maxOf(scores[name] ?: 0, value)
             if (exhausted) break
         }
         // A partial traversal must not bias selection toward catalog order.
         return if (exhausted) Result(emptyMap(), true) else Result(
-            scores.mapValues { (name, potential) -> potential + (complete[name]?.size ?: 0).coerceAtMost(20) },
+            scores.mapValues { (name, potential) -> potential + (complete[name]?.depth ?: 0).coerceAtMost(20) },
             false
         )
     }

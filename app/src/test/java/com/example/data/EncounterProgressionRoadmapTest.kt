@@ -424,6 +424,20 @@ class EncounterProgressionRoadmapTest {
     }
 
     @Test
+    fun `legacy roadmap without precondition is discarded instead of trusting stale purchases`() {
+        val npc = npcBase()
+        val roadmap = EncounterProgressionRoadmapService.construir(
+            npc, catalogoSolarDeTeste(), emptyList(), emptyList(), maxPassos = 1)
+        assertTrue(roadmap.passos.isNotEmpty())
+        val unsafe = roadmap.passos.first().copy(preconditionFingerprint = "")
+        val legacy = roadmap.copy(passos = listOf(unsafe), proximoPasso = 0)
+        assertEquals(null, EncounterProgressionRoadmapService.proximo(npc, legacy))
+        assertEquals(null, EncounterExperienceService.aplicarPassoRoadmap(npc, unsafe))
+        assertEquals(null, EncounterExperienceService.aplicarPassoRoadmapJaValidado(npc, unsafe))
+        assertEquals(null, EncounterProgressionRoadmapService.proximo(npc.copy(xpAtual = 100), legacy))
+    }
+
+    @Test
     fun `sha256 hexadecimal otimizado preserva contrato textual`() {
         assertEquals(
             "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",

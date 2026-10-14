@@ -92,7 +92,8 @@ object EncounterExperienceService {
         expectedCatalogFingerprint: String,
         validarPrecondicao: Boolean
     ): NpcEncontro? {
-        if (validarPrecondicao && passo.preconditionFingerprint.isNotBlank() &&
+        if (passo.preconditionFingerprint.isBlank()) return null
+        if (validarPrecondicao &&
             passo.preconditionFingerprint != EncounterProgressionRoadmapService.fingerprint(npc)
         ) return null
         if (expectedCatalogFingerprint.isNotBlank() &&

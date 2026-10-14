@@ -120,3 +120,12 @@ Commit `99d020b24206492ac924eea13063e4b96a29e716`, execução 38498787561: 1134 
 Nas nove trajetórias pareadas, profundidade e quantidade finais após 100 passos ficaram iguais às históricas. Não se demonstrou melhoria estratégica com a primeira preferência futura. Próximo ajuste: com potencial futuro igual, priorizar candidato legal com cadeia própria mais profunda; evitar que raízes paralelas recebam vantagem apenas por pertencerem a um objetivo distante com mais pré-requisitos.
 
 Defeito adicional: buildState resolvia nomes em todos os catálogos e contava Encantos homônimos de outros tipos. Correção restringe IDs e contribuições ao Tipo de Exaltado, preservando Artes Marciais. Regressão exige que uma raiz compartilhada conte uma vez e não desbloqueie requisito de dois Encantos. Teste diferencial usa referência congelada com catálogo restrito ao tipo; a série de benchmark muda de escopo e não deve ser comparada diretamente às rodadas anteriores. Validação desse pacote ainda pendente.
+
+
+## Execução 9 e refinamento final em teste
+
+Commit `534c90a40b8de53bf26ebcadd362845b998fc76f`, execução 38525077593: testes gerais e matriz 540 aprovados. Profundidade inicial média Solar 2,572, Sangue de Dragão 2,656, Lunar 2,778. Contra o baseline completo: 2,600 / 2,639 / 2,633. O baseline contém 55 NPCs inválidos, portanto esses agregados não demonstram por si só ganho em construções legais.
+
+Regressão identificada: Solar Físico seed 16 substituiu a cadeia defensiva Meditação da Durabilidade do Carvalho → Espírito Fortalece a Pele → Concentração de Pele de Ferro. Alterar ordem de candidatos do beam interferia no resultado de sinergia. Correção candidata restringe preferência futura Solar/DB às compras diretas de mínimo/foco e preserva a ordem do otimizador de sinergia. Regressão real acrescentada. O desempate agora mede comprimento de cadeia, não cardinalidade de pré-requisitos paralelos.
+
+H4 confirmado no caminho legado: proximo() e aplicador defensivo aceitavam preconditionFingerprint vazio. Agora rejeitam esse passo; o chamador existente recorre à expansão normal de XP. Nenhuma aquisição ou histórico é apagado. Teste cobre os dois aplicadores e um snapshot modificado. Alterações deste refinamento ainda aguardam testes executados.

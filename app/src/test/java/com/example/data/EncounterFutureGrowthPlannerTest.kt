@@ -44,6 +44,13 @@ class EncounterFutureGrowthPlannerTest {
         assertEquals(result.scores.getValue("Root A"), result.scores.getValue("Root B"))
     }
 
+    @Test fun `depth tie break measures chain length instead of prerequisite breadth`() {
+        val result = EncounterFutureGrowthPlanner.plan(listOf(node("A"), node("B"), node("C"),
+            node("Wide", 1, "A; B; C"), node("Middle", 1, "A"), node("Deep", 1, "Middle"),
+            node("Future wide", 5, "Wide"), node("Future deep", 5, "Deep")))
+        assertTrue(result.scores.getValue("Deep") > result.scores.getValue("Wide"))
+    }
+
     private fun solar(name: String, essence: Int = 1, pre: String = "") = EncantoSolarDefinition(
         id = name, habilidade = "Briga", nome = name, nomeIngles = name, custo = "", minsTexto = "",
         minHabilidade = 3, minEssencia = essence, tipo = "Reflexivo", palavrasChave = "", duracao = "",

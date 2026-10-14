@@ -33,6 +33,17 @@ class EncounterMandatoryResistanceTest {
         }
     }
 
+    @Test fun `future preference preserves the established Solar defensive chain`() {
+        val app = ApplicationProvider.getApplicationContext<Application>()
+        val npc = EncounterGenerator.gerarSolar("Audit", ArquetipoEncontro.FISICO,
+            EncantosSolaresCatalog(app).definitions, FeiticariaCatalog(app).definitions,
+            random = Random(16), meritosCatalogo = MeritosCatalog(app).definitions,
+            estilosArtesMarciais = ArtesMarciaisCatalog(app).definitions)
+        assertTrue(npc.charms.any { it.nome == "Concentração de Pele de Ferro" })
+        assertTrue(npc.charms.any { it.nome == "Espírito Fortalece a Pele" })
+        assertTrue(npc.charms.any { it.nome == "Meditação da Durabilidade do Carvalho" })
+    }
+
     @Test fun `functional resistance and literacy use normal budget rather than free dots`() {
         for (archetype in ArquetipoEncontro.entries) for (seed in 0..99) {
             val distribution = EncounterDistributionService.distribuirHabilidades(archetype,

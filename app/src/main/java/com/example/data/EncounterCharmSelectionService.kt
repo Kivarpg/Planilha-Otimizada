@@ -712,9 +712,10 @@ object EncounterCharmSelectionService {
                 if ((abilities[def.habilidade] ?: 0) >= def.minHabilidade)
                     listOf(requisitosParseados(def.preRequisitos)) else emptyList())
         })
-        val catalogoPorHabilidade = metadata.porHabilidade.mapValues { (_, definitions) ->
-            definitions.sortedByDescending { growth.scores[it.nome] ?: 0 }
-        }
+        // Preserve the established synergy beam's candidate order. Future
+        // preference belongs to direct minimum/focus purchases below; feeding
+        // it into beam ordering can displace a complete defensive chain.
+        val catalogoPorHabilidade = metadata.porHabilidade
         // A seleção chama o otimizador repetidamente enquanto preenche a ficha.
         // Preparar o catálogo uma única vez evita reconstruir índices, ordinais e
         // tags de sinergia a cada escolha de candidato.
