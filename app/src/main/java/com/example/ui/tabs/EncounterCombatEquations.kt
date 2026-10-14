@@ -495,38 +495,17 @@ object EncounterCombatEquations {
 
             finishPage()
             val nomeArquivo = "NPC_${npc.nome.replace(Regex("[^A-Za-z0-9_-]"), "_")}.pdf"
-            val publicDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    val values = ContentValues().apply {
-                        put(MediaStore.MediaColumns.DISPLAY_NAME, nomeArquivo)
-                        put(MediaStore.MediaColumns.MIME_TYPE, "application/pdf")
-                        put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS)
-                        put(MediaStore.MediaColumns.IS_PENDING, 1)
-                    }
-                    val resolver = context.contentResolver
-                    val collection = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
-                    val uri = resolver.insert(collection, values)
-                        ?: throw IllegalStateException("Não foi possível criar o PDF em Documentos")
-                    try {
-                        resolver.openOutputStream(uri, "w")?.use(document::writeTo)
-                            ?: throw IllegalStateException("Não foi possível abrir o PDF em Documentos")
-                        val ready = ContentValues().apply { put(MediaStore.MediaColumns.IS_PENDING, 0) }
-                        resolver.update(uri, ready, null, null)
-                    } catch (e: Exception) {
-                        resolver.delete(uri, null, null)
-                        throw e
-                    }
-                } else {
-                    if (!publicDir.exists() && !publicDir.mkdirs() && !publicDir.isDirectory) {
-                        throw IllegalStateException("Não foi possível criar a pasta Documentos")
-                    }
-                    FileOutputStream(File(publicDir, nomeArquivo)).use(document::writeTo)
-                }
+                com.example.data.ExaltedDocumentFolders.write(
+                    context = context,
+                    category = com.example.data.ExaltedDocumentFolders.NPC,
+                    name = nomeArquivo,
+                    mime = "application/pdf",
+                    writer = document::writeTo
+                )
             } finally {
                 document.close()
             }
-            File(publicDir, nomeArquivo)
         } catch (e: Exception) {
             if (com.example.BuildConfig.DEBUG) {
                 Log.e("EncounterPdf", "Falha ao exportar NPC para PDF", e)
