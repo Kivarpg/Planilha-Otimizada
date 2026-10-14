@@ -907,11 +907,15 @@ fun EncounterGeneratorTab(
                             unselectedContentColor = npcTabTemplate.accent,
                             text = {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
+                                    // A faixa dos NPCs rola horizontalmente, mas um nome
+                                    // comprido nunca deve criar uma aba maior que a tela.
                                     AppText(
                                         rotulosAba[npc.id] ?: npc.nome,
+                                        modifier = Modifier.widthIn(max = 152.dp),
                                         color = corNome,
                                         maxLines = 1,
-                                        softWrap = false
+                                        softWrap = false,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
                                     androidx.compose.foundation.layout.Box(
