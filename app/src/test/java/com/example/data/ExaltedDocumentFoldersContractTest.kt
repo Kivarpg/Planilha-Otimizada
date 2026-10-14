@@ -27,6 +27,14 @@ class ExaltedDocumentFoldersContractTest {
         assertTrue(repository.contains("documentExportScope.launch"))
     }
 
+    @Test fun `NPCs tab share code is also exported to NPC folder`() {
+        val npcActions = File("src/main/java/com/example/viewmodel/NpcActions.kt").readText()
+        assertTrue(npcActions.contains("onSuccess(repository::publicarCodigoNpcs)"))
+        assertTrue(repository.contains("fun publicarCodigoNpcs(codigo: String)"))
+        assertTrue(repository.contains("ExaltedDocumentFolders.NPC, name, \"text/plain\""))
+        assertTrue(repository.contains("documentExportScope.cancel()"))
+    }
+
     @Test fun `NPC save keeps private loading copy and publishes a public copy`() {
         assertTrue(npcSaves.contains("val dir = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)"))
         assertTrue(npcSaves.contains("ExaltedDocumentFolders.write("))
