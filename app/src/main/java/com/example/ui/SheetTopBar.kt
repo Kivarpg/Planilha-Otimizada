@@ -98,7 +98,7 @@ internal fun SheetTopBar(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.End
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     InkButton(onClick = { onShowSettingsDialog(true) }, modifier = Modifier.size(48.dp)) {
                         Icon(Icons.Outlined.Settings, "Configurações", tint = visual.accentBright, modifier = Modifier.size(20.dp))
                     }
