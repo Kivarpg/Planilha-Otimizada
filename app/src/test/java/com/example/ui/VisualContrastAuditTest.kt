@@ -69,6 +69,19 @@ class VisualContrastAuditTest {
     }
 
     @Test
+    fun `dark cards declare light content color and shared texts have outline`() {
+        val cards = java.io.File("src/main/java/com/example/ui/components/CardComponents.kt").readText()
+        val texts = java.io.File("src/main/java/com/example/ui/components/TextComponents.kt").readText()
+        val typography = java.io.File("src/main/java/com/example/ui/theme/Type.kt").readText()
+        assertTrue(cards.contains("contentColor = visual.onSurface"))
+        assertTrue(cards.contains("CardDefaults.cardColors(containerColor = surface.copy(alpha = .98f), contentColor = visual.onSurface)"))
+        assertTrue(texts.contains("inheritedContentColor == Color.Black -> visual.onSurface"))
+        assertTrue(texts.contains("shadow = style.shadow ?: ExaltedTextOutline"))
+        assertTrue(typography.contains("val ExaltedTextOutline = Shadow("))
+        assertTrue(typography.contains("shadow = ExaltedTextOutline"))
+    }
+
+    @Test
     fun `neutral text token itself is never transparent`() {
         assertTrue(ExaltedOnSurface.alpha == 1f)
     }
