@@ -55,7 +55,9 @@ class FileManagementActions(
         if (SheetCalculations.computeCompletionIssues(current).isNotEmpty()) {
             return Result.failure(IllegalStateException("A planilha precisa estar completa (luz verde) antes de gerar um código de compartilhamento."))
         }
-        return ShareCodeCodec.exportar(current, encantosSolares, feiticos)
+        return ShareCodeCodec.exportar(current, encantosSolares, feiticos).onSuccess { codigo ->
+            repository.publicarCodigoJogador(current, codigo)
+        }
     }
 
     fun aplicarPlanilhaImportada(sheet: CharacterSheet) {
