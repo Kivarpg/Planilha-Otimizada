@@ -310,7 +310,9 @@ class VisualIdentityPreparationContractTest {
         val personal = File("src/main/java/com/example/ui/tabs/PersonalDataTab.kt").readText()
         assertTrue(combat.contains("color = visual.accentBright.copy(alpha = 0.12f)"))
         assertTrue(combat.contains("if (ativo) visual.accentBright else visual.outline"))
-        assertTrue(combat.contains("corTextoContraste(essenciaGradientColor(nivel))"))
+        assertTrue(combat.contains("for (nivel in 1..5)"))
+        assertTrue(combat.contains("if (ativo) essenciaGradientColor(nivel)"))
+        assertFalse(combat.contains("text = nivel.toString()"))
         // Seleção do badge usa gradiente contextual com texto contrastante.
         assertTrue(attributes.contains("if (isSelected) listOf(visual.metalDeep, visual.accent, visual.metalDeep)"))
         assertTrue(attributes.contains("else listOf(visual.surface, visual.surfaceVariant, visual.surface)"))
