@@ -44,7 +44,8 @@ class NpcActions(
         novoEstado?.let(repository::salvarNpcs)
     }
 
-    fun exportarComoCodigo(): Result<String> = NpcShareCodec.exportar(state.value)
+    fun exportarComoCodigo(): Result<String> =
+        NpcShareCodec.exportar(state.value).onSuccess(repository::publicarCodigoNpcs)
 
     fun aplicarImportados(npcs: List<Npc>) {
         if (npcs.isEmpty()) return
