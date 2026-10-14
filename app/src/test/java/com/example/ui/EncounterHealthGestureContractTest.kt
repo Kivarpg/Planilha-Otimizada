@@ -49,7 +49,7 @@ class EncounterHealthGestureContractTest {
         assertTrue(source.contains("val compactPhone = maxWidth < 480.dp"))
         assertTrue(source.contains("val compactActions = compactPhone"))
         assertTrue(source.contains("Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())"))
-        assertTrue(source.contains("horizontalArrangement = Arrangement.spacedBy(if (compactActions) 6.dp else 4.dp)"))
+        assertTrue(source.contains("horizontalArrangement = Arrangement.spacedBy(8.dp)"))
         listOf("label = \"Exportar\"", "label = \"Salvar\"", "label = \"Carregar\"")
             .forEach { assertTrue(source.contains(it), "Missing NPC action: $it") }
     }
