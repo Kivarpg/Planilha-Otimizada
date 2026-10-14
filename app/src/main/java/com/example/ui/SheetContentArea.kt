@@ -1,6 +1,5 @@
 package com.example.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -14,10 +13,8 @@ import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
-import com.example.ui.theme.LocalExaltedVisualTemplate
 
 /** Hosts one tab at a time; each tab owns its vertical scrolling. */
 @Composable
@@ -35,7 +32,7 @@ internal fun SheetContentArea(
     BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
-            .background(sheetBackgroundBrush())
+            // A arte esta no MainSheetScreen; nao repintar um backdrop local.
             .pointerInput(Unit) {
                 detectTapGestures(onTap = { focusManager.clearFocus() })
             }
@@ -62,16 +59,3 @@ internal fun SheetContentArea(
     }
 }
 
-/** Backdrop do shell: tokens do Tipo atual, sem símbolos ou overlays manuais. */
-@Composable
-private fun sheetBackgroundBrush(): Brush {
-    val visual = LocalExaltedVisualTemplate.current
-    return Brush.verticalGradient(
-        listOf(
-            visual.metalDeep.copy(alpha = 0.34f),
-            visual.surface,
-            visual.surfaceVariant.copy(alpha = 0.92f),
-            visual.surface
-        )
-    )
-}
