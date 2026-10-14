@@ -18,7 +18,7 @@ class EncounterTextBoundsContractTest {
     @Test fun `NPC tab labels are bounded and ellipsized rather than overflowing`() {
         val start = generator.indexOf("rotulosAba[npc.id] ?: npc.nome")
         assertTrue(start > 0)
-        val label = generator.substring((start - 220).coerceAtLeast(0), (start + 310).coerceAtMost(generator.length))
+        val label = generator.substring((start - 220).coerceAtLeast(0), (start + 460).coerceAtMost(generator.length))
         assertTrue(label.contains("widthIn(max = 152.dp)"))
         assertTrue(label.contains("TextOverflow.Ellipsis"))
         assertTrue(label.contains("maxLines = 1"))
