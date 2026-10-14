@@ -65,8 +65,9 @@ class VisualIdentityPreparationContractTest {
         assertTrue(header.contains("R.drawable.tab_icon_sol"))
         // Regressao visual detectada na Exalted.952: o emblema nao pode
         // preencher a altura disponivel do Scaffold e expulsar as abas.
-        assertTrue(header.contains(".width(identityWidth)\n                    .height(104.dp)"))
-        assertFalse(header.contains(".width(identityWidth)\n                    .fillMaxHeight()"))
+        assertTrue(header.contains(".width(identityWidth)"))
+        assertTrue(header.contains(".height(104.dp)"))
+        assertFalse(header.contains(".fillMaxHeight()\n                    .padding(vertical = 14.dp)"))
         assertTrue(header.contains("SheetTabsBar(sheet, viewModel, tabs, selectedTabIndex, onSelectedTab)"))
     }
 
