@@ -110,6 +110,7 @@ class FileManagementActions(
         val atualizado = sheet.copy(numeroSequencial = numero, dataSalvamento = dataFormatada)
         sheetState.value = atualizado
         repository.saveActiveSheet(atualizado)
+        repository.publicarPlanilhaJogador(atualizado)
         return atualizado
     }
 
