@@ -206,13 +206,18 @@ internal fun LinhaInfo(
                     color = visual.surfaceVariant,
                     shape = MaterialTheme.shapes.small,
                     border = androidx.compose.foundation.BorderStroke(1.dp, visual.accentBright),
-                    shadowElevation = 4.dp
+                    shadowElevation = 4.dp,
+                    modifier = Modifier.widthIn(
+                        max = (androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp - 48)
+                            .coerceAtLeast(160).dp
+                    )
                 ) {
                     AppText(
                         calculo,
                         style = MaterialTheme.typography.bodyMedium,
                         color = visual.onSurface,
-                        modifier = Modifier.padding(12.dp)
+                        modifier = Modifier.fillMaxWidth().padding(12.dp),
+                        softWrap = true
                     )
                 }
             }
