@@ -33,7 +33,22 @@ class SheetRepository(context: Context) {
                     out.write(CharacterSheetJsonCodec.encode(sheet).toByteArray(Charsets.UTF_8))
                 }
             } catch (e: Exception) {
-                logErroInterno("Falha ao publicar planilha em Exalted/Jogador", e)
+                logErroInterno("Falha ao publicar planilha em Gerador Harmônico/Jogador", e)
+            }
+        }
+    }
+
+    /** Publica o código de compartilhamento na mesma pasta do Jogador. */
+    fun publicarCodigoJogador(sheet: CharacterSheet, codigo: String) {
+        documentExportScope.launch {
+            try {
+                val name = "${sheet.numeroSequencial.coerceAtLeast(1).toString().padStart(3, '0')} - (Jogador) - " +
+                    ExaltedDocumentFolders.safeName(sheet.nome) + " - ${sheet.id.take(8)} - codigo.txt"
+                ExaltedDocumentFolders.write(
+                    fileContext, ExaltedDocumentFolders.PLAYER, name, "text/plain"
+                ) { out -> out.write(codigo.toByteArray(Charsets.UTF_8)) }
+            } catch (e: Exception) {
+                logErroInterno("Falha ao exportar código de Jogador", e)
             }
         }
     }
