@@ -6,7 +6,7 @@ Base remota preservada: `3448757a94c124ab48faf71438bb56a406584332`, Exalted.947 
 
 Gradle 9.8.0; Kotlin 2.2.10; AGP 9.3.3; JDK 17 no runner. Não há Android SDK nem compilador Kotlin local. O workflow dedicado executa somente `:app:testDebugUnitTest`, não assemble/rename/package APK. A autorização atual permite testes automatizados; a restrição de não iniciar APK permanece.
 
-## Constatações do relatório
+## Constatações do relatório na análise inicial
 
 | ID | Classificação | Evidência atual |
 |---|---|---|
@@ -24,7 +24,7 @@ Gradle 9.8.0; Kotlin 2.2.10; AGP 9.3.3; JDK 17 no runner. Não há Android SDK n
 | A12 | Confirmada com ressalva | Pipeline descreve equipamento, mas também é chamado no XP e na restauração. |
 | A13 | Confirmada | GenerationRules mantém 15 Encantos, 28 Habilidades e método Artes Marciais separado. |
 
-## Hipóteses
+## Hipóteses na análise inicial
 
 | ID | Estado | Evidência e próxima prova |
 |---|---|---|
@@ -47,7 +47,7 @@ Gradle 9.8.0; Kotlin 2.2.10; AGP 9.3.3; JDK 17 no runner. Não há Android SDK n
 6. PerformanceMetrics usa ConcurrentLinkedQueue.size em cada amostra; a janela é limitada, porém a contagem exige travessia. Medir custo real antes de substituir a estrutura.
 7. `dragonBloodedXpExpanders` é HashMap não sincronizado; conferir simultaneidade entre fallback/prefetch/limpeza e retenção antes de classificar como corrida demonstrada.
 
-## Gate atual
+## Gate inicial — registro histórico
 
 Baseline em execução, nenhuma mudança em algoritmo/regra de produção. O teste cobre 540 cenários de observação, roundtrip JSON, repetição por seed e um passo XP. Isso NÃO substitui os testes de 10/50/100 XP, estresse 1.000, oráculo independente nem instrumentação Android. Métricas de agrupamento por categoria não são profundidade topológica.
 
@@ -138,3 +138,12 @@ Commit `f6450ad4cf95a752eab47d9400d7d3fd4c3075fc`, execução 38526049352: 1139 
 Lacuna adicional T21: o seletor Lunar esgotava a árvore principal antes de reservar mínimo para a outra prioridade física. Fixture antiga explicitamente esperava 9 Força e 0 Vigor em 10 vagas, contrariando a instrução atual. Ajuste candidato reserva três aquisições para o ataque principal (Força OU Destreza) e Vigor antes do aprofundamento opcional, compra inicialmente até um Corpo de Touro no Físico e mantém os cinco slots do projeto de Feitiçaria. O objetivo de seis Encantos no Foco cede quando não cabe junto das reservas no orçamento total; o Foco continua prioritário. Pontes utilitárias de Forma Espiritual são preservadas; não se proíbe um Encanto apenas por pertencer ao outro Atributo. Regressões cobrem ambos os ataques, quantidade 15, Feitiçaria e ausência de segundo ataque prioritário. Nenhuma aquisição ilegal é feita para preencher quota; catálogo insuficiente segue a busca de completude existente. O preenchimento final também verifica o teto de recompras de Corpo de Touro.
 
 Instrumentação candidata acrescenta bytes alocados pela thread de teste via JVM, com -1 explícito se indisponível. Isso mede alocação, não pico de heap ou memória de celular. Comparação pareada de alocação do índice usa a referência congelada restrita ao tipo, no mesmo processo. Ainda pendente de execução.
+
+
+## Execução 11: mínimos físicos Lunares e alocação
+
+Commit `bdaca02bd1511a8fc2e7f8b4c3d4557f067568f7`, execução 38560299797: 1140 testes gerais aprovados; 540 cenários sem exceções, erros de auditoria ou divergência de seed. Profundidade Lunar 2,633 → 2,794: 34 aumentos, 141 iguais, cinco reduções. Solar preserva a profundidade dos 163 históricos legais. A única redução DB permanece o caso Social/Foco/16 documentado.
+
+Alocação pareada do índice, mediana em bytes/120 estados: legado 22.356.120, indexado 10.056.824, redução de 55,0%. Geração automática atual, mediana por NPC: Solar 16,624 MiB, Sangue de Dragão 14,567 MiB, Lunar 71,908 MiB. Trata-se de alocação acumulada na thread, não memória retida/pico de heap. Tempos p50: 105,117 / 86,027 / 171,850 ms. Não declarar melhoria global baseada em runners diferentes.
+
+Para fechar essa incerteza, benchmark dedicado copiará a mesma fixture para o commit anterior `23f4975e3c8c84d8b2e94e7000215f12426edfe6` e a candidata, executando ambos no mesmo runner: 270 amostras por revisão, três tipos, três arquétipos, automático/Foco/+XP. A fixture é deliberadamente ignorada na suíte normal e executada somente com a propriedade de benchmark habilitada. Não valida legalidade do baseline (já possui 55 problemas conhecidos); a candidata permanece sob os gates separados. Sem APK.

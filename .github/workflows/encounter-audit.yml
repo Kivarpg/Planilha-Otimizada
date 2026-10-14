@@ -11,6 +11,7 @@ permissions:
   contents: read
 jobs:
   baseline:
+    if: ${{ !contains(github.event.head_commit.message, '[paired-benchmark]') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
@@ -57,3 +58,44 @@ jobs:
             app/build/reports/tests/
             app/build/test-results/
             app/build/reports/encounter-audit/
+  paired-benchmark:
+    if: ${{ contains(github.event.head_commit.message, '[paired-benchmark]') }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      JAVA_TOOL_OPTIONS: -Dexalted.pairedBenchmark=true
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          path: candidate
+      - uses: actions/checkout@v6
+        with:
+          ref: 23f4975e3c8c84d8b2e94e7000215f12426edfe6
+          path: baseline
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v5
+      - name: Use identical benchmark source in both revisions
+        run: cp candidate/app/src/test/java/com/example/data/EncounterPairedBenchmarkTest.kt baseline/app/src/test/java/com/example/data/
+      - name: Measure historical generator on this runner without APK
+        working-directory: baseline
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:testDebugUnitTest --tests 'com.example.data.EncounterPairedBenchmarkTest' --no-daemon --stacktrace
+      - name: Measure current generator on the same runner without APK
+        working-directory: candidate
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:testDebugUnitTest --tests 'com.example.data.EncounterPairedBenchmarkTest' --no-daemon --stacktrace
+      - name: Preserve both measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: encounter-paired-${{ github.sha }}
+          path: |
+            baseline/app/build/reports/encounter-paired/
+            candidate/app/build/reports/encounter-paired/
+            baseline/app/build/test-results/
+            candidate/app/build/test-results/
