@@ -28,6 +28,6 @@ class EncounterPdfExportContractTest {
         assertTrue(storage.contains("const val APP = \"Gerador Harmônico\""))
         assertTrue(storage.contains("const val NPC = \"NPC's\""))
         val card = File("src/main/java/com/example/ui/tabs/EncounterNpcCard.kt").readText()
-        assertTrue(card.contains("PDF salvo em Documentos:"))
+        assertTrue(card.contains("PDF salvo em Gerador Harmônico/NPC\'s:"))
     }
 }
