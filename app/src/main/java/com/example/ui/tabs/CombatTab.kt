@@ -159,9 +159,8 @@ fun CombatTab(
                     color = visual.accentBright
                 )
                 Spacer(modifier = Modifier.height(6.dp))
-                // Indicadores de Essência precisam permanecer visíveis mesmo quando
-                // a paleta ativa é muito escura. Mantemos a leitura 1..5 e damos
-                // a cada nível uma superfície própria, sem depender de Canvas/SVG.
+                // Os cinco indicadores de Essência são círculos sem números.
+                // A cor e a borda mostram os níveis ativos; a lógica é preservada.
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
@@ -181,17 +180,8 @@ fun CombatTab(
                                     width = if (ativo) 2.dp else 1.dp,
                                     color = if (ativo) visual.accentBright else visual.outline,
                                     shape = CircleShape
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            AppText(
-                                text = nivel.toString(),
-                                color = if (ativo) corTextoContraste(essenciaGradientColor(nivel)) else visual.onSurface,
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.Bold,
-                                maxLines = 1
-                            )
-                        }
+                                )
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.height(5.dp))
