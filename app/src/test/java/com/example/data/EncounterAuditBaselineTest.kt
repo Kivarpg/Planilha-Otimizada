@@ -49,7 +49,7 @@ class EncounterAuditBaselineTest {
         var blockedAcquisitions = 0
         var generationFailures = 0
         out.resolve("samples.csv").bufferedWriter().use { csv ->
-            csv.appendLine("type,archetype,mode,seed,operation_ns,audit_errors,charms,trees,largest_tree,xp_available,xp_spent,deterministic,named_chain_depth")
+            csv.appendLine("type,archetype,mode,seed,operation_ns,audit_errors,charms,trees,largest_tree,xp_available,xp_spent,deterministic,named_chain_depth,allocated_bytes")
             for (type in TipoExaltadoEncontro.entries) for (archetype in ArquetipoEncontro.entries) {
                 runCatching { generate(type, archetype, -1, null) } // unmeasured warmup
                 for (seed in 0 until 20) for (mode in listOf("automatic", "focus", "xp")) {
@@ -61,12 +61,17 @@ class EncounterAuditBaselineTest {
                     val id = "${type.name}-${archetype.name}-$mode-$seed"
                     scenarios++
                     try {
+                    val allocatedBefore = EncounterAuditAllocationCounter.bytes()
                     val start = System.nanoTime()
                     val generated = generate(type, archetype, seed, focus)
                     val generationNs = System.nanoTime() - start
+                    val allocatedAfterGeneration = EncounterAuditAllocationCounter.bytes()
                     val xpStart = System.nanoTime()
                     val npc = if (mode == "xp") xp(generated) else generated
                     val elapsed = if (mode == "xp") System.nanoTime() - xpStart else generationNs
+                    val allocated = EncounterAuditAllocationCounter.delta(
+                        if (mode == "xp") allocatedAfterGeneration else allocatedBefore,
+                        if (mode == "xp") EncounterAuditAllocationCounter.bytes() else allocatedAfterGeneration)
                     val report = EncounterNpcAuditor.audit(npc, catalog)
                     val depths = mutableMapOf<String, Int>()
                     val blocked = EncounterAcquisitionOrderOracle.blocked(npc, catalog, depths)
@@ -83,7 +88,7 @@ class EncounterAuditBaselineTest {
                         out.resolve("$id.alert-migration.txt").writeText("before=${npc.alertasValidacao}\nafter=${decoded.alertasValidacao}\n")
                     }
                     assertEquals("Mechanical JSON roundtrip $id", npc.copy(alertasValidacao = decoded.alertasValidacao), decoded)
-                    csv.appendLine(listOf(type, archetype, mode, seed, elapsed, report.errors.size, npc.charms.size, groups.size, groups.values.maxOrNull() ?: 0, npc.xpAtual, npc.xpGastoTotal, deterministic, depths.values.maxOrNull() ?: 0).joinToString(","))
+                    csv.appendLine(listOf(type, archetype, mode, seed, elapsed, report.errors.size, npc.charms.size, groups.size, groups.values.maxOrNull() ?: 0, npc.xpAtual, npc.xpGastoTotal, deterministic, depths.values.maxOrNull() ?: 0, allocated).joinToString(","))
                     csv.flush()
                     } catch (failure: IllegalStateException) {
                         generationFailures++

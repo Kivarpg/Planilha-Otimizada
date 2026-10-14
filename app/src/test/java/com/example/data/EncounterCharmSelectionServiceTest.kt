@@ -298,7 +298,7 @@ class EncounterCharmSelectionServiceTest {
     }
 
     @Test
-    fun `selecao Lunar aprofunda atributo principal antes de abrir outro atributo`() {
+    fun `selecao Lunar preserva tres encantos defensivos antes de aprofundar ataque unico`() {
         val forca = (1..9).map { lunar("Força Profunda $it", "Força") }
         val destreza = (1..9).map { lunar("Destreza Rasa $it", "Destreza") }
         val vigor = (1..9).map { lunar("Vigor Raso $it", "Vigor") }
@@ -319,8 +319,36 @@ class EncounterCharmSelectionServiceTest {
         )
 
         assertEquals(10, resultado.size)
-        assertEquals(9, resultado.count { it.atributo == "Força" })
+        assertEquals(6, resultado.count { it.atributo == "Força" })
+        assertEquals(3, resultado.count { it.atributo == "Vigor" })
+        assertEquals(0, resultado.count { it.atributo == "Destreza" })
         assertEquals(1, resultado.count { it.atributo == "Universal" })
+    }
+
+    @Test
+    fun `Lunar balances one attack and Stamina while preserving sorcery slots and manual focus`() {
+        for (attack in listOf("Força", "Destreza")) {
+            val other = if (attack == "Força") "Destreza" else "Força"
+            val catalog = (1..9).map { lunar("$attack $it", attack) } +
+                (1..9).map { lunar("$other $it", other) } +
+                (1..9).map { lunar("Vigor $it", "Vigor") } +
+                (1..4).map { lunar("Mental $it", "Inteligência") } +
+                lunar(com.example.model.NOME_CORPO_DE_TOURO, "Vigor") +
+                lunar("Universal", "Universal", minAtributo = 0) +
+                lunar("Feitiçaria do Círculo Terrestre", "Inteligência",
+                    preRequisitos = "Quaisquer quatro Encantamentos de Atributo Mental")
+            val selected = LunarEncounterCharmSelection.selecionarEncantosIniciais(catalog,
+                mapOf(attack to 5, other to 3, "Vigor" to 4, "Inteligência" to 3), 1,
+                listOf(attack, "Vigor", other), 15, kotlin.random.Random(947), ArquetipoEncontro.FISICO,
+                atributoFocoUsuario = attack)
+            assertEquals(15, selected.size)
+            assertTrue(selected.count { it.atributo == attack } >= 3)
+            assertTrue(selected.count { it.atributo == "Vigor" } >= 3)
+            assertEquals(0, selected.count { it.atributo == other })
+            assertEquals(1, selected.count { it.nome == com.example.model.NOME_CORPO_DE_TOURO })
+            assertTrue(selected.any { it.nome == "Feitiçaria do Círculo Terrestre" })
+            assertTrue(selected.count { it.atributo == "Inteligência" } >= 5)
+        }
     }
 
     @Test

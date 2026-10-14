@@ -198,6 +198,12 @@ internal object LunarEncounterCharmSelection {
         ) 5 else 0
         val limiteDeVagasAntesDaFeiticaria = (quantidade - reservaFeiticaria).coerceAtLeast(0)
         val limiteCorpoDeTouro = (attributes["Vigor"] ?: 0).coerceAtLeast(0)
+        val ataquePrincipalFisico = atributoFocoUsuario?.takeIf { it == "Força" || it == "Destreza" }
+            ?: if ((attributes["Força"] ?: 0) > (attributes["Destreza"] ?: 0)) "Força" else "Destreza"
+        val prioridadesFisicas = if (arquetipo == ArquetipoEncontro.FISICO)
+            listOf(ataquePrincipalFisico, "Vigor") else emptyList()
+        val aquisicoesIniciaisCorpo = if (arquetipo == ArquetipoEncontro.FISICO)
+            limiteCorpoDeTouro.coerceAtMost(1) else limiteCorpoDeTouro
         val candidatoCorpoDeTouro = catalogMetadata(catalogo).corpoDeTouro
         val elegivelCorpoDeTouro = candidatoCorpoDeTouro != null && elegivelSelecionado(candidatoCorpoDeTouro)
 
@@ -206,7 +212,7 @@ internal object LunarEncounterCharmSelection {
         // orçamento total de Encantos.
         if (elegivelCorpoDeTouro && reservaFeiticaria == 0) {
             val corpoDeTouro = candidatoCorpoDeTouro ?: error("Corpo de Touro elegível sem definição")
-            repeat(limiteCorpoDeTouro.coerceAtMost(limiteDeVagasAntesDaFeiticaria)) {
+            repeat(aquisicoesIniciaisCorpo.coerceAtMost(limiteDeVagasAntesDaFeiticaria)) {
                 selecionados += corpoDeTouro
                 registrar(corpoDeTouro)
             }
@@ -226,7 +232,16 @@ internal object LunarEncounterCharmSelection {
             .firstOrNull()
         val atributoPrincipal = atributoFocoUsuario
             ?.takeIf { it in EncounterGenerationRules.ALL_ATTRIBUTES }
-            ?: atributoPrincipalAutomatico
+            ?: atributoPrincipalAutomatico?.let {
+                if (arquetipo == ArquetipoEncontro.FISICO && (it == "Força" || it == "Destreza")) ataquePrincipalFisico else it
+            }
+        // Reserve the other physical priority and the universal slot before
+        // deepening the main tree. Sorcery already has its separate reservation.
+        val reservaOutraPrioridade = if (prioridadesFisicas.isNotEmpty())
+            prioridadesFisicas.count { it != atributoPrincipal } * 3 else 0
+        val limiteMinimoPrincipal = if (prioridadesFisicas.isNotEmpty())
+            (limiteDeVagasAntesDaFeiticaria - reservaOutraPrioridade - 1).coerceAtLeast(0)
+            else limiteDeVagasAntesDaFeiticaria
         val alvoEncantosAtributoPrincipal = if (atributoFocoUsuario != null) 6 else 3
 
         // A ordenação é estática; só a elegibilidade muda a cada compra.
@@ -364,7 +379,7 @@ internal object LunarEncounterCharmSelection {
                 ((categoriasSelecionadas[atributoPrincipal.lowercase()] ?: 0) -
                     if (atributoPrincipal.equals("Vigor", ignoreCase = true)) contagemCorpoDeTouroSelecionada else 0) <
                     alvoEncantosAtributoPrincipal &&
-                selecionados.size < limiteDeVagasAntesDaFeiticaria &&
+                selecionados.size < limiteMinimoPrincipal &&
                 tentativasPrincipal < 100
             ) {
                 tentativasPrincipal++
@@ -442,6 +457,20 @@ internal object LunarEncounterCharmSelection {
                 ?: error("Corpo de Touro elegível sem definição")
             selecionados += corpoDeTouro
             registrar(corpoDeTouro)
+        }
+
+        // Physical balance precedes optional deepening: one attack Attribute
+        // and Stamina each receive up to three legal acquisitions. Never buy
+        // an illegal charm merely to satisfy a quota; missing options fall back
+        // to the existing completion search. Spirit utility bridges stay intact.
+        for (atributo in prioridadesFisicas) {
+            while ((categoriasSelecionadas[atributo.lowercase()] ?: 0) < 3 && selecionados.size < quantidade) {
+                val candidato = catalogoOrdenadoPorAtributo[atributo].orEmpty().firstOrNull { def ->
+                    def.nome !in nomesSelecionados && rotaElegivel(def, atributo)?.atributo == atributo
+                } ?: break
+                selecionados += candidato
+                registrar(candidato, atributo)
+            }
         }
 
         // 5) As vagas restantes seguem a diretriz geral da Aba 11:
@@ -590,7 +619,8 @@ internal object LunarEncounterCharmSelection {
                 var candidato: EncantoLunarDefinition? = null
                 while (indiceBuscaFinal < candidatosFinais.size) {
                     val def = candidatosFinais[indiceBuscaFinal++]
-                    if ((def.nome !in nomesSelecionados || def.nome == NOME_CORPO_DE_TOURO) &&
+                    if ((def.nome !in nomesSelecionados ||
+                            (def.nome == NOME_CORPO_DE_TOURO && contagemCorpoDeTouroSelecionada < limiteCorpoDeTouro)) &&
                         elegivelSelecionado(def)
                     ) {
                         candidato = def

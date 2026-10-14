@@ -52,6 +52,20 @@ class EncounterStateIndexDifferentialTest {
                 out.appendLine("$round,${if (round % 2 == 0) first else second},${if (round % 2 == 0) second else first},${samples.size}")
             }
         }
+        File("build/reports/encounter-audit/state-index-allocation.csv").bufferedWriter().use { out ->
+            out.appendLine("round,legacy_bytes,indexed_bytes,states")
+            repeat(10) { round ->
+                fun allocated(legacy: Boolean): Long {
+                    val before = EncounterAuditAllocationCounter.bytes()
+                    for (selected in samples) state(selected, legacy)
+                    return EncounterAuditAllocationCounter.delta(before, EncounterAuditAllocationCounter.bytes())
+                }
+                val first = allocated(round % 2 == 0)
+                val second = allocated(round % 2 != 0)
+                out.appendLine("$round,${if (round % 2 == 0) first else second},${if (round % 2 == 0) second else first},${samples.size}")
+            }
+        }
+
         // Cold per-NPC boundary: include preparation and repeated audit states.
         val coldReport = File("build/reports/encounter-audit/state-index-cold.csv")
         coldReport.bufferedWriter().use { out ->
