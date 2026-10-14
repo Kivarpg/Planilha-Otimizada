@@ -34,7 +34,8 @@ fun ExaltedSceneBackdrop(
         painter = painterResource(drawable),
         contentDescription = null,
         modifier = modifier.background(Color.Black),
-        contentScale = ContentScale.Fit,
+        // Cobre todo o viewport sem deformar a pintura; recorta apenas bordas.
+        contentScale = ContentScale.Crop,
         alignment = alignment,
     )
 }
