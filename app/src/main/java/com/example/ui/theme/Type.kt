@@ -38,6 +38,9 @@ package com.example.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -66,51 +69,56 @@ private val ExaltedBodyFont = FontFamily(Font(R.font.inter))
 // por isso é pública: aplicada manualmente onde é usada (ver lista acima).
 val ExaltedSymbolFont = FontFamily(Font(R.font.rajdhani))
 
+// Contorno suave global: uma unica passagem de pintura por texto, sem
+// duplicar layout nem nodes de acessibilidade. Vale tambem para TextFields
+// que herdam a tipografia Material3. O deslocamento zero cria halo 360 graus.
+val ExaltedTextOutline = Shadow(color = Color.Black, offset = Offset.Zero, blurRadius = 2.6f)
+
 val Typography = Typography(
     // Usado no cabeçalho principal da ficha. Antes não era sobrescrito e, por
     // isso, recaía na tipografia Material padrão, quebrando a linguagem editorial.
     headlineMedium = TextStyle(
         fontFamily = ExaltedPrimaryFont, fontWeight = FontWeight.Bold,
-        fontSize = 31.sp, lineHeight = 37.sp, letterSpacing = 1.55.sp
+        fontSize = 31.sp, lineHeight = 37.sp, letterSpacing = 1.55.sp, shadow = ExaltedTextOutline
     ),
     headlineSmall = TextStyle(
         fontFamily = ExaltedPrimaryFont, fontWeight = FontWeight.Bold,
-        fontSize = 28.sp, lineHeight = 34.sp, letterSpacing = 1.65.sp
+        fontSize = 28.sp, lineHeight = 34.sp, letterSpacing = 1.65.sp, shadow = ExaltedTextOutline
     ),
     titleLarge = TextStyle(
         fontFamily = ExaltedSecondaryFont, fontWeight = FontWeight.SemiBold,
-        fontSize = 19.sp, lineHeight = 24.sp, letterSpacing = 1.05.sp
+        fontSize = 19.sp, lineHeight = 24.sp, letterSpacing = 1.05.sp, shadow = ExaltedTextOutline
     ),
     titleMedium = TextStyle(
         fontFamily = ExaltedSecondaryFont, fontWeight = FontWeight.SemiBold,
-        fontSize = 15.sp, lineHeight = 20.sp, letterSpacing = 0.8.sp
+        fontSize = 15.sp, lineHeight = 20.sp, letterSpacing = 0.8.sp, shadow = ExaltedTextOutline
     ),
     titleSmall = TextStyle(
         fontFamily = ExaltedSecondaryFont, fontWeight = FontWeight.SemiBold,
-        fontSize = 11.sp, lineHeight = 15.sp, letterSpacing = 0.75.sp
+        fontSize = 11.sp, lineHeight = 15.sp, letterSpacing = 0.75.sp, shadow = ExaltedTextOutline
     ),
     bodyLarge = TextStyle(
         fontFamily = ExaltedBodyFont, fontWeight = FontWeight.Normal,
-        fontSize = 16.sp, lineHeight = 21.sp, letterSpacing = 0.15.sp
+        fontSize = 16.sp, lineHeight = 21.sp, letterSpacing = 0.15.sp, shadow = ExaltedTextOutline
     ),
     bodyMedium = TextStyle(
         fontFamily = ExaltedBodyFont, fontWeight = FontWeight.Normal,
-        fontSize = 14.sp, lineHeight = 19.sp, letterSpacing = 0.1.sp
+        fontSize = 14.sp, lineHeight = 19.sp, letterSpacing = 0.1.sp, shadow = ExaltedTextOutline
     ),
     bodySmall = TextStyle(
         fontFamily = ExaltedBodyFont, fontWeight = FontWeight.Normal,
-        fontSize = 12.sp, lineHeight = 16.sp, letterSpacing = 0.05.sp
+        fontSize = 12.sp, lineHeight = 16.sp, letterSpacing = 0.05.sp, shadow = ExaltedTextOutline
     ),
     labelLarge = TextStyle(
         fontFamily = ExaltedBodyFont, fontWeight = FontWeight.SemiBold,
-        fontSize = 13.sp, lineHeight = 16.sp, letterSpacing = 0.65.sp
+        fontSize = 13.sp, lineHeight = 16.sp, letterSpacing = 0.65.sp, shadow = ExaltedTextOutline
     ),
     labelMedium = TextStyle(
         fontFamily = ExaltedBodyFont, fontWeight = FontWeight.SemiBold,
-        fontSize = 12.sp, lineHeight = 15.sp, letterSpacing = 0.45.sp
+        fontSize = 12.sp, lineHeight = 15.sp, letterSpacing = 0.45.sp, shadow = ExaltedTextOutline
     ),
     labelSmall = TextStyle(
         fontFamily = ExaltedBodyFont, fontWeight = FontWeight.Medium,
-        fontSize = 10.sp, lineHeight = 13.sp, letterSpacing = 0.2.sp
+        fontSize = 10.sp, lineHeight = 13.sp, letterSpacing = 0.2.sp, shadow = ExaltedTextOutline
     )
 )
