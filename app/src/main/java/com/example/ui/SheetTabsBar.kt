@@ -78,7 +78,7 @@ internal fun SheetTabsBar(
                     color = visual.divider.copy(alpha = .58f)
                 ),
             contentPadding = PaddingValues(start = 10.dp, end = 10.dp),
-            horizontalArrangement = Arrangement.spacedBy(0.dp)
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             itemsIndexed(tabs, key = { i, _ -> i }) { index, tab ->
                 val selected = index == selectedTabIndex
