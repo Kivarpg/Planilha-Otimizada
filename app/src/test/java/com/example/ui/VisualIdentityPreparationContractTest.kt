@@ -100,7 +100,10 @@ class VisualIdentityPreparationContractTest {
         assertFalse(tabs.contains("drawPath("))
         assertFalse(tabs.contains("Modifier.width(7.dp).fillMaxHeight()"))
         assertTrue(tabs.contains("maxLines = 2, softWrap = true"))
-        assertTrue(header.contains("val headerHeight = if (enlargedHeaderText) 156.dp else 132.dp"))
+        // O cabeçalho atual tem linha de ações independente e altura mínima para identidade.
+        assertTrue(header.contains("statusBarsPadding()"))
+        assertTrue(header.contains(".heightIn(min = 104.dp)"))
+        assertTrue(header.contains("SheetTabsBar(sheet, viewModel, tabs, selectedTabIndex, onSelectedTab)"))
     }
 
     @Test
@@ -109,7 +112,10 @@ class VisualIdentityPreparationContractTest {
         assertTrue(header.contains("Icon(Icons.Outlined.Settings, \"Configurações\", tint = visual.accentBright"))
         assertTrue(header.contains("Icon(Icons.Outlined.MoreVert, \"Opções\", tint = visual.accentBright"))
         assertTrue(header.contains("LocalExaltedVisualTemplate.current"))
-        assertTrue(header.contains("val actionsWidth = if (compactHeader) 96.dp else 104.dp"))
+        // Ações independentes em alvos de toque de 48dp, sem disputar o nome.
+        assertTrue(header.contains(".statusBarsPadding().padding(horizontal = 12.dp, vertical = 4.dp)"))
+        assertTrue(header.contains("InkButton(onClick = { onShowSettingsDialog(true) }, modifier = Modifier.size(48.dp))"))
+        assertTrue(header.contains("InkButton(onClick = { onShowOpcoesMenu(true) }, modifier = Modifier.size(48.dp))"))
     }
 
     @Test
@@ -243,8 +249,9 @@ class VisualIdentityPreparationContractTest {
     @Test
     fun `header reserves space for two accessible action targets`() {
         val header = File("src/main/java/com/example/ui/SheetTopBar.kt").readText()
-        assertTrue(header.contains("val actionsWidth = if (compactHeader) 96.dp else 104.dp"))
-        assertTrue(header.contains("modifier = Modifier.size(48.dp)"))
+        assertTrue(header.contains("Row(verticalAlignment = Alignment.CenterVertically)"))
+        assertTrue(header.contains("InkButton(onClick = { onShowSettingsDialog(true) }, modifier = Modifier.size(48.dp))"))
+        assertTrue(header.contains("InkButton(onClick = { onShowOpcoesMenu(true) }, modifier = Modifier.size(48.dp))"))
     }
 
     @Test
@@ -298,7 +305,10 @@ class VisualIdentityPreparationContractTest {
         assertTrue(combat.contains("color = visual.accentBright.copy(alpha = 0.12f)"))
         assertTrue(combat.contains("if (ativo) visual.accentBright else visual.outline"))
         assertTrue(combat.contains("corTextoContraste(essenciaGradientColor(nivel))"))
-        assertTrue(attributes.contains(".background(if (isSelected) visual.accent else visual.surfaceVariant)"))
+        // Seleção do badge usa gradiente contextual com texto contrastante.
+        assertTrue(attributes.contains("if (isSelected) listOf(visual.metalDeep, visual.accent, visual.metalDeep)"))
+        assertTrue(attributes.contains("else listOf(visual.surface, visual.surfaceVariant, visual.surface)"))
+        assertTrue(attributes.contains("if (isSelected) corTextoContraste(visual.accent) else visual.muted"))
         assertTrue(attributes.contains("if (favoritoInfo.ehCasta) visual.accentBright else visual.outline"))
         assertTrue(personal.contains("colors = exaltedTextFieldColors()"))
     }
@@ -389,7 +399,8 @@ class VisualIdentityPreparationContractTest {
     @Test
     fun `ability filter remains type specific on narrow screens`() {
         val tab = File("src/main/java/com/example/ui/tabs/AbilitiesTab.kt").readText()
-        assertTrue(tab.contains("val columns = if (maxWidth < 390.dp) 1 else 2"))
+        // Faixa de 480dp mantém o rótulo completo em dispositivos estreitos.
+        assertTrue(tab.contains("val columns = if (maxWidth < 480.dp) 1 else 2"))
         assertTrue(tab.contains("maxItemsInEachRow = columns"))
         assertTrue(tab.contains("sheet.tipoPersonagem.isLunar()"))
         assertTrue(tab.contains("0 to \"Todas\", 2 to \"Com Pontos\""))
