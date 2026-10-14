@@ -35,6 +35,15 @@ class ExaltedDocumentFoldersContractTest {
         assertTrue(repository.contains("documentExportScope.cancel()"))
     }
 
+    @Test fun `no export still writes directly into the old flat Documents directory`() {
+        val pdf = File("src/main/java/com/example/ui/tabs/EncounterCombatEquations.kt").readText()
+        val card = File("src/main/java/com/example/ui/tabs/EncounterNpcCard.kt").readText()
+        assertTrue(pdf.contains("ExaltedDocumentFolders.write("))
+        assertTrue(!pdf.contains("MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS"))
+        assertTrue(!pdf.contains("FileOutputStream(File(publicDir, nomeArquivo))"))
+        assertTrue(card.contains("NpcSaveLoadService.salvar(context, npc, proximoNumero)"))
+    }
+
     @Test fun `NPC save keeps private loading copy and publishes a public copy`() {
         assertTrue(npcSaves.contains("val dir = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)"))
         assertTrue(npcSaves.contains("ExaltedDocumentFolders.write("))
