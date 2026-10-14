@@ -53,7 +53,7 @@ fun LongPressCard(
                 onClick = { onClick?.invoke() },
                 onLongClick = onLongClick
             ),
-        colors = CardDefaults.cardColors(containerColor = visual.surfaceVariant),
+        colors = CardDefaults.cardColors(containerColor = visual.surfaceVariant, contentColor = visual.onSurface),
         border = BorderStroke(
             1.25.dp,
             Brush.linearGradient(listOf(visual.metalDeep, visual.outline, visual.metalDeep))
@@ -85,7 +85,7 @@ fun GildedCard(
         // Conteúdo e decoração não compartilham mais a mesma fase de desenho.
         // A identidade fica no container/borda; nada é pintado depois do conteúdo.
         modifier = modifier,
-        colors = colors ?: CardDefaults.cardColors(containerColor = surface.copy(alpha = .98f)),
+        colors = colors ?: CardDefaults.cardColors(containerColor = surface.copy(alpha = .98f), contentColor = visual.onSurface),
         border = border ?: BorderStroke(
             1.5.dp,
             Brush.linearGradient(
