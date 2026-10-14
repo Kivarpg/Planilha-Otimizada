@@ -859,8 +859,10 @@ fun NpcEncontroCard(
             }
             val ordemPenalidadesNpc = NPC_HEALTH_PENALTY_ORDER
             Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                ordemPenalidadesNpc.forEach { penalidadeRotulo ->
-                    val caixasDoGrupo = gruposPorPenalidadeNpc[ordemPenalidadesNpc.indexOf(penalidadeRotulo)]
+                // Usa o índice da própria iteração: sem busca repetida
+                // na lista de penalidades a cada recomposição do cartão.
+                ordemPenalidadesNpc.forEachIndexed { grupoIndex, penalidadeRotulo ->
+                    val caixasDoGrupo = gruposPorPenalidadeNpc[grupoIndex]
                     if (caixasDoGrupo.isNotEmpty()) {
                         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
                             androidx.compose.foundation.layout.BoxWithConstraints(modifier = Modifier.weight(1f)) {
