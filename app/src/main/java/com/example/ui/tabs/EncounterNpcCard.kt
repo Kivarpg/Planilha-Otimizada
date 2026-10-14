@@ -964,13 +964,8 @@ fun NpcEncontroCard(
                                 listOf(visualTemplate.metalDeep, visualTemplate.surfaceVariant, visualTemplate.surface)
                             )
                         )
-                        .border(
-                            1.5.dp,
-                            androidx.compose.ui.graphics.Brush.horizontalGradient(
-                                listOf(visualTemplate.metalShine, visualTemplate.accentBright, visualTemplate.metalDeep)
-                            ),
-                            RoundedCornerShape(8.dp)
-                        )
+                        // Borda sólida reforça a leitura do título em telas pequenas.
+                        .border(2.dp, visualTemplate.accentBright, RoundedCornerShape(8.dp))
                         .feedbackClickable {
                             gavetasExpandidas = if (expandida) gavetasExpandidas - habilidade else gavetasExpandidas + habilidade
                         }
