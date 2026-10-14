@@ -1001,6 +1001,7 @@ fun NpcEncontroCard(
                             fontWeight = FontWeight.SemiBold,
                             color = visualTemplate.onSurface,
                             modifier = Modifier
+                                .fillMaxWidth()
                                 .padding(start = 18.dp, bottom = 2.dp)
                                 .pointerInput(npc.id, c.nome) {
                                     detectTapGestures(onLongPress = { mostrarDetalhes = true })
@@ -1085,6 +1086,7 @@ fun NpcEncontroCard(
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = visualTemplate.onSurface,
                                 modifier = Modifier
+                                    .fillMaxWidth()
                                     .padding(start = 18.dp, bottom = 3.dp)
                                     .pointerInput(npc.id, feitico.nome) {
                                         detectTapGestures(onLongPress = { mostrarDetalhesFeitico = true })
