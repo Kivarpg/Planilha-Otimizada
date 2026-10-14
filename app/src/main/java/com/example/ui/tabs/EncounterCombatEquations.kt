@@ -4,7 +4,6 @@ import android.util.Log
 import com.example.data.EncounterMoteService
 
 import android.content.Context
-import android.content.ContentValues
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
@@ -14,13 +13,9 @@ import android.text.Spanned
 import android.text.StaticLayout
 import android.text.TextPaint
 import android.text.style.StyleSpan
-import android.os.Environment
-import android.os.Build
-import android.provider.MediaStore
 import com.example.model.ArquetipoEncontro
 import com.example.model.NpcEncontro
 import java.io.File
-import java.io.FileOutputStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.ceil
@@ -253,7 +248,7 @@ object EncounterCombatEquations {
 
     /**
      * Gera um PDF do NPC no formato solicitado e salva na pasta pública
-     * Documentos do aparelho. Em Android 10+ usa MediaStore/RELATIVE_PATH,
+     * Documentos/Gerador Harmônico/NPC's. Em Android 10+ usa MediaStore/RELATIVE_PATH,
      * portanto o arquivo fica visível ao usuário fora da área privada do app.
      *
      * Retorna uma referência com o nome/caminho público esperado ou null em caso de erro.
