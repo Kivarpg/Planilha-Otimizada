@@ -71,6 +71,12 @@ object NpcSaveLoadService {
                 if (!temp.renameTo(file)) {
                     throw IllegalStateException("Não foi possível concluir o salvamento do NPC")
                 }
+                // Mantém o arquivo privado para carregamento e recuperação
+                // e publica a mesma planilha na pasta visível de NPCs.
+                ExaltedDocumentFolders.write(
+                    context, ExaltedDocumentFolders.NPC, file.name,
+                    "application/octet-stream"
+                ) { output -> file.inputStream().use { it.copyTo(output) } }
                 file
             } finally {
                 temp.delete()
