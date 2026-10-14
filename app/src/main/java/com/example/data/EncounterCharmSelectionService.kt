@@ -707,7 +707,14 @@ object EncounterCharmSelectionService {
         restricaoCandidato: (EncantoSolarDefinition, Set<String>) -> Boolean = { _, _ -> true }
     ): List<EncantoSolarDefinition> {
         val metadata = catalogMetadata(catalogo)
-        val catalogoPorHabilidade = metadata.porHabilidade
+        val growth = EncounterFutureGrowthPlanner.plan(catalogo.map { def ->
+            EncounterFutureGrowthPlanner.Node(def.nome, def.minEssencia,
+                if ((abilities[def.habilidade] ?: 0) >= def.minHabilidade)
+                    listOf(requisitosParseados(def.preRequisitos)) else emptyList())
+        })
+        val catalogoPorHabilidade = metadata.porHabilidade.mapValues { (_, definitions) ->
+            definitions.sortedByDescending { growth.scores[it.nome] ?: 0 }
+        }
         // A seleção chama o otimizador repetidamente enquanto preenche a ficha.
         // Preparar o catálogo uma única vez evita reconstruir índices, ordinais e
         // tags de sinergia a cada escolha de candidato.
@@ -850,6 +857,7 @@ object EncounterCharmSelectionService {
             val candidatosPrincipalOrdenados =
                 if (habilidadePrincipal in candidatosPorHabilidadeFiltrado) {
                     metadata.porHabilidadeParaMinimoPrincipal[habilidadePrincipal].orEmpty()
+                        .sortedByDescending { growth.scores[it.nome] ?: 0 }
                 } else {
                     emptyList()
                 }

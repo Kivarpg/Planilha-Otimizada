@@ -22,6 +22,7 @@ class EncounterXpMatrixAuditTest {
         val spells = FeiticariaCatalog(app).definitions
         val merits = MeritosCatalog(app).definitions
         val martial = ArtesMarciaisCatalog(app).definitions
+        val catalog = PreparedEncounterCatalog.prepare(solar, dragon, lunar, spells, martial)
         val out = File("build/reports/encounter-audit/xp-matrix.csv").apply { parentFile.mkdirs() }
         out.bufferedWriter().use { csv ->
             csv.appendLine("type,archetype,steps,cumulative_ns,charms,xp_available,xp_spent")
@@ -46,6 +47,8 @@ class EncounterXpMatrixAuditTest {
                     assertTrue(context, current.xpAtual >= 0 && current.xpGastoTotal >= 0)
                     assertEquals(context, base.feiticoInicialNome, current.feiticoInicialNome)
                     if (step in setOf(1, 10, 50, 100)) {
+                        assertEquals(context, emptyList<EncounterValidationIssue>(), EncounterNpcAuditor.audit(current, catalog).errors)
+                        assertEquals(context, emptySet<PreparedEncounterCatalog.StableContentId>(), EncounterAcquisitionOrderOracle.blocked(current, catalog))
                         val decoded = NpcEncontroJsonCodec.decode(NpcEncontroJsonCodec.encode(current))
                         assertEquals(context, current.copy(alertasValidacao = decoded.alertasValidacao), decoded)
                         csv.appendLine("$type,$archetype,$step,$nanos,${current.charms.size},${current.xpAtual},${current.xpGastoTotal}")

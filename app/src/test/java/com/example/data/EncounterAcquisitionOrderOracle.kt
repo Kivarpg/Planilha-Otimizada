@@ -6,7 +6,7 @@ package com.example.data
  * does not prove historical XP prices or the ratings at each historical purchase.
  */
 internal object EncounterAcquisitionOrderOracle {
-    fun blocked(npc: com.example.model.NpcEncontro, catalog: PreparedEncounterCatalog): Set<PreparedEncounterCatalog.StableContentId> {
+    fun blocked(npc: com.example.model.NpcEncontro, catalog: PreparedEncounterCatalog, depths: MutableMap<String, Int>? = null): Set<PreparedEncounterCatalog.StableContentId> {
         val namespace = when (npc.tipoExaltado) {
             com.example.model.TipoExaltadoEncontro.SOLAR -> PreparedEncounterCatalog.NS_SOLAR
             com.example.model.TipoExaltadoEncontro.SANGUE_DE_DRAGAO -> PreparedEncounterCatalog.NS_DRAGON_BLOODED
@@ -23,10 +23,10 @@ internal object EncounterAcquisitionOrderOracle {
         return blocked(catalog, EncounterRulesEngine.BuildState(npc.tipoExaltado, npc.essencia,
             abilities = npc.abilities, attributes = npc.attributes, acquiredCharmNames = names,
             acquiredCharmIds = ids, spiritTraits = traits,
-            martialStyleIds = catalog.estilosMarciais.filter { it.nomePt in styles || it.nomeEn in styles }.map { it.id }.toSet()))
+            martialStyleIds = catalog.estilosMarciais.filter { it.nomePt in styles || it.nomeEn in styles }.map { it.id }.toSet()), depths)
     }
 
-    fun blocked(catalog: PreparedEncounterCatalog, finalState: EncounterRulesEngine.BuildState): Set<PreparedEncounterCatalog.StableContentId> {
+    fun blocked(catalog: PreparedEncounterCatalog, finalState: EncounterRulesEngine.BuildState, depths: MutableMap<String, Int>? = null): Set<PreparedEncounterCatalog.StableContentId> {
         val pending = finalState.acquiredCharmIds.toMutableSet()
         val acquired = linkedSetOf<PreparedEncounterCatalog.StableContentId>()
         val names = linkedSetOf<String>()
@@ -42,12 +42,22 @@ internal object EncounterAcquisitionOrderOracle {
             is EncounterRequirement.SpiritTrait -> requirement.trait in finalState.spiritTraits
             is EncounterRequirement.MartialStyle -> requirement.styleId in finalState.martialStyleIds
         }
+        fun prerequisiteDepth(req: EncounterRequirement): Int = when (req) {
+            is EncounterRequirement.Charm -> depths?.get(req.name) ?: 0
+            is EncounterRequirement.AnyOf -> req.alternatives.filter(::satisfies).minOfOrNull(::prerequisiteDepth) ?: 0
+            else -> 0 // Aggregate counts do not identify a unique named chain.
+        }
         while (pending.isNotEmpty()) {
             val eligible = pending.filter { id ->
                 catalog.requirementGraph.node(id)?.routes?.any { it.requirements.all(::satisfies) } == true
             }
             if (eligible.isEmpty()) break
             for (id in eligible) {
+                if (depths != null) {
+                    val level = catalog.requirementGraph.node(id)!!.routes.filter { it.requirements.all(::satisfies) }
+                        .minOf { route -> (route.requirements.maxOfOrNull(::prerequisiteDepth) ?: 0) + 1 }
+                    catalog.find(id)?.let { depths[it.nome] = level }
+                }
                 pending.remove(id)
                 acquired.add(id)
                 catalog.find(id)?.let { names.add(it.nome) }

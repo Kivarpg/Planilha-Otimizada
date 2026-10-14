@@ -124,6 +124,11 @@ internal object LunarEncounterCharmSelection {
         // de varrer todo o catálogo novamente para cada Atributo.
         val routeContext = LunarCharmArchetypePolicy.prepare(catalogo, spiritTraits)
         val catalogoPorAtributo: Map<String, List<EncantoLunarDefinition>> = routeContext.charmsByAttribute
+        val growth = EncounterFutureGrowthPlanner.plan(catalogo.map { def ->
+            EncounterFutureGrowthPlanner.Node(def.nome, def.minEssencia,
+                routeContext.routesFor(def).filter { (attributes[it.atributo] ?: 0) >= it.minAtributo }
+                    .map { it.requisitosCompilados })
+        })
         val selecionados = mutableListOf<EncantoLunarDefinition>()
         val nomesSelecionados = mutableSetOf<String>()
         val categoriasSelecionadas = mutableMapOf<String, Int>()
@@ -231,7 +236,7 @@ internal object LunarEncounterCharmSelection {
             catalogoPorAtributo = catalogoPorAtributo,
             arquetipo = arquetipo,
             spiritTraits = spiritTraits
-        )
+        ).mapValues { (_, definitions) -> definitions.sortedByDescending { growth.scores[it.nome] ?: 0 } }
 
         // Catálogo/tags/categorias são invariantes durante esta seleção. Preparar
         // uma vez evita reconstruí-los a cada uma das muitas chamadas do beam.

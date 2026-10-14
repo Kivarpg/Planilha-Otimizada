@@ -89,3 +89,14 @@ Próximo ajuste em validação: contribuições de contagem por Encanto passam a
 H1: após confirmar ausência de falsos positivos na matriz, o chamador passa a recusar publicação/persistência quando quality.valid é falso. Teste de integração injeta candidato inválido e verifica estado e repositório; outro cancela geração suspensa e verifica que limpar não é revertido por resultado tardio. O cache de expansores DB usa ConcurrentHashMap e snapshot da lista de Favorecidas, evitando getOrPut não atômico concorrente com limpeza.
 
 Pendências de escopo: medir versão sob demanda, consolidar todos os testes e mapeamento T01–T52, ampliar avaliação estratégica de profundidade/progressão elevada nos três tipos. Correções no planejador canônico não equivalem à integração dele no seletor ativo. Nenhuma conclusão de otimização global ou término da tarefa neste checkpoint.
+
+
+## Execução 6: barreira de publicação e índice sob demanda
+
+Commit remoto `db78f00ea014de1b5881e654255d66dd821b67a1`, execução 38466319662: 1127 testes gerais aprovados; job de estresse aprovado (1380 gerações e 900 passos de XP). Matriz de 540 cenários: zero exceções, erros de auditoria ou divergências de semente. A publicação rejeita NPC inválido antes de persistir; cancelamento não publica resultado tardio. Cache de expansores Sangue de Dragão usa mapa concorrente e cópia da chave.
+
+Medições do índice em `results-run6`: mediana quente 40,249 ms (legado) versus 8,045 ms (índice), cerca de 80% de redução nesse componente. Mediana fria inclui preparar catálogo e 15 estados; dados brutos preservados. Tempos globais estão em `comparison-run6.json`; ganho de componente não implica ganho geral.
+
+## Próximo pacote: planejamento de caminhos futuros
+
+Seletores iniciais dos três tipos passam a preferir raízes de cadeias nomeadas completas até Essência 5, apenas quando os mínimos de Habilidade/Atributo já permitem a rota. Toda aquisição mantém sua validação atual. Rotas desconhecidas, contagens agregadas não demonstradas, ciclos e nomes ambíguos não ganham bônus; orçamento esgotado retorna preferência vazia. Custos, cotas mínimas, foco de ataque Lunar, artes marciais e identidade visual permanecem sob as regras existentes. Ainda requer validação executada, comparação de profundidade e verificação de desempenho; não representa conclusão da auditoria.

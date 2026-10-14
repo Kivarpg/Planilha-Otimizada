@@ -46,9 +46,10 @@ class EncounterAuditBaselineTest {
         var scenarios = 0
         var errors = 0
         var nondeterministic = 0
+        var blockedAcquisitions = 0
         var generationFailures = 0
         out.resolve("samples.csv").bufferedWriter().use { csv ->
-            csv.appendLine("type,archetype,mode,seed,operation_ns,audit_errors,charms,trees,largest_tree,xp_available,xp_spent,deterministic")
+            csv.appendLine("type,archetype,mode,seed,operation_ns,audit_errors,charms,trees,largest_tree,xp_available,xp_spent,deterministic,named_chain_depth")
             for (type in TipoExaltadoEncontro.entries) for (archetype in ArquetipoEncontro.entries) {
                 runCatching { generate(type, archetype, -1, null) } // unmeasured warmup
                 for (seed in 0 until 20) for (mode in listOf("automatic", "focus", "xp")) {
@@ -67,7 +68,9 @@ class EncounterAuditBaselineTest {
                     val npc = if (mode == "xp") xp(generated) else generated
                     val elapsed = if (mode == "xp") System.nanoTime() - xpStart else generationNs
                     val report = EncounterNpcAuditor.audit(npc, catalog)
-                    val blocked = EncounterAcquisitionOrderOracle.blocked(npc, catalog)
+                    val depths = mutableMapOf<String, Int>()
+                    val blocked = EncounterAcquisitionOrderOracle.blocked(npc, catalog, depths)
+                    blockedAcquisitions += blocked.size
                     if (blocked.isNotEmpty()) out.resolve("$id.acquisition-blocked.txt").writeText(blocked.joinToString("\n"))
                     val groups = npc.charms.groupingBy { it.habilidadeVinculada }.eachCount()
                     val deterministic = if (mode == "xp") snapshot(npc) == snapshot(xp(generated)) else snapshot(npc) == snapshot(generate(type, archetype, seed, focus))
@@ -80,7 +83,7 @@ class EncounterAuditBaselineTest {
                         out.resolve("$id.alert-migration.txt").writeText("before=${npc.alertasValidacao}\nafter=${decoded.alertasValidacao}\n")
                     }
                     assertEquals("Mechanical JSON roundtrip $id", npc.copy(alertasValidacao = decoded.alertasValidacao), decoded)
-                    csv.appendLine(listOf(type, archetype, mode, seed, elapsed, report.errors.size, npc.charms.size, groups.size, groups.values.maxOrNull() ?: 0, npc.xpAtual, npc.xpGastoTotal, deterministic).joinToString(","))
+                    csv.appendLine(listOf(type, archetype, mode, seed, elapsed, report.errors.size, npc.charms.size, groups.size, groups.values.maxOrNull() ?: 0, npc.xpAtual, npc.xpGastoTotal, deterministic, depths.values.maxOrNull() ?: 0).joinToString(","))
                     csv.flush()
                     } catch (failure: IllegalStateException) {
                         generationFailures++
@@ -96,5 +99,6 @@ class EncounterAuditBaselineTest {
         assertEquals("Generation exceptions; inspect failure artifacts", 0, generationFailures)
         assertEquals("Illegal generated NPCs; inspect issue artifacts", 0, errors)
         assertEquals("Seed regression", 0, nondeterministic)
+        assertEquals("No legal acquisition order; inspect artifacts", 0, blockedAcquisitions)
     }
 }

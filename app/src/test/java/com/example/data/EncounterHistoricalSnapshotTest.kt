@@ -18,6 +18,11 @@ class EncounterHistoricalSnapshotTest {
     @Test fun `all frozen pre-refactor NPCs remain loadable and migration is idempotent`() {
         val root = File("../docs/audit/encounters-20261013/baseline")
         val hashes = JSONObject(root.resolve("snapshot-sha256.json").readText())
+        val app = ApplicationProvider.getApplicationContext<Application>()
+        val catalog = PreparedEncounterCatalog.prepare(EncantosSolaresCatalog(app).definitions,
+            EncantosSangueDosDragoesCatalog(app).definitions, EncantosLunaresCatalog(app).definitions,
+            FeiticariaCatalog(app).definitions, ArtesMarciaisCatalog(app).definitions)
+        val quality = mutableListOf("scenario,named_chain_depth,blocked")
         var count = 0
         ZipFile(root.resolve("snapshots.zip")).use { archive ->
             archive.entries().asSequence().forEach { entry ->
@@ -28,9 +33,14 @@ class EncounterHistoricalSnapshotTest {
                 val migrated = NpcEncontroJsonCodec.decode(NpcEncontroJsonCodec.encode(npc))
                 assertEquals(entry.name, npc, migrated)
                 EncounterValidationService.validarIdentidadeEstrutural(migrated)
+                val depths = mutableMapOf<String, Int>()
+                val blocked = EncounterAcquisitionOrderOracle.blocked(npc, catalog, depths)
+                quality += "${entry.name},${depths.values.maxOrNull() ?: 0},${blocked.size}"
                 count++
             }
         }
+        File("build/reports/encounter-audit/historical-quality.csv").apply { parentFile.mkdirs() }
+            .writeText(quality.joinToString("\n") + "\n")
         assertEquals(540, count)
     }
 }
