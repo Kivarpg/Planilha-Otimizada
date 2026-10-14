@@ -1331,7 +1331,7 @@ fun NpcEncontroCard(
         modifier = Modifier
             .align(Alignment.TopEnd)
             .then(if (compactActions) Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()) else Modifier),
-        horizontalArrangement = Arrangement.spacedBy(if (compactActions) 6.dp else 4.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         InkButton(
             visualTemplate = visualTemplate,
