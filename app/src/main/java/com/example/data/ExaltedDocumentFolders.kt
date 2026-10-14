@@ -14,7 +14,7 @@ import java.io.OutputStream
  * Android 9 e anteriores: diretório público Documents (permissão legada).
  */
 object ExaltedDocumentFolders {
-    const val APP = "Exalted"
+    const val APP = "Gerador Harmônico"
     const val PLAYER = "Jogador"
     const val NPC = "NPC's"
 
@@ -37,10 +37,10 @@ object ExaltedDocumentFolders {
             }
             val resolver = context.contentResolver
             val uri = resolver.insert(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), values)
-                ?: throw IllegalStateException("Não foi possível criar o arquivo na pasta Exalted/$category")
+                ?: throw IllegalStateException("Não foi possível criar o arquivo na pasta $APP/$category")
             try {
                 resolver.openOutputStream(uri, "w")?.use(writer)
-                    ?: throw IllegalStateException("Não foi possível gravar o arquivo na pasta Exalted/$category")
+                    ?: throw IllegalStateException("Não foi possível gravar o arquivo na pasta $APP/$category")
                 resolver.update(uri, ContentValues().apply {
                     put(MediaStore.MediaColumns.IS_PENDING, 0)
                 }, null, null)
@@ -51,7 +51,7 @@ object ExaltedDocumentFolders {
         } else {
             val directory = target.parentFile ?: throw IllegalStateException("Diretório inválido")
             if (!directory.isDirectory && !directory.mkdirs() && !directory.isDirectory) {
-                throw IllegalStateException("Não foi possível criar Exalted/$category")
+                throw IllegalStateException("Não foi possível criar $APP/$category")
             }
             val temp = File(directory, ".${name}.tmp")
             try {
