@@ -138,8 +138,12 @@ internal fun SheetTopBar(
             Box(
                 Modifier
                     .width(identityWidth)
-                    .fillMaxHeight()
-                    .padding(vertical = 14.dp)
+                    // Nunca preencher a altura do viewport: o Row do cabeçalho
+                    // é medido com altura flexível pelo Scaffold. fillMaxHeight()
+                    // aqui fazia o emblema ocupar quase toda a tela e escondia
+                    // a barra de abas e os campos da ficha.
+                    .height(104.dp)
+                    .padding(vertical = 10.dp)
                     .background(
                         Brush.verticalGradient(
                             listOf(
