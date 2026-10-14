@@ -68,13 +68,7 @@ internal fun SheetTopBar(
     val identityWidth = if (compactHeader) 68.dp else 84.dp
     // Dois controles de 48.dp exigem ao menos 96.dp, mesmo no celular.
     val identityIconSize = if (compactHeader) 36.dp else 42.dp
-    // Arte LEO sob o cabecalho; o conteudo continua a determinar a altura.
-    Box(Modifier.fillMaxWidth().background(Color.Black)) {
-        ExaltedSceneBackdrop(
-            sheet.tipoPersonagem,
-            modifier = Modifier.matchParentSize(),
-            alignment = Alignment.TopCenter,
-        )
+    // Usa a mesma arte do Scaffold; somente a faixa de leitura e local.
     Column(
         Modifier
             .fillMaxWidth()
@@ -224,7 +218,6 @@ internal fun SheetTopBar(
         // Índice de capítulos: somente tipografia, ícone mínimo e linha ativa.
         // A navegação deixa de parecer uma fileira de botões.
         SheetTabsBar(sheet, viewModel, tabs, selectedTabIndex, onSelectedTab)
-    }
     }
     }
 
