@@ -124,6 +124,7 @@ private fun ValorCalculadoCard(label: String, valor: Int, modifier: Modifier = M
     }
 }
 
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 fun CombatTab(
     sheet: CharacterSheet,
