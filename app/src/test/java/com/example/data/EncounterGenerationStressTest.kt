@@ -30,9 +30,13 @@ class EncounterGenerationStressTest {
     private val meritos = MeritosCatalog(app).definitions
     private val estilos = ArtesMarciaisCatalog(app).definitions
 
+    private val prepared = PreparedEncounterCatalog.prepare(solares, dragoes, lunares, feiticos, estilos)
+
     private fun assertInvariants(npc: NpcEncontro, expected: TipoExaltadoEncontro, seed: Int) {
         val tag = "tipo=$expected seed=$seed arquetipo=${npc.arquetipo} nome=${npc.nome}"
         assertEquals(tag, expected, npc.tipoExaltado)
+        assertEquals(tag, emptyList<EncounterValidationIssue>(), EncounterNpcAuditor.audit(npc, prepared).errors)
+        assertEquals(tag, emptySet<PreparedEncounterCatalog.StableContentId>(), EncounterAcquisitionOrderOracle.blocked(npc, prepared))
         assertTrue("$tag: id vazio", npc.id.isNotBlank())
         assertTrue("$tag: nome vazio", npc.nome.isNotBlank())
         assertTrue("$tag: Essencia invalida ${npc.essencia}", npc.essencia >= 1)

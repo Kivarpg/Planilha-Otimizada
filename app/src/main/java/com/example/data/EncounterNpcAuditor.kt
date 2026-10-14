@@ -34,7 +34,7 @@ internal object EncounterNpcAuditor {
 
         // Reutiliza invariantes estruturais existentes, mas converte a exceção em
         // diagnóstico: o auditor nunca altera nem interrompe a ficha auditada.
-        runCatching { EncounterValidationService.validarIdentidadeEstrutural(npc) }
+        runCatching { EncounterValidationService.validarIdentidadeAposProgressao(npc) }
             .exceptionOrNull()
             ?.let { error ->
                 issues += issue("STRUCTURAL_INVARIANT", EncounterValidationSeverity.ERROR,

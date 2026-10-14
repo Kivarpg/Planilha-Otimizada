@@ -100,3 +100,14 @@ Medições do índice em `results-run6`: mediana quente 40,249 ms (legado) versu
 ## Próximo pacote: planejamento de caminhos futuros
 
 Seletores iniciais dos três tipos passam a preferir raízes de cadeias nomeadas completas até Essência 5, apenas quando os mínimos de Habilidade/Atributo já permitem a rota. Toda aquisição mantém sua validação atual. Rotas desconhecidas, contagens agregadas não demonstradas, ciclos e nomes ambíguos não ganham bônus; orçamento esgotado retorna preferência vazia. Custos, cotas mínimas, foco de ataque Lunar, artes marciais e identidade visual permanecem sob as regras existentes. Ainda requer validação executada, comparação de profundidade e verificação de desempenho; não representa conclusão da auditoria.
+
+
+## Execução 7: preferência futura ainda provisória
+
+Commit `d3a00dbf121d2f9eb312ff52c0d13643232860f4`, execução 38498095349: 1133 testes gerais aprovados. Matriz 540 legal e determinística, agora também exige ordem de aquisição demonstrável. Profundidade média de cadeia nomeada antiga → nova: Solar 2,600 → 2,572; Sangue de Dragão 2,639 → 2,639; Lunar 2,633 → 2,572. Portanto **não está demonstrada melhoria estratégica**. Preparação para objetivos futuros pode reduzir profundidade inicial; comparação pareada de trajetórias de XP foi adicionada para investigar, sem aprovar automaticamente diferenças.
+
+Geração automática p50 nesta execução: Solar 67,086 ms, Sangue de Dragão 55,305 ms, Lunar 102,629 ms. Tempos menores do que baseline, mas a variação entre runners é grande e impede atribuir causalidade apenas a estas medidas.
+
+Novo defeito confirmado por inspeção: auditor chamava validação de recém-criado e exigia Essência 1/2 mesmo após XP. Validação comum extraída; entrada de criação preserva Essência inicial; entrada após progressão usa a fórmula de XP existente, sem alterar limiares. Saldo/gasto negativos agora são diagnosticados. Testes de mutação verificam catálogo estrangeiro, mínimos insuficientes, XP negativo e Essência incoerente. A matriz de estresse também passa a executar auditor e reconstrução independente da ordem legal. Tudo isso aguarda execução do próximo pacote.
+
+Mapeamento T01–T52 em `test-coverage.csv` distingue evidência e lacunas. Métricas de profundidade não medem força em combate, e testes Robolectric não substituem validação em aparelho. Não houve compilação de APK.

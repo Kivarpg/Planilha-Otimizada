@@ -44,10 +44,10 @@ jobs:
           distribution: temurin
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v5
-      - name: Run 1380 generation samples and 900 XP steps without APK
+      - name: Run generation stress, XP invariants and paired strategic trajectories without APK
         run: |
           chmod +x gradlew
-          ./gradlew :app:testDebugUnitTest -PfullEncounterAudit=true --tests 'com.example.data.EncounterGenerationStressTest' --tests 'com.example.data.EncounterXpMatrixAuditTest' --no-daemon --stacktrace
+          ./gradlew :app:testDebugUnitTest -PfullEncounterAudit=true --tests 'com.example.data.EncounterGenerationStressTest' --tests 'com.example.data.EncounterXpMatrixAuditTest' --tests 'com.example.data.EncounterStrategicProgressionAuditTest' --no-daemon --stacktrace
       - name: Preserve stress and XP evidence
         if: always()
         uses: actions/upload-artifact@v4

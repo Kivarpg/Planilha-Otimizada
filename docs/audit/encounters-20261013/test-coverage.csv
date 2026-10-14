@@ -1,0 +1,53 @@
+report_id,test_classes,scope_and_limits
+T01,SolarEncounterGeneratorRegressionTest,Identidade Solar e Supernal
+T02,DragonBloodedEncounterGeneratorTest,Aspecto e Favorecidas adicionais
+T03,LunarEncounterGeneratorTest,Quatro Atributos especiais distintos
+T04,EncounterDistributionServiceLunarTest;EncounterArchetypeMatrixTest,Distribuição base; complementar fronteiras dos três tipos
+T05,EncounterDistributionServiceBudgetTest;EncounterMandatoryResistanceTest,Orçamento e mínimos funcionais
+T06,EncounterCharmSelectionServiceTest;EncounterNpcSpellManagementTest,Catálogos parciais e feitiço indisponível
+T07,EncounterAuditBaselineTest,540 cenários determinísticos
+T08,EncounterPersonalizedFocusTest,Foco Solar/DB
+T09,EncounterPersonalizedFocusTest;LunarSelectionCacheRegressionTest,Foco Lunar; atualização de UI não instrumentada
+T10,EncounterArchetypePolicyTest;EncounterDistributionServiceLunarTest,Método de ataque e defesa
+T11,EncounterMartialArtsSelectionServiceTest;EncounterCombatSynergyTest,Árvores marciais e Briga distintas
+T12,EncounterMartialEquipmentTest,Equipamento e estilo
+T13,EncounterCharmActivationCompatibilityTest,Simples e suporte sequencial
+T14,EncounterCombatSynergyTest;EncounterActionSignatureTest,Semântica de Iniciativa e ação
+T15,EncounterAuditBaselineTest;EncounterXpMatrixAuditTest,Legalidade de ratings finais; não prova todos ratings históricos
+T16,CanonicalEncounterRulesTest;EncounterAuditBaselineTest,Ordem possível de aquisição; parser compartilhado
+T17,EncounterAuditorMutationTest,Mutação de catálogo estrangeiro; aguardando execução
+T18,CharmTreeCanonicalIdTest;PreparedEncounterCatalogTest,Mapeamentos explícitos
+T19,EncounterAvailabilityCycleTest;EncounterFutureGrowthPlannerTest,"Ciclos, ausências e orçamento"
+T20,EncounterGeneratorXpTest;EncounterFutureGrowthPlannerTest,Fixtures de progressão; qualidade real ainda em medição
+T21,EncounterDistributionServiceLunarTest;LunarSpiritFormStrategyTest,Ataque único e pontes espirituais; avaliar cotas reais
+T22,EncounterCpuSafetyBudgetTest;EncounterCombinationBranchPreservationTest,Parcial: limite diagnosticado; não há prova universal de retenção de rota obrigatória
+T23,EncounterAuditBaselineTest,Desempates por determinismo; fixture específica adicional desejável
+T24,EncounterSorceryAccessTest;EncounterSorceryRoutePolicyTest,Política de círculos
+T25,EncounterNpcSpellManagementTest,Preenchimento automático
+T26,EncounterInitialSpellLockTest,Bloqueio após XP no domínio
+T27,EncounterSorceryAccessTest,Sem acesso sem círculo
+T28,EncounterNpcSpellManagementTest,Aviso sem opção legal
+T29,EncounterNpcSpellManagementTest;EncounterXpMatrixAuditTest,Feitiço inicial preservado durante XP
+T30,EncounterGeneratorXpTest;EncounterXpMatrixAuditTest,Crédito de 5 e saldo
+T31,EncounterGeneratorXpTest,Fronteiras de Essência e motes
+T32,EncounterProgressionRoadmapTest,Lotes e chamadas individuais
+T33,EncounterGeneratorXpTest,Reversão de lote
+T34,EncounterXpMatrixAuditTest,Reversão de 100 lotes em nove perfis
+T35,EncounterExperienceVitalityTest,Vitalidade e dano
+T36,EncounterEquipmentServiceTest;EncounterNpcActionsEquipmentIntegrationTest,Derivados de equipamentos
+T37,EncounterProgressionRoadmapTest,Fingerprint de foco e estado
+T38,EncounterProgressionRoadmapTest;LunarSelectionCacheRegressionTest,Catálogo e traits
+T39,LunarMarkCoherenceServiceTest;LunarSpiritFormStrategyTest,Parcial: fixtures de formas; ampliar Quimera após XP e reload
+T40,NpcEncontroJsonCodecTest;EncounterXpMatrixAuditTest,Round-trip mecânico; alertas legados migram
+T41,EncounterHistoricalSnapshotTest,540 snapshots históricos e idempotência
+T42,EncounterGenerationRulesRegressionTest,Nomes; conferir casos Ying/Yuan/Xion específicos
+T43,EncounterNpcActionsEquipmentIntegrationTest,Candidato inválido e cancelamento suspenso
+T44,EncounterGenerationStressTest,120 sementes por combinação; validação ampliada pendente
+T45,EncounterAuditBaselineTest,p50/p95/p99 medidos; memória e aparelho pendentes
+T46,EncounterXpMatrixAuditTest,1/10/50/100; legalidade ampliada pendente
+T47,EncounterGenerationStressTest,1380 gerações com invariantes; ampliar auditoria completa
+T48,PreparedEncounterCatalogTest;EncounterRuleGraphValidationTest,Parcial: catálogo e grafo; duplicatas de aquisição exigem política explícita
+T49,EncounterProgressionCacheTest;LunarSelectionCacheRegressionTest,"LRU, hit/miss e isolamento de traits"
+T50,EncounterNpcActionsEquipmentIntegrationTest,Parcial: cancelamento; troca de tela e responsividade em aparelho pendentes
+T51,EncounterStateIndexDifferentialTest,Estados idênticos; não equivale a diferencial completo do seletor
+T52,EncounterAuditBaselineTest;EncounterHistoricalSnapshotTest,Histórico preservado; novos snapshots não aprovados automaticamente

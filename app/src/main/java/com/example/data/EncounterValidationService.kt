@@ -145,7 +145,18 @@ object EncounterValidationService {
 
     /** Invariantes estruturais da criação da Aba 11. Lança somente em estados
      * impossíveis; não substitui as mensagens de validação exibidas na UI. */
-    fun validarIdentidadeEstrutural(npc: NpcEncontro) {
+    fun validarIdentidadeEstrutural(npc: NpcEncontro) = validarIdentidade(npc, emCriacao = true)
+
+    /** Same invariants after XP, using the existing progression formula. */
+    internal fun validarIdentidadeAposProgressao(npc: NpcEncontro) = validarIdentidade(npc, emCriacao = false)
+
+    private fun validarIdentidade(npc: NpcEncontro, emCriacao: Boolean) {
+        check(npc.xpAtual >= 0 && npc.xpGastoTotal >= 0) { "Saldo ou gasto de XP negativo" }
+        if (!emCriacao) {
+            check(npc.essencia == EncounterExperienceService.essenciaPara(npc, npc.xpGastoTotal)) {
+                "Essência divergente da progressão de XP"
+            }
+        }
         check(npc.essencia >= 1) { "Essência inválida no NPC de encontro" }
         check(npc.motesPersonais >= 0) { "Motes Pessoais não podem ser negativos" }
         check(npc.motesPerifericos >= 0) { "Motes Periféricos não podem ser negativos" }
@@ -251,7 +262,7 @@ object EncounterValidationService {
                 check(npc.habilidadesFavorecidas.all { (npc.abilities[it] ?: 0) >= 1 }) {
                     "Toda Habilidade Favorecida Solar deve possuir pelo menos 1 ponto"
                 }
-                check(npc.essencia == EncounterGenerationRules.ESSENCIA_SOLAR) { "Solar recém-gerado deve começar com Essência 1" }
+                if (emCriacao) check(npc.essencia == EncounterGenerationRules.ESSENCIA_SOLAR) { "Solar recém-gerado deve começar com Essência 1" }
             }
             TipoExaltadoEncontro.SANGUE_DE_DRAGAO -> {
                 val aspecto = Aspecto.entries.firstOrNull { it.displayName == npc.casta }
@@ -272,7 +283,7 @@ object EncounterValidationService {
                     "Sangue de Dragão deve possuir 10 Habilidades estruturais distintas"
                 }
                 check(npc.habilidadeSupernal.isBlank()) { "Sangue de Dragão não pode possuir Supernal" }
-                check(npc.essencia == EncounterGenerationRules.ESSENCIA_SANGUE_DE_DRAGAO) { "Sangue de Dragão recém-gerado deve começar com Essência 2" }
+                if (emCriacao) check(npc.essencia == EncounterGenerationRules.ESSENCIA_SANGUE_DE_DRAGAO) { "Sangue de Dragão recém-gerado deve começar com Essência 2" }
             }
             TipoExaltadoEncontro.LUNAR -> {
                 check(npc.habilidadesFavorecidas.size == 2) { "Lunar deve possuir exatamente 2 Atributos Favorecidos adicionais" }
@@ -292,7 +303,7 @@ object EncounterValidationService {
                 check(npc.lunarAtributosCasta.all { it in ExaltedConstants.ALL_ATTRIBUTES }) {
                     "Atributos de Casta Lunares devem ser canônicos"
                 }
-                check(npc.essencia == EncounterGenerationRules.ESSENCIA_LUNAR) { "Lunar recém-gerado deve começar com Essência 1" }
+                if (emCriacao) check(npc.essencia == EncounterGenerationRules.ESSENCIA_LUNAR) { "Lunar recém-gerado deve começar com Essência 1" }
                 // Feitiçaria do Círculo Terrestre é uma exigência de construção
                 // do Lunar Físico com Inteligência 3+, mas a ausência dessa aquisição
                 // não é uma falha fatal da validação estrutural.

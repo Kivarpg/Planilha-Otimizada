@@ -12,7 +12,7 @@ class EncounterNpcAuditorContractTest {
         assertTrue(source.contains("internal object EncounterNpcAuditor"))
         assertTrue(source.contains("fun audit(npc: NpcEncontro, catalog: PreparedEncounterCatalog)"))
         assertTrue(source.contains("EncounterRulesEngine.evaluate"))
-        assertTrue(source.contains("validarIdentidadeEstrutural(npc)"))
+        assertTrue(source.contains("validarIdentidadeAposProgressao(npc)"))
         assertFalse(source.contains("npc.copy("))
     }
 
