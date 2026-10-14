@@ -189,7 +189,8 @@ fun TemplateSelectionScreen(onTemplateSelected: (String) -> Unit, modifier: Modi
                                     text = if (isSolar) "Solar" else if (isDragon) "Sangue de Dragão" else "Lunar",
                                     color = ExaltedMuted,
                                     style = MaterialTheme.typography.bodySmall,
-                                    maxLines = 1
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
                                 )
                             }
                             AppText(
