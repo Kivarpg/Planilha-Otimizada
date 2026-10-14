@@ -43,6 +43,13 @@ fun PersonalDataTab(sheet: CharacterSheet, viewModel: SheetViewModel, modifier: 
     itemToDelete?.let { item -> ConfirmDeleteDialog(itemTitle=item.nome.ifBlank{"Intimidade"},onConfirm={viewModel.removeIntimidade(item.id);itemToDelete=null},onDismiss={itemToDelete=null}) }
 }
 
+/**
+ * Garante que cada campo tenha largura real para seu rótulo.
+ * Composição em três colunas só em áreas amplas, com escala de fonte normal.
+ */
+internal fun personalIdentityNeedsStacking(availableWidthDp: Float, fontScale: Float): Boolean =
+    availableWidthDp < 900f || fontScale > 1.2f
+
 @Composable
 private fun PersonalIdentitySection(sheet:CharacterSheet,viewModel:SheetViewModel){
     // Os tres campos precisam de largura para o texto, rotulos e alvos de toque.
@@ -50,8 +57,8 @@ private fun PersonalIdentitySection(sheet:CharacterSheet,viewModel:SheetViewMode
     // em telas de celular e tablets compactos. O limite considera a area REAL
     // disponivel dentro do cartao, nao a largura fisica do aparelho.
     BoxWithConstraints(Modifier.fillMaxWidth()) {
-        val largeText = androidx.compose.ui.platform.LocalDensity.current.fontScale > 1.2f
-        if (maxWidth < 900.dp || largeText) {
+        val fontScale = androidx.compose.ui.platform.LocalDensity.current.fontScale
+        if (personalIdentityNeedsStacking(maxWidth.value, fontScale)) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
