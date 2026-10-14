@@ -25,6 +25,12 @@ class EncounterRecentUiRegressionContractTest {
         assertTrue(section.contains("NPC_DAMAGE_DELTAS_POSITIVE.forEach"))
         assertTrue(section.contains("width = 88.dp"))
         assertTrue(section.contains("Modifier.width(84.dp)"))
+        assertTrue(section.contains("OutlinedTextField("))
+        assertTrue(section.contains("readOnly = true"))
+        assertTrue(section.contains("formatarNumeroPlanilha(iniciativaSincronizada)"))
+        assertTrue(section.contains("unfocusedBorderColor = visualTemplate.outline.copy(alpha = 0.55f)"))
+        assertTrue(section.contains("unfocusedContainerColor = visualTemplate.surface"))
+        assertTrue(section.contains("ajustarIniciativaSincronizada(delta)"))
         assertTrue(!section.contains("horizontalScroll("))
     }
 
