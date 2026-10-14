@@ -480,7 +480,7 @@ run {
                 coluna.forEach { (k, v) ->
                     val temEspecializacao = k in especialidadesSet
                     Row(
-                        modifier = Modifier.padding(vertical = 3.dp),
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 3.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(5.dp)
                     ) {
@@ -538,8 +538,9 @@ if (npc.merits.isEmpty()) {
                 merito.linhaExibicao(),
                 style = MaterialTheme.typography.bodyLarge,
                 color = visualTemplate.onSurface,
-                softWrap = false,
+                softWrap = true,
                 modifier = Modifier
+                    .fillMaxWidth()
                     .pointerInput(merito.id) {
                         detectTapGestures(onLongPress = { mostrarDescricao = true })
                     }
