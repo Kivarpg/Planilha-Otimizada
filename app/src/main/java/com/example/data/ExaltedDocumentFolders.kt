@@ -18,6 +18,9 @@ object ExaltedDocumentFolders {
     const val PLAYER = "Jogador"
     const val NPC = "NPC's"
 
+    // Compilado uma única vez para todos os nomes de arquivos exportados.
+    private val invalidFileNameCharacters = Regex("[\\\\/:*?\\\"<>|\\r\\n\\t]")
+
     fun relativePath(category: String): String {
         require(category == PLAYER || category == NPC)
         return "${Environment.DIRECTORY_DOCUMENTS}/$APP/$category/"
@@ -66,6 +69,6 @@ object ExaltedDocumentFolders {
 
     fun safeName(value: String): String = value
         .trim().ifBlank { "Sem Nome" }
-        .replace(Regex("[\\\\/:*?\\\"<>|\\r\\n\\t]"), "_")
+        .replace(invalidFileNameCharacters, "_")
         .take(80).ifBlank { "Sem Nome" }
 }
