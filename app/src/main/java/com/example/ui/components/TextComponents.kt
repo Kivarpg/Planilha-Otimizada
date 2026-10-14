@@ -61,6 +61,7 @@ import androidx.compose.ui.unit.sp
 import com.example.model.EncantoQuadro
 import com.example.ui.theme.ExaltedDivider
 import com.example.ui.theme.ExaltedTextStroke
+import com.example.ui.theme.ExaltedTextOutline
 import com.example.ui.theme.Dimens
 import com.example.ui.theme.LocalExaltedVisualTemplate
 
@@ -122,6 +123,9 @@ fun AppText(
     val resolvedColor = when {
         color != Color.Unspecified -> color
         style.color != Color.Unspecified -> style.color
+        // Material3 pode fornecer preto como cor herdada em cards com
+        // container customizado. Na skin escura, o padrao e sempre claro.
+        inheritedContentColor == Color.Black -> visual.onSurface
         inheritedContentColor != Color.Unspecified -> inheritedContentColor
         else -> visual.onSurface
     }
@@ -134,7 +138,8 @@ fun AppText(
         letterSpacing = if (letterSpacing != TextUnit.Unspecified) letterSpacing else style.letterSpacing,
         textDecoration = textDecoration ?: style.textDecoration,
         textAlign = textAlign ?: style.textAlign,
-        lineHeight = if (lineHeight != TextUnit.Unspecified) lineHeight else style.lineHeight
+        lineHeight = if (lineHeight != TextUnit.Unspecified) lineHeight else style.lineHeight,
+        shadow = style.shadow ?: ExaltedTextOutline
     )
     Text(text = text, modifier = modifier, color = resolvedColor, style = resolvedStyle, overflow = overflow, softWrap = softWrap, maxLines = maxLines, minLines = minLines, onTextLayout = onTextLayout)
 }
@@ -159,6 +164,9 @@ fun AppText(
     val resolvedColor = when {
         color != Color.Unspecified -> color
         style.color != Color.Unspecified -> style.color
+        // Material3 pode fornecer preto como cor herdada em cards com
+        // container customizado. Na skin escura, o padrao e sempre claro.
+        inheritedContentColor == Color.Black -> visual.onSurface
         inheritedContentColor != Color.Unspecified -> inheritedContentColor
         else -> visual.onSurface
     }
@@ -167,7 +175,8 @@ fun AppText(
         fontSize = if (fontSize != TextUnit.Unspecified) fontSize else style.fontSize,
         fontWeight = fontWeight ?: style.fontWeight,
         fontFamily = fontFamily ?: style.fontFamily,
-        textAlign = textAlign ?: style.textAlign
+        textAlign = textAlign ?: style.textAlign,
+        shadow = style.shadow ?: ExaltedTextOutline
     )
     // Uma única camada de texto: evita divergência de medição/recorte entre
     // contorno e preenchimento em layouts estreitos. O contraste passa a ser
